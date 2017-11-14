@@ -19,7 +19,7 @@ while true; do
         --variable title=dummy \
         -o /target/index.html \
         /source/slides.md || :
-    rsync -Pav /source/assets /target/ || :
+    rsync -Pav /source/assets /md2deck/lib /target/ || :
     echo -e "\n\nopen http://localhost:8080\n\n"
     inotifywait /source/
 done
