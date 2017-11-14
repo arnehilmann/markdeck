@@ -1,0 +1,27 @@
+#!/bin/bash
+set -e -E -u
+
+live-server --port=8080 /target &
+
+ln -sf /target/rendered .
+
+while true; do
+    mkdir -p /target/rendered
+    pandoc \
+        -f markdown \
+        -t html5 \
+        --standalone \
+        --template=template-revealjs.html \
+        --section-divs \
+        --lua-filter render-asciiart-filter.lua \
+        --variable theme=simple \
+        --variable transition=slide \
+        --variable title=dummy \
+        -o /target/index.html \
+        /source/slides.md || :
+    rsync -Pav /source/assets /target/ || :
+    echo -e "\n\nopen http://localhost:8080\n\n"
+    inotifywait /source/
+done
+
+echo "done."
