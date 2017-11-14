@@ -13,13 +13,13 @@ while true; do
         --standalone \
         --template=template-revealjs.html \
         --section-divs \
-        --lua-filter render-asciiart-filter.lua \
+        --lua-filter lib/render-asciiart-filter.lua \
         --variable theme=simple \
         --variable transition=slide \
-        --variable title=dummy \
+        --variable title=nyi \
         -o /target/index.html \
         /source/slides.md || :
-    rsync -Pav /source/assets /md2deck/lib /target/ || :
+    rsync -Pav /source/assets /md2deck/assets /target/ || :
     echo -e "\n\nopen http://localhost:8080\n\n"
     inotifywait /source/
 done

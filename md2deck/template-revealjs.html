@@ -16,29 +16,29 @@ $endfor$
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<link rel="stylesheet" href="lib/reveal.js/css/reveal.css">
+<link rel="stylesheet" href="assets/3rdparty/reveal.js/css/reveal.css">
 $if(theme)$
-  <link rel="stylesheet" href="lib/reveal.js/css/theme/$theme$.css" id="theme">
+  <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/theme/$theme$.css" id="theme">
 $else$
-  <link rel="stylesheet" href="lib/reveal.js/css/theme/default.css" id="theme">
+  <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/theme/default.css" id="theme">
 $endif$
 
 
 <!-- For syntax highlighting -->
 $if(highlight-style)$
-  <link rel="stylesheet" href="lib/reveal.js/lib/css/$highlight-style$.css">
+  <link rel="stylesheet" href="assets/3rdparty/reveal.js/lib/css/$highlight-style$.css">
 $else$
-  <link rel="stylesheet" href="lib/reveal.js/lib/css/zenburn.css">
+  <link rel="stylesheet" href="assets/3rdparty/reveal.js/lib/css/zenburn.css">
 $endif$
 
-<link rel="stylesheet" type="text/css" href="lib/asciinema-player.css" />
+<link rel="stylesheet" type="text/css" href="assets/3rdparty/asciinema-player.css" />
 
 <link rel="stylesheet" href="assets/css/slides.css">
 
 <!-- If the query includes 'print-pdf', use the PDF print sheet -->
 <script>
   document.write( '<link rel="stylesheet" href="assets/css/print/' +
-    ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + 
+    ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) +
     '.css" type="text/css" media="print">' );
 </script>
 
@@ -67,7 +67,7 @@ $for(author)$<h3>$author$</h3>$endfor$
 <p>
 <h4>$date$</h4>
 </p>
-</section>  
+</section>
 -->
 
 $if(toc)$
@@ -82,8 +82,8 @@ $endif$
 $body$
 </div>
 
-<script src="lib/reveal.js/lib/js/head.min.js"></script>
-<script src="lib/reveal.js/js/reveal.js"></script>
+<script src="assets/3rdparty/reveal.js/lib/js/head.min.js"></script>
+<script src="assets/3rdparty/reveal.js/js/reveal.js"></script>
 
 <script>
     // Full list of configuration options available here:
@@ -111,10 +111,10 @@ $body$
 
     // Optional libraries used to extend on reveal.js
     dependencies: [
-        { src: 'lib/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-        { src: 'lib/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-        { src: 'lib/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-        { src: 'lib/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+        { src: 'assets/3rdparty/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+        { src: 'assets/3rdparty/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: 'assets/3rdparty/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+        { src: 'assets/3rdparty/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
 
         // { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
         // { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
