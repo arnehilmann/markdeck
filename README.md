@@ -1,2 +1,16 @@
 # md2deck
-markdown to slides deck, the docker part
+
+markdown to sleek slides deck
+
+example: [markdown](https://raw.githubusercontent.com/arnehilmann/md2deck/master/example/slides.md)
+-> [html deck](https://arnehilmann.github.io/md2deck/)
+
+
+## TODO
+
+* add tl;dr section
+* add documentation (config, markdown, renderer, ...)
+* make asciiart rendering paramterizable (<-- is that a word?)
+* make rendered images transparent
+* improve text layout
+* pdf rendering of whole deck
