@@ -1,0 +1,76 @@
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Inconsolata Regular'), local('Inconsolata-Regular'), url(https://fonts.gstatic.com/s/inconsolata/v16/BjAYBlHtW3CJxDcjzrnZCIgp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+
+@font-face {
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 400;
+  src: local('EB Garamond Regular'), local('EBGaramond-Regular'), url(https://fonts.gstatic.com/s/ebgaramond/v9/kYZt1bJ8UsGAPRGnkXPeFYgp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
+}
+
+.reveal,
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6,
+.reveal div {
+    font-family: "EB Garamond", serif;
+}
+
+.reveal h1 {
+    font-size: 1.4em; }
+
+.reveal h2 {
+    font-size: 0.8em; }
+
+.reveal .license {
+    font-size: 12pt;
+}
+
+.reveal section img {
+    border: 0;
+    background: transparent;
+}
+
+.reveal .footer {
+    position: absolute;
+    bottom: 1em;
+    left: 1em;
+    font-size: 0.5em;
+}
+
+.reveal .controls .navigate-up.enabled {
+    border-bottom-color: #444;
+}
+
+.reveal .controls .navigate-down.enabled {
+    border-top-color: #444;
+}
+
+.reveal .controls .navigate-right.enabled {
+    border-left-color: #444;
+}
+
+.reveal .controls .navigate-left.enabled {
+    border-right-color: #444;
+}
+
+.reveal .progress span {
+    background: #444;
+}
+
+.reveal div pre.asciinema-terminal {
+    font-family: "Inconsolata", monospace;
+}
+
+.reveal section img {
+    box-shadow: none;
+}

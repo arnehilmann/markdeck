@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+
+<title>md2deck example</title>
+
+<meta name="description" content="md2deck example">
+
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<link rel="stylesheet" href="assets/3rdparty/reveal.js/css/reveal.css">
+  <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/theme/simple.css" id="theme">
+
+
+<!-- For syntax highlighting -->
+  <link rel="stylesheet" href="assets/3rdparty/reveal.js/lib/css/zenburn.css">
+
+<link rel="stylesheet" type="text/css" href="assets/3rdparty/asciinema-player.css" />
+
+<link rel="stylesheet" href="assets/css/slides.css">
+
+<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+<script>
+  document.write( '<link rel="stylesheet" href="assets/css/print/' +
+    ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) +
+    '.css" type="text/css" media="print">' );
+</script>
+
+<!--[if lt IE 9]>
+<script src="lib/js/html5shiv.js"></script>
+<![endif]-->
+</head>
+
+<body>
+
+<div class="reveal">
+
+<!-- Any section element inside of this container is displayed as a slide -->
+<div class="slides">
+
+<!--
+<section>
+<h1>md2deck example</h1>
+
+<p>
+<h4></h4>
+</p>
+</section>
+-->
+
+
+<section id="md2deck" class="level1">
+<h1>md2deck</h1>
+<p>create sleek slide decks using markdown only</p>
+<div class="line-block"><a href="https://github.com/arnehilmann/md2deck">github.com/arnehilmann/md2deck</a></div>
+<div class="line-block"><a href="https://hub.docker.com/r/arne/md2deck/">md2deck on docker hub</a></div>
+<p><small> arne@hilmann.de | 2017-11 </small></p>
+</section>
+<section id="features" class="level1">
+<h1>features</h1>
+<p>the whole deck in one markdown file</p>
+<p>on-the-fly rendering of asciiart<br> (ditaa, plantuml, graphviz)</p>
+<p>sleek ui, based on reveal.js</p>
+<p>on-the-fly reload when changing sources</p>
+</section>
+<section id="plantuml" class="level1" data-background="lightblue">
+<h1>plantuml</h1>
+<p><img src="rendered/plantuml-e99618cf74aef9ce1cb392aabaf1a4d20d66cbdc.png" alt="rendered" /></p>
+</section>
+<section id="ditaa" class="level1" data-background="sandybrown">
+<h1>ditaa</h1>
+<p><img src="rendered/ditaa-6225cbaab83c44551865a8a348839511df384697.png" alt="rendered" /></p>
+</section>
+<section id="graphviz" class="level1" data-background="green">
+<h1>graphviz</h1>
+<p><img src="rendered/dot-acefbfbbfec439946732a489417f023dcfb6f73c.png" alt="rendered" /></p>
+</section>
+<section id="asciinema" class="level1" data-background="black">
+<h1>asciinema</h1>
+<p><asciinema-player
+    src="./assets/img/test.json"
+    poster="npt:0:21"
+    idle-time-limit=1
+    speed=2
+    rows=18
+    font-size="medium"
+></asciinema-player></p>
+</section>
+<section id="thank-you" class="level1">
+<h1>Thank You!</h1>
+<div class="line-block"><a href="http://pandoc.org">pandoc</a></div>
+<div class="line-block"><a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a></div>
+<div class="line-block"><a href="http://plantuml.com">plantuml</a></div>
+<div class="line-block"><a href="https://github.com/pepijnve/ditaa.git">ditaamini</a></div>
+<div class="line-block"><a href="http://www.graphviz.org">graphviz</a></div>
+<div class="line-block"><a href="https://github.com/asciinema/asciinema-player">asciinema</a></div>
+<script src="assets/3rdparty/asciinema-player.js"></script>
+</section>
+</div>
+
+<script src="assets/3rdparty/reveal.js/lib/js/head.min.js"></script>
+<script src="assets/3rdparty/reveal.js/js/reveal.js"></script>
+
+<script>
+    // Full list of configuration options available here:
+    // https://github.com/hakimel/reveal.js#configuration
+    Reveal.initialize({
+        controls: true,
+        progress: true,
+        history: true,
+        center: true,
+        // backgroundTransition: 'slide',
+
+    // available themes are in /css/theme
+            theme: Reveal.getQueryHash().theme || 'simple',
+    
+    // default/cube/page/concave/zoom/linear/fade/none
+            transition: Reveal.getQueryHash().transition || 'slide',
+    
+    // Optional libraries used to extend on reveal.js
+    dependencies: [
+        { src: 'assets/3rdparty/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+        { src: 'assets/3rdparty/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: 'assets/3rdparty/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+        { src: 'assets/3rdparty/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+
+        // { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        // { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+    ]
+  });
+</script>
+
+</body>
+</html>
