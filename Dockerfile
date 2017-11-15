@@ -12,4 +12,4 @@ COPY md2deck/ /md2deck/
 
 WORKDIR /md2deck
 
-CMD ["/md2deck/loop"]
+ENTRYPOINT ["/md2deck/loop"]
