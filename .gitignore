@@ -1,1 +1,4 @@
 .*.swp
+md2deck/assets/
+md2deck/bin/
+md2deck/lib/
