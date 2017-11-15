@@ -39,4 +39,4 @@ md2deck/assets/3rdparty/asciinema-player.css:
 
 md2deck/assets/3rdparty/reveal.js:
 	mkdir -p $@
-	curl -L "https://github.com/hakimel/reveal.js/archive/3.5.0.tar.gz" | tar -C $@ --strip-components=1 --exclude test -zxvf -
+	curl -L "https://github.com/hakimel/reveal.js/archive/3.5.0.tar.gz" | tar -C $@ --strip-components=1 --exclude test --exclude font -zxvf -
