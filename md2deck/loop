@@ -1,27 +1,50 @@
 #!/bin/bash
 set -e -E -u
 
-live-server --port=8080 /target &
+PORT=8080
+
+live-server --port=$PORT /target &
 
 ln -sf /target/rendered .
-
 while true; do
-    mkdir -p /target/rendered
-    pandoc \
+    [[ -d /target/rendered ]] || mkdir -p /target/rendered
+    echo -e "\n\n\n\n\n\n\n\n\n\n"
+
+    echo "-------- rsync output --------"
+    rsync -Pav /source/assets /md2deck/assets /target/ || :
+    echo "-------- /rsync output --------"
+    echo
+
+    echo "-------- config --------"
+    [[ -e /source/config ]] && source /source/config
+    MD2DECK_TITLE=${title:-md2deck}
+    MD2DECK_THEME=${theme:-simple}
+    MD2DECK_TRANSITION=${transition:-slide}
+    for V in ${!MD2DECK_@}; do
+        echo $V=${!V}
+    done
+    echo "-------- /config --------"
+    echo
+
+    echo "-------- pandoc output --------"
+    /md2deck/bin/pandoc \
         -f markdown \
         -t html5 \
         --standalone \
-        --template=template-revealjs.html \
+        --template=/md2deck/template-revealjs.html \
         --section-divs \
-        --lua-filter lib/render-asciiart-filter.lua \
-        --variable theme=simple \
-        --variable transition=slide \
-        --variable title=nyi \
+        --lua-filter /md2deck/lib/render-asciiart-filter.lua \
+        --variable theme=$MD2DECK_THEME \
+        --variable transition=$MD2DECK_TRANSITION \
+        --variable title="$MD2DECK_TITLE" \
         -o /target/index.html \
         /source/slides.md || :
-    rsync -Pav /source/assets /md2deck/assets /target/ || :
-    echo -e "\n\nopen http://localhost:8080\n\n"
-    inotifywait /source/
+    echo "-------- /pandoc output --------"
+    echo
+
+    sleep .5
+    echo -e "\n\n\nopen http://localhost:$PORT\n\n(... or use Ctrl-C to stop md2deck)\n\n\n"
+    inotifywait -r -q /source/
 done
 
 echo "done."
