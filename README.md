@@ -13,10 +13,11 @@ example: [markdown](https://raw.githubusercontent.com/arnehilmann/md2deck/master
 * ~make asciiart rendering paramterizable (<-- is that a word?)~
 * ~make rendered images transparent~
 * improve text layout
-* pdf rendering of whole deck
+* ~pdf rendering of whole deck~
 * ~add dev mode for md2deck~
 * ~remove obsolete asciiart images rendered by filter~
-* add short-notation for background settings
+* ~add short-notation for background settings~
 * document/build/provide miniditaa jar
 * handle change in asciiart parameters
 * add simple QR Code generator (for url on last slide, for example)
+* fix font problem in pdf
