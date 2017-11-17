@@ -50,6 +50,9 @@ Bob->Alice : ??
 
 ```dot
 digraph G {
+    bgcolor=transparent;
+    node [style=filled,color=white];
+
     a -> b -> c;
     a -> c;
     b -> d;
@@ -82,6 +85,8 @@ digraph G {
 | [graphviz](http://www.graphviz.org)
 
 | [asciinema](https://github.com/asciinema/asciinema-player)
+
+| [decktape](https://github.com/astefanutti/decktape)
 
 
 #
