@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e -E -u
+
+TITLE=${1:-$(basename $PWD)}
+PDF_SIZE=1024x768
+DECKTAPE_CONTAINER=astefanutti/decktape:1.0.0
+
+echo "rendering $TITLE.pdf"
+docker run --rm -v $PWD:/pwd -w /pwd \
+        --env http_proxy=${http_proxy:-} --env https_proxy=${https_proxy:-} \
+        $DECKTAPE_CONTAINER \
+        reveal \
+        --size $PDF_SIZE \
+        index.html \
+        "$TITLE.pdf"
+
+echo "done."
