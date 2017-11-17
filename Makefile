@@ -1,10 +1,13 @@
+VERSION=0.3
+
+
 all:	md2deck/bin/pandoc md2deck/lib/plantuml.jar md2deck/lib/plantuml.jar md2deck/lib/ditaa.jar md2deck/lib/render-asciiart-filter.lua md2deck/assets/3rdparty/asciinema-player.js md2deck/assets/3rdparty/asciinema-player.css md2deck/assets/3rdparty/reveal.js
 	docker build \
 		--rm \
 		--build-arg http_proxy=$(http_proxy) \
 		--build-arg https_proxy=$(https_proxy) \
 		-t arne/md2deck:latest \
-		-t arne/md2deck:0.2 \
+		-t arne/md2deck:$(VERSION) \
 		.
 
 
@@ -40,3 +43,6 @@ md2deck/assets/3rdparty/asciinema-player.css:
 md2deck/assets/3rdparty/reveal.js:
 	mkdir -p $@
 	curl -L "https://github.com/hakimel/reveal.js/archive/3.5.0.tar.gz" | tar -C $@ --strip-components=1 --exclude test --exclude font -zxvf -
+
+
+.PHONY: all
