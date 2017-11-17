@@ -1,4 +1,4 @@
-VERSION=0.3
+VERSION=0.4
 
 
 all:	md2deck/bin/pandoc md2deck/lib/plantuml.jar md2deck/lib/plantuml.jar md2deck/lib/ditaa.jar md2deck/lib/render-asciiart-filter.lua md2deck/assets/3rdparty/asciinema-player.js md2deck/assets/3rdparty/asciinema-player.css md2deck/assets/3rdparty/reveal.js
