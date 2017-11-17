@@ -18,8 +18,8 @@ $ONCE || live-server --port=$PORT /target &
 export ASCIIART_CONFIG=/source/render-asciiart-filter.config
 export ASCIIART_LIBDIR=/md2deck/lib
 
-cd /target
 while true; do
+    cd /target
     [[ -d /target/rendered ]] || mkdir -p /target/rendered
 
     echo "-------- rsync output --------"
@@ -46,6 +46,7 @@ while true; do
         --template=/md2deck/template-revealjs.html \
         --section-divs \
         --lua-filter /md2deck/lib/render-asciiart-filter.lua \
+        --lua-filter /md2deck/lib/reveal-shortcut-filter.lua \
         --variable theme=$MD2DECK_THEME \
         --variable transition=$MD2DECK_TRANSITION \
         --variable title="$MD2DECK_TITLE" \

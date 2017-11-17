@@ -69,7 +69,7 @@ digraph G {
 ></asciinema-player>
 
 
-# Thank You!
+# Thank You! {bg=black;assets/img/dark.png}
 
 | [pandoc](http://pandoc.org)
 
