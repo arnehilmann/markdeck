@@ -15,7 +15,10 @@ esac
 
 $ONCE || live-server --port=$PORT /target &
 
-ln -sf /target/rendered .
+export ASCIIART_CONFIG=/source/render-asciiart-filter.config
+export ASCIIART_LIBDIR=/md2deck/lib
+
+cd /target
 while true; do
     [[ -d /target/rendered ]] || mkdir -p /target/rendered
 
@@ -42,6 +45,7 @@ while true; do
         --standalone \
         --template=/md2deck/template-revealjs.html \
         --section-divs \
+        --lua-filter /md2deck/lib/render-asciiart-filter.lua \
         --lua-filter /md2deck/lib/render-asciiart-filter.lua \
         --variable theme=$MD2DECK_THEME \
         --variable transition=$MD2DECK_TRANSITION \
