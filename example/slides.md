@@ -21,7 +21,7 @@ sleek ui, based on reveal.js
 on-the-fly reload when changing sources
 
 
-# plantuml {data-background=lightblue}
+# plantuml {bg=lightblue}
 
 ```plantuml
 @startuml
@@ -32,7 +32,7 @@ Bob->Alice : ??
 ```
 
 
-# ditaa {data-background=sandybrown}
+# ditaa {bg=sandybrown}
 
 ```ditaa
     +--------+   +-------+    +-------+
@@ -46,7 +46,7 @@ Bob->Alice : ??
         +--------------------------+
 ```
 
-# graphviz {data-background=green}
+# graphviz {bg=green}
 
 ```dot
 digraph G {
@@ -57,7 +57,7 @@ digraph G {
 ```
 
 
-# asciinema {data-background=black}
+# asciinema {bg=black}
 
 <asciinema-player
     src="./assets/img/test.json"
@@ -69,7 +69,7 @@ digraph G {
 ></asciinema-player>
 
 
-# Thank You! {bg=black;assets/img/dark.png}
+# Thank You!
 
 | [pandoc](http://pandoc.org)
 
@@ -82,6 +82,13 @@ digraph G {
 | [graphviz](http://www.graphviz.org)
 
 | [asciinema](https://github.com/asciinema/asciinema-player)
+
+
+#
+
+```qr
+https://github.com/arnehilmann/md2deck
+```
 
 
 

@@ -19,5 +19,5 @@ example: [markdown](https://raw.githubusercontent.com/arnehilmann/md2deck/master
 * ~add short-notation for background settings~
 * document/build/provide miniditaa jar
 * handle change in asciiart parameters
-* add simple QR Code generator (for url on last slide, for example)
+* ~add simple QR Code generator (for url on last slide, for example)~
 * fix font problem in pdf
