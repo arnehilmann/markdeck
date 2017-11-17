@@ -18,3 +18,4 @@ example: [markdown](https://raw.githubusercontent.com/arnehilmann/md2deck/master
 * remove obsolete asciiart images rendered by filter
 * add short-notation for background settings
 * document/build/provide miniditaa jar
+* handle change in asciiart parameters
