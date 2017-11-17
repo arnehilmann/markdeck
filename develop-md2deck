@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e -E -u
+
+docker run \
+    -v $PWD/example:/source:ro \
+    -v $PWD/docs:/target \
+    -v $PWD/md2deck:/md2deck:ro \
+    -it \
+    --rm \
+    -p 8080:8080 arne/md2deck \
+    $@
