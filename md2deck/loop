@@ -46,7 +46,6 @@ while true; do
         --template=/md2deck/template-revealjs.html \
         --section-divs \
         --lua-filter /md2deck/lib/render-asciiart-filter.lua \
-        --lua-filter /md2deck/lib/render-asciiart-filter.lua \
         --variable theme=$MD2DECK_THEME \
         --variable transition=$MD2DECK_TRANSITION \
         --variable title="$MD2DECK_TITLE" \

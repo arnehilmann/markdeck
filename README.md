@@ -10,12 +10,12 @@ example: [markdown](https://raw.githubusercontent.com/arnehilmann/md2deck/master
 
 * add tl;dr section
 * add documentation (config, markdown, renderer, ...)
-* make asciiart rendering paramterizable (<-- is that a word?)
-* make rendered images transparent
+* ~make asciiart rendering paramterizable (<-- is that a word?)~
+* ~make rendered images transparent~
 * improve text layout
 * pdf rendering of whole deck
-* add dev mode for md2deck
-* remove obsolete asciiart images rendered by filter
+* ~add dev mode for md2deck~
+* ~remove obsolete asciiart images rendered by filter~
 * add short-notation for background settings
 * document/build/provide miniditaa jar
 * handle change in asciiart parameters
