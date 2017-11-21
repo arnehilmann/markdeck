@@ -1,7 +1,12 @@
-VERSION=0.5
+VERSION=0.6
 
 
-all:	md2deck/bin/pandoc md2deck/lib/plantuml.jar md2deck/lib/plantuml.jar md2deck/lib/ditaa.jar md2deck/lib/render-asciiart-filter.lua md2deck/assets/3rdparty/asciinema-player.js md2deck/assets/3rdparty/asciinema-player.css md2deck/assets/3rdparty/reveal.js
+PANDOC_VERSION=2.0.2
+REVEALJS_VERSION=3.5.0
+IMPRESSJS_VERSION=1.0.0-beta1
+ASCIINEMAPLAYER_VERSION=v2.6.0
+
+all:	md2deck/bin/pandoc md2deck/lib/plantuml.jar md2deck/lib/plantuml.jar md2deck/lib/ditaa.jar md2deck/lib/render-asciiart-filter.lua md2deck/assets/3rdparty/asciinema-player.js md2deck/assets/3rdparty/asciinema-player.css md2deck/assets/3rdparty/reveal.js md2deck/assets/3rdparty/impress.js
 	docker build \
 		--rm \
 		--build-arg http_proxy=$(http_proxy) \
@@ -12,7 +17,7 @@ all:	md2deck/bin/pandoc md2deck/lib/plantuml.jar md2deck/lib/plantuml.jar md2dec
 
 
 md2deck/bin/pandoc:
-	curl -L "https://github.com/jgm/pandoc/releases/download/2.0.2/pandoc-2.0.2-linux.tar.gz" | tar --strip-components=1 -C md2deck -zxvf - "pandoc-*/bin/pandoc"
+	curl -L "https://github.com/jgm/pandoc/releases/download/$(PANDOC_VERSION)/pandoc-$(PANDOC_VERSION)-linux.tar.gz" | tar --strip-components=1 -C md2deck -zxvf - "pandoc-*/bin/pandoc"
 
 
 md2deck/lib/plantuml.jar:
@@ -32,17 +37,22 @@ md2deck/lib/render-asciiart-filter.lua:
 
 md2deck/assets/3rdparty/asciinema-player.js:
 	mkdir -p $(shell dirname $@)
-	curl -L -o $@ "https://github.com/asciinema/asciinema-player/releases/download/v2.5.0/asciinema-player.js"
+	curl -L -o $@ "https://github.com/asciinema/asciinema-player/releases/download/$(ASCIINEMAPLAYER_VERSION)/asciinema-player.js"
 
 
 md2deck/assets/3rdparty/asciinema-player.css:
 	mkdir -p $(shell dirname $@)
-	curl -L -o $@ "https://github.com/asciinema/asciinema-player/releases/download/v2.5.0/asciinema-player.css"
+	curl -L -o $@ "https://github.com/asciinema/asciinema-player/releases/download/$(ASCIINEMAPLAYER_VERSION)/asciinema-player.css"
 
 
 md2deck/assets/3rdparty/reveal.js:
 	mkdir -p $@
-	curl -L "https://github.com/hakimel/reveal.js/archive/3.5.0.tar.gz" | tar -C $@ --strip-components=1 --exclude test --exclude font -zxvf -
+	curl -L "https://github.com/hakimel/reveal.js/archive/$(REVEALJS_VERSION).tar.gz" | tar -C $@ --strip-components=1 --exclude test --exclude font -zxvf -
+
+
+md2deck/assets/3rdparty/impress.js:
+	mkdir -p $@
+	curl -L "https://github.com/impress/impress.js/archive/$(IMPRESSJS_VERSION).tar.gz" | tar -C $@ --strip-components=1 --exclude test --exclude examples -zxvf -
 
 
 .PHONY: all

@@ -28,10 +28,16 @@ while true; do
     echo
 
     echo "-------- config --------"
+    title=
+    theme=
+    transition=
+    variant=
     [[ -e /source/config ]] && source /source/config
     MD2DECK_TITLE=${title:-md2deck}
     MD2DECK_THEME=${theme:-simple}
     MD2DECK_TRANSITION=${transition:-slide}
+    MD2DECK_VARIANT=${variant:-revealjs}
+    MD2DECK_TEMPLATE=/md2deck/template-$MD2DECK_VARIANT.html
     for V in ${!MD2DECK_@}; do
         echo $V=${!V}
     done
@@ -43,10 +49,10 @@ while true; do
         -f markdown \
         -t html5 \
         --standalone \
-        --template=/md2deck/template-revealjs.html \
+        --template=$MD2DECK_TEMPLATE \
         --section-divs \
         --lua-filter /md2deck/lib/render-asciiart-filter.lua \
-        --lua-filter /md2deck/lib/reveal-shortcut-filter.lua \
+        --lua-filter /md2deck/lib/$VARIANT-shortcut-filter.lua \
         --variable theme=$MD2DECK_THEME \
         --variable transition=$MD2DECK_TRANSITION \
         --variable title="$MD2DECK_TITLE" \
