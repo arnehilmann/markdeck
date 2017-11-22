@@ -173,7 +173,7 @@ For recording, you have to [install asciinema](https://asciinema.org/docs/instal
 locally on your machine, then start recording with ```asciinema rec assets/YOUR_SESSION_FILE_HERE.json```.
 
 the javascript for the asciinema-player must be loaded explicitly: add the following
-code at the end of your ```slides.md```
+code to the end of your ```slides.md```
 ```
 <script src="assets/3rdparty/asciinema-player.js"></script>
 ```
@@ -199,7 +199,7 @@ embed the player with the following code (and pay attention to the ```rows``` at
 * provide localality check (no external dependencies, usefull when no internet connection available)
 * provide font helper (download fonts, change css definitions)
 * integrate impress.js option
-* ~add documentation (~config, markdown, renderer, ...)~
+* ~add documentation (config, markdown, renderer, ...)~
 * ~add tl;dr section~
 * ~make asciiart rendering paramterizable (<-- is that a word?)~
 * ~make rendered images transparent~
