@@ -27,10 +27,11 @@ for further details.
 
 ## author your deck
 
-To start with, see [the tl;dr](#tldr) section.
+To start with ```md2deck```, see [the tl;dr](#tldr) section.
+
 Every change you make to the ```slides.md``` file, the various config files, or the
 ```assets/``` subdir, triggers a rebuild of your deck.
-The integrated web server pushes these changes to your browser, so no need to
+The integrated web server then pushes these changes to your browser, so no need to
 reload your slides.
 
 
@@ -43,15 +44,14 @@ documentation of [reveal.js](https://github.com/hakimel/reveal.js/)
 
 ### background shortcut
 
-out of the box, you can set the background by specifying the ```data-background``` and
-```data-background-image``` attribute of a section/subsection.
-But there exists a shortcut for that:
+specify the background of your slide:
 
+with a solid color
 ```
 # your title {bg=COLOR}
 ```
 
-or
+or with an image
 
 ```
 # your title {bg=COLOR;PATH_TO_IMAGE}
@@ -68,7 +68,7 @@ codeblocks of the class "plantuml", "ditaa", "dot", or "qr" get replaced during
 conversion by rendered images (in the following examples: plantuml):
 
 ```
-\`\`\`plantuml
+` ` `plantuml
 ...
 ```
 
@@ -82,26 +82,72 @@ if you want to change these parameters, you can specify them as follows (note:
 here you cannot use the class shortcut notation, but the slightly longer notation
 with curly braces):
 ```
-\`\`\`{.plantuml args="..."}
+` ` `{.plantuml args="..."}
 ...
 ```
 
 ### asciiart: plantuml
 
+* [plantuml website](http://plantuml.com)
+* [language reference](http://plantuml.com/PlantUML_Language_Reference_Guide.pdf)
+* [common commands](http://plantuml.com/commons)
+* [common settings](http://plantuml.com/skinparam)
+
 ```
-\`\`\`plantuml
+` ` `plantuml
 @startuml
 Bob->Alice : hello
 Alice->Bob : oh, you again...
 @enduml
-\`\`\`
+` ` `
 ```
 
+### asciiart: ditaa
+
+* [original project](https://github.com/stathissideris/ditaa)
+* [documentation](https://github.com/stathissideris/ditaa#usage-and-syntax)
+* fork of ditaa, with minimal dependencies: [ditaamini @ github](https://github.com/pepijnve/ditaa.git)
+
+```
+` ` `ditaa
+    +--------+   +-------+    +-------+
+    |        +---+ ditaa +--->|       |
+    |  Text  |   +-------+    |diagram|
+    |Document|   |!magic!|    |       |
+    |     {d}|   |       |    |       |
+    +---+----+   +-------+    +-------+
+        :                          ^
+        |       Lots of work       |
+        +--------------------------+
+` ` `
+```
+
+### asciiart: graphviz
+
+* [graphviz website](http://www.graphviz.org)
+* [dot language](http://www.graphviz.org/pdf/dotguide.pdf)
+* [attributes](http://www.graphviz.org/content/attrs)
+* [node shapes](http://www.graphviz.org/content/node-shapes)
+* [arrow shapes](http://www.graphviz.org/content/arrow-shapes)
+* [gallery of examples](http://www.graphviz.org/Gallery.php)
+
+```
+` ` `dot
+digraph G {
+    bgcolor=transparent;
+    node [style=filled,color=white];
+
+    a -> b -> c;
+    a -> c;
+    b -> d;
+}
+` ` `
+```
 
 
 # TODO
 
-* add documentation (config, markdown, renderer, ...)
+* add documentation (~config, markdown,~ renderer, ...)
 * improve text layout
 * document/build/provide miniditaa jar
 * fix font problem in pdf
