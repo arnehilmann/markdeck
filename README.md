@@ -20,14 +20,16 @@ open http://localhost:8080
 
 # documentation
 
-md2deck takes a ```slides.md``` file in markdown format, a few config files, and the assets subdir
-and converts these in a html5 slidedeck, using pandoc as converter and reveal.js as web framework.
+*md2deck* takes a ```slides.md``` file in markdown format, a few config files, and the assets subdir
+and converts these in a html5 slidedeck, using [pandoc](http://pandoc.org) as converter
+and [reveal.js](http://lab.hakim.se/reveal-js/) as web framework.
+
 see the [example slides](https://raw.githubusercontent.com/arnehilmann/md2deck/master/example/slides.md)
 for further details.
 
 ## author your deck
 
-To start with ```md2deck```, see [the tl;dr](#tldr) section.
+To start with *md2deck*, see [the tl;dr](#tldr) section.
 
 Every change you make to the ```slides.md``` file, the various config files, or the
 ```assets/``` subdir, triggers a rebuild of your deck.
@@ -46,12 +48,12 @@ documentation of [reveal.js](https://github.com/hakimel/reveal.js/)
 
 specify the background of your slide:
 
-with a solid color
+* with a solid color
 ```
 # your title {bg=COLOR}
 ```
 
-or with an image
+* with an image
 
 ```
 # your title {bg=COLOR;PATH_TO_IMAGE}
@@ -79,7 +81,7 @@ the default commandline parameters for the asciiart renderer are defined
 in the ```render-asciiart-filter.config``` file.
 
 if you want to change these parameters, you can specify them as follows (note:
-here you cannot use the class shortcut notation, but the slightly longer notation
+you cannot use the class shortcut notation here, but the slightly longer notation
 with curly braces):
 ```
 ` ` `{.plantuml args="..."}
@@ -92,6 +94,7 @@ with curly braces):
 * [language reference](http://plantuml.com/PlantUML_Language_Reference_Guide.pdf)
 * [common commands](http://plantuml.com/commons)
 * [common settings](http://plantuml.com/skinparam)
+* [sequence diagram](http://plantuml.com/sequence-diagram)
 
 ```
 ` ` `plantuml
@@ -101,6 +104,7 @@ Alice->Bob : oh, you again...
 @enduml
 ` ` `
 ```
+see [example plantuml slide](https://arnehilmann.github.io/md2deck/#/plantuml)
 
 ### asciiart: ditaa
 
@@ -121,6 +125,7 @@ Alice->Bob : oh, you again...
         +--------------------------+
 ` ` `
 ```
+see [example ditaa slide](https://arnehilmann.github.io/md2deck/#/ditaa)
 
 ### asciiart: graphviz
 
@@ -143,17 +148,58 @@ digraph G {
 }
 ` ` `
 ```
+see [example graphviz slide](https://arnehilmann.github.io/md2deck/#/graphviz)
+
+### asciiart: qr
+
+* [libqrencode website](https://fukuchi.org/works/qrencode/)
+
+```
+` ` `qr
+https://github.com/arnehilmann/md2deck
+` ` `
+```
+see [example qr slide](https://arnehilmann.github.io/md2deck/#/md2deck-github)
+
+
+## asciinema
+
+* [asciinema website](https://asciinema.org)
+* [html player attributes](https://github.com/asciinema/asciinema-player#asciinema-player-element-attributes)
+
+asciinema allows you to record a terminal session in a local file, and to
+replay that session within your slides.
+For recording, you have to [install asciinema](https://asciinema.org/docs/installation)
+locally on your machine, then start recording with ```asciinema rec assets/YOUR_SESSION_FILE_HERE.json```.
+
+the javascript for the asciinema-player must be loaded explicitly: add the following
+code at the end of your ```slides.md```
+```
+<script src="assets/3rdparty/asciinema-player.js"></script>
+```
+
+embed the player with the following code (and pay attention to the ```rows``` attribute):
+```
+<asciinema-player
+    src="./assets/YOUR_SESSION_FILE_HERE.json"
+    poster="npt:0:11"
+    idle-time-limit=1
+    speed=2
+    rows=18
+    font-size="medium"
+></asciinema-player>
+```
 
 
 # TODO
 
-* add documentation (~config, markdown,~ renderer, ...)
 * improve text layout
 * document/build/provide miniditaa jar
 * fix font problem in pdf
 * provide localality check (no external dependencies, usefull when no internet connection available)
 * provide font helper (download fonts, change css definitions)
 * integrate impress.js option
+* ~add documentation (~config, markdown, renderer, ...)~
 * ~add tl;dr section~
 * ~make asciiart rendering paramterizable (<-- is that a word?)~
 * ~make rendered images transparent~
