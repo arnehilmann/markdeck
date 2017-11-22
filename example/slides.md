@@ -34,7 +34,7 @@ Bob->Alice : ??
 
 # ditaa {bg=sandybrown}
 
-```ditaa
+```{.ditaa args="--scale 1 --transparent"}
     +--------+   +-------+    +-------+
     |        +---+ ditaa +--->|       |
     |  Text  |   +-------+    |diagram|
@@ -89,7 +89,7 @@ digraph G {
 | [decktape](https://github.com/astefanutti/decktape)
 
 
-#
+# md2deck @ github
 
 ```qr
 https://github.com/arnehilmann/md2deck

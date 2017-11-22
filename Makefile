@@ -1,7 +1,7 @@
-VERSION=0.6
+VERSION=0.7
 
 
-PANDOC_VERSION=2.0.2
+PANDOC_VERSION=2.0.3
 REVEALJS_VERSION=3.5.0
 IMPRESSJS_VERSION=1.0.0-beta1
 ASCIINEMAPLAYER_VERSION=v2.6.0
@@ -14,6 +14,13 @@ all:	md2deck/bin/pandoc md2deck/lib/plantuml.jar md2deck/lib/plantuml.jar md2dec
 		-t arne/md2deck:latest \
 		-t arne/md2deck:$(VERSION) \
 		.
+
+
+push:	all
+	git tag -a v$(VERSION) -m v$(VERSION)
+	git push --tags
+	docker push arne/md2deck:$(VERSION)
+	docker push arne/md2deck:latest
 
 
 md2deck/bin/pandoc:
@@ -55,4 +62,10 @@ md2deck/assets/3rdparty/impress.js:
 	curl -L "https://github.com/impress/impress.js/archive/$(IMPRESSJS_VERSION).tar.gz" | tar -C $@ --strip-components=1 --exclude test --exclude examples -zxvf -
 
 
-.PHONY: all
+clean:
+	rm -f md2deck/bin/*
+	rm -rf md2deck/assets/
+	git clean -fx
+
+
+.PHONY: all push clean
