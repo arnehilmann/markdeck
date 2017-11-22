@@ -78,7 +78,7 @@ The images are cached locally, changes to the codeblock or its parameters result
 in a re-rendering.
 
 the default commandline parameters for the asciiart renderer are defined
-in the ```render-asciiart-filter.config``` file.
+in the [render-asciiart-filter.config](example/render-asciiart-filter.config) file.
 
 if you want to change these parameters, you can specify them as follows (note:
 you cannot use the class shortcut notation here, but the slightly longer notation
