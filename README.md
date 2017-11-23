@@ -187,12 +187,12 @@ embed the player with the following code (and pay attention to the ```rows``` at
 
 # TODO
 
-* improve text layout
+* improve text layout (examples for header, footer, subslides, ...)
 * document/build/provide miniditaa jar
-* fix font problem in pdf
-* provide localality check (no external dependencies, usefull when no internet connection available)
+* fix font problem in pdf (regarding non-local font resources)
+* provide locality check (no external dependencies, usefull when no internet connection available)
 * provide font helper (download fonts, change css definitions)
-* integrate impress.js option
+* integrate impress.js option (filter for coordinate handling ala hoovercraft, ...)
 * ~add documentation (config, markdown, renderer, ...)~
 * ~add tl;dr section~
 * ~make asciiart rendering paramterizable (<-- is that a word?)~
