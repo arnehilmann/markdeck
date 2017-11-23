@@ -7,9 +7,9 @@ EXPOSE 8080
 
 VOLUME ["/source/", "/target/"]
 
-RUN mkdir -p /md2deck/
-COPY md2deck/ /md2deck/
+RUN mkdir -p /markdeck/
+COPY markdeck/ /markdeck/
 
-WORKDIR /md2deck
+WORKDIR /markdeck
 
-ENTRYPOINT ["/md2deck/loop"]
+ENTRYPOINT ["/markdeck/loop"]

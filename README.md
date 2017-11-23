@@ -1,17 +1,17 @@
-# md2deck
+# markdeck
 
 markdown to sleek slides deck
 
-example: [markdown](https://raw.githubusercontent.com/arnehilmann/md2deck/master/example/slides.md)
--> [html deck](https://arnehilmann.github.io/md2deck/)
+example: [markdown](https://raw.githubusercontent.com/arnehilmann/markdeck/master/example/slides.md)
+-> [html deck](https://arnehilmann.github.io/markdeck/)
 
 
 # tl;dr
 
 ```
-git clone https://arnehilmann.github.io/md2deck
-cd md2deck
-docker run -it -v $PWD:/source:ro -v $PWD/docs:/target --rm -p 8080:8080 arne/md2deck
+git clone https://arnehilmann.github.io/markdeck
+cd markdeck
+docker run -it -v $PWD:/source:ro -v $PWD/docs:/target --rm -p 8080:8080 arne/markdeck
 open http://localhost:8080
 # edit slides.md, change css, add images, ...
 ```
@@ -20,16 +20,16 @@ open http://localhost:8080
 
 # documentation
 
-*md2deck* takes a ```slides.md``` file in markdown format, a few config files, and the assets subdir
+*markdeck* takes a ```slides.md``` file in markdown format, a few config files, and the assets subdir
 and converts these in a html5 slidedeck, using [pandoc](http://pandoc.org) as converter
 and [reveal.js](http://lab.hakim.se/reveal-js/) as web framework.
 
-see the [example slides](https://raw.githubusercontent.com/arnehilmann/md2deck/master/example/slides.md)
+see the [example slides](https://raw.githubusercontent.com/arnehilmann/markdeck/master/example/slides.md)
 for further details.
 
 ## author your deck
 
-To start with *md2deck*, see [the tl;dr](#tldr) section.
+To start with *markdeck*, see [the tl;dr](#tldr) section.
 
 Every change you make to the ```slides.md``` file, the various config files, or the
 ```assets/``` subdir, triggers a rebuild of your deck.
@@ -93,7 +93,7 @@ you have to use the slightly longer notation with curly braces):
 * [common commands](http://plantuml.com/commons)
 * [common settings](http://plantuml.com/skinparam)
 * [sequence diagram](http://plantuml.com/sequence-diagram)
-* [example plantuml slide](https://arnehilmann.github.io/md2deck/#/plantuml)
+* [example plantuml slide](https://arnehilmann.github.io/markdeck/#/plantuml)
 
 <!-- -->
     ```plantuml
@@ -108,7 +108,7 @@ you have to use the slightly longer notation with curly braces):
 * [original project](https://github.com/stathissideris/ditaa)
 * [documentation](https://github.com/stathissideris/ditaa#usage-and-syntax)
 * fork of ditaa, with minimal dependencies: [ditaamini @ github](https://github.com/pepijnve/ditaa.git)
-* [example ditaa slide](https://arnehilmann.github.io/md2deck/#/ditaa)
+* [example ditaa slide](https://arnehilmann.github.io/markdeck/#/ditaa)
 
 <!-- -->
     ```ditaa
@@ -131,7 +131,7 @@ you have to use the slightly longer notation with curly braces):
 * [node shapes](http://www.graphviz.org/content/node-shapes)
 * [arrow shapes](http://www.graphviz.org/content/arrow-shapes)
 * [gallery of examples](http://www.graphviz.org/Gallery.php)
-* [example graphviz slide](https://arnehilmann.github.io/md2deck/#/graphviz)
+* [example graphviz slide](https://arnehilmann.github.io/markdeck/#/graphviz)
 
 <!-- -->
     ```dot
@@ -148,11 +148,11 @@ you have to use the slightly longer notation with curly braces):
 ### asciiart: qr
 
 * [libqrencode website](https://fukuchi.org/works/qrencode/)
-* [example qr slide](https://arnehilmann.github.io/md2deck/#/md2deck-github)
+* [example qr slide](https://arnehilmann.github.io/markdeck/#/markdeck-github)
 
 <!-- -->
     ```qr
-    https://github.com/arnehilmann/md2deck
+    https://github.com/arnehilmann/markdeck
     ```
 
 
@@ -198,7 +198,7 @@ embed the player with the following code (and pay attention to the ```rows``` at
 * ~make asciiart rendering paramterizable (<-- is that a word?)~
 * ~make rendered images transparent~
 * ~pdf rendering of whole deck~
-* ~add dev mode for md2deck~
+* ~add dev mode for markdeck~
 * ~remove obsolete asciiart images rendered by filter~
 * ~add short-notation for background settings~
 * ~handle change in asciiart parameters~

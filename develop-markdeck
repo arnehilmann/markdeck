@@ -4,8 +4,8 @@ set -e -E -u
 docker run \
     -v $PWD/example:/source:ro \
     -v $PWD/docs:/target \
-    -v $PWD/md2deck:/md2deck:ro \
+    -v $PWD/markdeck:/markdeck:ro \
     -it \
     --rm \
-    -p 8080:8080 arne/md2deck \
+    -p 8080:8080 arne/markdeck \
     $@

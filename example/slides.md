@@ -1,11 +1,11 @@
 
-# md2deck
+# markdeck
 
 create sleek slide decks using markdown only
 
-| [github.com/arnehilmann/md2deck](https://github.com/arnehilmann/md2deck)
+| [github.com/arnehilmann/markdeck](https://github.com/arnehilmann/markdeck)
 
-| [md2deck on docker hub](https://hub.docker.com/r/arne/md2deck/)
+| [markdeck on docker hub](https://hub.docker.com/r/arne/markdeck/)
 
 <small> arne@hilmann.de | 2017-11 </small>
 
@@ -89,10 +89,10 @@ digraph G {
 | [decktape](https://github.com/astefanutti/decktape)
 
 
-# md2deck @ github
+# markdeck @ github
 
 ```qr
-https://github.com/arnehilmann/md2deck
+https://github.com/arnehilmann/markdeck
 ```
 
 

@@ -16,14 +16,14 @@ esac
 $ONCE || live-server --port=$PORT /target &
 
 export ASCIIART_CONFIG=/source/render-asciiart-filter.config
-export ASCIIART_LIBDIR=/md2deck/lib
+export ASCIIART_LIBDIR=/markdeck/lib
 
 while true; do
     cd /target
     [[ -d /target/rendered ]] || mkdir -p /target/rendered
 
     echo "-------- rsync output --------"
-    rsync -Pav /source/assets /md2deck/assets /target/ || :
+    rsync -Pav /source/assets /markdeck/assets /target/ || :
     echo "-------- /rsync output --------"
     echo
 
@@ -33,29 +33,29 @@ while true; do
     transition=
     variant=
     [[ -e /source/config ]] && source /source/config
-    MD2DECK_TITLE=${title:-md2deck}
-    MD2DECK_THEME=${theme:-simple}
-    MD2DECK_TRANSITION=${transition:-slide}
-    MD2DECK_VARIANT=${variant:-revealjs}
-    MD2DECK_TEMPLATE=/md2deck/template-$MD2DECK_VARIANT.html
-    for V in ${!MD2DECK_@}; do
+    MARKDECK_TITLE=${title:-markdeck}
+    MARKDECK_THEME=${theme:-simple}
+    MARKDECK_TRANSITION=${transition:-slide}
+    MARKDECK_VARIANT=${variant:-revealjs}
+    MARKDECK_TEMPLATE=/markdeck/template-$MARKDECK_VARIANT.html
+    for V in ${!MARKDECK_@}; do
         echo $V=${!V}
     done
     echo "-------- /config --------"
     echo
 
     echo "-------- pandoc output --------"
-    /md2deck/bin/pandoc \
+    /markdeck/bin/pandoc \
         -f markdown \
         -t html5 \
         --standalone \
-        --template=$MD2DECK_TEMPLATE \
+        --template=$MARKDECK_TEMPLATE \
         --section-divs \
-        --lua-filter /md2deck/lib/render-asciiart-filter.lua \
-        --lua-filter /md2deck/lib/$MD2DECK_VARIANT-shortcut-filter.lua \
-        --variable theme=$MD2DECK_THEME \
-        --variable transition=$MD2DECK_TRANSITION \
-        --variable title="$MD2DECK_TITLE" \
+        --lua-filter /markdeck/lib/render-asciiart-filter.lua \
+        --lua-filter /markdeck/lib/$MARKDECK_VARIANT-shortcut-filter.lua \
+        --variable theme=$MARKDECK_THEME \
+        --variable transition=$MARKDECK_TRANSITION \
+        --variable title="$MARKDECK_TITLE" \
         -o /target/index.html \
         /source/slides.md || :
     echo "-------- /pandoc output --------"
@@ -63,7 +63,7 @@ while true; do
     $ONCE && break
 
     sleep .5
-    echo -e "\n\n\nopen http://localhost:$PORT\n\n(... or use Ctrl-C to stop md2deck)\n\n\n"
+    echo -e "\n\n\nopen http://localhost:$PORT\n\n(... or use Ctrl-C to stop markdeck)\n\n\n"
     inotifywait -r -q /source/
     echo -e "\n\n\n\n\n\n\n\n\n\n"
 done

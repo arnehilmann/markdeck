@@ -1,7 +1,0 @@
-#!/bin/bash
-set -e -E -u
-
-SOURCE=$(readlink -f .)
-TARGET=$(readlink -f ../docs)
-mkdir -p $TARGET
-docker run -it -v $SOURCE:/source:ro -v $TARGET:/target --rm -p 8080:8080 arne/md2deck $@
