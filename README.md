@@ -69,10 +69,9 @@ the text color gets set depending on the COLOR argument
 codeblocks of the class "plantuml", "ditaa", "dot", or "qr" get replaced during
 conversion by rendered images (in the following examples: plantuml):
 
-```
-` ` `plantuml
-...
-```
+    ```plantuml
+    ...
+    ```
 
 The images are cached locally, changes to the codeblock or its parameters result
 in a re-rendering.
@@ -81,12 +80,11 @@ the default commandline parameters for the asciiart renderer are defined
 in the [render-asciiart-filter.config](example/render-asciiart-filter.config) file.
 
 if you want to change these parameters, you can specify them as follows (note:
-you cannot use the class shortcut notation here, but the slightly longer notation
-with curly braces):
-```
-` ` `{.plantuml args="..."}
-...
-```
+you have to use the slightly longer notation with curly braces):
+    
+    ```{.plantuml args="..."}
+    ...
+    ```
 
 ### asciiart: plantuml
 
@@ -95,25 +93,25 @@ with curly braces):
 * [common commands](http://plantuml.com/commons)
 * [common settings](http://plantuml.com/skinparam)
 * [sequence diagram](http://plantuml.com/sequence-diagram)
+* [example plantuml slide](https://arnehilmann.github.io/md2deck/#/plantuml)
 
-```
-` ` `plantuml
-@startuml
-Bob->Alice : hello
-Alice->Bob : oh, you again...
-@enduml
-` ` `
-```
-see [example plantuml slide](https://arnehilmann.github.io/md2deck/#/plantuml)
+<!-- -->
+    ```plantuml
+    @startuml
+    Bob->Alice : hello
+    Alice->Bob : oh, you again...
+    @enduml
+    ```
 
 ### asciiart: ditaa
 
 * [original project](https://github.com/stathissideris/ditaa)
 * [documentation](https://github.com/stathissideris/ditaa#usage-and-syntax)
 * fork of ditaa, with minimal dependencies: [ditaamini @ github](https://github.com/pepijnve/ditaa.git)
+* [example ditaa slide](https://arnehilmann.github.io/md2deck/#/ditaa)
 
-```
-` ` `ditaa
+<!-- -->
+    ```ditaa
     +--------+   +-------+    +-------+
     |        +---+ ditaa +--->|       |
     |  Text  |   +-------+    |diagram|
@@ -123,9 +121,7 @@ see [example plantuml slide](https://arnehilmann.github.io/md2deck/#/plantuml)
         :                          ^
         |       Lots of work       |
         +--------------------------+
-` ` `
-```
-see [example ditaa slide](https://arnehilmann.github.io/md2deck/#/ditaa)
+    ```
 
 ### asciiart: graphviz
 
@@ -135,31 +131,29 @@ see [example ditaa slide](https://arnehilmann.github.io/md2deck/#/ditaa)
 * [node shapes](http://www.graphviz.org/content/node-shapes)
 * [arrow shapes](http://www.graphviz.org/content/arrow-shapes)
 * [gallery of examples](http://www.graphviz.org/Gallery.php)
+* [example graphviz slide](https://arnehilmann.github.io/md2deck/#/graphviz)
 
-```
-` ` `dot
-digraph G {
-    bgcolor=transparent;
-    node [style=filled,color=white];
+<!-- -->
+    ```dot
+    digraph G {
+        bgcolor=transparent;
+        node [style=filled,color=white];
 
-    a -> b -> c;
-    a -> c;
-    b -> d;
-}
-` ` `
-```
-see [example graphviz slide](https://arnehilmann.github.io/md2deck/#/graphviz)
+        a -> b -> c;
+        a -> c;
+        b -> d;
+    }
+    ```
 
 ### asciiart: qr
 
 * [libqrencode website](https://fukuchi.org/works/qrencode/)
+* [example qr slide](https://arnehilmann.github.io/md2deck/#/md2deck-github)
 
-```
-` ` `qr
-https://github.com/arnehilmann/md2deck
-` ` `
-```
-see [example qr slide](https://arnehilmann.github.io/md2deck/#/md2deck-github)
+<!-- -->
+    ```qr
+    https://github.com/arnehilmann/md2deck
+    ```
 
 
 ## asciinema
