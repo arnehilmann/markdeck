@@ -16,9 +16,12 @@ all:	markdeck/bin/pandoc markdeck/lib/plantuml.jar markdeck/lib/plantuml.jar mar
 		.
 
 
-push:	all
+tag:	all
 	git tag -a v$(VERSION) -m v$(VERSION)
 	git push --tags
+
+
+push:	all
 	docker push arne/markdeck:$(VERSION)
 	docker push arne/markdeck:latest
 
@@ -68,4 +71,4 @@ clean:
 	git clean -fx
 
 
-.PHONY: all push clean
+.PHONY: all push clean tag
