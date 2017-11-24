@@ -15,7 +15,12 @@ esac
 
 $ONCE || live-server --port=$PORT /target &
 
-export ASCIIART_CONFIG=/source/render-asciiart-filter.config
+[[ -e /source/render-asciiart-filter.config ]] && \
+    ASCIIART_CONFIG=/source/render-asciiart-filter.config || \
+    ASCIIART_CONFIG=/markdeck/lib/render-asciiart-filter.config
+export ASCIIART_CONFIG
+
+export ASCIIART_CONFIG
 export ASCIIART_LIBDIR=/markdeck/lib
 
 while true; do
@@ -28,6 +33,7 @@ while true; do
     echo
 
     echo "-------- config --------"
+    echo ASCIIART_CONFIG=$ASCIIART_CONFIG
     title=
     theme=
     transition=
@@ -64,7 +70,7 @@ while true; do
 
     sleep .5
     echo -e "\n\n\nopen http://localhost:$PORT\n\n(... or use Ctrl-C to stop markdeck)\n\n\n"
-    inotifywait -r -q /source/
+    inotifywait -r -q /source/*.md /source/assets/ /source/*config
     echo -e "\n\n\n\n\n\n\n\n\n\n"
 done
 

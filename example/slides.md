@@ -34,7 +34,7 @@ Bob->Alice : ??
 
 # ditaa {bg=sandybrown}
 
-```{.ditaa args="--scale 1 --transparent"}
+```ditaa
     +--------+   +-------+    +-------+
     |        +---+ ditaa +--->|       |
     |  Text  |   +-------+    |diagram|
