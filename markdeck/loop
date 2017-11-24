@@ -6,7 +6,7 @@ ONCE=false
 
 PARAM=${1:-loop}
 case $PARAM in
-    shell)  bash -i && exit;;
+    shell)  bash -i; exit;;
     --once) ONCE=true;;
     loop)   ;;
     *)      echo "unknown parameter '$PARAM' given, aborting here..." && exit 1;;
