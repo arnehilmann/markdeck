@@ -194,7 +194,7 @@ embed the player with the following code (and pay attention to the ```rows``` at
 * provide font helper (download fonts, change css definitions)
 * integrate impress.js option (filter for coordinate handling ala hoovercraft, ...)
 * allow page number instead of navigation
-* minimize files needed as /source (move slides.css and filter config inside markdeck as defaults, allow customized files in /source)
+* ~minimize files needed as /source (move slides.css and filter config inside markdeck as defaults, allow customized files in /source)~
 * ~use full-fledged hightligt.js plugin~
 * ~add documentation (config, markdown, renderer, ...)~
 * ~add tl;dr section~
