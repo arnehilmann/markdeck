@@ -23,7 +23,7 @@ while true; do
     [[ -d /target/rendered ]] || mkdir -p /target/rendered
 
     echo "-------- rsync output --------"
-    rsync -Pav /source/assets /markdeck/assets /target/ || :
+    rsync -Pav /markdeck/assets /source/assets /target/ || :
     echo "-------- /rsync output --------"
     echo
 
