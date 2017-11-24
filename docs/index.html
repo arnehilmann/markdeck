@@ -22,6 +22,7 @@
 
 <link rel="stylesheet" type="text/css" href="assets/3rdparty/asciinema-player.css" />
 
+<link rel="stylesheet" href="assets/css/markdeck.revealjs.css">
 <link rel="stylesheet" href="assets/css/slides.css">
 
 <!-- If the query includes 'print-pdf', use the PDF print sheet -->
@@ -74,7 +75,7 @@
 </section>
 <section id="ditaa" class="level1" data-background="sandybrown">
 <h1>ditaa</h1>
-<p><img src="rendered/ditaa-8fab2da3e98cad5ea96de3c8bc2c1c645d6436fa.png" alt="rendered" /></p>
+<p><img src="rendered/ditaa-69f877ff5793629e7ca7adf88914d3384b175cc5.png" alt="rendered" /></p>
 </section>
 <section id="graphviz" class="level1" data-background="green">
 <h1>graphviz</h1>
@@ -130,7 +131,8 @@
     // Optional libraries used to extend on reveal.js
     dependencies: [
         { src: 'assets/3rdparty/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-        { src: 'assets/3rdparty/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        //{ src: 'assets/3rdparty/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: 'assets/3rdparty/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
         { src: 'assets/3rdparty/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
         { src: 'assets/3rdparty/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
 
