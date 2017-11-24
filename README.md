@@ -188,6 +188,7 @@ embed the player with the following code (and pay attention to the ```rows``` at
 # TODO
 
 * document/build/provide miniditaa jar
+* docgumnt/build/provide highlight.js with all languages bundled
 * fix font problem in pdf (regarding non-local font resources)
 * provide locality check (no external dependencies, usefull when no internet connection available)
 * provide font helper (download fonts, change css definitions)
