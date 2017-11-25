@@ -74,3 +74,9 @@
 .reveal section img {
     box-shadow: none;
 }
+
+.slide-background {
+    background-size: cover !important;
+    background-repeat: no-repeat;
+}
+
