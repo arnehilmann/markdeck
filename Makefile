@@ -65,6 +65,8 @@ markdeck/assets/3rdparty/impress.js:
 	curl -L "https://github.com/impress/impress.js/archive/$(IMPRESSJS_VERSION).tar.gz" | tar -C $@ --strip-components=1 --exclude test --exclude examples -zxvf -
 
 
+# https://raw.githubusercontent.com/neverpanic/google-font-download/master/google-font-download
+
 clean:
 	rm -f markdeck/bin/*
 	rm -rf markdeck/assets/

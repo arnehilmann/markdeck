@@ -22,7 +22,7 @@
 
 <link rel="stylesheet" type="text/css" href="assets/3rdparty/asciinema-player.css" />
 
-<link rel="stylesheet" href="assets/css/markdeck.revealjs.css">
+<link rel="stylesheet" href="assets/markdeck/css/markdeck.revealjs.css">
 <link rel="stylesheet" href="assets/css/slides.css">
 
 <!-- If the query includes 'print-pdf', use the PDF print sheet -->
@@ -132,7 +132,7 @@
     dependencies: [
         { src: 'assets/3rdparty/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
         //{ src: 'assets/3rdparty/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-        { src: 'assets/3rdparty/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: 'assets/markdeck/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
         { src: 'assets/3rdparty/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
         { src: 'assets/3rdparty/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
 
