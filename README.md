@@ -9,13 +9,16 @@ example: [markdown](https://raw.githubusercontent.com/arnehilmann/markdeck/maste
 # tl;dr
 
 ```
-git clone https://arnehilmann.github.io/markdeck
-cd markdeck
-docker run -it -v $PWD:/source:ro -v $PWD/docs:/target --rm -p 8080:8080 arne/markdeck
-open http://localhost:8080
-# edit slides.md, change css, add images, ...
+docker run -it --rm -v $PWD:/source:ro -v $PWD/slides:/target -p 8080:8080 arne/markdeck:0.9
 ```
-*Note: the ```/source``` folder could and should be mounted read-only.*
+
+```
+open http://localhost:8080
+```
+
+```
+# edit slides.md, add assets/ and config, consult documentation below, ...
+```
 
 
 # documentation
@@ -183,6 +186,18 @@ embed the player with the following code (and pay attention to the ```rows``` at
     font-size="medium"
 ></asciinema-player>
 ```
+
+
+# for adventurous developers
+
+```
+git clone https://arnehilmann.github.io/markdeck
+cd markdeck
+docker run -it -v $PWD:/source:ro -v $PWD/docs:/target --rm -p 8080:8080 arne/markdeck
+open http://localhost:8080
+# edit slides.md, change css, add images, ...
+```
+*Note: the ```/source``` folder could and should be mounted read-only.*
 
 
 # TODO
