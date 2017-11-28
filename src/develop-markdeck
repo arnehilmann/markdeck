@@ -2,10 +2,12 @@
 set -e -E -u
 
 docker run \
-    -v $PWD/example:/source:ro \
+    -v $PWD:/source:ro \
     -v $PWD/docs:/target \
     -v $PWD/markdeck:/markdeck:ro \
     -it \
     --rm \
-    -p 8080:8080 arne/markdeck \
+    -p 8080:8080 \
+    -p 8081:8081 \
+    arne/markdeck \
     $@

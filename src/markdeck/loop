@@ -2,6 +2,7 @@
 set -e -E -u
 
 PORT=8080
+PORT_HELPER=8081
 ONCE=false
 
 PARAM=${1:-loop}
@@ -15,6 +16,7 @@ esac
 shopt -s nullglob
 
 $ONCE || live-server --port=$PORT /target > /tmp/live-server.log 2>&1 &
+$ONCE || live-server --port=$PORT_HELPER /markdeck/helper > /tmp/helper.log 2>&1 &
 
 [[ -e /source/render-asciiart-filter.config ]] && \
     ASCIIART_CONFIG=/source/render-asciiart-filter.config || \
@@ -40,10 +42,12 @@ while true; do
     theme=
     transition=
     variant=
+    controls=
     [[ -e /source/config ]] && source /source/config
     MARKDECK_TITLE=${title:-markdeck}
     MARKDECK_THEME=${theme:-simple}
     MARKDECK_TRANSITION=${transition:-slide}
+    MARKDECK_CONTROLS=${controls:-true}
     MARKDECK_VARIANT=${variant:-revealjs}
     MARKDECK_TEMPLATE=/markdeck/template-$MARKDECK_VARIANT.html
     for V in ${!MARKDECK_@}; do
@@ -65,6 +69,7 @@ while true; do
         --variable theme=$MARKDECK_THEME \
         --variable transition=$MARKDECK_TRANSITION \
         --variable title="$MARKDECK_TITLE" \
+        --variable controls="$MARKDECK_CONTROLS" \
         -o /target/index.html \
         $SOURCE_MD || :
     echo "-------- /pandoc output --------"

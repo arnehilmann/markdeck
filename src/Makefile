@@ -1,4 +1,4 @@
-VERSION=0.9
+VERSION=0.10
 
 
 PANDOC_VERSION=2.0.3
@@ -6,7 +6,7 @@ REVEALJS_VERSION=3.5.0
 IMPRESSJS_VERSION=1.0.0-beta1
 ASCIINEMAPLAYER_VERSION=v2.6.0
 
-all:	markdeck/bin/pandoc markdeck/lib/plantuml.jar markdeck/lib/plantuml.jar markdeck/lib/ditaa.jar markdeck/lib/render-asciiart-filter.lua markdeck/assets/3rdparty/asciinema-player.js markdeck/assets/3rdparty/asciinema-player.css markdeck/assets/3rdparty/reveal.js markdeck/assets/3rdparty/impress.js
+all:	markdeck/bin/pandoc markdeck/lib/plantuml.jar markdeck/lib/plantuml.jar markdeck/lib/ditaa.jar markdeck/lib/render-asciiart-filter.lua markdeck/assets/3rdparty/asciinema-player.js markdeck/assets/3rdparty/asciinema-player.css markdeck/assets/3rdparty/reveal.js markdeck/assets/3rdparty/impress.js markdeck/helper/trianglify-background-generator-master markdeck/bin/phantomjs markdeck/lib/decktape-1.0.0
 	docker build \
 		--rm \
 		--build-arg http_proxy=$(http_proxy) \
@@ -65,7 +65,24 @@ markdeck/assets/3rdparty/impress.js:
 	curl -L "https://github.com/impress/impress.js/archive/$(IMPRESSJS_VERSION).tar.gz" | tar -C $@ --strip-components=1 --exclude test --exclude examples -zxvf -
 
 
+markdeck/helper/trianglify-background-generator-master:
+	mkdir -p $(shell dirname $@)
+	curl -O -L https://github.com/alssndro/trianglify-background-generator/archive/master.zip
+	unzip -d $(shell dirname $@) master.zip
+	rm -f master.zip
+
+
+markdeck/bin/phantomjs:
+	curl -L https://github.com/astefanutti/decktape/releases/download/v1.0.0/phantomjs-linux-x86-64 -o $@
+	chmod a+rx $@
+
+
+markdeck/lib/decktape-1.0.0:
+	curl -L https://github.com/astefanutti/decktape/archive/v1.0.0.tar.gz | tar -C $(shell dirname $@) -xz --exclude phantomjs
+
+
 # https://raw.githubusercontent.com/neverpanic/google-font-download/master/google-font-download
+
 
 clean:
 	rm -f markdeck/bin/*
