@@ -40,6 +40,26 @@ The integrated web server then pushes these changes to your browser, so no need 
 reload your slides.
 
 
+## overall config
+
+The ```config``` file defines some global settings, like:
+
+```
+title="markdeck example"
+# theme=
+# transition=
+controls=false
+pdf=example.pdf
+```
+
+* title: the title of your deck *surprise*
+
+* controls: should navigation be rendered in lower right corner
+
+* pdf: should render a pdf
+
+
+
 ## slides in general
 
 ### reveal.js
