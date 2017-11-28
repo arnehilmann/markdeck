@@ -43,6 +43,7 @@ while true; do
     transition=
     variant=
     controls=
+    pdf=
     [[ -e /source/config ]] && source /source/config
     MARKDECK_TITLE=${title:-markdeck}
     MARKDECK_THEME=${theme:-simple}
@@ -74,6 +75,21 @@ while true; do
         $SOURCE_MD || :
     echo "-------- /pandoc output --------"
     echo
+
+    if [[ -n "$pdf" ]]; then
+        echo "-------- decktape output --------"
+        (
+            cd /markdeck/lib/decktape-1.0.0;
+            /markdeck/bin/phantomjs \
+                decktape.js reveal \
+                --size 1024x768 \
+                /target/index.html \
+                /tmp/slides.pdf;
+            mv /tmp/slides.pdf "/target/$pdf"
+        )
+        echo "-------- /decktape output --------"
+    fi
+
     $ONCE && break
 
     sleep .5
