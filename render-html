@@ -1,4 +1,5 @@
-#!/bin/bash
-set -e -E -u
-
-docker run -it -v $PWD/example:/source:ro -v $PWD/docs:/target --rm -p 8080:8080 arne/markdeck
+docker run -it --rm \
+    -v $PWD:/source:ro \
+    -v $PWD/slides:/target \
+    -p 8080:8080 \
+    arne/markdeck:0.9

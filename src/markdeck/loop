@@ -12,8 +12,9 @@ case $PARAM in
     *)      echo "unknown parameter '$PARAM' given, aborting here..." && exit 1;;
 esac
 
+shopt -s nullglob
 
-$ONCE || live-server --port=$PORT /target &
+$ONCE || live-server --port=$PORT /target > /tmp/live-server.log 2>&1 &
 
 [[ -e /source/render-asciiart-filter.config ]] && \
     ASCIIART_CONFIG=/source/render-asciiart-filter.config || \
@@ -28,7 +29,8 @@ while true; do
     [[ -d /target/rendered ]] || mkdir -p /target/rendered
 
     echo "-------- rsync output --------"
-    rsync -Pav /markdeck/assets /source/assets /target/ || :
+    rsync -av /markdeck/assets /target/ || :
+    [[ -d /source/assets ]] && rsync -av /source/assets /target/ || :
     echo "-------- /rsync output --------"
     echo
 
@@ -51,6 +53,7 @@ while true; do
     echo
 
     echo "-------- pandoc output --------"
+    [[ -e /source/slides.md ]] && SOURCE_MD=/source/slides.md || SOURCE_MD=/markdeck/note.md
     /markdeck/bin/pandoc \
         -f markdown \
         -t html5 \
@@ -63,14 +66,20 @@ while true; do
         --variable transition=$MARKDECK_TRANSITION \
         --variable title="$MARKDECK_TITLE" \
         -o /target/index.html \
-        /source/slides.md || :
+        $SOURCE_MD || :
     echo "-------- /pandoc output --------"
     echo
     $ONCE && break
 
     sleep .5
-    echo -e "\n\n\nopen http://localhost:$PORT\n\n(... or use Ctrl-C to stop markdeck)\n\n\n"
-    inotifywait -r -q /source/*.md /source/assets/ /source/*config
+    echo -e "\n\n\nopen http://localhost:$PORT\n\n(... or use Ctrl-C to stop markdeck)\n"
+
+    if inotifywait -r -q /source/*.md /source/assets* /source/*config > /tmp/inotifywait.log 2>&1; then
+        :
+    else
+        echo -e "edit 'slides.md' now...\n\n\n"
+        inotifywait -q -r /source
+    fi
     echo -e "\n\n\n\n\n\n\n\n\n\n"
 done
 
