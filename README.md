@@ -54,9 +54,9 @@ pdf=example.pdf
 
 * title: the title of your deck *surprise*
 
-* controls: should navigation be rendered in lower right corner
+* controls: should the navigation be rendered in lower right corner?
 
-* pdf: should render a pdf
+* pdf: should a pdf be rendered?
 
 
 
