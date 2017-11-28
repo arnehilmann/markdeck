@@ -9,7 +9,7 @@ example: [markdown](https://raw.githubusercontent.com/arnehilmann/markdeck/maste
 # tl;dr
 
 ```
-docker run -it --rm -v $PWD:/source:ro -v $PWD/slides:/target -p 8080:8080 arne/markdeck:0.9
+docker run -it --rm -v $PWD:/source:ro -v $PWD/slides:/target -p 8080:8080 -p 8081:8081 arne/markdeck:0.10
 ```
 
 ```
@@ -37,7 +37,7 @@ To start with *markdeck*, see [the tl;dr](#tldr) section.
 Every change you make to the ```slides.md``` file, the various config files, or the
 ```assets/``` subdir, triggers a rebuild of your deck.
 The integrated web server then pushes these changes to your browser, so no need to
-reload your slides.
+reload your slides manually.
 
 
 ## overall config
