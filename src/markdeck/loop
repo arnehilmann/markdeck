@@ -33,6 +33,7 @@ while true; do
     echo "-------- rsync output --------"
     rsync -av /markdeck/assets /target/ || :
     [[ -d /source/assets ]] && rsync -av /source/assets /target/ || :
+    touch /target/assets/css/slides.css
     echo "-------- /rsync output --------"
     echo
 
@@ -44,11 +45,13 @@ while true; do
     variant=
     controls=
     pdf=
+    pdfsize=
     [[ -e /source/config ]] && source /source/config
     MARKDECK_TITLE=${title:-markdeck}
     MARKDECK_THEME=${theme:-simple}
     MARKDECK_TRANSITION=${transition:-slide}
     MARKDECK_CONTROLS=${controls:-true}
+    MARKDECK_PDF_SIZE=${pdfsize:-1024x768}
     MARKDECK_VARIANT=${variant:-revealjs}
     MARKDECK_TEMPLATE=/markdeck/template-$MARKDECK_VARIANT.html
     for V in ${!MARKDECK_@}; do
@@ -78,15 +81,12 @@ while true; do
 
     if [[ -n "$pdf" ]]; then
         echo "-------- decktape output --------"
-        (
-            cd /markdeck/lib/decktape-1.0.0;
-            /markdeck/bin/phantomjs \
-                decktape.js reveal \
-                --size 1024x768 \
-                /target/index.html \
-                /tmp/slides.pdf;
-            mv /tmp/slides.pdf "/target/$pdf"
-        )
+        PDF_FILE="$(basename "$pdf" .pdf).pdf"
+        decktape reveal -s $MARKDECK_PDF_SIZE \
+            --no-sandbox \
+            -p 100 \
+            /target/index.html "/target/$PDF_FILE"
+        (cd /target && du -h $PDF_FILE)
         echo "-------- /decktape output --------"
     fi
 
