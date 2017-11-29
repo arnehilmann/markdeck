@@ -9,7 +9,7 @@ example: [markdown](https://raw.githubusercontent.com/arnehilmann/markdeck/maste
 # tl;dr
 
 ```
-docker run -it --rm -v $PWD:/source:ro -v $PWD/slides:/target -p 8080:8080 -p 8081:8081 arne/markdeck:0.10
+docker run -it --rm -v $PWD:/source:ro -v $PWD/slides:/target -p 8080:8080 -p 8081:8081 arne/markdeck:0.11
 ```
 
 ```
@@ -62,7 +62,7 @@ pdf=example.pdf
 
 ## slides in general
 
-### reveal.js
+### web presentation with reveal.js
 
 documentation of [reveal.js](https://github.com/hakimel/reveal.js/)
 (see also the [promo slidedeck](http://lab.hakim.se/reveal-js/#/))
@@ -104,7 +104,7 @@ in the [render-asciiart-filter.config](example/render-asciiart-filter.config) fi
 
 if you want to change these parameters, you can specify them as follows (note:
 you have to use the slightly longer notation with curly braces):
-    
+
     ```{.plantuml args="..."}
     ...
     ```
@@ -223,12 +223,12 @@ open http://localhost:8080
 # TODO
 
 * document/build/provide miniditaa jar
-* docgumnt/build/provide highlight.js with all languages bundled
-* fix font problem in pdf (regarding non-local font resources)
+* document/build/provide highlight.js with all languages bundled
 * provide locality check (no external dependencies, usefull when no internet connection available)
 * provide font helper (download fonts, change css definitions)
 * integrate impress.js option (filter for coordinate handling ala hoovercraft, ...)
 * allow page number instead of navigation
+* ~fix font problem in pdf (regarding non-local font resources)~
 * ~minimize files needed as /source (move slides.css and filter config inside markdeck as defaults, allow customized files in /source)~
 * ~use full-fledged hightligt.js plugin~
 * ~add documentation (config, markdown, renderer, ...)~
