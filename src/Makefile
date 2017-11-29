@@ -1,4 +1,4 @@
-VERSION=0.10
+VERSION=0.11
 
 
 PANDOC_VERSION=2.0.3
@@ -6,7 +6,19 @@ REVEALJS_VERSION=3.5.0
 IMPRESSJS_VERSION=1.0.0-beta1
 ASCIINEMAPLAYER_VERSION=v2.6.0
 
-all:	markdeck/bin/pandoc markdeck/lib/plantuml.jar markdeck/lib/plantuml.jar markdeck/lib/ditaa.jar markdeck/lib/render-asciiart-filter.lua markdeck/assets/3rdparty/asciinema-player.js markdeck/assets/3rdparty/asciinema-player.css markdeck/assets/3rdparty/reveal.js markdeck/assets/3rdparty/impress.js markdeck/helper/trianglify-background-generator-master markdeck/bin/phantomjs markdeck/lib/decktape-1.0.0
+all:	markdeck/bin/pandoc \
+		markdeck/lib/plantuml.jar \
+		markdeck/lib/plantuml.jar \
+		markdeck/lib/ditaa.jar \
+		markdeck/lib/render-asciiart-filter.lua \
+		markdeck/assets/3rdparty/asciinema-player.js \
+		markdeck/assets/3rdparty/asciinema-player.css \
+		markdeck/assets/3rdparty/reveal.js \
+		markdeck/assets/3rdparty/impress.js \
+		markdeck/helper/trianglify-background-generator-master \
+		markdeck/helper/colorful-background \
+		markdeck/helper/gradient-generator \
+		markdeck/helper/unique-gradient-generator
 	docker build \
 		--rm \
 		--build-arg http_proxy=$(http_proxy) \
@@ -72,13 +84,24 @@ markdeck/helper/trianglify-background-generator-master:
 	rm -f master.zip
 
 
-markdeck/bin/phantomjs:
-	curl -L https://github.com/astefanutti/decktape/releases/download/v1.0.0/phantomjs-linux-x86-64 -o $@
-	chmod a+rx $@
+markdeck/helper/colorful-background:
+	mkdir -p $(shell dirname $@)
+	wget -kr -np -nH http://www.webcore-it.com/colorful-background/
+	mv colorful-background $@
 
 
-markdeck/lib/decktape-1.0.0:
-	curl -L https://github.com/astefanutti/decktape/archive/v1.0.0.tar.gz | tar -C $(shell dirname $@) -xz --exclude phantomjs
+markdeck/helper/unique-gradient-generator:
+	mkdir -p @$
+	curl -L -O https://github.com/tiborsaas/unique-gradient-generator/archive/gh-pages.zip
+	unzip gh-pages.zip
+	rm -f gh-pages.zip
+	mv unique-gradient-generator-gh-pages/ $@
+
+
+markdeck/helper/gradient-generator:
+	mkdir -p $(shell dirname $@)
+	wget -kr -np -nH https://tools.superdevresources.com/gradient-generator/
+	mv gradient-generator/ $@
 
 
 # https://raw.githubusercontent.com/neverpanic/google-font-download/master/google-font-download
