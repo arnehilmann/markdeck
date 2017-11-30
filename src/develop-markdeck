@@ -2,8 +2,8 @@
 set -e -E -u
 
 docker run \
-    -v $PWD:/source:ro \
-    -v $PWD/docs:/target \
+    -v $PWD/../example:/source:ro \
+    -v $PWD/slides:/target \
     -v $PWD/markdeck:/markdeck:ro \
     -it \
     --rm \
