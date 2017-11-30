@@ -32,8 +32,8 @@ while true; do
 
     echo "-------- rsync output --------"
     rsync -av /markdeck/assets /target/ || :
+    touch /target/assets/css/slides.css /target/assets/css/print-pdf.css
     [[ -d /source/assets ]] && rsync -av /source/assets /target/ || :
-    touch /target/assets/css/slides.css
     echo "-------- /rsync output --------"
     echo
 
@@ -85,7 +85,7 @@ while true; do
         decktape reveal -s $MARKDECK_PDF_SIZE \
             --no-sandbox \
             -p 100 \
-            /target/index.html "/target/$PDF_FILE"
+            "/target/index.html?render=pdf" "/target/$PDF_FILE"
         (cd /target && du -h $PDF_FILE)
         echo "-------- /decktape output --------"
     fi

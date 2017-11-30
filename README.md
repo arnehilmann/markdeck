@@ -67,6 +67,15 @@ pdf=example.pdf
 documentation of [reveal.js](https://github.com/hakimel/reveal.js/)
 (see also the [promo slidedeck](http://lab.hakim.se/reveal-js/#/))
 
+### pdf rendering with decktape
+
+these settings in the ```config``` file are important for the pdf rendering:
+* ```pdf``` name of the pdf file; if not set, no pdf gets rendered
+* ```pdfsize``` size of the resulting pdf, default to 1024x768
+
+```assets/css/render-pdf.css``` gets applied when rendering the pdf.
+
+
 ### background shortcut
 
 specify the background of your slide:
@@ -218,6 +227,11 @@ open http://localhost:8080
 # edit slides.md, change css, add images, ...
 ```
 *Note: the ```/source``` folder could and should be mounted read-only.*
+
+
+# similar projects
+
+* https://github.com/divshot/markdeck
 
 
 # TODO

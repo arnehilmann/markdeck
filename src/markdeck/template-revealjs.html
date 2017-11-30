@@ -36,9 +36,12 @@ $endif$
 <link rel="stylesheet" href="assets/markdeck/css/markdeck.revealjs.css">
 <link rel="stylesheet" href="assets/css/slides.css">
 
-<!--[if lt IE 9]>
-<script src="lib/js/html5shiv.js"></script>
-<![endif]-->
+<script>
+    if (window.location.search.match(/render=pdf/gi)) {
+        document.write('<link rel="stylesheet" href="assets/css/render-pdf.css" type="text/css">');
+    }
+</script>
+
 $for(header-includes)$
   $header-includes$
 $endfor$
@@ -51,28 +54,7 @@ $endfor$
 
 <div class="reveal">
 
-<!-- Any section element inside of this container is displayed as a slide -->
 <div class="slides">
-
-<!--
-<section>
-<h1>$title$</h1>
-$for(author)$<h3>$author$</h3>$endfor$
-<p>
-<h4>$date$</h4>
-</p>
-</section>
--->
-
-$if(toc)$
-<section>
-  <h2>Outline</h2>
-  <nav id="$idprefix$TOC">
-    $toc$
-  </nav>
-</section>
-$endif$
-
 $body$
 </div>
 
