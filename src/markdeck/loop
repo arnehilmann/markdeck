@@ -15,7 +15,7 @@ esac
 
 shopt -s nullglob
 
-$ONCE || live-server --port=$PORT /target > /tmp/live-server.log 2>&1 &
+$ONCE || live-server --port=$PORT --ignore='**/*.pdf' /target > /tmp/live-server.log 2>&1 &
 $ONCE || live-server --port=$PORT_HELPER /markdeck/helper > /tmp/helper.log 2>&1 &
 
 [[ -e /source/render-asciiart-filter.config ]] && \
@@ -92,10 +92,21 @@ while true; do
 
     $ONCE && break
 
+    if [[ /source -nt /target/index.html ]]; then
+        echo -e "\n\n\nchange detected, rerendering started...\n\n\n"
+        continue
+    fi
+
     sleep .5
     echo -e "\n\n\nopen http://localhost:$PORT\n\n(... or use Ctrl-C to stop markdeck)\n"
 
-    if inotifywait -r -q /source/*.md /source/assets* /source/*config > /tmp/inotifywait.log 2>&1; then
+    if inotifywait -r -q \
+        /source/*.md \
+        /source/assets* \
+        /source/*config \
+        /markdeck/assets* \
+        /markdeck/template*.html \
+        /markdeck/lib/ > /tmp/inotifywait.log 2>&1; then
         :
     else
         echo -e "edit 'slides.md' now...\n\n\n"
