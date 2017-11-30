@@ -1,4 +1,4 @@
 docker run -it --rm \
     -v $PWD:/source:ro \
     -v $PWD/../docs:/target \
-    -p 8080:8080 arne/markdeck:0.11
+    -p 8080:8080 arne/markdeck:0.12
