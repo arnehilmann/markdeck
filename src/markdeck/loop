@@ -32,7 +32,7 @@ while true; do
 
     echo "-------- rsync output --------"
     rsync -av /markdeck/assets /target/ || :
-    touch /target/assets/css/slides.css /target/assets/css/print-pdf.css
+    touch /target/assets/css/slides.css /target/assets/css/render-pdf.css
     [[ -d /source/assets ]] && rsync -av /source/assets /target/ || :
     echo "-------- /rsync output --------"
     echo
