@@ -4,6 +4,7 @@ markdown to sleek slides deck
 
 example: [markdown](https://raw.githubusercontent.com/arnehilmann/markdeck/master/example/slides.md)
 -> [html deck](https://arnehilmann.github.io/markdeck/)
+-> [pdf](https://arnehilmann.github.io/markdeck/markdeck-example.pdf)
 
 
 # tl;dr
