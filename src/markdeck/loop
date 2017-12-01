@@ -63,6 +63,7 @@ while true; do
     echo "-------- pandoc output --------"
     [[ -e /source/slides.md ]] && SOURCE_MD=/source/slides.md || SOURCE_MD=/markdeck/note.md
     /markdeck/bin/pandoc \
+        --no-highlight \
         -f markdown \
         -t html5 \
         --standalone \
@@ -84,7 +85,7 @@ while true; do
         PDF_FILE="$(basename "$pdf" .pdf).pdf"
         decktape reveal -s $MARKDECK_PDF_SIZE \
             --no-sandbox \
-            -p 100 \
+            -p 200 \
             "/target/index.html?render=pdf" "/target/$PDF_FILE"
         (cd /target && du -h $PDF_FILE)
         echo "-------- /decktape output --------"
@@ -98,7 +99,9 @@ while true; do
     fi
 
     sleep .5
-    echo -e "\n\n\nopen http://localhost:$PORT\n\n(... or use Ctrl-C to stop markdeck)\n"
+    echo -e "\n\n\nmarkdeck $VERSION\n"
+    echo -e "open http://localhost:$PORT\n"
+    echo -e "(... or use Ctrl-C to stop markdeck)\n"
 
     if inotifywait -r -q \
         /source/*.md \

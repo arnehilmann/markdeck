@@ -20,4 +20,7 @@ RUN mkdir -p /markdeck/
 COPY markdeck/ /markdeck/
 WORKDIR /markdeck
 
+ARG VERSION
+ENV VERSION $VERSION
+
 ENTRYPOINT ["/markdeck/loop"]

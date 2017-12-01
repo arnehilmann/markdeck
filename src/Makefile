@@ -1,4 +1,4 @@
-VERSION=0.13
+VERSION=0.14
 
 
 PANDOC_VERSION=2.0.3
@@ -23,6 +23,7 @@ all:	markdeck/bin/pandoc \
 		--rm \
 		--build-arg http_proxy=$(http_proxy) \
 		--build-arg https_proxy=$(https_proxy) \
+		--build-arg VERSION=$(VERSION) \
 		-t arne/markdeck:latest \
 		-t arne/markdeck:$(VERSION) \
 		.
