@@ -10,7 +10,7 @@ create sleek slide decks using markdown only
 <small> arne@hilmann.de | 2017-11 </small>
 
 
-# features
+# features {bgcss=colorful}
 
 the whole deck in one markdown file
 

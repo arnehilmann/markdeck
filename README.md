@@ -76,7 +76,7 @@ these settings in the ```config``` file are important for the pdf rendering:
 ```assets/css/render-pdf.css``` gets applied when rendering the pdf.
 
 
-### background shortcut
+### background shortcuts
 
 specify the background of your slide:
 
@@ -94,6 +94,24 @@ specify the background of your slide:
 the text color gets set depending on the COLOR argument
 (using a dark color results in white text, for example)
 
+* with css3
+
+```
+# your title {bgcss=CSSCLASSHERE}
+```
+
+put your css definition in ```slides.css``` and give it a selector like this:
+```.CSSCLASSHERE .reveal { background: ...}``` (Note: the ".reveal" part
+is important here.)
+If you like to have a white text color, put something like this in
+```slides.css```, too:
+
+```
+.CSSCLASSHERE .reveal section > * {
+    color: #fff;
+    text-shadow: 1px 1px #000;
+    }
+```
 
 
 ## asciiart
