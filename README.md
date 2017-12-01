@@ -9,7 +9,7 @@ example: [markdown](https://raw.githubusercontent.com/arnehilmann/markdeck/maste
 # tl;dr
 
 ```
-docker run -it --rm -v $PWD:/source:ro -v $PWD/slides:/target -p 8080:8080 -p 8081:8081 arne/markdeck:0.12
+docker run -it --rm -v $PWD:/source:ro -v $PWD/slides:/target -p 8080:8080 -p 8081:8081 arne/markdeck:0.13
 ```
 
 ```
