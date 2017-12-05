@@ -46,6 +46,7 @@ while true; do
     controls=
     pdf=
     pdfsize=
+    highlight_style=
     [[ -e /source/config ]] && source /source/config
     MARKDECK_TITLE=${title:-markdeck}
     MARKDECK_THEME=${theme:-simple}
@@ -54,6 +55,7 @@ while true; do
     MARKDECK_PDF_SIZE=${pdfsize:-1024x768}
     MARKDECK_VARIANT=${variant:-revealjs}
     MARKDECK_TEMPLATE=/markdeck/template-$MARKDECK_VARIANT.html
+    MARKDECK_HIGHLIGHT_STYLE=${highlight_style:-}
     for V in ${!MARKDECK_@}; do
         echo $V=${!V}
     done
@@ -75,6 +77,7 @@ while true; do
         --variable transition=$MARKDECK_TRANSITION \
         --variable title="$MARKDECK_TITLE" \
         --variable controls="$MARKDECK_CONTROLS" \
+        --variable highlight_style="$MARKDECK_HIGHLIGHT_STYLE" \
         -o /target/index.html \
         $SOURCE_MD || :
     echo "-------- /pandoc output --------"
