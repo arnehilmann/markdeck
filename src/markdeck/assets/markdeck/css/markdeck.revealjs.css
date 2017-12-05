@@ -2,7 +2,7 @@
   font-family: 'Inconsolata';
   font-style: normal;
   font-weight: 400;
-  src: local('Inconsolata Regular'), local('Inconsolata-Regular'), url(https://fonts.gstatic.com/s/inconsolata/v16/BjAYBlHtW3CJxDcjzrnZCIgp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/inconsolata/v16/BjAYBlHtW3CJxDcjzrnZCIgp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
 }
 
@@ -10,7 +10,7 @@
   font-family: 'EB Garamond';
   font-style: normal;
   font-weight: 400;
-  src: local('EB Garamond Regular'), local('EBGaramond-Regular'), url(https://fonts.gstatic.com/s/ebgaramond/v9/kYZt1bJ8UsGAPRGnkXPeFYgp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');
+  src: url(https://fonts.gstatic.com/s/ebgaramond/v9/kYZt1bJ8UsGAPRGnkXPeFYgp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215;
 }
 
@@ -80,3 +80,6 @@
     background-repeat: no-repeat;
 }
 
+.reveal code {
+    font-family: "Inconsolata";
+}
