@@ -1,0 +1,16 @@
+
+ROOT=$(readlink -e $(dirname $0)/..)
+
+eval $(grep ^VERSION= $ROOT/src/Makefile)
+echo "bumping to version $VERSION"
+
+fgrep -IRl "arne/markdeck:0." $ROOT/* $(readlink -e $ROOT/../markdeck-cc) | grep -v bump-version
+
+fgrep -IRl "arne/markdeck:0." $ROOT/* $(readlink -e $ROOT/../markdeck-cc) | grep -v bump-version | \
+    xargs sed -e "s/arne\/markdeck:0\.../arne\/markdeck:$VERSION/g" -i.bak
+
+find $ROOT -name "*.bak" -delete || :
+find $ROOT/../markdeck-cc -name "*.bak" -delete || :
+
+echo "--------------------"
+fgrep -IR "arne/markdeck:0." $ROOT/* $(readlink -e $ROOT/../markdeck-cc) | grep -v bump-version
