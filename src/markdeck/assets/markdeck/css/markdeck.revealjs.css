@@ -83,3 +83,13 @@
 .reveal code {
     font-family: "Inconsolata";
 }
+
+.note-colorful .reveal {
+    background:
+        linear-gradient(45deg, hsla(207, 93%, 44%, 1) 0%, hsla(207, 93%, 44%, 0) 70%),
+        linear-gradient(135deg, hsla(189, 95%, 50%, 1) 10%, hsla(189, 95%, 50%, 0) 80%)
+    }
+.note-colorful .reveal section > *{
+    color: #fff;
+    text-shadow: 1px 1px #000;
+    }
