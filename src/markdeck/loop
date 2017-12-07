@@ -22,8 +22,6 @@ $ONCE || live-server --port=$PORT_HELPER /markdeck/helper > /tmp/helper.log 2>&1
     ASCIIART_CONFIG=/source/render-asciiart-filter.config || \
     ASCIIART_CONFIG=/markdeck/lib/render-asciiart-filter.config
 export ASCIIART_CONFIG
-
-export ASCIIART_CONFIG
 export ASCIIART_LIBDIR=/markdeck/lib
 
 while true; do
@@ -38,27 +36,13 @@ while true; do
     echo
 
     echo "-------- config --------"
-    echo ASCIIART_CONFIG=$ASCIIART_CONFIG
-    title=
-    theme=
-    transition=
-    variant=
-    controls=
-    pdf=
-    pdfsize=
-    highlight_style=
+    source /markdeck/default.config
     [[ -e /source/config ]] && source /source/config
-    MARKDECK_TITLE=${title:-markdeck}
-    MARKDECK_THEME=${theme:-simple}
-    MARKDECK_TRANSITION=${transition:-slide}
-    MARKDECK_CONTROLS=${controls:-true}
-    MARKDECK_PDF_SIZE=${pdfsize:-1024x768}
-    MARKDECK_VARIANT=${variant:-revealjs}
-    MARKDECK_TEMPLATE=/markdeck/template-$MARKDECK_VARIANT.html
-    MARKDECK_HIGHLIGHT_STYLE=${highlight_style:-}
-    for V in ${!MARKDECK_@}; do
+    MARKDECK_TEMPLATE=/markdeck/template-${variant}.html
+    for V in $(sed "s/=.*//" /markdeck/default.config); do
         echo $V=${!V}
     done
+    echo ASCIIART_CONFIG=$ASCIIART_CONFIG
     echo "-------- /config --------"
     echo
 
@@ -72,12 +56,12 @@ while true; do
         --template=$MARKDECK_TEMPLATE \
         --section-divs \
         --lua-filter /markdeck/lib/render-asciiart-filter.lua \
-        --lua-filter /markdeck/lib/$MARKDECK_VARIANT-shortcut-filter.lua \
-        --variable theme=$MARKDECK_THEME \
-        --variable transition=$MARKDECK_TRANSITION \
-        --variable title="$MARKDECK_TITLE" \
-        --variable controls="$MARKDECK_CONTROLS" \
-        --variable highlight_style="$MARKDECK_HIGHLIGHT_STYLE" \
+        --lua-filter /markdeck/lib/${variant}-shortcut-filter.lua \
+        --variable theme=${theme} \
+        --variable transition=${transition} \
+        --variable title="${title}" \
+        --variable controls="${controls}" \
+        --variable highlight_style="${highlight_style}" \
         -o /target/index.html \
         $SOURCE_MD || :
     echo "-------- /pandoc output --------"
@@ -86,10 +70,10 @@ while true; do
     if [[ -n "$pdf" ]]; then
         echo "-------- decktape output --------"
         PDF_FILE="$(basename "$pdf" .pdf).pdf"
-        decktape reveal -s $MARKDECK_PDF_SIZE \
+        decktape reveal -s $pdf_size \
             --no-sandbox \
-            -p 200 \
-            "/target/index.html?render=pdf" "/target/$PDF_FILE"
+            -p $pdf_delay \
+            "http://localhost:8080/index.html?render=pdf" "/target/$PDF_FILE"
         (cd /target && du -h $PDF_FILE)
         echo "-------- /decktape output --------"
     fi
@@ -97,6 +81,10 @@ while true; do
     $ONCE && break
 
     if [[ /source -nt /target/index.html ]]; then
+        echo -e "\n\n\nchange detected, rerendering started...\n\n\n"
+        continue
+    fi
+    if [[ -n "$pdf" ]] && [[ /target/index.html -nt $PDF_FILE ]]; then
         echo -e "\n\n\nchange detected, rerendering started...\n\n\n"
         continue
     fi
