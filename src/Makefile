@@ -1,9 +1,9 @@
-VERSION=0.14
+VERSION=0.15
 
 
 PANDOC_VERSION=2.0.3
 REVEALJS_VERSION=3.5.0
-IMPRESSJS_VERSION=1.0.0-beta1
+# IMPRESSJS_VERSION=1.0.0-beta1
 ASCIINEMAPLAYER_VERSION=v2.6.0
 
 all:	markdeck/bin/pandoc \
@@ -14,7 +14,6 @@ all:	markdeck/bin/pandoc \
 		markdeck/assets/3rdparty/asciinema-player.js \
 		markdeck/assets/3rdparty/asciinema-player.css \
 		markdeck/assets/3rdparty/reveal.js \
-		markdeck/assets/3rdparty/impress.js \
 		markdeck/helper/trianglify-background-generator-master \
 		markdeck/helper/colorful-background \
 		markdeck/helper/gradient-generator \
