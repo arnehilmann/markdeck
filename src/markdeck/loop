@@ -73,7 +73,7 @@ while true; do
         decktape reveal -s $pdf_size \
             --no-sandbox \
             -p $pdf_delay \
-            "http://localhost:8080/index.html?render=pdf" "/target/$PDF_FILE"
+            "http://localhost:8080/index.html?render=pdf" "/target/$PDF_FILE" || :
         (cd /target && du -h $PDF_FILE)
         echo "-------- /decktape output --------"
     fi
@@ -95,7 +95,7 @@ while true; do
     echo -e "(... or use Ctrl-C to stop markdeck)\n"
 
     if inotifywait -r -q \
-        /source/*.md \
+        /source/slides.md \
         /source/assets* \
         /source/*config \
         /markdeck/assets* \
@@ -104,7 +104,7 @@ while true; do
         :
     else
         echo -e "edit 'slides.md' now...\n\n\n"
-        inotifywait -q -r /source
+        inotifywait /source -e create
     fi
     echo -e "\n\n\n\n\n\n\n\n\n\n"
 done
