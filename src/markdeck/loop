@@ -104,7 +104,7 @@ while true; do
         :
     else
         echo -e "edit 'slides.md' now...\n\n\n"
-        inotifywait /source -e create
+        inotifywait -q /source -e create
     fi
     echo -e "\n\n\n\n\n\n\n\n\n\n"
 done
