@@ -3,4 +3,4 @@ docker run -it --rm \
     -v $PWD/slides:/target \
     -p 8080:8080 \
     -p 8081:8081 \
-    arne/markdeck:0.15
+    arne/markdeck:0.16
