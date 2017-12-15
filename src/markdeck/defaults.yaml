@@ -1,0 +1,12 @@
+
+---
+title: slides by markdeck
+theme: simple
+transition: slide
+controls: "false"
+pdf:
+pdf_size: 1024x768
+pdf_delay: 100
+variant: revealjs
+highlight_style: zenburn
+---

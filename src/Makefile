@@ -1,4 +1,4 @@
-VERSION=0.16
+VERSION=0.17
 
 
 PANDOC_VERSION=2.0.3
@@ -39,7 +39,7 @@ push:	all
 
 
 downloaded/bin/pandoc:
-	mkdir -p downloaded
+	mkdir -p downloaded/bin
 	curl -L "https://github.com/jgm/pandoc/releases/download/$(PANDOC_VERSION)/pandoc-$(PANDOC_VERSION)-linux.tar.gz" | tar --strip-components=1 -C downloaded -zxvf - "pandoc-*/bin/pandoc"
 
 

@@ -48,34 +48,33 @@ while true; do
     echo
 
     echo "-------- config --------"
-    source /markdeck/default.config
-    [[ -e /source/config ]] && source /source/config
+    [[ -e /source/slides.md ]] && SOURCE_MD=/source/slides.md || SOURCE_MD=/markdeck/note.md
+    METADATA="$(pandoc --template=/markdeck/metadata.template $SOURCE_MD /markdeck/defaults.yaml)"
+    jq '. | .' <<<$METADATA
+    variant=$(jq -r '.variant' <<< "$METADATA")
+    pdf=$(jq -r '.pdf' <<< "$METADATA")
+    pdf_size=$(jq -r '.pdf_size' <<< "$METADATA")
+    pdf_delay=$(jq -r '.pdf_delay' <<< "$METADATA")
     MARKDECK_TEMPLATE=/markdeck/template-${variant}.html
-    for V in $(sed "s/=.*//" /markdeck/default.config); do
-        echo $V=${!V}
-    done
     echo ASCIIART_CONFIG=$ASCIIART_CONFIG
     echo "-------- /config --------"
     echo
 
     echo "-------- pandoc output --------"
-    [[ -e /source/slides.md ]] && SOURCE_MD=/source/slides.md || SOURCE_MD=/markdeck/note.md
+    PANDOC_ARGS=
+    [[ -e /source/include-before-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-before-body /source/include-before-body"
     pandoc \
         --no-highlight \
-        -f markdown \
+        -f markdown+yaml_metadata_block \
         -t html5 \
         --standalone \
         --template=$MARKDECK_TEMPLATE \
         --section-divs \
         --lua-filter /markdeck/lib/render-asciiart-filter.lua \
         --lua-filter /markdeck/lib/${variant}-shortcut-filter.lua \
-        --variable theme=${theme} \
-        --variable transition=${transition} \
-        --variable title="${title}" \
-        --variable controls="${controls}" \
-        --variable highlight_style="${highlight_style}" \
+        $PANDOC_ARGS \
         -o /target/index.html \
-        $SOURCE_MD || :
+        $SOURCE_MD /markdeck/defaults.yaml || :
     echo "-------- /pandoc output --------"
     echo
 
