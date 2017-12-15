@@ -15,8 +15,20 @@ esac
 
 shopt -s nullglob
 
-$ONCE || live-server --port=$PORT --ignore='**/*.pdf' /target > /tmp/live-server.log 2>&1 &
-$ONCE || live-server --port=$PORT_HELPER /markdeck/helper > /tmp/helper.log 2>&1 &
+if ! $ONCE; then
+    live-server --port=$PORT --ignore='**/*.pdf' /target > /tmp/live-server.log 2>&1 &
+    pid0=$!
+    live-server --port=$PORT_HELPER /markdeck/helper > /tmp/helper.log 2>&1 &
+    pid1=$!
+    kill_rest(){
+        echo
+        kill $pid0 $pid1 2> /dev/null
+        wait $pid0 $pid1 || :
+        echo "done."
+        exit
+    }
+    trap kill_rest INT
+fi
 
 [[ -e /source/render-asciiart-filter.config ]] && \
     ASCIIART_CONFIG=/source/render-asciiart-filter.config || \
