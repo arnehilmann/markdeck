@@ -1,1 +1,3 @@
-# edit "slides.md" now... {bgcss=note-colorful}
+# markdeck {bgcss=note-colorful}
+
+edit "slides.md" now...
