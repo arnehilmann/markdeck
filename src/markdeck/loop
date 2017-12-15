@@ -60,7 +60,7 @@ while true; do
 
     echo "-------- pandoc output --------"
     [[ -e /source/slides.md ]] && SOURCE_MD=/source/slides.md || SOURCE_MD=/markdeck/note.md
-    /markdeck/bin/pandoc \
+    pandoc \
         --no-highlight \
         -f markdown \
         -t html5 \

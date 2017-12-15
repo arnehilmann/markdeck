@@ -16,6 +16,7 @@ EXPOSE 8080 8081
 
 VOLUME ["/source/", "/target/"]
 
+COPY downloaded/ /usr/
 RUN mkdir -p /markdeck/
 COPY markdeck/ /markdeck/
 WORKDIR /markdeck

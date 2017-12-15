@@ -1,4 +1,4 @@
-VERSION=0.15
+VERSION=0.16
 
 
 PANDOC_VERSION=2.0.3
@@ -6,7 +6,7 @@ REVEALJS_VERSION=3.5.0
 # IMPRESSJS_VERSION=1.0.0-beta1
 ASCIINEMAPLAYER_VERSION=v2.6.0
 
-all:	markdeck/bin/pandoc \
+all:	downloaded/bin/pandoc \
 		markdeck/lib/plantuml.jar \
 		markdeck/lib/plantuml.jar \
 		markdeck/lib/ditaa.jar \
@@ -38,8 +38,9 @@ push:	all
 	docker push arne/markdeck:latest
 
 
-markdeck/bin/pandoc:
-	curl -L "https://github.com/jgm/pandoc/releases/download/$(PANDOC_VERSION)/pandoc-$(PANDOC_VERSION)-linux.tar.gz" | tar --strip-components=1 -C markdeck -zxvf - "pandoc-*/bin/pandoc"
+downloaded/bin/pandoc:
+	mkdir -p downloaded
+	curl -L "https://github.com/jgm/pandoc/releases/download/$(PANDOC_VERSION)/pandoc-$(PANDOC_VERSION)-linux.tar.gz" | tar --strip-components=1 -C downloaded -zxvf - "pandoc-*/bin/pandoc"
 
 
 markdeck/lib/plantuml.jar:
@@ -96,6 +97,9 @@ markdeck/helper/unique-gradient-generator:
 	unzip gh-pages.zip
 	rm -f gh-pages.zip
 	mv unique-gradient-generator-gh-pages/ $@
+	echo $@/img
+	ls -al $@/img
+	for F in $$(find $@/img -size +100k); do BN=$@/img/$$(basename $$F .png); rm -fv $$BN.png $${BN}_thumb.png; done
 
 
 markdeck/helper/gradient-generator:
