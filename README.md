@@ -10,7 +10,7 @@ example: [markdown](https://raw.githubusercontent.com/arnehilmann/markdeck/maste
 # tl;dr
 
 ```
-docker run -it --rm -v $PWD:/source:ro -v $PWD/slides:/target -p 8080:8080 -p 8081:8081 arne/markdeck:0.16
+docker run -it --rm -v $PWD:/source:ro -v $PWD/slides:/target -p 8080:8080 -p 8081:8081 arne/markdeck:0.17
 ```
 
 ```
@@ -18,7 +18,7 @@ open http://localhost:8080
 ```
 
 ```
-# edit slides.md, add assets/ and config, consult documentation below, ...
+# edit slides.md, add assets/, consult documentation below, ...
 ```
 
 
@@ -26,7 +26,7 @@ open http://localhost:8080
 
 *markdeck* takes a ```slides.md``` file in markdown format, a few config files, and the assets subdir
 and converts these in a html5 slidedeck, using [pandoc](http://pandoc.org) as converter
-and [reveal.js](http://lab.hakim.se/reveal-js/) as web framework.
+and [reveal.js](http://lab.hakim.se/reveal-js/) as the presenter framework.
 
 see the [example slides](https://raw.githubusercontent.com/arnehilmann/markdeck/master/example/slides.md)
 for further details.
@@ -41,9 +41,9 @@ The integrated web server then pushes these changes to your browser, so no need 
 reload your slides manually.
 
 
-## overall config
+## slides config
 
-The ```config``` file defines some global settings, like:
+~The ```config``` file defines some global settings, like:
 
 ```
 title="markdeck example"
@@ -51,14 +51,25 @@ title="markdeck example"
 # transition=
 controls=false
 pdf=example.pdf
+```~
+
+Since v0.17, the config resides in the ```slides.md``` as well, an own section bracketed by ```---```:
+
+```
+---
+title: the nice title
+---
+
+# first slide...
 ```
 
 * title: the title of your deck *surprise*
 
-* controls: should the navigation be rendered in lower right corner?
+* controls: should the navigation be rendered in lower right corner? [default: false]
 
-* pdf: should a pdf be rendered?
+* pdf: name of the pdf to be rendered (or missing when no pdf needed)
 
+TODO: document theme, transition, pdf_size, pdf_delay, highlight_style
 
 
 ## slides in general
@@ -69,10 +80,6 @@ documentation of [reveal.js](https://github.com/hakimel/reveal.js/)
 (see also the [promo slidedeck](http://lab.hakim.se/reveal-js/#/))
 
 ### pdf rendering with decktape
-
-these settings in the ```config``` file are important for the pdf rendering:
-* ```pdf``` name of the pdf file; if not set, no pdf gets rendered
-* ```pdfsize``` size of the resulting pdf, default to 1024x768
 
 ```assets/css/render-pdf.css``` gets applied when rendering the pdf.
 
@@ -217,12 +224,6 @@ replay that session within your slides.
 For recording, you have to [install asciinema](https://asciinema.org/docs/installation)
 locally on your machine, then start recording with ```asciinema rec assets/YOUR_SESSION_FILE_HERE.json```.
 
-the javascript for the asciinema-player must be loaded explicitly: add the following
-code to the end of your ```slides.md```
-```
-<script src="assets/3rdparty/asciinema-player.js"></script>
-```
-
 embed the player with the following code (and pay attention to the ```rows``` attribute):
 ```
 <asciinema-player
@@ -234,6 +235,14 @@ embed the player with the following code (and pay attention to the ```rows``` at
     font-size="medium"
 ></asciinema-player>
 ```
+
+
+# helper
+
+Under ```http://localhost:8081``` you find some helpfull resources, like extended asciiart characters
+(• ♥ ♣ € ™ ©), an extensive list of emojis (🙄 🤔), and some background generators.
+
+TODO: more documentation here
 
 
 # for adventurous developers
