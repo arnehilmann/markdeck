@@ -1,104 +1,105 @@
 <!doctype html>
 <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="utf-8">
+    <meta charset="utf-8" />
 
-<title>$title$</title>
+    <title>$title$</title>
 
-<meta name="description" content="$title$">
+    <meta name="description" content="$title$" />
+    $for(author)$
+        <meta name="author" content="$author$" />
+    $endfor$
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-$for(author)$
-  <meta name="author" content="$author$" />
-$endfor$
-
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-<link rel="stylesheet" href="assets/3rdparty/reveal.js/css/reveal.css">
-$if(theme)$
-  <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/theme/$theme$.css" id="theme">
-$else$
-  <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/theme/default.css" id="theme">
-$endif$
-
-
-<!-- For syntax highlighting -->
-$if(highlight-style)$
-  <link rel="stylesheet" href="assets/markdeck/styles/$highlight-style$.css">
-$else$
-  <link rel="stylesheet" href="assets/3rdparty/reveal.js/lib/css/zenburn.css">
-$endif$
-
-<link rel="stylesheet" type="text/css" href="assets/3rdparty/asciinema-player.css" />
-
-<link rel="stylesheet" href="assets/markdeck/css/markdeck.revealjs.css">
-<link rel="stylesheet" href="assets/css/slides.css">
-
-<script>
-    if (window.location.search.match(/render=pdf/gi)) {
-        document.write('<link rel="stylesheet" href="assets/css/render-pdf.css" type="text/css">');
-    }
-</script>
-
-$for(header-includes)$
-  $header-includes$
-$endfor$
-</head>
-
-<body>
-$for(include-before)$
-  $include-before$
-$endfor$
-
-<div class="reveal">
-
-<div class="slides">
-$body$
-</div>
-
-<script src="assets/3rdparty/reveal.js/lib/js/head.min.js"></script>
-<script src="assets/3rdparty/reveal.js/js/reveal.js"></script>
-
-<script>
-    // Full list of configuration options available here:
-    // https://github.com/hakimel/reveal.js#configuration
-    Reveal.initialize({
-        controls: $controls$,
-        progress: true,
-        history: true,
-        center: true,
-        // backgroundTransition: 'slide',
-
-    // available themes are in /css/theme
+    <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/reveal.css" />
     $if(theme)$
-        theme: Reveal.getQueryHash().theme || '$theme$',
+        <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/theme/$theme$.css" id="theme" />
     $else$
-        theme: Reveal.getQueryHash().theme || 'default',
+        <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/theme/default.css" id="theme" />
     $endif$
 
-    // default/cube/page/concave/zoom/linear/fade/none
-    $if(transition)$
-        transition: Reveal.getQueryHash().transition || '$transition$',
+    $if(highlight-style)$
+        <link rel="stylesheet" href="assets/markdeck/styles/$highlight-style$.css" />
     $else$
-        transition: Reveal.getQueryHash().transition || 'default',
+        <link rel="stylesheet" href="assets/3rdparty/reveal.js/lib/css/zenburn.css" />
     $endif$
 
-    // Optional libraries used to extend on reveal.js
-    dependencies: [
-        { src: 'assets/3rdparty/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-        //{ src: 'assets/3rdparty/reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-        { src: 'assets/markdeck/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-        { src: 'assets/3rdparty/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-        { src: 'assets/3rdparty/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+    <link rel="stylesheet" type="text/css" href="assets/3rdparty/asciinema-player.css" />
+    <link rel="stylesheet" href="assets/markdeck/css/markdeck.revealjs.css" />
+    <link rel="stylesheet" href="assets/css/slides.css" />
 
-        // { src: 'plugin/markdown/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-        // { src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-        // { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
-    ]
-  });
-</script>
+    <script>
+        if (window.location.search.match(/render=pdf/gi)) {
+            document.write('<link rel="stylesheet" href="assets/css/render-pdf.css" type="text/css">');
+        }
+    </script>
+
+    $for(header-includes)$
+        $header-includes$
+    $endfor$
+</head>
+<body>
+    $for(include-before)$
+        $include-before$
+    $endfor$
+
+    <div class="reveal">
+        <div class="slides">
+            $body$
+        </div>
+    </div>
+
+    <script src="assets/3rdparty/reveal.js/lib/js/head.min.js"></script>
+    <script src="assets/3rdparty/reveal.js/js/reveal.js"></script>
+
+    <script>
+        // Full list of configuration options available here:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: $controls$,
+            progress: true,
+            history: true,
+            center: true,
+            // backgroundTransition: 'slide',
+
+            // available themes are in /css/theme
+            $if(theme)$
+                theme: Reveal.getQueryHash().theme || '$theme$',
+            $else$
+                theme: Reveal.getQueryHash().theme || 'default',
+            $endif$
+
+            // default/cube/page/concave/zoom/linear/fade/none
+            $if(transition)$
+                transition: Reveal.getQueryHash().transition || '$transition$',
+            $else$
+                transition: Reveal.getQueryHash().transition || 'default',
+            $endif$
+
+            // Optional libraries used to extend on reveal.js
+            dependencies: [
+                { src: 'assets/3rdparty/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                { src: 'assets/markdeck/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                { src: 'assets/3rdparty/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                { src: 'assets/3rdparty/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            ]
+        });
+    </script>
+
+    <script src="assets/3rdparty/asciinema-player.js"></script>
+    <script src="assets/3rdparty/jquery.js"></script>
+    <script src="assets/3rdparty/jQueryEmoji.js"></script>
+    <script>
+        $$(function(){
+            $$('h1, h2, span, p').Emoji({
+                path:  'assets/3rdparty/jqueryemoji/apple72/',
+                class: 'emoji',
+                ext:   'png'
+            });
+        });
+    </script>
 
 </body>
 </html>
