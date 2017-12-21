@@ -6,18 +6,8 @@ REVEALJS_VERSION=3.6.0
 ASCIINEMAPLAYER_VERSION=v2.6.0
 JQUERY_VERSION=3.2.1.slim.min
 
-all:	downloaded/bin/pandoc \
-		markdeck/lib/plantuml.jar \
-		markdeck/lib/plantuml.jar \
-		markdeck/lib/ditaa.jar \
-		markdeck/lib/render-asciiart-filter.lua \
-		markdeck/assets/3rdparty/asciinema-player.js \
-		markdeck/assets/3rdparty/asciinema-player.css \
-		markdeck/assets/3rdparty/reveal.js \
-		markdeck/helper/trianglify-background-generator-master \
-		markdeck/helper/colorful-background \
-		markdeck/helper/gradient-generator \
-		markdeck/helper/unique-gradient-generator
+
+all:	prepare
 	docker build \
 		--rm \
 		--build-arg http_proxy=$(http_proxy) \
@@ -36,6 +26,21 @@ tag:	all
 push:	all
 	docker push arne/markdeck:$(VERSION)
 	docker push arne/markdeck:latest
+
+
+prepare:	downloaded/bin/pandoc \
+		markdeck/lib/plantuml.jar \
+		markdeck/lib/plantuml.jar \
+		markdeck/lib/ditaa.jar \
+		markdeck/lib/render-asciiart-filter.lua \
+		markdeck/assets/3rdparty/asciinema-player.js \
+		markdeck/assets/3rdparty/asciinema-player.css \
+		markdeck/assets/3rdparty/reveal.js \
+		jqueryemoji \
+		markdeck/helper/trianglify-background-generator-master \
+		markdeck/helper/colorful-background \
+		markdeck/helper/gradient-generator \
+		markdeck/helper/unique-gradient-generator
 
 
 downloaded/bin/pandoc:
