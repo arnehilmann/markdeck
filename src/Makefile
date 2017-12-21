@@ -37,10 +37,10 @@ prepare:	downloaded/bin/pandoc \
 		markdeck/assets/3rdparty/asciinema-player.css \
 		markdeck/assets/3rdparty/reveal.js \
 		jqueryemoji \
-		markdeck/helper/trianglify-background-generator-master \
-		markdeck/helper/colorful-background \
-		markdeck/helper/gradient-generator \
-		markdeck/helper/unique-gradient-generator
+		markdeck/helper/downloaded/trianglify-background-generator-master \
+		markdeck/helper/downloaded/colorful-background \
+		markdeck/helper/downloaded/gradient-generator \
+		markdeck/helper/downloaded/unique-gradient-generator
 
 
 downloaded/bin/pandoc:
@@ -103,20 +103,20 @@ markdeck/assets/3rdparty/impress.js:
 	curl -L "https://github.com/impress/impress.js/archive/$(IMPRESSJS_VERSION).tar.gz" | tar -C $@ --strip-components=1 --exclude test --exclude examples -zxvf -
 
 
-markdeck/helper/trianglify-background-generator-master:
+markdeck/helper/downloaded/trianglify-background-generator-master:
 	mkdir -p $(shell dirname $@)
 	curl -O -L https://github.com/alssndro/trianglify-background-generator/archive/master.zip
 	unzip -d $(shell dirname $@) master.zip
 	rm -f master.zip
 
 
-markdeck/helper/colorful-background:
+markdeck/helper/downloaded/colorful-background:
 	mkdir -p $(shell dirname $@)
 	wget -kr -np -nH http://www.webcore-it.com/colorful-background/
 	mv colorful-background $@
 
 
-markdeck/helper/unique-gradient-generator:
+markdeck/helper/downloaded/unique-gradient-generator:
 	mkdir -p @$
 	curl -L -O https://github.com/tiborsaas/unique-gradient-generator/archive/gh-pages.zip
 	unzip gh-pages.zip
@@ -124,10 +124,10 @@ markdeck/helper/unique-gradient-generator:
 	mv unique-gradient-generator-gh-pages/ $@
 	echo $@/img
 	ls -al $@/img
-	for F in $$(find $@/img -size +100k); do BN=$@/img/$$(basename $$F .png); rm -fv $$BN.png $${BN}_thumb.png; done
+	#for F in $$(find $@/img -size +100k); do BN=$@/img/$$(basename $$F .png); rm -fv $$BN.png $${BN}_thumb.png; done
 
 
-markdeck/helper/gradient-generator:
+markdeck/helper/downloaded/gradient-generator:
 	mkdir -p $(shell dirname $@)
 	wget -kr -np -nH https://tools.superdevresources.com/gradient-generator/
 	mv gradient-generator/ $@

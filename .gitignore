@@ -1,8 +1,8 @@
 .*.swp
 .DS_Store
 src/markdeck/assets/3rdparty/
-src/downloaded
-src/markdeck/helper/
+src/downloaded/
+src/markdeck/helper/downloaded/
 src/markdeck/lib/ditaa.jar
 src/markdeck/lib/plantuml.jar
 src/markdeck/lib/render-asciiart-filter.lua
