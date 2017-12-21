@@ -43,25 +43,15 @@ reload your slides manually.
 
 ## slides config
 
-~The ```config``` file defines some global settings, like:
-
-```
-title="markdeck example"
-# theme=
-# transition=
-controls=false
-pdf=example.pdf
-```~
+~The ```config``` file defines some global settings, ...~
 
 Since v0.17, the config resides in the ```slides.md``` as well, an own section bracketed by ```---```:
 
-```
----
-title: the nice title
----
+    ---
+    title: the nice title
+    ---
 
-# first slide...
-```
+    # first slide...
 
 * title: the title of your deck *surprise*
 
