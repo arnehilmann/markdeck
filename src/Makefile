@@ -48,6 +48,26 @@ downloaded/bin/pandoc:
 	curl -L "https://github.com/jgm/pandoc/releases/download/$(PANDOC_VERSION)/pandoc-$(PANDOC_VERSION)-linux.tar.gz" | tar --strip-components=1 -C downloaded -zxvf - "pandoc-*/bin/pandoc"
 
 
+jqueryemoji:	jquery.js markdeck/assets/3rdparty/jQueryEmoji.js
+
+
+markdeck/assets/3rdparty/jQueryEmoji.js:
+	mkdir -p $(shell dirname $@)/jqueryemoji
+	curl -L -o $@.zip https://github.com/rodrigopolo/jqueryemoji/archive/master.zip
+	unzip $@.zip
+	cp -R jqueryemoji-master/img/apple72 $(shell dirname $@)/jqueryemoji
+	mv jqueryemoji-master/js/jQueryEmoji.min.js $@
+	rm -rf jqueryemoji-master $@.zip
+
+
+jquery.js:	markdeck/assets/3rdparty/jquery.js
+
+
+markdeck/assets/3rdparty/jquery.js:
+	mkdir -p $(shell dirname $@)
+	curl -L -o $@ https://code.jquery.com/jquery-$(JQUERY_VERSION).js
+
+
 markdeck/lib/plantuml.jar:
 	mkdir -p $(shell dirname $@)
 	curl -L -o $@ "https://sourceforge.net/projects/plantuml/files/plantuml.jar/download?use_mirror=10gbps-io"
