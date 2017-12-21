@@ -137,7 +137,7 @@ markdeck/helper/gradient-generator:
 
 
 clean:
-	rm -f markdeck/bin/*
+	rm -f downloaded/bin/*
 	rm -rf markdeck/assets/
 	git clean -fx
 
