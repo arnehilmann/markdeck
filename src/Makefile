@@ -142,4 +142,11 @@ clean:
 	git clean -fx
 
 
-.PHONY: all push clean tag
+tabularasa:
+	docker images arne/markdeck
+	docker rmi arne/markdeck || :
+	for I in $$(docker images -q arne/markdeck); do docker rmi $$I; done
+	docker system prune -f
+	docker images arne/markdeck
+
+.PHONY: all prepare jquery.js jqueryemoji push tag clean tabularasa
