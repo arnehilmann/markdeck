@@ -31,7 +31,8 @@
     <link rel="stylesheet" href="assets/css/slides.css" />
 
     <script>
-        if (window.location.search.match(/render=pdf/gi)) {
+        window.pdf_render = window.location.search.match(/render=pdf/gi) != null;
+        if (window.pdf_render) {
             document.write('<link rel="stylesheet" href="assets/css/render-pdf.css" type="text/css">');
         }
     </script>
@@ -39,6 +40,8 @@
     $for(header-includes)$
         $header-includes$
     $endfor$
+
+    <script src="assets/3rdparty/jquery.js"></script>
 </head>
 <body>
 
@@ -65,6 +68,7 @@ $body$
             progress: true,
             history: true,
             center: true,
+            slideNumber: true,
             // backgroundTransition: 'slide',
 
             // available themes are in /css/theme
@@ -92,17 +96,13 @@ $body$
     </script>
 
     <script src="assets/3rdparty/asciinema-player.js"></script>
-    <script src="assets/3rdparty/jquery.js"></script>
     <script src="assets/3rdparty/jQueryEmoji.js"></script>
-    <script>
-        $$(function(){
-            $$('h1, h2, span, p').Emoji({
-                path:  'assets/3rdparty/jqueryemoji/apple72/',
-                class: 'emoji',
-                ext:   'png'
-            });
-        });
-    </script>
+
+    <script src="assets/markdeck/revealjs-helper.js"></script>
+
+$for(include-after)$
+$include-after$
+$endfor$
 
 </body>
 </html>
