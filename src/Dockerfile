@@ -3,7 +3,7 @@ LABEL maintainer="arne@hilmann.de"
 
 RUN dnf install --nodocs -y \
     java-1.8.0-openjdk graphviz inotify-tools npm rsync \
-    qrencode procps-ng \
+    qrencode procps-ng jq \
     && dnf clean all
 RUN dnf install --nodocs -y \
     chromium-libs ipa-gothic-fonts xorg-x11-fonts-100dpi \
