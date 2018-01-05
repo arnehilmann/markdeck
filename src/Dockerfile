@@ -11,7 +11,7 @@ RUN dnf install --nodocs -y \
     xorg-x11-fonts-misc \
     && dnf clean all
 RUN dnf install --nodocs -y \
-    jq \
+    rubygem-sass \
     && dnf clean all
 RUN npm install -g --unsafe-perm decktape && npm cache clean --force
 RUN npm install -g live-server && npm cache clean --force
