@@ -57,21 +57,24 @@ while true; do
     fi
 
     echo "-------- config --------"
-    [[ -e /source/slides.md ]] && SOURCE_MD=/source/slides.md || SOURCE_MD=/markdeck/note.md
-    METADATA="$(pandoc --template=/markdeck/metadata.template $SOURCE_MD /markdeck/defaults.yaml)"
+    shopt -s nullglob
+    SOURCE_MD=$(echo /source/slide*.md)
+    shopt -u nullglob
+    METADATA="$(pandoc --template=/markdeck/metadata.template ${SOURCE_MD:-/markdeck/note.md} /markdeck/defaults.yaml)"
     jq '. | .' <<<$METADATA
     variant=$(jq -r '.variant' <<< "$METADATA")
     pdf=$(jq -r '.pdf' <<< "$METADATA")
     pdf_size=$(jq -r '.pdf_size' <<< "$METADATA")
     pdf_delay=$(jq -r '.pdf_delay' <<< "$METADATA")
     MARKDECK_TEMPLATE=/markdeck/template-${variant}.html
-    echo ASCIIART_CONFIG=$ASCIIART_CONFIG
+    echo "ASCIIART_CONFIG=$ASCIIART_CONFIG"
     echo "-------- /config --------"
     echo
 
     echo "-------- pandoc output --------"
     PANDOC_ARGS=
     [[ -e /source/include-before-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-before-body /source/include-before-body"
+    [[ -e /source/include-after-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-after-body /source/include-after-body"
     pandoc \
         --no-highlight \
         -f markdown+yaml_metadata_block \
@@ -83,7 +86,7 @@ while true; do
         --lua-filter /markdeck/lib/${variant}-shortcut-filter.lua \
         $PANDOC_ARGS \
         -o /target/index.html \
-        $SOURCE_MD /markdeck/defaults.yaml || :
+        ${SOURCE_MD:-/markdeck/note.md} /markdeck/defaults.yaml || :
     echo "-------- /pandoc output --------"
     echo
 
@@ -110,18 +113,18 @@ while true; do
     fi
 
     sleep .5
-    echo -e "\n\n\nmarkdeck $VERSION\n"
+    echo -e "\n\n\nmarkdeck $VERSION - $MOTTO\n"
     echo -e "open http://localhost:$PORT\n"
     echo -e "(... or use Ctrl-C to stop markdeck)\n"
 
-    if inotifywait -r -q \
-        /source/slides.md \
-        /source/assets* \
-        /source/*config \
-        /markdeck/assets* \
-        /markdeck/template*.html \
-        /markdeck/lib/ > /tmp/inotifywait.log 2>&1; then
-        :
+    if [[ -n $SOURCE_MD ]]; then
+        inotifywait -r -q -e create -e modify -e delete \
+            /source/slide*.md \
+            /source/include-* \
+            /source/assets/* \
+            /markdeck/assets* \
+            /markdeck/template*.html \
+            /markdeck/lib/ # > /tmp/inotifywait.log 2>&1 || :
     else
         echo -e "edit 'slides.md' now...\n\n\n"
         inotifywait -q /source -e create
