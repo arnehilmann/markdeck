@@ -47,6 +47,15 @@ while true; do
     echo "-------- /rsync output --------"
     echo
 
+    if [[ -e /source/assets/css/slides.scss ]]; then
+        echo "-------- sass output --------"
+        sass --scss --no-cache \
+            /source/assets/css/slides.scss \
+            /target/assets/css/slides.css || :
+        echo "-------- /sass output --------"
+        echo
+    fi
+
     echo "-------- config --------"
     [[ -e /source/slides.md ]] && SOURCE_MD=/source/slides.md || SOURCE_MD=/markdeck/note.md
     METADATA="$(pandoc --template=/markdeck/metadata.template $SOURCE_MD /markdeck/defaults.yaml)"
