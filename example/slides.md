@@ -3,15 +3,15 @@ title: markdeck
 pdf: argh.pdf
 ---
 
-# markdeck 🙃
+# markdeck
 
-create sleek slide decks using markdown only 🙃
+create sleek slide decks using markdown only
 
 | [github.com/arnehilmann/markdeck](https://github.com/arnehilmann/markdeck)
 
 | [markdeck on docker hub](https://hub.docker.com/r/arne/markdeck/)
 
-<small> arne@hilmann.de | 2017-11 🙃</small>
+<small> arne@hilmann.de | 2018-01 🙃</small>
 
 
 # features {bgcss=colorful}
@@ -64,7 +64,7 @@ digraph G {
 ```
 
 
-# asciinema {bg=black}
+# asciinema {bg=#121314}
 
 <asciinema-player
     src="./assets/img/test.json"

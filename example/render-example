@@ -1,4 +1,7 @@
 docker run -it --rm \
     -v $PWD:/source:ro \
     -v $PWD/../docs:/target \
-    -p 8080:8080 arne/markdeck:0.17
+    --shm-size 1G \
+    -p 8080:8080 \
+    -p 8081:8081 \
+    arne/markdeck:0.18
