@@ -66,6 +66,7 @@ while true; do
     pdf=$(jq -r '.pdf' <<< "$METADATA")
     pdf_size=$(jq -r '.pdf_size' <<< "$METADATA")
     pdf_delay=$(jq -r '.pdf_delay' <<< "$METADATA")
+    standalone=$(jq -r '.standalone' <<< "$METADATA")
     MARKDECK_TEMPLATE=/markdeck/template-${variant}.html
     echo "ASCIIART_CONFIG=$ASCIIART_CONFIG"
     echo "-------- /config --------"
@@ -92,23 +93,41 @@ while true; do
 
     if [[ -n "$pdf" ]]; then
         echo "-------- decktape output --------"
-        PDF_FILE="$(basename "$pdf" .pdf).pdf"
         decktape reveal -s $pdf_size \
             --no-sandbox \
             -p $pdf_delay \
-            "http://localhost:8080/index.html?render=pdf" "/target/$PDF_FILE" || :
-        (cd /target && du -h $PDF_FILE)
+            "http://localhost:8080/index.html?render=pdf" "/target/$pdf" || :
+        (cd /target && du -h $pdf)
         echo "-------- /decktape output --------"
+        echo
+    fi
+
+    if [[ -n "$standalone" ]]; then
+        echo "-------- standalone output ------"
+        (
+            cd /target
+            /markdeck/embed < index.html > "$standalone"
+            ZIP_FILE=$(basename "$standalone" .html).zip
+            rm -f "$ZIP_FILE"
+            zip "$ZIP_FILE" "$standalone"
+            du -h "$standalone" "$ZIP_FILE"
+        )
+        echo "-------- /standalone output ------"
+        echo
     fi
 
     $ONCE && break
 
     if [[ /source -nt /target/index.html ]]; then
-        echo -e "\n\n\nchange detected, rerendering started...\n\n\n"
+        echo -e "\n\n\nchange detected: sources newer than rendered deck, rerendering started...\n\n\n"
         continue
     fi
-    if [[ -n "$pdf" ]] && [[ /target/index.html -nt $PDF_FILE ]]; then
-        echo -e "\n\n\nchange detected, rerendering started...\n\n\n"
+    if [[ -n "$pdf" ]] && [[ /target/index.html -nt /target/$pdf ]]; then
+        echo -e "\n\n\nchange detected: rendered deck newer than pdf, rerendering started...\n\n\n"
+        continue
+    fi
+    if [[ -n "$standalone" ]] && [[ /target/index.html -nt /target/$standalone ]]; then
+        echo -e "\n\n\nchange detected: rendered deck newer than standalone file, rerendering started...\n\n\n"
         continue
     fi
 
@@ -118,9 +137,8 @@ while true; do
     echo -e "(... or use Ctrl-C to stop markdeck)\n"
 
     if [[ -n $SOURCE_MD ]]; then
-        inotifywait -r -q -e create -e modify -e delete \
+        inotifywait -r -q -e create -e modify -e delete -e move \
             /source/slide*.md \
-            /source/include-* \
             /source/assets/* \
             /markdeck/assets* \
             /markdeck/template*.html \

@@ -9,4 +9,5 @@ pdf_size: 1024x768
 pdf_delay: 100
 variant: revealjs
 highlight_style: zenburn
+standalone:
 ---
