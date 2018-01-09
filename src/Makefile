@@ -1,5 +1,5 @@
-VERSION=0.17
-
+VERSION=0.18
+MOTTO="🎆  happy new year 2018 edition 🎆"
 
 PANDOC_VERSION=2.0.5
 REVEALJS_VERSION=3.6.0
@@ -10,9 +10,8 @@ JQUERY_VERSION=3.2.1.slim.min
 all:	prepare
 	docker build \
 		--rm \
-		--build-arg http_proxy=$(http_proxy) \
-		--build-arg https_proxy=$(https_proxy) \
 		--build-arg VERSION=$(VERSION) \
+		--build-arg MOTTO=$(MOTTO) \
 		-t arne/markdeck:latest \
 		-t arne/markdeck:$(VERSION) \
 		.
@@ -134,7 +133,6 @@ markdeck/helper/downloaded/gradient-generator:
 
 
 # https://raw.githubusercontent.com/neverpanic/google-font-download/master/google-font-download
-
 
 clean:
 	rm -f downloaded/bin/*
