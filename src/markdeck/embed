@@ -45,6 +45,12 @@ while read -r line || [[ -n "$line" ]]; do
         echo "$line" | sed "s/data-background-image=.*//"
         # TODO support more formats, like jpeg, ...
         echo "    data-background-image=\"data:image/png;base64,$(base64 -w 0 $src)\">"
+    elif echo "$line" | grep -q "<asciinema-player src="; then
+        src=$(echo "$line" | sed "s/^.*<asciinema-player src=['\"]//;s/['\"].*$//")
+        du -h "$src" >&2
+        echo
+        echo "<!-- EXTERNAL ASCIINEMA SCRIPT: $src -->"
+        echo "<asciinema-player src=\"data:text/json;base64,$(base64 -w 0 $src)\""
     else
         echo "$line"
     fi
