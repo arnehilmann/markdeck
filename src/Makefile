@@ -1,7 +1,7 @@
-VERSION=0.18
-MOTTO="🎆  happy new year 2018 edition 🎆"
+VERSION=0.19
+MOTTO="🐾 the paw edition"
 
-PANDOC_VERSION=2.0.5
+PANDOC_VERSION=2.1
 REVEALJS_VERSION=3.6.0
 ASCIINEMAPLAYER_VERSION=v2.6.0
 JQUERY_VERSION=3.2.1.slim.min
@@ -136,7 +136,7 @@ markdeck/helper/downloaded/gradient-generator:
 
 clean:
 	rm -f downloaded/bin/*
-	rm -rf markdeck/assets/
+	rm -rf markdeck/assets/3rdparty
 	git clean -fx
 
 
