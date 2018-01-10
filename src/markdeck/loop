@@ -41,6 +41,11 @@ while true; do
     [[ -d /target/rendered ]] || mkdir -p /target/rendered
 
     echo "-------- rsync output --------"
+    if [[ -d /source/assets/css/fonts ]]; then
+        mkdir -p $HOME/.fonts
+        rsync -av --delete /source/assets/css/fonts/ $HOME/.fonts
+        fc-cache
+    fi
     rsync -a /markdeck/assets /target/ || :
     touch /target/assets/css/slides.css /target/assets/css/render-pdf.css
     [[ -d /source/assets ]] && rsync -av /source/assets /target/ || :
