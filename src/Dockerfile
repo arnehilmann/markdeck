@@ -10,8 +10,13 @@ RUN dnf install --nodocs -y \
     xorg-x11-fonts-75dpi xorg-x11-utils xorg-x11-fonts-cyrillic \
     xorg-x11-fonts-misc \
     && dnf clean all
+RUN dnf install --nodocs -y \
+    less tmux \
+    && dnf clean all
 RUN npm install -g --unsafe-perm decktape && npm cache clean --force
 RUN npm install -g live-server && npm cache clean --force
+RUN npm install -g vega vega-lite && npm cache clean --force
+RUN npm install -g mathjax-pandoc-filter && npm cache clean --force
 EXPOSE 8080 8081
 
 VOLUME ["/source/", "/target/"]
