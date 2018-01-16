@@ -23,7 +23,7 @@ while read -r line || [[ -n "$line" ]]; do
                 du -h "$fontsrcabs" >&2
                 fontencoded=$(base64 -w 0 "$fontsrcabs")
                 # TODO support more formats, like truetype, ...
-                echo "src: url(\"data:font/woff2;charset=utf-8;base64,$fontencoded\") format(\"woff2\");}"
+                echo "src: url(\"data:font/opentype;charset=utf-8;base64,$fontencoded\") format(\"opentype\");}"
            else
                 echo "$cssline"
             fi
@@ -32,19 +32,25 @@ while read -r line || [[ -n "$line" ]]; do
     elif echo "$line" | grep -q "<img .*src="; then
         src=$(echo "$line" | sed "s/^.*<img .*src=['\"]//;s/['\"].*$//")
         du -h "$src" >&2
+        format=${src##*.}
         echo
         echo "<!-- EXTERNAL IMAGE: $src -->"
-        echo "$line" | sed "s/ src=\".*//"
-        echo "    src=\"data:image/png;base64,$(base64 -w 0 $src)\""
-        echo "$line" | sed "s/.* src=\"[^\"]*\"//"
+        # TODO support formats, which dont need base64 encoding, e.g. svg?!
+        if [[ $format = "svg" ]]; then
+            cat $src
+        else
+            echo "$line" | sed "s/ src=\".*//"
+            echo "    src=\"data:image/$format;base64,$(base64 -w 0 $src)\""
+            echo "$line" | sed "s/.* src=\"[^\"]*\"//"
+        fi
     elif echo "$line" | grep -q "<section .*data-background-image="; then
         src=$(echo "$line" | sed "s/^.*<section .*data-background-image=['\"]//;s/['\"].*$//")
         du -h "$src" >&2
+        format=${src##*.}
         echo
         echo "<!-- EXTERNAL BACKGROUND IMAGE: $src -->"
         echo "$line" | sed "s/data-background-image=.*//"
-        # TODO support more formats, like jpeg, ...
-        echo "    data-background-image=\"data:image/png;base64,$(base64 -w 0 $src)\">"
+        echo "    data-background-image=\"data:image/format;base64,$(base64 -w 0 $src)\">"
     elif echo "$line" | grep -q "<asciinema-player src="; then
         src=$(echo "$line" | sed "s/^.*<asciinema-player src=['\"]//;s/['\"].*$//")
         du -h "$src" >&2
