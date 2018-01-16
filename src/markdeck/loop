@@ -14,16 +14,64 @@ case $PARAM in
 esac
 
 shopt -s nullglob
+esc=$(printf '\033')
 
 if ! $ONCE; then
-    live-server --port=$PORT --ignore='**/*.pdf' /target > /tmp/live-server.log 2>&1 &
+    function wait_for_indexhtml() {
+        inotifywait -r -q -q /target/index.html
+    }
+
+    (
+        echo "service starting"
+        live-server \
+            --port=$PORT \
+            --no-browser \
+            --wait=1 \
+            --watch=/target/index.html \
+            /target
+    ) 2>&1 | sed "s/^.*$/${esc}[34m${esc}[3m[liveserver@$PORT]    &${esc}[0m/" &
     pid0=$!
+
     live-server --port=$PORT_HELPER /markdeck/helper > /tmp/helper.log 2>&1 &
     pid1=$!
+
+    (
+        echo "service starting"
+        while true; do
+            if [[ -x /target/render-pdf ]]; then
+                mv /target/render-pdf /target/render-pdf.now
+                /target/render-pdf.now || :
+                rm -f /target/render-pdf.now
+            fi
+            [[ -x /target/render-pdf ]] && continue
+            wait_for_indexhtml
+        done
+    ) 2>&1 | sed -u "s/^.*$/${esc}[32m${esc}[3m[render-pdf]         &${esc}[0m/" &
+    pid2=$!
+
+    (
+        echo "service starting"
+        cd /target
+        while true; do
+            if [[ -e /target/render-standalone ]]; then
+                standalone="$(cat /target/render-standalone)"
+                rm -f /target/render-standalone
+                /markdeck/embed < index.html > "$standalone"
+                ZIP_FILE=$(basename "$standalone" .html).zip
+                rm -f "$ZIP_FILE"
+                zip "$ZIP_FILE" "$standalone"
+                du -h "$standalone" "$ZIP_FILE"
+            fi
+            [[ -e /target/render-standalone ]] && continue
+            wait_for_indexhtml
+        done
+    ) 2>&1 | sed -u "s/^.*$/${esc}[33m${esc}[3m[render-standalone]  &${esc}[0m/" &
+    pid3=$!
+
     kill_rest(){
         echo
-        kill $pid0 $pid1 2> /dev/null
-        wait $pid0 $pid1 || :
+        kill $pid0 $pid1 $pid2 $pid3 2> /dev/null
+        wait $pid0 $pid1 $pid2 $pid3 || :
         echo "done."
         exit
     }
@@ -81,45 +129,38 @@ while true; do
     PANDOC_ARGS=
     [[ -e /source/include-before-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-before-body /source/include-before-body"
     [[ -e /source/include-after-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-after-body /source/include-after-body"
-    pandoc \
+    if pandoc \
         --no-highlight \
         -f markdown+yaml_metadata_block \
         -t html5 \
         --standalone \
         --template=$MARKDECK_TEMPLATE \
         --section-divs \
+        --filter mathjax-pandoc-filter \
         --lua-filter /markdeck/lib/render-asciiart-filter.lua \
         --lua-filter /markdeck/lib/${variant}-shortcut-filter.lua \
         $PANDOC_ARGS \
-        -o /target/index.html \
-        ${SOURCE_MD:-/markdeck/note.md} /markdeck/defaults.yaml || :
+        -o /target/index.html.tmp \
+        ${SOURCE_MD:-/markdeck/note.md} /markdeck/defaults.yaml 2>&1 | tee /tmp/pandoc.output;
+    then
+        if [[ -n "$pdf" ]]; then
+            echo "decktape reveal \
+                -s $pdf_size --no-sandbox -p $pdf_delay \
+                'http://localhost:8080/index.html?render=pdf' \
+                '/target/$pdf'" > /target/render-pdf
+            chmod a+rx /target/render-pdf
+        fi
+        if [[ -n "$standalone" ]]; then
+            echo $standalone > /target/render-standalone
+        fi
+
+        mv /target/index.html.tmp /target/index.html
+    else
+        cp /tmp/pandoc.output /target/index.html
+        sleep 4
+    fi
     echo "-------- /pandoc output --------"
     echo
-
-    if [[ -n "$pdf" ]]; then
-        echo "-------- decktape output --------"
-        decktape reveal -s $pdf_size \
-            --no-sandbox \
-            -p $pdf_delay \
-            "http://localhost:8080/index.html?render=pdf" "/target/$pdf" || :
-        (cd /target && du -h $pdf)
-        echo "-------- /decktape output --------"
-        echo
-    fi
-
-    if [[ -n "$standalone" ]]; then
-        echo "-------- standalone output ------"
-        (
-            cd /target
-            /markdeck/embed < index.html > "$standalone"
-            ZIP_FILE=$(basename "$standalone" .html).zip
-            rm -f "$ZIP_FILE"
-            zip "$ZIP_FILE" "$standalone"
-            du -h "$standalone" "$ZIP_FILE"
-        )
-        echo "-------- /standalone output ------"
-        echo
-    fi
 
     $ONCE && break
 
@@ -127,19 +168,11 @@ while true; do
         echo -e "\n\n\nchange detected: sources newer than rendered deck, rerendering started...\n\n\n"
         continue
     fi
-    if [[ -n "$pdf" ]] && [[ /target/index.html -nt /target/$pdf ]]; then
-        echo -e "\n\n\nchange detected: rendered deck newer than pdf, rerendering started...\n\n\n"
-        continue
-    fi
-    if [[ -n "$standalone" ]] && [[ /target/index.html -nt /target/$standalone ]]; then
-        echo -e "\n\n\nchange detected: rendered deck newer than standalone file, rerendering started...\n\n\n"
-        continue
-    fi
 
     sleep .5
-    echo -e "\n\n\nmarkdeck $VERSION - $MOTTO\n"
-    echo -e "open http://localhost:$PORT\n"
-    echo -e "(... or use Ctrl-C to stop markdeck)\n"
+    echo -e "\n\n\n${esc}[1mmarkdeck $VERSION - $MOTTO\n"
+    echo -e "open http://localhost:$PORT${esc}[0m\n"
+    echo -e "(or open http://localhost:$PORT_HELPER for utilities, or hit Ctrl-C to stop markdeck)\n"
 
     if [[ -n $SOURCE_MD ]]; then
         inotifywait -r -q -e create -e modify -e delete -e move \
