@@ -12,6 +12,8 @@ all:	prepare
 		--rm \
 		--build-arg VERSION=$(VERSION) \
 		--build-arg MOTTO=$(MOTTO) \
+		--build-arg http_proxy=$${http_proxy:-} \
+		--build-arg https_proxy=$${https_proxy:-} \
 		-t arne/markdeck:latest \
 		-t arne/markdeck:$(VERSION) \
 		.
@@ -85,6 +87,7 @@ markdeck/lib/render-asciiart-filter.lua:
 markdeck/assets/3rdparty/asciinema-player.js:
 	mkdir -p $(shell dirname $@)
 	curl -L -o $@ "https://github.com/asciinema/asciinema-player/releases/download/$(ASCIINEMAPLAYER_VERSION)/asciinema-player.js"
+	touch $@.map
 
 
 markdeck/assets/3rdparty/asciinema-player.css:
