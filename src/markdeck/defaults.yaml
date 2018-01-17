@@ -10,4 +10,5 @@ pdf_delay: 100
 variant: revealjs
 highlight_style: zenburn
 standalone:
+asciinema: "false"
 ---
