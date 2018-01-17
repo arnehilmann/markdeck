@@ -23,7 +23,7 @@ while read -r line || [[ -n "$line" ]]; do
                 du -h "$fontsrcabs" >&2
                 fontencoded=$(base64 -w 0 "$fontsrcabs")
                 # TODO support more formats, like truetype, ...
-                echo "src: url(\"data:font/opentype;charset=utf-8;base64,$fontencoded\") format(\"opentype\");}"
+                echo "src: url(\"data:font/truetype;charset=utf-8;base64,$fontencoded\") format(\"truetype\");"
            else
                 echo "$cssline"
             fi
@@ -50,7 +50,12 @@ while read -r line || [[ -n "$line" ]]; do
         echo
         echo "<!-- EXTERNAL BACKGROUND IMAGE: $src -->"
         echo "$line" | sed "s/data-background-image=.*//"
-        echo "    data-background-image=\"data:image/format;base64,$(base64 -w 0 $src)\">"
+        if [[ $format = "svg" ]]; then
+            echo "    data-background-image=\"data:image/svg+xml;base64,$(base64 -w 0 $src)\">"
+            # echo "    data-background-image='data:image/svg+xml;$(cat $src)'>"
+        else
+            echo "    data-background-image=\"data:image/$format;base64,$(base64 -w 0 $src)\">"
+        fi
     elif echo "$line" | grep -q "<asciinema-player src="; then
         src=$(echo "$line" | sed "s/^.*<asciinema-player src=['\"]//;s/['\"].*$//")
         du -h "$src" >&2
