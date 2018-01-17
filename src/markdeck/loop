@@ -138,6 +138,7 @@ while true; do
         --section-divs \
         --filter mathjax-pandoc-filter \
         --lua-filter /markdeck/lib/render-asciiart-filter.lua \
+        --lua-filter /markdeck/lib/render-emojis-filter.lua \
         --lua-filter /markdeck/lib/${variant}-shortcut-filter.lua \
         $PANDOC_ARGS \
         -o /target/index.html.tmp \
