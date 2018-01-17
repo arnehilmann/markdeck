@@ -100,3 +100,11 @@
     margin: 0;
     vertical-align: baseline;
 }
+
+section.has-dark-background.colorfull * {
+    text-shadow: 1px 1px #000;
+}
+
+.flush-text-left {
+    text-align: left;
+}
