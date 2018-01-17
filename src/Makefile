@@ -52,12 +52,11 @@ downloaded/bin/pandoc:
 jqueryemoji:	jquery.js markdeck/assets/3rdparty/jQueryEmoji.js
 
 
-markdeck/assets/3rdparty/jQueryEmoji.js:
-	mkdir -p $(shell dirname $@)/jqueryemoji
+markdeck/assets/3rdparty/jqueryemoji:
+	mkdir -p $@
 	curl -L -o $@.zip https://github.com/rodrigopolo/jqueryemoji/archive/master.zip
 	unzip $@.zip
-	cp -R jqueryemoji-master/img/apple72 $(shell dirname $@)/jqueryemoji
-	mv jqueryemoji-master/js/jQueryEmoji.min.js $@
+	mv jqueryemoji-master/img/apple72 $@
 	rm -rf jqueryemoji-master $@.zip
 
 
