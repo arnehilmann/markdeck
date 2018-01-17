@@ -15,6 +15,7 @@ esac
 
 shopt -s nullglob
 esc=$(printf '\033')
+# ansi color codes: http://pueblo.sourceforge.net/doc/manual/ansi_color_codes.html
 
 if ! $ONCE; then
     function wait_for_indexhtml() {
@@ -144,20 +145,31 @@ while true; do
         -o /target/index.html.tmp \
         ${SOURCE_MD:-/markdeck/note.md} /markdeck/defaults.yaml 2>&1 | tee /tmp/pandoc.output;
     then
-        if [[ -n "$pdf" ]]; then
-            echo "decktape reveal \
-                -s $pdf_size --no-sandbox -p $pdf_delay \
-                'http://localhost:8080/index.html?render=pdf' \
-                '/target/$pdf'" > /target/render-pdf
-            chmod a+rx /target/render-pdf
-        fi
-        if [[ -n "$standalone" ]]; then
-            echo $standalone > /target/render-standalone
-        fi
+        if [[ -e /target/index.html.tmp ]]; then
+            if [[ -n "$pdf" ]]; then
+                echo "decktape reveal \
+                    -s $pdf_size --no-sandbox -p $pdf_delay \
+                    'http://localhost:8080/index.html?render=pdf' \
+                    '/target/$pdf'" > /target/render-pdf
+                chmod a+rx /target/render-pdf
+            fi
+            if [[ -n "$standalone" ]]; then
+                echo $standalone > /target/render-standalone
+            fi
 
-        mv /target/index.html.tmp /target/index.html
+            mv /target/index.html.tmp /target/index.html
+        else
+            cp /tmp/pandoc.output /target/index.html
+            echo -e "${esc}[37m${esc}[43m"
+            cat /tmp/pandoc.output
+            echo -e "${esc}[0m"
+            sleep 4
+        fi
     else
         cp /tmp/pandoc.output /target/index.html
+        echo -e "${esc}[37m${esc}[43m"
+        cat /tmp/pandoc.output
+        echo -e "${esc}[0m"
         sleep 4
     fi
     echo "-------- /pandoc output --------"
