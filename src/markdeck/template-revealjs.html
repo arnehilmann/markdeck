@@ -26,7 +26,9 @@
         <link rel="stylesheet" href="assets/3rdparty/reveal.js/lib/css/zenburn.css" />
     $endif$
 
-    <link rel="stylesheet" type="text/css" href="assets/3rdparty/asciinema-player.css" />
+    $if(asciinema)$
+        <link rel="stylesheet" type="text/css" href="assets/3rdparty/asciinema-player.css" />
+    $endif$
     <link rel="stylesheet" href="assets/markdeck/css/markdeck.revealjs.css" />
     <link rel="stylesheet" href="assets/css/slides.css" />
 
@@ -96,8 +98,9 @@ $body$
         });
     </script>
 
-    <script src="assets/3rdparty/asciinema-player.js"></script>
-    <script src="assets/3rdparty/jQueryEmoji.js"></script>
+    $if(asciinema)$
+        <script src="assets/3rdparty/asciinema-player.js"></script>
+    $endif$
 
     <script src="assets/markdeck/revealjs-helper.js"></script>
 
