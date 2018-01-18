@@ -1,25 +1,5 @@
-
-function beautify_emojis(selector="h1, h2, span, p") {
-    $(selector).Emoji({
-        path:  'assets/3rdparty/jqueryemoji/apple72/',
-        class: 'emoji',
-        ext:   'png'
-    });
-}
-
 function calc_offset_left() {
-    var offset_left = $(".slides").offset().left;
-    // console.log("offset_left: " + offset_left);
-    var t = $(".slides")[0].style.transform;
-    var start = t.indexOf("scale(");
-    if (start > 0) {
-        var end = t.indexOf(")", start);
-        var s = t.substring(start + "scale(".length, end);
-        // console.log("scale: " + s);
-        return offset_left / s;
-    } else {
-        return offset_left;
-    }
+    return offset_left = $(".slides").offset().left / Reveal.getScale();
 }
 
 function flushleft(selector) {
