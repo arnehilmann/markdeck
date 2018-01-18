@@ -93,12 +93,8 @@ while true; do
     if [[ -d /source/assets/css/fonts ]]; then
         mkdir -p $HOME/.fonts
         rsync -av --delete /source/assets/css/fonts/ $HOME/.fonts
+        fc-cache
     fi
-    if [[ -d /markdeck/assets/markdeck/css/fonts ]]; then
-        mkdir -p $HOME/.fonts
-        rsync -av --delete /markdeck/assets/markdeck/css/fonts/ $HOME/.fonts
-    fi
-    fc-cache
     rsync -a /markdeck/assets /target/ || :
     touch /target/assets/css/slides.css /target/assets/css/render-pdf.css
     [[ -d /source/assets ]] && rsync -av /source/assets /target/ || :
@@ -110,6 +106,9 @@ while true; do
         sass --scss --no-cache \
             /source/assets/css/slides.scss \
             /target/assets/css/slides.css || :
+        sass --scss --no-cache \
+            /markdeck/assets/markdeck/css/slides.scss \
+            /target/assets/markdeck/css/slides.css || ~
         echo "-------- /sass output --------"
         echo
     fi

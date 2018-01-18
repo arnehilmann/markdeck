@@ -1,26 +1,7 @@
-@font-face {
-  font-family: 'Inconsolata';
-  font-style: normal;
-  font-weight: 400;
-  src: url("fonts/Inconsolata-Regular.ttf") format('truetype');
-}
-
-@font-face {
-  font-family: "EB Garamond";
-  font-style: normal;
-  font-weight: 400;
-  src: url("fonts/EBGaramond12-Regular.ttf") format('truetype');
-}
-
-.reveal,
-.reveal h1,
-.reveal h2,
-.reveal h3,
-.reveal h4,
-.reveal h5,
-.reveal h6,
-.reveal div {
-    font-family: "EB Garamond", sans-serif;
+.reveal {
+    h1, h2, h3, h4, h5, h6, div {
+        font-family: sans-serif;
+    }
 }
 
 .reveal h1 {
@@ -65,10 +46,6 @@
     background: #444;
 }
 
-.reveal div pre.asciinema-terminal {
-    font-family: "Inconsolata", monospace;
-}
-
 .reveal section img {
     box-shadow: none;
 }
@@ -76,21 +53,6 @@
 .slide-background {
     background-size: cover !important;
     background-repeat: no-repeat;
-}
-
-.reveal code {
-    font-family: "Inconsolata";
-}
-
-.note-colorful .reveal {
-    background:
-        linear-gradient(45deg, hsla(207, 93%, 44%, 1) 0%, hsla(207, 93%, 44%, 0) 70%),
-        linear-gradient(135deg, hsla(189, 95%, 50%, 1) 10%, hsla(189, 95%, 50%, 0) 80%)
-    }
-
-.note-colorful .reveal section > *{
-    color: #fff;
-    text-shadow: 1px 1px #000;
 }
 
 .reveal img.emoji {
