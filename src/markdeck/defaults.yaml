@@ -20,7 +20,7 @@ controlsBackArrows: 'faded'
 progress: true
 defaultTiming: 120
 slideNumber: 'false'
-history: 'false'
+history: true
 keyboard: true
 overview: true
 center: true
