@@ -2,9 +2,10 @@
 title: markdeck
 # pdf: markdeck-example.pdf
 # standalone: markdeck-example.html
+autoSlide: 2000
 ---
 
-# markdeck
+# markdeck {data-autoslide=5000}
 
 create cool slide decks using markdown only
 
@@ -15,12 +16,18 @@ create cool slide decks using markdown only
 <small> arne@hilmann.de | 2018-01 🙃</small>
 
 
-# features {bg=black;assets/img/bg.colorfull.png .colorfull}
+# features {bg=black;assets/img/bg.colorfull.png .colorfull data-autoslide=2000}
 
 the whole deck as markdown
 
 on-the-fly rendering of asciiart<br>
-<small>(boxes, uml, graphs, charts, equations, qrcodes, …)</small>
+<small>[boxes,]{.fragment data-autoslide=500}
+[uml,]{.fragment data-autoslide=500}
+[graphs,]{.fragment data-autoslide=500}
+[charts,]{.fragment data-autoslide=500}
+[equations,]{.fragment data-autoslide=500}
+[qrcodes, …]{.fragment data-autoslide=500}
+</small>
 
 supports emojis and terminal sessions
 
@@ -29,7 +36,7 @@ cool ui, based on reveal.js
 on-the-fly reload when changing sources
 
 
-# boxes: ditaa {bg=SteelBlue}
+# boxes: ditaa {bg=SteelBlue data-autoslide=2000}
 
 ```render_ditaa
     +--------+   +-------+    +-------+
