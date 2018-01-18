@@ -3,7 +3,7 @@
 title: slides by markdeck
 
 pdf:
-pdf_size: 1280x720  # 1024x768
+pdf_size: 1024x768  # 1280x720
 pdf_delay: 100
 
 standalone:
