@@ -1,8 +1,9 @@
 ---
 title: markdeck
-# pdf: markdeck-example.pdf
-# standalone: markdeck-example.html
-autoSlide: 2000
+pdf: markdeck-example.pdf
+standalone: markdeck-example.html
+slideNumber: true
+autoSlide: 3000
 ---
 
 # markdeck {data-autoslide=5000}
@@ -16,17 +17,18 @@ create cool slide decks using markdown only
 <small> arne@hilmann.de | 2018-01 🙃</small>
 
 
-# features {bg=black;assets/img/bg.colorfull.png .colorfull data-autoslide=2000}
+# features {bg=black;assets/img/bg.colorfull.png .colorfull}
 
 the whole deck as markdown
 
 on-the-fly rendering of asciiart<br>
-<small>[boxes,]{.fragment data-autoslide=500}
-[uml,]{.fragment data-autoslide=500}
-[graphs,]{.fragment data-autoslide=500}
-[charts,]{.fragment data-autoslide=500}
-[equations,]{.fragment data-autoslide=500}
-[qrcodes, …]{.fragment data-autoslide=500}
+<small>
+boxes,
+uml,
+graphs,
+charts,
+equations,
+qrcodes, …
 </small>
 
 supports emojis and terminal sessions
@@ -36,7 +38,7 @@ cool ui, based on reveal.js
 on-the-fly reload when changing sources
 
 
-# boxes: ditaa {bg=SteelBlue data-autoslide=2000}
+# boxes: ditaa {bg=SteelBlue}
 
 ```render_ditaa
     +--------+   +-------+    +-------+
@@ -127,7 +129,7 @@ $$e = \mathop {\lim }\limits_{n \to \infty } \left( {1 + \frac{1}{n}} \right)^n$
 ></asciinema-player>
 
 
-# Thank You! {bg=AliceBlue}
+# Thank You! {bg=AliceBlue data-autoslide=4000}
 
 [pandoc](http://pandoc.org)
 [reveal.js](http://lab.hakim.se/reveal-js/#/)
