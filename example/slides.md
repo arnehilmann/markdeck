@@ -100,6 +100,7 @@ digraph G {
         "axis": {
             "labelFont": "EB Garamond",
             "labelFontSize": 18,
+            "titleFont": "EB Garamond",
             "titleFontSize": 24,
             "titleAngle": 0
         },
