@@ -33,7 +33,6 @@ prepare:	downloaded/bin/pandoc \
 		markdeck/lib/plantuml.jar \
 		markdeck/lib/plantuml.jar \
 		markdeck/lib/ditaa.jar \
-		markdeck/lib/render-asciiart-filter.lua \
 		markdeck/assets/3rdparty/asciinema-player.js \
 		markdeck/assets/3rdparty/asciinema-player.css \
 		markdeck/assets/3rdparty/reveal.js \
@@ -78,9 +77,9 @@ markdeck/lib/ditaa.jar:
 	curl -L -o $@ "https://github.com/arnehilmann/deck-master-md-reveal-pdf-cc/raw/master/ditaamini-0.11-SNAPSHOT.jar"
 
 
-markdeck/lib/render-asciiart-filter.lua:
-	mkdir -p $(shell dirname $@)
-	curl -L -o $@ "https://raw.githubusercontent.com/arnehilmann/pandoc-asciiart-filter/master/render-asciiart-filter.lua"
+#markdeck/lib/render-asciiart-filter.lua:
+	#mkdir -p $(shell dirname $@)
+	#curl -L -o $@ "https://raw.githubusercontent.com/arnehilmann/pandoc-asciiart-filter/master/render-asciiart-filter.lua"
 
 
 markdeck/assets/3rdparty/asciinema-player.js:
