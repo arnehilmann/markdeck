@@ -5,4 +5,3 @@ src/downloaded/
 src/markdeck/helper/downloaded/
 src/markdeck/lib/ditaa.jar
 src/markdeck/lib/plantuml.jar
-src/markdeck/lib/render-asciiart-filter.lua
