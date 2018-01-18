@@ -42,3 +42,19 @@
     }
 }
 
+.reveal .slides .flushleft {
+    position: absolute;
+    width: 50%;
+    min-height: 240px;
+    top: -100px;
+    background-color: rgba(0, 128, 128, 0.7);
+    border-right: 2px solid Teal;
+    padding: 1em 2em 1em;
+    text-align: left;
+    font-size: 60%;
+}
+
+.reveal .slides .textcentered {
+    text-align: center !important;
+}
+

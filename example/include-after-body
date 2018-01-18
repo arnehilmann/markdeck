@@ -1,0 +1,3 @@
+<script>
+    flushleft(".slides .flushleft");
+</script>

@@ -1,7 +1,7 @@
 ---
 title: markdeck
-pdf: markdeck-example.pdf
-standalone: markdeck-example.html
+# pdf: markdeck-example.pdf
+# standalone: markdeck-example.html
 ---
 
 # markdeck
@@ -134,7 +134,7 @@ $$e = \mathop {\lim }\limits_{n \to \infty } \left( {1 + \frac{1}{n}} \right)^n$
 🙃
 
 
-# {bg=White;assets/img/wordcloud.svg .flush-text-left}
+# {bg=White;assets/img/wordcloud.svg .flushleft .textcentered}
 
 ```render_qr
 https://github.com/arnehilmann/markdeck
