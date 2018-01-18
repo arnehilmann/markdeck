@@ -87,7 +87,9 @@ $body$
             help: $help$,
             showNotes: $showNotes$,
             autoPlayMedia: $autoPlayMedia$,
-            autoSlide: $autoSlide$,
+
+            autoSlide: (window.pdf_render) ? 0 : $autoSlide$,
+
             autoSlideStoppable: $autoSlideStoppable$,
             autoSlideMethod: $autoSlideMethod$,
             mouseWheel: $mouseWheel$,
