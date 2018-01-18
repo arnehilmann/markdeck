@@ -1,14 +1,48 @@
 
 ---
 title: slides by markdeck
+
+pdf:
+pdf_size: 1280x720  # 1024x768
+pdf_delay: 100
+
+standalone:
+
+asciinema: 'false'
+
+
 theme: simple
 transition: slide
-controls: "false"
-pdf:
-pdf_size: 1024x768
-pdf_delay: 100
+controls: 'false'
+controlsTutorial: 'false'
+controlsLayout: 'bottom-right'
+controlsBackArrows: 'faded'
+progress: true
+defaultTiming: 120
+slideNumber: 'false'
+history: 'false'
+keyboard: true
+overview: true
+center: true
+touch: true
+loop: 'false'
+rtl: 'false'
+shuffle: 'false'
+fragments: true
+embedded: 'false'
+help: true
+showNotes: 'false'
+autoPlayMedia: 'null'
+autoSlide: 0
+autoSlideStoppable: true
+autoSlideMethod: 'Reveal.navigateNext'
+mouseWheel: 'false'
+hideAddressBar: true
+previewLinks: 'false'
+transition: 'slide' # none/fade/slide/convex/concave/zoom
+transitionSpeed: 'default' # default/fast/slow
+backgroundTransition: 'fade' # none/fade/slide/convex/concave/zoom
+
 variant: revealjs
 highlight_style: zenburn
-standalone:
-asciinema: "false"
 ---

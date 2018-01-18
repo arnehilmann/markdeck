@@ -68,24 +68,40 @@ $body$
         // https://github.com/hakimel/reveal.js#configuration
         Reveal.initialize({
             controls: $controls$,
-            progress: true,
-            history: true,
-            center: true,
-            slideNumber: true,
-            // backgroundTransition: 'slide',
+            controlsTutorial: $controlsTutorial$,
+            controlsLayout: '$controlsLayout$',
+            controlsBackArrows: '$controlsBackArrows$',
+            progress: $progress$,
+            defaultTiming: $defaultTiming$,
+            slideNumber: $slideNumber$,
+            history: $history$,
+            keyboard: $keyboard$,
+            overview: $overview$,
+            center: $center$,
+            touch: $touch$,
+            loop: $loop$,
+            rtl: $rtl$,
+            shuffle: $shuffle$,
+            fragments: $fragments$,
+            embedded: $embedded$,
+            help: $help$,
+            showNotes: $showNotes$,
+            autoPlayMedia: $autoPlayMedia$,
+            autoSlide: $autoSlide$,
+            autoSlideStoppable: $autoSlideStoppable$,
+            autoSlideMethod: $autoSlideMethod$,
+            mouseWheel: $mouseWheel$,
+            hideAddressBar: $hideAddressBar$,
+            previewLinks: $previewLinks$,
+            transition: '$transition$',
+            transitionSpeed: '$transitionSpeed$',
+            backgroundTransition: '$backgroundTransition$',
 
             // available themes are in /css/theme
             $if(theme)$
                 theme: Reveal.getQueryHash().theme || '$theme$',
             $else$
                 theme: Reveal.getQueryHash().theme || 'default',
-            $endif$
-
-            // default/cube/page/concave/zoom/linear/fade/none
-            $if(transition)$
-                transition: Reveal.getQueryHash().transition || '$transition$',
-            $else$
-                transition: Reveal.getQueryHash().transition || 'default',
             $endif$
 
             // Optional libraries used to extend on reveal.js
