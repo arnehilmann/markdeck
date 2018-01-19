@@ -1,10 +1,12 @@
 #!/bin/bash
 set -e -E -u
 
+VERBOSE=false
+
 while read -r line || [[ -n "$line" ]]; do
     if echo "$line" | grep -q "<script src="; then
         src=$(echo "$line" | sed "s/^.*<script.*src=['\"]//;s/['\"].*$//")
-        du -h "$src" >&2
+        $VERBOSE && du -h "$src" >&2
         echo
         echo "<!-- EXTERNAL JAVASCRIPT: $src -->"
         echo "<script>"
@@ -12,7 +14,7 @@ while read -r line || [[ -n "$line" ]]; do
         echo "</script>"
     elif echo "$line" | grep -q "<link .*stylesheet"; then
         src=$(echo "$line" | sed "s/^.*<link.* href=['\"]//;s/['\"].*$//")
-        du -h "$src" >&2
+        $VERBOSE && du -h "$src" >&2
         echo
         echo "<!-- EXTERNAL STYLESHEET: $src -->"
         echo "<style>"
@@ -20,7 +22,7 @@ while read -r line || [[ -n "$line" ]]; do
             if echo "$cssline" | grep -q "src: .*url(\"fonts.* format"; then
                 fontsrcrel=$(echo "$cssline" | sed "s/.*url(['\"]//;s/['\"].*//")
                 fontsrcabs=$(dirname $src)/$fontsrcrel
-                du -h "$fontsrcabs" >&2
+                $VERBOSE && du -h "$fontsrcabs" >&2
                 fontencoded=$(base64 -w 0 "$fontsrcabs")
                 # TODO support more formats, like truetype, ...
                 echo "src: url(\"data:font/truetype;charset=utf-8;base64,$fontencoded\") format(\"truetype\");"
@@ -31,7 +33,7 @@ while read -r line || [[ -n "$line" ]]; do
         echo "</style>"
     elif echo "$line" | grep -q "<img .*src="; then
         src=$(echo "$line" | sed "s/^.*<img .*src=['\"]//;s/['\"].*$//")
-        du -h "$src" >&2
+        $VERBOSE && du -h "$src" >&2
         format=${src##*.}
         echo
         echo "<!-- EXTERNAL IMAGE: $src -->"
@@ -45,7 +47,7 @@ while read -r line || [[ -n "$line" ]]; do
         fi
     elif echo "$line" | grep -q "<section .*data-background-image="; then
         src=$(echo "$line" | sed "s/^.*<section .*data-background-image=['\"]//;s/['\"].*$//")
-        du -h "$src" >&2
+        $VERBOSE && du -h "$src" >&2
         format=${src##*.}
         echo
         echo "<!-- EXTERNAL BACKGROUND IMAGE: $src -->"
@@ -58,7 +60,7 @@ while read -r line || [[ -n "$line" ]]; do
         fi
     elif echo "$line" | grep -q "<asciinema-player src="; then
         src=$(echo "$line" | sed "s/^.*<asciinema-player src=['\"]//;s/['\"].*$//")
-        du -h "$src" >&2
+        $VERBOSE && du -h "$src" >&2
         echo
         echo "<!-- EXTERNAL ASCIINEMA SCRIPT: $src -->"
         echo "<asciinema-player src=\"data:text/json;base64,$(base64 -w 0 $src)\""
