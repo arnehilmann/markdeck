@@ -40,9 +40,9 @@
         var source = document.getElementById('source');
 
         var split_source = function(doc) {
-            console.log(doc);
+            // console.log(doc);
             var myText = doc.getElementsByTagName("pre")[0];
-            console.log(myText);
+            // console.log(myText);
             var lines = myText.innerHTML.split("\n");
             var numLines = lines.length;
             var i;
@@ -53,7 +53,7 @@
 
             for (i = 0; i < numLines; i++) {
                 var line = lines[i];
-                console.log("line: " + line);
+                // console.log("line: " + line);
                 if (line.indexOf('---') == 0) {
                     header = !header;
                     continue;
@@ -65,7 +65,7 @@
                     if (currentSection) {
                         window.sections.push(currentSection.join("\n"));
                     }
-                    console.log("slide header found: " + line);
+                    // console.log("slide header found: " + line);
                     currentSection = Array();
                     currentSection.push("<pre>");
                     currentSection.push(line);
