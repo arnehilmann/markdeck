@@ -148,11 +148,11 @@ function Render(elem, attr)
 
             local f=io.open(fname,"rb")
             if f~=nil then
-                io.stderr:write("cached " .. format .. " rendering found: '" .. fname .. "'\n")
+                io.stderr:write("cached " .. format .. " found\n")
                 data = f:read("*all")
                 f:close()
             else
-                io.stderr:write("rendering " .. format .. ": '" .. fname .. "'\n")
+                io.stderr:write("call " .. format .. "\n")
                 data = pandoc.pipe(cmd[1], cmd[2], cmd[3])
                 local f=io.open(fname, "wb")
                 f:write(data)
