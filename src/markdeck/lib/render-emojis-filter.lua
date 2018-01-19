@@ -6,13 +6,14 @@ function getFilename(url)
 end
 
 
-local pfile = io.popen('ls -a assets/3rdparty/jqueryemoji/apple72/*.png')
+local pfile = io.popen('ls -a /markdeck/lib/emojis/*.png')
 for png in pfile:lines() do
     -- io.stderr:write("png found: " .. png .. "\n")
     local code = getFilename(png)
     emojis[code] = png
 end
 
+os.execute('mkdir -p /target/assets/markdeck/emojis/')
 
 function ReplaceEmojis(elem)
     local es = {}
@@ -27,9 +28,9 @@ function ReplaceEmojis(elem)
                 es[#es+1] = pandoc.Str(elem.text:sub(last_pos, pos-1))
             end
             last_pos = pos + utf8.char(c):len()
-            es[#es+1] = pandoc.Image({pandoc.Str(utf8.char(c))}, png, "", pandoc.Attr("", {"emoji"}))
-            -- pandoc.mediabag.insert(fname, mimetype, data)
-            -- return pandoc.Para{ pandoc.Image({pandoc.Str("rendered")}, fname) }
+            local png_as_asset = "assets/markdeck/emojis/" .. codepoint .. ".png"
+            os.execute("cp " .. png .. " " .. png_as_asset)
+            es[#es+1] = pandoc.Image({pandoc.Str(utf8.char(c))}, png_as_asset, "", pandoc.Attr("", {"emoji"}))
         end
     end
     if elem.text:len() > last_pos then

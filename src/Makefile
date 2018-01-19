@@ -48,14 +48,14 @@ downloaded/bin/pandoc:
 	curl -L "https://github.com/jgm/pandoc/releases/download/$(PANDOC_VERSION)/pandoc-$(PANDOC_VERSION)-linux.tar.gz" | tar --strip-components=1 -C downloaded -zxvf - "pandoc-*/bin/pandoc"
 
 
-jqueryemoji:	jquery.js markdeck/assets/3rdparty/jQueryEmoji.js
+jqueryemoji:	jquery.js markdeck/lib/emojis
 
 
-markdeck/assets/3rdparty/jqueryemoji:
+markdeck/lib/emojis:
 	mkdir -p $@
 	curl -L -o $@.zip https://github.com/rodrigopolo/jqueryemoji/archive/master.zip
 	unzip $@.zip
-	mv jqueryemoji-master/img/apple72 $@
+	mv jqueryemoji-master/img/apple72/* $@
 	rm -rf jqueryemoji-master $@.zip
 
 
