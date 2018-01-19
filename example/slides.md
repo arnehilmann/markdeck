@@ -3,10 +3,10 @@ title: markdeck
 pdf: markdeck-example.pdf
 standalone: markdeck-example.html
 slideNumber: true
-autoSlide: 3000
+# autoSlide: 5000
 ---
 
-# markdeck {data-autoslide=5000}
+# markdeck {bg=black;assets/img/bg.colorfull.png .colorfull}
 
 create cool slide decks using markdown only
 
@@ -17,11 +17,17 @@ create cool slide decks using markdown only
 <small> arne@hilmann.de | 2018-01 🙃</small>
 
 
-# features {bg=black;assets/img/bg.colorfull.png .colorfull}
+# features
 
 the whole deck as markdown
 
-on-the-fly rendering of asciiart<br>
+cool ui, based on reveal.js
+
+
+# features {bg=Teal}
+
+on-the-fly rendering of asciiart
+
 <small>
 boxes,
 uml,
@@ -31,16 +37,19 @@ equations,
 qrcodes, …
 </small>
 
-supports emojis and terminal sessions
 
-cool ui, based on reveal.js
+# features {bg=DarkSlateBlue}
+
+emojis and terminal sessions
 
 on-the-fly reload when changing sources
 
 
-# boxes: ditaa {bg=SteelBlue}
+# asciiart: boxes {bg=SteelBlue}
 
-```render_ditaa
+ditaa
+
+```{.render_ditaa args="--transparent --scale 2 --font 'EB Garamond'"}
     +--------+   +-------+    +-------+
     |        +---+ ditaa +--->|       |
     |  Text  |   +-------+    |diagram|
@@ -53,9 +62,11 @@ on-the-fly reload when changing sources
 ```
 
 
-# uml: plantuml {bg=lightblue}
+# asciiart: uml {bg=lightblue}
 
-```render_plantuml
+plantuml
+
+```{.render_plantuml args="-Sbackgroundcolor=transparent -SdefaultFontSize=24 -SdefaultFontName=EB\ Garamond"}
 @startuml
 Bob->Alice : hello
 Alice->Bob : oh, you again...
@@ -64,7 +75,9 @@ Bob->Alice : ??
 ```
 
 
-# graphs: graphviz {bg=DarkOrange}
+# asciiart: graphs {bg=DarkOrange}
+
+graphviz
 
 ```render_dot
 digraph G {
@@ -77,7 +90,9 @@ digraph G {
 }
 ```
 
-# charts: vega lite {bg=GhostWhite}
+# asciiart: charts {bg=GhostWhite}
+
+vega-lite
 
 ```render_vegalite
 {
@@ -112,7 +127,9 @@ digraph G {
 ```
 
 
-# equations: mathjax {bg=Teal}
+# asciiart: equations {bg=Teal}
+
+mathjax
 
 $a^2 + b^2 = c^2$
 
@@ -130,7 +147,7 @@ $$e = \mathop {\lim }\limits_{n \to \infty } \left( {1 + \frac{1}{n}} \right)^n$
 ></asciinema-player>
 
 
-# Thank You! {bg=AliceBlue data-autoslide=4000}
+# Thank You! {bg=AliceBlue}
 
 [pandoc](http://pandoc.org)
 [reveal.js](http://lab.hakim.se/reveal-js/#/)
