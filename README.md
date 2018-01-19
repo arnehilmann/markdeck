@@ -2,12 +2,13 @@
 
 markdown to cool slides deck
 
-example:
-[side-by-side view](https://arnehilmann.github.io/markdeck/explain.html),
-with the rendered slide on the left and the markdown source on the right side.
+## example
 
-path:
-[markdown](https://raw.githubusercontent.com/arnehilmann/markdeck/master/example/slides.md)
+[side-by-side view](https://arnehilmann.github.io/markdeck/explain.html),<br/>
+with the rendered slide on the left and the markdown source on the right side
+
+data path:
+[markdown source](https://raw.githubusercontent.com/arnehilmann/markdeck/master/example/slides.md)
 ->
 [html deck](https://arnehilmann.github.io/markdeck/)
 ->
@@ -31,7 +32,7 @@ open http://localhost:8080
 ```
 
 
-# example
+# how
 
 *markdeck* takes ```slide-*.md``` files in markdown format
 and the assets subdir
@@ -40,7 +41,23 @@ and [reveal.js](http://lab.hakim.se/reveal-js/) as the presenter framework.
 
 see the
 [side-by-side view](https://arnehilmann.github.io/markdeck/explain.html),
-to get an idea how markdeck works and looks like...
+to get an idea how markdeck works and looks like, or have a look
+at the [documentation](DOCUMENTATION.md).
+
+
+# why
+
+* cool looking slides
+* fast/easy to write
+* easy to collaborate/reuse
+* all sources under version control
+* no binary formats
+
+
+# known issues
+
+* custom layout hard, but possible
+* pixel-perfect layout nearly impossible
 
 
 # documentation
