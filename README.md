@@ -2,7 +2,7 @@
 
 markdown to cool slides deck
 
-## example
+# example
 
 [slide deck](https://arnehilmann.github.io/markdeck/)
 
