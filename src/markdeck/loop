@@ -30,6 +30,10 @@ function print_usage() {
 }
 
 if ! $ONCE; then
+    print_usage
+
+    touch /target/index.html
+
     function wait_for_indexhtml() {
         inotifywait -r -q -q /target/index.html
     }
@@ -78,6 +82,7 @@ if ! $ONCE; then
                     du -h "$standalone" "$ZIP_FILE"
                 fi
                 du -h "$standalone"
+                echo "Packaged all slides"
             fi
             [[ -e /target/render-standalone ]] && continue
             wait_for_indexhtml
