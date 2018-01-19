@@ -50,6 +50,7 @@
 
             for (i = 1; i < numLines; i++) {
                 var line = lines[i];
+                console.log("line: " + line);
                 if (line.indexOf('---') == 0) {
                     header = !header;
                     continue;
@@ -71,7 +72,7 @@
                 }
             }
             window.sections.push(currentSection.join("\n"));
-            // console.log(window.sections);
+            console.log(window.sections);
         }
 
         document.getElementById('deck').onload = function(event) {
