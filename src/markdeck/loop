@@ -107,8 +107,8 @@ while true; do
             /source/assets/css/slides.scss \
             /target/assets/css/slides.css || :
         sass --scss --no-cache \
-            /markdeck/assets/markdeck/css/slides.scss \
-            /target/assets/markdeck/css/slides.css || :
+            /markdeck/assets/markdeck/css/markdeck.revealjs.scss \
+            /target/assets/markdeck/css/markdeck.revealjs.css || :
         echo "-------- /sass output --------"
         echo
     fi
