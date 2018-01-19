@@ -17,6 +17,18 @@ shopt -s nullglob
 esc=$(printf '\033')
 # ansi color codes: http://pueblo.sourceforge.net/doc/manual/ansi_color_codes.html
 
+function print_usage() {
+    echo -e "\n\n\n${esc}[1mmarkdeck $VERSION - $MOTTO\n"
+    echo -e "       for the slides:  open http://localhost:$PORT${esc}[0m"
+    echo
+    echo -e "for side-by-side view:  open http://localhost:$PORT/explain.html"
+    echo -e "        for utilities:  open http://localhost:$PORT_HELPER"
+    echo
+    echo -e "(... or hit Ctrl-C to stop markdeck)"
+    echo
+    echo
+}
+
 if ! $ONCE; then
     function wait_for_indexhtml() {
         inotifywait -r -q -q /target/index.html
@@ -55,13 +67,17 @@ if ! $ONCE; then
         cd /target
         while true; do
             if [[ -e /target/render-standalone ]]; then
+                echo "packaging slides and assets"
                 standalone="$(cat /target/render-standalone)"
                 rm -f /target/render-standalone
                 /markdeck/embed < index.html > "$standalone"
-                ZIP_FILE=$(basename "$standalone" .html).zip
-                rm -f "$ZIP_FILE"
-                zip "$ZIP_FILE" "$standalone"
-                du -h "$standalone" "$ZIP_FILE"
+                if false; then
+                    ZIP_FILE=$(basename "$standalone" .html).zip
+                    rm -f "$ZIP_FILE"
+                    zip "$ZIP_FILE" "$standalone"
+                    du -h "$standalone" "$ZIP_FILE"
+                fi
+                du -h "$standalone"
             fi
             [[ -e /target/render-standalone ]] && continue
             wait_for_indexhtml
@@ -198,9 +214,7 @@ while true; do
     fi
 
     sleep .5
-    echo -e "\n\n\n${esc}[1mmarkdeck $VERSION - $MOTTO\n"
-    echo -e "open http://localhost:$PORT${esc}[0m\n"
-    echo -e "(or open http://localhost:$PORT_HELPER for utilities, or hit Ctrl-C to stop markdeck)\n"
+    print_usage
 
     if [[ -n $SOURCE_MD ]]; then
         inotifywait -r -q -e create -e modify -e delete -e move \
