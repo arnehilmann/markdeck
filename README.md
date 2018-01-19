@@ -4,15 +4,14 @@ markdown to cool slides deck
 
 ## example
 
-[side-by-side view](https://arnehilmann.github.io/markdeck/explain.html),<br/>
-with the rendered slide on the left and the markdown source on the right side
+[slide deck](https://arnehilmann.github.io/markdeck/)
 
-data path:
+[side-by-side view](https://arnehilmann.github.io/markdeck/explain.html)<br/>
+(the rendered slide on the left and the markdown source on the right side)
+
+[handout](https://arnehilmann.github.io/markdeck/markdeck-example.pdf)
+
 [markdown source](https://raw.githubusercontent.com/arnehilmann/markdeck/master/example/slides.md)
-->
-[html deck](https://arnehilmann.github.io/markdeck/)
-->
-[pdf](https://arnehilmann.github.io/markdeck/markdeck-example.pdf)
 
 
 # tl;dr
