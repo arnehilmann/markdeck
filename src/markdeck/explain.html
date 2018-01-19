@@ -71,24 +71,20 @@
                 }
             }
             window.sections.push(currentSection.join("\n"));
-            console.log(window.sections);
-        }
-
-        var sync_iframes = function() {
-            var sourceDoc = source.contentDocument;
-            split_source(sourceDoc.documentElement.innerHTML);
-
-
-
-            var deckWindow = deck.contentWindow;
-            deckWindow.Reveal.addEventListener( 'slidechanged', function( event ) {
-                var slideNr = deckWindow.Reveal.getIndices().h;
-                source.contentDocument.documentElement.innerHTML = window.sections[slideNr];
-            });
+            // console.log(window.sections);
         }
 
         document.getElementById('deck').onload = function(event) {
-            sync_iframes();
+            var sourceDoc = source.contentDocument;
+            split_source(sourceDoc.documentElement.innerHTML);
+            var deckWindow = deck.contentWindow;
+            var update_source = function() {
+                // console.log("updating source view");
+                var slideNr = deckWindow.Reveal.getIndices().h;
+                source.contentDocument.documentElement.innerHTML = window.sections[slideNr];
+            };
+            update_source();
+            deckWindow.Reveal.addEventListener('slidechanged', update_source);
         };
     </script>
 </body>
