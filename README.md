@@ -7,7 +7,7 @@ markdown to cool slides deck
 [slide deck](https://arnehilmann.github.io/markdeck/)
 
 [side-by-side view](https://arnehilmann.github.io/markdeck/explain.html)<br/>
-(the rendered slide on the left and the markdown source on the right side)
+(markdown source on the right side, the rendered slide on the left)
 
 [handout](https://arnehilmann.github.io/markdeck/markdeck-example.pdf)
 
