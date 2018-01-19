@@ -1,5 +1,5 @@
-VERSION=0.19
-MOTTO="🐾 the paw edition"
+VERSION=0.20
+MOTTO="charts-n-math"
 
 PANDOC_VERSION=2.1.1
 REVEALJS_VERSION=3.6.0
