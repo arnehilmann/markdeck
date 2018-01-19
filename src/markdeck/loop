@@ -23,8 +23,7 @@ function print_usage() {
     echo
     echo -e "for side-by-side view:  open http://localhost:$PORT/explain.html"
     echo -e "        for utilities:  open http://localhost:$PORT_HELPER"
-    echo
-    echo -e "(... or hit Ctrl-C to stop markdeck)"
+    echo -e "     to stop markdeck:  hit Ctrl-C"
     echo
     echo
 }
