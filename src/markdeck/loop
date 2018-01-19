@@ -133,8 +133,8 @@ while true; do
     PANDOC_ARGS=
     [[ -e /source/include-before-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-before-body /source/include-before-body"
     [[ -e /source/include-after-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-after-body /source/include-after-body"
-    rm -f /target/.slides.md
-    cat ${SOURCE_MD:-/markdeck/note.md} > /target/.slides.md
+    rm -f /target/slides.combined.md
+    cat ${SOURCE_MD:-/markdeck/note.md} > /target/slides.combined.md
     if pandoc \
         --no-highlight \
         -f markdown+yaml_metadata_block \
@@ -148,7 +148,7 @@ while true; do
         --lua-filter /markdeck/lib/${variant}-shortcut-filter.lua \
         $PANDOC_ARGS \
         -o /target/index.html.tmp \
-        /target/.slides.md /markdeck/defaults.yaml 2>&1 | tee /tmp/pandoc.output;
+        /target/slides.combined.md /markdeck/defaults.yaml 2>&1 | tee /tmp/pandoc.output;
     then
         if [[ -e /target/index.html.tmp ]]; then
             if [[ -n "$pdf" ]]; then
