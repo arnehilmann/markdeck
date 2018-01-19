@@ -166,4 +166,3 @@ $$e = \mathop {\lim }\limits_{n \to \infty } \left( {1 + \frac{1}{n}} \right)^n$
 ```render_qr
 https://github.com/arnehilmann/markdeck
 ```
-a
