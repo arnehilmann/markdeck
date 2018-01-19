@@ -1,0 +1,95 @@
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+        }
+        .box {
+            display:inline-block;
+            padding: 0;
+        }
+        .deck {
+            width: 66%;
+        }
+        .source {
+            width: 32%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="box deck">
+        <iframe
+            id="deck"
+            src="/index.html"
+            style="border: 0;"
+            frameborder="0"
+            scrolling="no" height="100%" width="100%" align="left" ></iframe>
+    </div>
+    <div class="box source">
+        <iframe
+            id="source"
+            src="/slides.combined.md"
+            frameborder="0"
+            height="100%" width="100%" align="left" ></iframe>
+    </div>
+
+    <script>
+        var deck = document.getElementById('deck');
+        var source = document.getElementById('source');
+
+        var split_source = function(myText) {
+            var lines = myText.split("\n");
+            var numLines = lines.length;
+            var i;
+            var currentSection = undefined;
+            var header = true;
+
+            window.sections = Array();
+
+            for (i = 1; i < numLines; i++) {
+                var line = lines[i];
+                if (line.indexOf('---') == 0) {
+                    header = !header;
+                    continue;
+                }
+                if (header) {
+                    continue;
+                }
+                if (line.indexOf('# ') == 0) {
+                    if (currentSection) {
+                        window.sections.push(currentSection.join("\n"));
+                    }
+                    currentSection = Array();
+                    currentSection.push("<pre>");
+                    currentSection.push(line);
+                } else {
+                    if (currentSection) {
+                        currentSection.push(line);
+                    }
+                }
+            }
+            window.sections.push(currentSection.join("\n"));
+            console.log(window.sections);
+        }
+
+        var sync_iframes = function() {
+            var sourceDoc = source.contentDocument;
+            split_source(sourceDoc.documentElement.innerHTML);
+
+
+
+            var deckWindow = deck.contentWindow;
+            deckWindow.Reveal.addEventListener( 'slidechanged', function( event ) {
+                var slideNr = deckWindow.Reveal.getIndices().h;
+                source.contentDocument.documentElement.innerHTML = window.sections[slideNr];
+            });
+        }
+
+        document.getElementById('deck').onload = function(event) {
+            sync_iframes();
+        };
+    </script>
+</body>
+</html>
