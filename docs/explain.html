@@ -39,16 +39,19 @@
         var deck = document.getElementById('deck');
         var source = document.getElementById('source');
 
-        var split_source = function(myText) {
-            var lines = myText.split("\n");
+        var split_source = function(doc) {
+            console.log(doc);
+            var myText = doc.getElementsByTagName("pre")[0];
+            console.log(myText);
+            var lines = myText.innerHTML.split("\n");
             var numLines = lines.length;
             var i;
             var currentSection = undefined;
-            var header = true;
+            var header = false;
 
             window.sections = Array();
 
-            for (i = 1; i < numLines; i++) {
+            for (i = 0; i < numLines; i++) {
                 var line = lines[i];
                 console.log("line: " + line);
                 if (line.indexOf('---') == 0) {
@@ -62,6 +65,7 @@
                     if (currentSection) {
                         window.sections.push(currentSection.join("\n"));
                     }
+                    console.log("slide header found: " + line);
                     currentSection = Array();
                     currentSection.push("<pre>");
                     currentSection.push(line);
@@ -77,7 +81,7 @@
 
         document.getElementById('deck').onload = function(event) {
             var sourceDoc = source.contentDocument;
-            split_source(sourceDoc.documentElement.innerHTML);
+            split_source(sourceDoc.documentElement);
             var deckWindow = deck.contentWindow;
             var update_source = function() {
                 // console.log("updating source view");
