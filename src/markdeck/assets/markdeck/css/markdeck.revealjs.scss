@@ -64,7 +64,11 @@
 }
 
 section.has-dark-background.colorfull * {
-    text-shadow: 1px 1px #000;
+    // text-shadow: 1px 1px #000;
+}
+
+section.has-dark-background.colorfull a {
+    color: AliceBlue;
 }
 
 .flush-text-left {
