@@ -1,8 +1,7 @@
---
--- blatantly copied from https://stackoverflow.com/a/28665686
---
-
 function shlex(text)
+    --
+    -- blatantly copied from https://stackoverflow.com/a/28665686
+    --
     local result = {}
     local e = 0
     while true do
@@ -28,10 +27,11 @@ function shlex(text)
     end
     return result
 end
-
 -- for _, token in pairs(shlex("aha 'foo bar' egg")) do
     -- print(token)
 -- end
+--
+--
 CONFIGFILE=os.getenv("ASCIIART_CONFIG") or "render-asciiart-filter.config"
 local config = {}
 local configfile,err = loadfile(CONFIGFILE, "t", config)
@@ -106,23 +106,9 @@ local renderer = {
     end,
 }
 
--- vegalite_spots_nr = 0
--- local js_renderer = {
---     render_vegalite = function(text, attrs)
---         -- io.stderr:write("vegalite text\n" .. text .. "\n")
---         local nr = vegalite_spots_nr
---         vegalite_spots_nr = vegalite_spots_nr + 1
---         return {
---                     pandoc.Div({
---                         pandoc.Para{pandoc.Str("")}
---                     }, pandoc.Attr("vegalite_spot_" .. nr)),
---                     pandoc.Plain{pandoc.RawInline("html", "<script>vegalite_spots.push(" .. text .. ")</script>")},
---                }
---     end,
--- }
-
 
 images = {}
+
 
 function Cleanup(doc)
     local pfile = io.popen('ls -a rendered/*.png rendered/*.svg 2> /dev/null')
@@ -160,9 +146,24 @@ function Render(elem, attr)
             end
             images[fname] = true
             pandoc.mediabag.insert(fname, mimetype, data)
-            return pandoc.Para{ pandoc.Image({pandoc.Str("")}, fname) }
+            return fname
         end
     end
 end
 
-return {{CodeBlock=Render}, {Pandoc=Cleanup}}
+
+function RenderCodeBlock(elem, attr)
+    local fname = Render(elem, attr)
+    return pandoc.Para{ pandoc.Image({pandoc.Str("")}, fname) }
+end
+
+
+function RenderCode(elem, attr)
+    local fname = Render(elem, attr)
+    if fname ~= nil then
+        return pandoc.Image({pandoc.Str("")}, fname)
+    end
+end
+
+
+return {{CodeBlock=RenderCodeBlock, Code=RenderCode}, {Pandoc=Cleanup}}
