@@ -52,7 +52,7 @@ on-the-fly reload when changing sources
 
 ditaa
 
-```{.render_ditaa args="--transparent --scale 2 --font 'EB Garamond'"}
+```{.render_ditaa args="--transparent --scale 2 --font 'EB Garamond 12'"}
     +--------+   +-------+    +-------+
     |        +---+ ditaa +--->|       |
     |  Text  |   +-------+    |diagram|
