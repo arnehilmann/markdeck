@@ -5,14 +5,38 @@
     <meta name="viewport" content="width=1024" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <title>$title$</title>
-    <meta name="description" content="" />
-    <meta name="author" content="" />
+    <meta name="description" content="$title$" />
+    $for(author)$
+        <meta name="author" content="$author$" />
+    $endfor$
+
+    <link rel="stylesheet" href="assets/markdeck/styles/$highlight_style$.css" />
+
+    $if(asciinema)$
+        <link rel="stylesheet" type="text/css" href="assets/3rdparty/asciinema-player.css" />
+    $endif$
 
     <link href="assets/3rdparty/impress.js/css/impress-demo.css" rel="stylesheet" />
+    <link href="assets/markdeck/css/markdeck.impressjs.css" rel="stylesheet" />
     <link href="assets/css/slides.css" rel="stylesheet" />
+        <script>
+        window.pdf_render = window.location.search.match(/render=pdf/gi) != null;
+        if (window.pdf_render) {
+            document.write('<link rel="stylesheet" href="assets/css/render-pdf.css" type="text/css">');
+        }
+    </script>
+
+    $for(header-includes)$
+        $header-includes$
+    $endfor$
+
 </head>
 
 <body class="impress-not-supported">
+
+$for(include-before)$
+$include-before$
+$endfor$
 
     <div class="fallback-message">
         <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
@@ -38,7 +62,16 @@
     </script>
 
     <script src="assets/3rdparty/impress.js/js/impress.js"></script>
+    <script src="assets/markdeck/impressjs-helper.js"></script>
     <script>impress().init();</script>
+
+    $if(asciinema)$
+        <script src="assets/3rdparty/asciinema-player.js"></script>
+    $endif$
+
+$for(include-after)$
+$include-after$
+$endfor$
 
 </body>
 </html>
