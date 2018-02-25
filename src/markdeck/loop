@@ -28,6 +28,18 @@ function print_usage() {
     echo
 }
 
+function show_errors() {
+    rm -f /target/index.html
+    echo '<html><head></head><body><pre>' > /target/index.html
+    cat /tmp/pandoc.output >> /target/index.html
+    echo '</pre></body></html>' >> /target/index.html
+    echo -e "${esc}[37m${esc}[43m"
+    echo -e "\npandoc crashed\n"
+    cat /tmp/pandoc.output
+    echo -e "${esc}[0m"
+    sleep 4
+}
+
 if ! $ONCE; then
     print_usage
 
@@ -130,6 +142,9 @@ while true; do
         sass --scss --no-cache \
             /markdeck/assets/markdeck/css/markdeck.revealjs.scss \
             /target/assets/markdeck/css/markdeck.revealjs.css || :
+        sass --scss --no-cache \
+            /markdeck/assets/markdeck/css/markdeck.impressjs.scss \
+            /target/assets/markdeck/css/markdeck.impressjs.css || :
         echo "-------- /sass output --------"
         echo
     fi
@@ -141,11 +156,11 @@ while true; do
     METADATA="$(pandoc --template=/markdeck/metadata.template ${SOURCE_MD:-/markdeck/note.md} /markdeck/defaults.yaml)"
     jq '. | .' <<<$METADATA
     variant=$(jq -r '.variant' <<< "$METADATA")
+    html=$(jq -r '.html' <<< "$METADATA")
     pdf=$(jq -r '.pdf' <<< "$METADATA")
     pdf_size=$(jq -r '.pdf_size' <<< "$METADATA")
     pdf_delay=$(jq -r '.pdf_delay' <<< "$METADATA")
     standalone=$(jq -r '.standalone' <<< "$METADATA")
-    MARKDECK_TEMPLATE=/markdeck/template-${variant}.html
     echo "ASCIIART_CONFIG=$ASCIIART_CONFIG"
     echo "-------- /config --------"
     echo
@@ -156,16 +171,19 @@ while true; do
     [[ -e /source/include-after-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-after-body /source/include-after-body"
     rm -f /target/slides.combined.md.txt
     cat ${SOURCE_MD:-/markdeck/note.md} > /target/slides.combined.md.txt
+
+    template=/markdeck/template-${variant}.html
     if pandoc \
         --no-highlight \
         -f markdown+yaml_metadata_block \
         -t html5 \
         --standalone \
-        --template=$MARKDECK_TEMPLATE \
+        --template=$template \
         --section-divs \
         --filter mathjax-pandoc-filter \
         --lua-filter /markdeck/lib/render-asciiart-filter.lua \
         --lua-filter /markdeck/lib/render-emojis-filter.lua \
+        --lua-filter /markdeck/lib/bg-shortcut-filter.lua \
         --lua-filter /markdeck/lib/${variant}-shortcut-filter.lua \
         $PANDOC_ARGS \
         -o /target/index.html.tmp \
@@ -173,9 +191,9 @@ while true; do
     then
         if [[ -e /target/index.html.tmp ]]; then
             if [[ -n "$pdf" ]]; then
-                echo "decktape reveal \
+                echo "decktape $variant \
                     -s $pdf_size --no-sandbox -p $pdf_delay \
-                    'http://localhost:8080/index.html?render=pdf' \
+                    'http://localhost:8080/$html?render=pdf' \
                     '/target/$pdf'" > /target/render-pdf
                 chmod a+rx /target/render-pdf
             fi
@@ -185,27 +203,10 @@ while true; do
 
             mv /target/index.html.tmp /target/index.html
         else
-            rm -f /target/index.html
-            echo '<pre>' > /target/index.html
-            cat /tmp/pandoc.output >> /target/index.html
-            echo '</pre>' >> /target/index.html
-            echo -e "${esc}[37m${esc}[43m"
-            echo -e "\nsome pandoc internals failed\n"
-            cat /tmp/pandoc.output
-            echo -e "${esc}[0m"
-            sleep 4
+            show_errors
         fi
     else
-        # TODO refactor to own function, see else-branch above
-        rm -f /target/index.html
-        echo '<pre>' > /target/index.html
-        cat /tmp/pandoc.output >> /target/index.html
-        echo '</pre>' >> /target/index.html
-        echo -e "${esc}[37m${esc}[43m"
-        echo -e "\npandoc crashed\n"
-        cat /tmp/pandoc.output
-        echo -e "${esc}[0m"
-        sleep 4
+        show_errors
     fi
     echo "-------- /pandoc output --------"
     echo
