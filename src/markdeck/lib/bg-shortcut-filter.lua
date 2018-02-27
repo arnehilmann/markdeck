@@ -10,7 +10,7 @@ function Header(elem)
                 elem.attributes[bg_attrs[i]]=w
                 i=i+1
             end
-            elem.attributes.bg=nil
+            -- elem.attributes.bg=nil
         end
         if elem.attributes.bgcss then
             -- io.stderr:write("section " .. elem.identifier .. "\n")
