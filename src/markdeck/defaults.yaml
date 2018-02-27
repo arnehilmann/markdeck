@@ -2,47 +2,47 @@
 ---
 title: slides by markdeck
 
+variant: reveal
+html: index.html
+
 pdf:
-pdf_size: 1024x768  # 1280x720
+pdf_size: 1189x841  # 1024x768  # 1280x720
 pdf_delay: 100
 
 standalone:
 
-asciinema: 'false'
-
+asciinema: false
 
 theme: simple
 transition: slide
-controls: 'false'
-controlsTutorial: 'false'
-controlsLayout: 'bottom-right'
-controlsBackArrows: 'faded'
+controls: false
+controlsTutorial: false
+controlsLayout: bottom-right
+controlsBackArrows: faded
 progress: true
 defaultTiming: 120
-slideNumber: 'false'
+slideNumber: false
 history: true
 keyboard: true
 overview: true
 center: true
 touch: true
-loop: 'false'
-rtl: 'false'
-shuffle: 'false'
+loop: false
+rtl: false
+shuffle: false
 fragments: true
-embedded: 'false'
+embedded: false
 help: true
-showNotes: 'false'
-autoPlayMedia: 'null'
+showNotes: false
+autoPlayMedia: null
 autoSlide: 0
 autoSlideStoppable: true
-autoSlideMethod: 'Reveal.navigateNext'
-mouseWheel: 'false'
+autoSlideMethod: Reveal.navigateNext
+mouseWheel: false
 hideAddressBar: true
-previewLinks: 'false'
-transition: 'slide' # none/fade/slide/convex/concave/zoom
-transitionSpeed: 'default' # default/fast/slow
-backgroundTransition: 'fade' # none/fade/slide/convex/concave/zoom
-
-variant: revealjs
+previewLinks: false
+transition: slide  # none/fade/slide/convex/concave/zoom
+transitionSpeed: default  # default/fast/slow
+backgroundTransition: fade  # none/fade/slide/convex/concave/zoom
 highlight_style: zenburn
 ---

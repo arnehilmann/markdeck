@@ -67,44 +67,39 @@ $body$
         // Full list of configuration options available here:
         // https://github.com/hakimel/reveal.js#configuration
         Reveal.initialize({
-            controls: $controls$,
-            controlsTutorial: $controlsTutorial$,
+            controls: '$controls$',
+            controlsTutorial: '$controlsTutorial$',
             controlsLayout: '$controlsLayout$',
             controlsBackArrows: '$controlsBackArrows$',
-            progress: $progress$,
-            defaultTiming: $defaultTiming$,
-            slideNumber: $slideNumber$,
-            history: $history$,
-            keyboard: $keyboard$,
-            overview: $overview$,
-            center: $center$,
-            touch: $touch$,
-            loop: $loop$,
-            rtl: $rtl$,
-            shuffle: $shuffle$,
-            fragments: $fragments$,
-            embedded: $embedded$,
-            help: $help$,
-            showNotes: $showNotes$,
-            autoPlayMedia: $autoPlayMedia$,
+            progress: '$progress$',
+            defaultTiming: '$defaultTiming$',
+            slideNumber: '$slideNumber$',
+            history: '$history$',
+            keyboard: '$keyboard$',
+            overview: '$overview$',
+            center: '$center$',
+            touch: '$touch$',
+            loop: '$loop$',
+            rtl: '$rtl$',
+            shuffle: '$shuffle$',
+            fragments: '$fragments$',
+            embedded: '$embedded$',
+            help: '$help$',
+            showNotes: '$showNotes$',
+            autoPlayMedia: '$autoPlayMedia$',
 
             autoSlide: (window.pdf_render) ? 0 : $autoSlide$,
 
-            autoSlideStoppable: $autoSlideStoppable$,
-            autoSlideMethod: $autoSlideMethod$,
-            mouseWheel: $mouseWheel$,
-            hideAddressBar: $hideAddressBar$,
-            previewLinks: $previewLinks$,
+            autoSlideStoppable: '$autoSlideStoppable$',
+            autoSlideMethod: '$autoSlideMethod$',
+            mouseWheel: '$mouseWheel$',
+            hideAddressBar: '$hideAddressBar$',
+            previewLinks: '$previewLinks$',
             transition: '$transition$',
             transitionSpeed: '$transitionSpeed$',
             backgroundTransition: '$backgroundTransition$',
 
-            // available themes are in /css/theme
-            $if(theme)$
-                theme: Reveal.getQueryHash().theme || '$theme$',
-            $else$
-                theme: Reveal.getQueryHash().theme || 'default',
-            $endif$
+            theme: '$theme$',
 
             // Optional libraries used to extend on reveal.js
             dependencies: [
