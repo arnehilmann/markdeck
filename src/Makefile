@@ -5,6 +5,7 @@ PANDOC_VERSION=2.1.1
 REVEALJS_VERSION=3.6.0
 ASCIINEMAPLAYER_VERSION=v2.6.0
 JQUERY_VERSION=3.2.1.slim.min
+IMPRESSJS_VERSION=1.0.0-beta2
 
 
 all:	prepare
@@ -36,6 +37,7 @@ prepare:	downloaded/bin/pandoc \
 		markdeck/assets/3rdparty/asciinema-player.js \
 		markdeck/assets/3rdparty/asciinema-player.css \
 		markdeck/assets/3rdparty/reveal.js \
+		markdeck/assets/3rdparty/impress.js \
 		jqueryemoji \
 		markdeck/helper/downloaded/trianglify-background-generator-master \
 		markdeck/helper/downloaded/colorful-background \
@@ -73,6 +75,7 @@ markdeck/lib/plantuml.jar:
 
 
 markdeck/lib/ditaa.jar:
+	# from https://github.com/pepijnve/ditaa/
 	mkdir -p $(shell dirname $@)
 	curl -L -o $@ "https://github.com/arnehilmann/deck-master-md-reveal-pdf-cc/raw/master/ditaamini-0.11-SNAPSHOT.jar"
 
@@ -100,7 +103,7 @@ markdeck/assets/3rdparty/reveal.js:
 
 markdeck/assets/3rdparty/impress.js:
 	mkdir -p $@
-	curl -L "https://github.com/impress/impress.js/archive/$(IMPRESSJS_VERSION).tar.gz" | tar -C $@ --strip-components=1 --exclude test --exclude examples -zxvf -
+	curl -L "https://github.com/impress/impress.js/archive/$(IMPRESSJS_VERSION).tar.gz" | tar -C $@ --strip-components=1 --exclude example --exclude test -zxvf -
 
 
 markdeck/helper/downloaded/trianglify-background-generator-master:

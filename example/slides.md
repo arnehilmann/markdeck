@@ -1,12 +1,16 @@
 ---
 title: markdeck
-# pdf: markdeck-example.pdf
+variant: impress
+pdf: markdeck-example.pdf
 # standalone: markdeck-example.html
-slideNumber: true
+# slideNumber: true
 # autoSlide: 5000
-controls: true
-controlsTutorial: true
-controlsLayout: edges
+# controls: true
+# controlsTutorial: true
+# controlsLayout: edges
+# pdf_size: 1189x841
+pdf_size: 1024x768
+asciinema: true
 ---
 
 # markdeck {bg=black;assets/img/bg.colorfull.png .colorfull}
@@ -20,14 +24,14 @@ create cool slide decks using markdown only
 <small> arne@hilmann.de | 2018-01 🙃</small>
 
 
-# features
+# features {rel-x=1}
 
 the whole deck as markdown
 
 cool ui, based on reveal.js
 
 
-# features {bg=Teal}
+# features {bg=Teal rel-x=0 rel-y=1}
 
 on-the-fly rendering of asciiart
 
@@ -41,7 +45,7 @@ qrcodes, …
 </small>
 
 
-# features {bg=DarkSlateBlue}
+# features {bg=DarkSlateBlue rel-x=-1 rel-y=0}
 
 emojis and terminal sessions
 
@@ -53,19 +57,28 @@ on-the-fly reload when changing sources
 ditaa
 
 ```{.render_ditaa args="--transparent --scale 2 --font 'EB Garamond 12'"}
-    +--------+   +-------+    +-------+
-    |        +---+ ditaa +--->|       |
-    |  Text  |   +-------+    |diagram|
-    |Document|   |!magic!|    |       |
-    |     {d}|   |       |    |       |
-    +---+----+   +-------+    +-------+
-        :                          ^
-        |       Lots of work       |
-        +--------------------------+
+
++=----------------------------+   +=----------------------------+
+| Node                        |   | Node                        |
+|                             |   |                             |
+|                             |   |                             |
+| +----------+   +----------+ |   | +----------+   +----------+ |
+| |          |   |          | |   | |          |   |          | |
+| | Frontend |   | Foo      | |   | | Frontend |   | Bar      | |
+| |          |   |          | |   | |          |   |          | |
+| |          |   |          | |   | |          |   |          | |
+| |          |   | {s}      | |   | |          |   | {s}      | |
+| +-----+----+   +----------+ |   | +-----+----+   +----------+ |
+|       ^                     |   |       ^                     |
+|       |                     |   |       |                     |
+|       +-------------service-------------+                     |
+|                             |   |                             |
++-----------------------------+   +-----------------------------+
+
 ```
 
 
-# asciiart: uml {bg=lightblue}
+# asciiart: uml {bg=lightblue rel-x=0 rel-y=-1}
 
 plantuml
 
@@ -93,7 +106,7 @@ digraph G {
 }
 ```
 
-# asciiart: charts {bg=GhostWhite}
+# asciiart: charts {bg=GhostWhite rel-x=1 rel-y=0}
 
 vega-lite
 
@@ -150,7 +163,7 @@ $$e = \mathop {\lim }\limits_{n \to \infty } \left( {1 + \frac{1}{n}} \right)^n$
 ></asciinema-player>
 
 
-# Thank You! {bg=AliceBlue}
+# Thank You! {bg=AliceBlue rel-x=0 rel-y=1}
 
 [pandoc](http://pandoc.org)
 [reveal.js](http://lab.hakim.se/reveal-js/#/)
@@ -164,6 +177,27 @@ $$e = \mathop {\lim }\limits_{n \to \infty } \left( {1 + \frac{1}{n}} \right)^n$
 🙃
 
 
-# {bg=White;assets/img/wordcloud.svg .flushleft .textcentered}
+# {bg=White;assets/img/wordcloud.svg .flush-right}
 
 [`https://github.com/arnehilmann/markdeck`{.render_qr}](https://github.com/arnehilmann/markdeck)
+
+
+
+
+
+
+# {id=big bg=White;assets/img/temperature_preferences_2x.png x=6 y=0 scale=3 .skip}
+
+# {x-of=big rel-x=-1 y-of=big rel-y=-1.2 scale=1.4}
+
+# {x-of=big rel-x=-.8 y-of=big rel-y=-.4 scale=1}
+
+# {rel-x=.2 rel-y=.1 scale=1.4}
+
+# {x-of=big rel-x=-1 y-of=big rel-y=1}
+
+# {x-of=big y-of=big scale=3}
+
+
+
+# {x-of=markdeck rel-x=3 y-of=markdeck scale=8}

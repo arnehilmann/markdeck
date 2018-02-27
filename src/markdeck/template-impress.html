@@ -18,8 +18,8 @@
 
     <link href="assets/3rdparty/impress.js/css/impress-demo.css" rel="stylesheet" />
     <link href="assets/markdeck/css/markdeck.impressjs.css" rel="stylesheet" />
-    <link href="assets/css/slides.css" rel="stylesheet" />
-        <script>
+    <link href="assets/css/slides.impress.css" rel="stylesheet" />
+    <script>
         window.pdf_render = window.location.search.match(/render=pdf/gi) != null;
         if (window.pdf_render) {
             document.write('<link rel="stylesheet" href="assets/css/render-pdf.css" type="text/css">');
@@ -43,7 +43,9 @@ $endfor$
         <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
     </div>
 
-    <div id="impress">
+    <div
+        id="impress"
+        data-transition-duration="750">
 
         $body$
 

@@ -13,8 +13,12 @@ function calc_pos(elem, dim)
         elem.attributes[attr_name] = elem.attributes[dim]
         change[dim] = 0
     end
-    if elem.attributes[dim .. "r"] then
-        elem.attributes[attr_name] = last[dim] + elem.attributes[dim .. "r"]
+    if elem.attributes["rel-" .. dim] then
+        if elem.attributes[attr_name] then
+            elem.attributes[attr_name] = elem.attributes[attr_name] + elem.attributes["rel-" .. dim]
+        else
+            elem.attributes[attr_name] = last[dim] + elem.attributes["rel-" .. dim]
+        end
         change[dim] = elem.attributes[attr_name] - last[dim]
     end
     if elem.attributes[attr_name] == nil then
@@ -46,10 +50,10 @@ function dump_position(elem)
         local attr_name = "data-" .. dim
         table.insert(attrs, elem.attributes[attr_name])
     end
-    print(table.concat(attrs, " "))
+    print(table.concat(attrs, "\t"))
 end
 
-function Header(elem)
+function calc_positions(elem)
     table.insert(elem.classes, "step")
 
     calc_position(elem)
@@ -58,3 +62,14 @@ function Header(elem)
 
     return elem
 end
+
+
+function add_backgrounds(header)
+    if header.attributes.bg then
+        return {header, pandoc.Div(pandoc.Null(), pandoc.Attr(header.identifier .. "__bg"))}
+    else
+        return header
+    end
+end
+
+return {{Header=calc_positions}, {Header=add_backgrounds}}

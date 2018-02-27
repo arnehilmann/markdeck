@@ -140,6 +140,9 @@ while true; do
             /source/assets/css/slides.scss \
             /target/assets/css/slides.css || :
         sass --scss --no-cache \
+            /source/assets/css/slides.impress.scss \
+            /target/assets/css/slides.impress.css || :
+        sass --scss --no-cache \
             /markdeck/assets/markdeck/css/markdeck.revealjs.scss \
             /target/assets/markdeck/css/markdeck.revealjs.css || :
         sass --scss --no-cache \
@@ -191,7 +194,9 @@ while true; do
     then
         if [[ -e /target/index.html.tmp ]]; then
             if [[ -n "$pdf" ]]; then
-                echo "decktape $variant \
+                echo "env DEBUG='puppeteer:mouse,puppeteer:session' \
+                    env DEBUG_COLORS=true \
+                    decktape $variant \
                     -s $pdf_size --no-sandbox -p $pdf_delay \
                     'http://localhost:8080/$html?render=pdf' \
                     '/target/$pdf'" > /target/render-pdf

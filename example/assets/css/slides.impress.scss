@@ -1,0 +1,75 @@
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/Inconsolata-Regular.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: "EB Garamond";
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/EBGaramond12-Regular.ttf") format('truetype');
+}
+
+body.impress-enabled {
+    background: #fff;
+
+    .step {
+        text-align: center;
+    }
+
+    #impress {
+        * {
+            font-family: "EB Garamond", sans-serif;
+        }
+
+        section {
+            * {
+                font-size: 100%;
+            }
+            h1 {
+                font-size: 140%;
+            }
+        }
+
+        a {
+            background: none;
+            text-shadow: none;
+            text-decoration: underline;
+            font-size: 80%;
+        }
+
+        small {
+            font-size: 60%;
+        }
+
+        .flush-right {
+            text-align: right;
+        }
+
+        div pre.asciinema-terminal * {
+            font-family: "Inconsolata", monospace;
+            font-size: 80%;
+        }
+
+        code {
+            font-family: "Inconsolata";
+        }
+
+        .has-dark-background {
+            color: #fff;
+        }
+
+        .step {
+            opacity: 1;
+            //opacity: 0.3;
+            //transition: opacity 1s;
+        }
+
+        .step.active {
+            opacity: 1;
+        }
+
+    }
+}
