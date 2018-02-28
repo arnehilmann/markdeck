@@ -48,67 +48,6 @@ if ! $ONCE; then
     function wait_for_indexhtml() {
         inotifywait -r -q -q /target/index.html
     }
-
-    (
-        echo "service starting"
-        live-server \
-            --port=$PORT \
-            --no-browser \
-            --wait=1 \
-            --watch=/target/index.html \
-            /target
-    ) 2>&1 | sed "s/^.*$/${esc}[34m${esc}[3m[liveserver@$PORT]    &${esc}[0m/" &
-    pid0=$!
-
-    live-server --port=$PORT_HELPER /markdeck/helper > /tmp/helper.log 2>&1 &
-    pid1=$!
-
-    (
-        echo "service starting"
-        while true; do
-            if [[ -x /target/render-pdf ]]; then
-                mv /target/render-pdf /target/render-pdf.now
-                /target/render-pdf.now || :
-                rm -f /target/render-pdf.now
-            fi
-            [[ -x /target/render-pdf ]] && continue
-            wait_for_indexhtml
-        done
-    ) 2>&1 | sed -u "s/^.*$/${esc}[32m${esc}[3m[render-pdf]         &${esc}[0m/" &
-    pid2=$!
-
-    (
-        echo "service starting"
-        cd /target
-        while true; do
-            if [[ -e /target/render-standalone ]]; then
-                echo "packaging slides and assets"
-                standalone="$(cat /target/render-standalone)"
-                rm -f /target/render-standalone
-                /markdeck/embed < index.html > "$standalone"
-                if false; then
-                    ZIP_FILE=$(basename "$standalone" .html).zip
-                    rm -f "$ZIP_FILE"
-                    zip "$ZIP_FILE" "$standalone"
-                    du -h "$standalone" "$ZIP_FILE"
-                fi
-                du -h "$standalone"
-                echo "Packaged all slides"
-            fi
-            [[ -e /target/render-standalone ]] && continue
-            wait_for_indexhtml
-        done
-    ) 2>&1 | sed -u "s/^.*$/${esc}[33m${esc}[3m[render-standalone]  &${esc}[0m/" &
-    pid3=$!
-
-    kill_rest(){
-        echo
-        kill $pid0 $pid1 $pid2 $pid3 2> /dev/null
-        wait $pid0 $pid1 $pid2 $pid3 || :
-        echo "done."
-        exit
-    }
-    trap kill_rest INT
 fi
 
 [[ -e /source/render-asciiart-filter.config ]] && \
@@ -134,23 +73,25 @@ while true; do
     echo "-------- /rsync output --------"
     echo
 
+    echo "-------- sass output --------"
     if [[ -e /source/assets/css/slides.scss ]]; then
-        echo "-------- sass output --------"
-        sass --scss --no-cache \
+        sassc \
             /source/assets/css/slides.scss \
             /target/assets/css/slides.css || :
-        sass --scss --no-cache \
+    fi
+    if [[ -e /source/assets/css/slides.impress.scss ]]; then
+        sassc \
             /source/assets/css/slides.impress.scss \
             /target/assets/css/slides.impress.css || :
-        sass --scss --no-cache \
-            /markdeck/assets/markdeck/css/markdeck.revealjs.scss \
-            /target/assets/markdeck/css/markdeck.revealjs.css || :
-        sass --scss --no-cache \
-            /markdeck/assets/markdeck/css/markdeck.impressjs.scss \
-            /target/assets/markdeck/css/markdeck.impressjs.css || :
-        echo "-------- /sass output --------"
-        echo
     fi
+    sassc \
+        /markdeck/assets/markdeck/css/markdeck.revealjs.scss \
+        /target/assets/markdeck/css/markdeck.revealjs.css || :
+    sassc \
+        /markdeck/assets/markdeck/css/markdeck.impressjs.scss \
+        /target/assets/markdeck/css/markdeck.impressjs.css || :
+    echo "-------- /sass output --------"
+    echo
 
     echo "-------- config --------"
     shopt -s nullglob
@@ -194,13 +135,7 @@ while true; do
     then
         if [[ -e /target/index.html.tmp ]]; then
             if [[ -n "$pdf" ]]; then
-                echo "env DEBUG='puppeteer:mouse,puppeteer:session' \
-                    env DEBUG_COLORS=true \
-                    decktape $variant \
-                    -s $pdf_size --no-sandbox -p $pdf_delay \
-                    'http://localhost:8080/$html?render=pdf' \
-                    '/target/$pdf'" > /target/render-pdf
-                chmod a+rx /target/render-pdf
+                echo "-s $pdf_size -p $pdf_delay $variant http://localhost:8080/$html $pdf" > /target/render-pdf
             fi
             if [[ -n "$standalone" ]]; then
                 echo $standalone > /target/render-standalone

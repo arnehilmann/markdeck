@@ -1,0 +1,44 @@
+version: "3.2"
+
+services:
+  markdeck-pandoc:
+    build:
+      context: .
+      dockerfile: Dockerfile.pandoc
+      args:
+        version: $markdeck_pandoc_version
+        motto: "impress-ive"
+    image: "arne/markdeck-pandoc:$markdeck_pandoc_version"
+    volumes:
+      - type: bind
+        source: ./source
+        target: /source
+        read_only: true
+      - type: bind
+        source: ./target
+        target: /target
+
+  markdeck-liveserver:
+    build:
+      context: .
+      dockerfile: Dockerfile.liveserver
+    image: "arne/markdeck-liveserver:$markdeck_liveserver_version"
+    ports:
+      - "8080:8080"
+    volumes:
+      - type: bind
+        source: ./target
+        target: /target
+    depends_on: [markdeck-pandoc]
+
+  markdeck-decktape:
+    build:
+      context: .
+      dockerfile: Dockerfile.decktape
+    image: "arne/markdeck-decktape:$markdeck_decktape_version"
+    volumes:
+      - type: bind
+        source: ./target
+        target: /slides
+    shm_size: 1G
+    depends_on: [markdeck-pandoc]

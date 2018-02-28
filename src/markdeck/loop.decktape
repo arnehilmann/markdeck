@@ -1,0 +1,17 @@
+#!/bin/ash
+
+CMD_FILE=/slides/render-pdf
+
+http-server -p 8080 -c-1 -s &
+
+while true; do
+    if [ -e $CMD_FILE ]; then
+        CMD=$(cat $CMD_FILE)
+        rm -f $CMD_FILE
+        echo node /decktape/decktape.js --no-sandbox --executablePath chromium-browser $CMD
+        node /decktape/decktape.js --no-sandbox --executablePath chromium-browser $CMD
+
+        [ -e $CMD_FILE ] && continue
+    fi
+    inotifywait -qq /slides/index.html
+done

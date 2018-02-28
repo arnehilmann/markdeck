@@ -1,0 +1,12 @@
+FROM node:9-alpine
+
+LABEL maintainer="arne@hilmann.de"
+
+RUN npm install -g live-server && npm cache clean --force
+
+EXPOSE 8080
+
+VOLUME /target
+WORKDIR /target
+
+ENTRYPOINT live-server --no-browser --wait=1 --watch=/target/index.html /target
