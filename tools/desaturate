@@ -1,0 +1,21 @@
+#!/bin/bash
+set -e -E -u
+
+infile=${1:?no source file given?!}
+factor=${2:?no factor given?!}
+outfile=${3:?no target file given?!}
+
+tmp0=$outfile.tmp0
+tmp1=$outfile.tmp1
+tmp2=$outfile.tmp2
+
+convert $infile -colorspace HSL -channel R -separate $tmp0
+convert $infile -colorspace HSL -channel G -separate $tmp1
+convert $infile -colorspace HSL -channel B -separate $tmp2
+convert $tmp0 -colorspace HSL \
+    $tmp0 -compose CopyRed -composite \
+        \( $tmp1 -evaluate multiply $factor \) -compose CopyGreen -composite \
+        $tmp2 -compose CopyBlue -composite \
+        -colorspace RGB $outfile
+
+rm -f $outfile.tmp*
