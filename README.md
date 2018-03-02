@@ -16,9 +16,10 @@ markdown to cool slides deck
 
 # tl;dr
 
-copy
-```https://raw.githubusercontent.com/arnehilmann/markdeck/master/docker-compose.yaml```
-into your source directory
+```
+mkdir my-slides && cd my-slides
+curl -O https://raw.githubusercontent.com/arnehilmann/markdeck/master/docker-compose.yaml
+```
 
 ```
 docker-compose pull
