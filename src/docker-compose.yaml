@@ -1,44 +1,44 @@
 version: "3.2"
 
 services:
-  markdeck-pandoc:
+  converter:
     build:
       context: .
       dockerfile: Dockerfile.pandoc
       args:
-        version: $markdeck_pandoc_version
-        motto: "impress-ive"
-    image: "arne/markdeck-pandoc:$markdeck_pandoc_version"
+        version: 0.21
+        motto: impress-ive bundle
+    image: "arne/markdeck-pandoc:0.21"
     volumes:
       - type: bind
-        source: ./source
+        source: ./
         target: /source
         read_only: true
       - type: bind
-        source: ./target
+        source: ./deck
         target: /target
 
-  markdeck-liveserver:
+  webserver:
     build:
       context: .
       dockerfile: Dockerfile.liveserver
-    image: "arne/markdeck-liveserver:$markdeck_liveserver_version"
+    image: "arne/markdeck-liveserver:0.1"
     ports:
       - "8080:8080"
     volumes:
       - type: bind
-        source: ./target
+        source: ./deck
         target: /target
-    depends_on: [markdeck-pandoc]
+    depends_on: [converter]
 
-  markdeck-decktape:
+  pdfexporter:
     build:
       context: .
       dockerfile: Dockerfile.decktape
-    image: "arne/markdeck-decktape:$markdeck_decktape_version"
+    image: "arne/markdeck-decktape:0.1"
     volumes:
       - type: bind
-        source: ./target
+        source: ./deck
         target: /slides
     shm_size: 1G
-    depends_on: [markdeck-pandoc]
+    depends_on: [converter, webserver]

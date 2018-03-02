@@ -3,7 +3,7 @@ FROM astefanutti/decktape:2
 LABEL maintainer="arne@hilmann.de"
 
 USER root
-RUN apk add --update inotify-tools && rm -rf /var/cache/apk/*
+RUN apk add --update inotify-tools jq curl && rm -rf /var/cache/apk/*
 RUN npm -g config set user root
 RUN npm install -g http-server && npm cache clean --force
 COPY markdeck/loop.decktape /usr/local/bin/loop.decktape

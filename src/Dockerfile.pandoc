@@ -2,27 +2,27 @@ FROM node:9-alpine
 
 LABEL maintainer="arne@hilmann.de"
 
+ARG pandoc_version
+ARG version
+ARG motto
+
 RUN apk add --update \
     graphviz inotify-tools rsync \
     libqrencode jq sassc zip openjdk8-jre \
-    python make g++ bash cairo \
+    python make g++ bash cairo curl \
     && rm -rf /var/cache/apk/*
 
 RUN npm -g config set user root
 RUN npm install -g mathjax-pandoc-filter vega vega-lite && npm cache clean --force
 
-VOLUME ["/source", "/target"]
-
-COPY downloaded/ /usr/
+COPY downloaded/ /usr
 RUN mkdir -p /markdeck/
 COPY markdeck/ /markdeck/
 WORKDIR /markdeck
 
-ARG version
 ENV VERSION $version
-
-ARG motto
 ENV MOTTO $motto
+VOLUME ["/source", "/target"]
 
 ENTRYPOINT ["/markdeck/loop"]
 # ENTRYPOINT sleep 1d

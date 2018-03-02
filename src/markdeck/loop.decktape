@@ -1,17 +1,26 @@
 #!/bin/ash
 
-CMD_FILE=/slides/render-pdf
-
-http-server -p 8080 -c-1 -s &
+CONFIG_FILE=/slides/.meta/config.json
 
 while true; do
-    if [ -e $CMD_FILE ]; then
-        CMD=$(cat $CMD_FILE)
-        rm -f $CMD_FILE
-        echo node /decktape/decktape.js --no-sandbox --executablePath chromium-browser $CMD
-        node /decktape/decktape.js --no-sandbox --executablePath chromium-browser $CMD
+    CONFIG=$(cat $CONFIG_FILE)
+    pdf=$(echo "$CONFIG" | jq -r '.pdf')
 
-        [ -e $CMD_FILE ] && continue
+    if [ -n "$pdf" ]; then
+        pdf_size=$(echo "$CONFIG" | jq -r '.pdf_size')
+        pdf_delay=$(echo "$CONFIG" | jq -r '.pdf_delay')
+        variant=$(echo "$CONFIG" | jq -r '.variant')
+
+        touch /slides/.meta/pdf_rendered
+        node /decktape/decktape.js \
+            --no-sandbox \
+            --executablePath chromium-browser \
+            -s $pdf_size \
+            -p $pdf_delay \
+            $variant \
+            http://webserver:8080/index.html?render=pdf \
+            /slides/$pdf
+        [ /slides/index.html -nt /slides/.meta/pdf_rendered ] && continue
     fi
     inotifywait -qq /slides/index.html
 done
