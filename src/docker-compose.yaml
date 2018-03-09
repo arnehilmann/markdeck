@@ -50,3 +50,14 @@ services:
     image: "arne/markdeck-helper:0.1"
     ports:
       - "8081:8081"
+
+  standaloneexporter:
+    build:
+      context: .
+      dockerfile: Dockerfile.standalone
+    image: "arne/markdeck-standalone:0.1"
+    volumes:
+      - type: bind
+        source: ./deck
+        target: /target
+    depends_on: [converter]

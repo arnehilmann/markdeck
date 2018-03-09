@@ -23,7 +23,7 @@ while read -r line || [[ -n "$line" ]]; do
                 fontsrcrel=$(echo "$cssline" | sed "s/.*url(['\"]//;s/['\"].*//")
                 fontsrcabs=$(dirname $src)/$fontsrcrel
                 $VERBOSE && du -h "$fontsrcabs" >&2
-                fontencoded=$(base64 -w 0 "$fontsrcabs")
+                fontencoded=$(base64 "$fontsrcabs" | tr -d '\n')
                 # TODO support more formats, like truetype, ...
                 echo "src: url(\"data:font/truetype;charset=utf-8;base64,$fontencoded\") format(\"truetype\");"
            else
@@ -42,7 +42,7 @@ while read -r line || [[ -n "$line" ]]; do
             cat $src
         else
             echo "$line" | sed "s/ src=\".*//"
-            echo "    src=\"data:image/$format;base64,$(base64 -w 0 $src)\""
+            echo "    src=\"data:image/$format;base64,$(base64 $src | tr -d '\n')\""
             echo "$line" | sed "s/.* src=\"[^\"]*\"//"
         fi
     elif echo "$line" | grep -q "<section .*data-background-image="; then
@@ -53,17 +53,17 @@ while read -r line || [[ -n "$line" ]]; do
         echo "<!-- EXTERNAL BACKGROUND IMAGE: $src -->"
         echo "$line" | sed "s/data-background-image=.*//"
         if [[ $format = "svg" ]]; then
-            echo "    data-background-image=\"data:image/svg+xml;base64,$(base64 -w 0 $src)\">"
+            echo "    data-background-image=\"data:image/svg+xml;base64,$(base64 $src | tr -d '\n')\">"
             # echo "    data-background-image='data:image/svg+xml;$(cat $src)'>"
         else
-            echo "    data-background-image=\"data:image/$format;base64,$(base64 -w 0 $src)\">"
+            echo "    data-background-image=\"data:image/$format;base64,$(base64 $src | tr -d '\n')\">"
         fi
     elif echo "$line" | grep -q "<asciinema-player src="; then
         src=$(echo "$line" | sed "s/^.*<asciinema-player src=['\"]//;s/['\"].*$//")
         $VERBOSE && du -h "$src" >&2
         echo
         echo "<!-- EXTERNAL ASCIINEMA SCRIPT: $src -->"
-        echo "<asciinema-player src=\"data:text/json;base64,$(base64 -w 0 $src)\""
+        echo "<asciinema-player src=\"data:text/json;base64,$(base64 $src | tr -d '\n')\""
     else
         echo "$line"
     fi

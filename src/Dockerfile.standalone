@@ -1,0 +1,14 @@
+FROM node:9-alpine
+
+LABEL maintainer="arne@hilmann.de"
+
+USER root
+RUN apk add --update inotify-tools jq curl bash && rm -rf /var/cache/apk/*
+COPY markdeck/loop.standalone /usr/local/bin/loop.standalone
+COPY markdeck/embed /usr/local/bin/embed
+USER node
+
+VOLUME /target
+WORKDIR /target
+
+ENTRYPOINT ["/usr/local/bin/loop.standalone"]
