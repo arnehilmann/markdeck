@@ -6,9 +6,9 @@ services:
       context: .
       dockerfile: Dockerfile.pandoc
       args:
-        version: 0.21
-        motto: impress-ive bundle
-    image: "arne/markdeck-pandoc:0.21"
+        version: 0.22
+        motto: impress-ive bundle, again
+    image: "arne/markdeck-pandoc:0.22"
     volumes:
       - type: bind
         source: ./
@@ -42,3 +42,11 @@ services:
         target: /slides
     shm_size: 1G
     depends_on: [converter, webserver]
+
+  helper:
+    build:
+      context: .
+      dockerfile: Dockerfile.helper
+    image: "arne/markdeck-helper:0.1"
+    ports:
+      - "8081:8081"
