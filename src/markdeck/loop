@@ -15,14 +15,12 @@ esac
 
 shopt -s nullglob
 esc=$(printf '\033')
-# ansi color codes: http://pueblo.sourceforge.net/doc/manual/ansi_color_codes.html
 
 function print_usage() {
     echo -e "\n\n\n${esc}[1mmarkdeck $VERSION - $MOTTO${esc}[0m\n"
     echo -e "       ${esc}[1mfor the slides:  open http://localhost:$PORT${esc}[0m"
     echo
     echo -e "for side-by-side view:  open http://localhost:$PORT/explain.html"
-    # echo -e "        for utilities:  open http://localhost:$PORT_HELPER"
     echo -e "     to stop markdeck:  hit Ctrl-C"
     echo
     echo
@@ -98,7 +96,6 @@ while true; do
     echo "$METADATA" > /target/.meta/config.json
     jq '. | .' <<<$METADATA
     variant=$(jq -r '.variant' <<< "$METADATA")
-    # standalone=$(jq -r '.standalone' <<< "$METADATA")
     echo "ASCIIART_CONFIG=$ASCIIART_CONFIG"
     echo "-------- /config --------"
     echo
@@ -128,9 +125,6 @@ while true; do
         /target/slides.combined.md.txt /markdeck/defaults.yaml 2>&1 | tee /tmp/pandoc.output;
     then
         if [[ -e /target/index.html.tmp ]]; then
-            # if [[ -n "$standalone" ]]; then
-                # echo $standalone > /target/render-standalone
-            # fi
             mv /target/index.html.tmp /target/index.html
         else
             show_errors
@@ -152,12 +146,9 @@ while true; do
     print_usage
 
     if [[ -n $SOURCE_MD ]]; then
-        inotifywait -r -q -e create -e modify -e delete -e move \
-            /source/slide*.md \
-            /source/assets/* \
-            /markdeck/assets* \
-            /markdeck/template*.html \
-            /markdeck/lib/ # > /tmp/inotifywait.log 2>&1 || :
+        rm -rf /tmp/meta-dirs
+        find /source -name .meta -exec dirname {} \; | sed s/^/^/ > /tmp/meta-dirs
+        inotifywait -q -e create -e modify -e delete -e move $(find /source -type d | grep -v -f /tmp/meta-dirs)
     else
         echo -e "edit 'slides.md' now...\n\n\n"
         inotifywait -q /source -e create
