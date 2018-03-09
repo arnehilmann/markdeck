@@ -2,7 +2,7 @@ version: "3.2"
 
 services:
   converter:
-    image: "arne/markdeck-pandoc:0.21"
+    image: "arne/markdeck-pandoc:0.22"
     volumes:
       - type: bind
         source: ./
@@ -30,3 +30,8 @@ services:
         target: /slides
     shm_size: 1G
     depends_on: [converter, webserver]
+
+  helper:
+    image: "arne/markdeck-helper:0.1"
+    ports:
+      - "8081:8081"
