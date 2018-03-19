@@ -3,13 +3,15 @@
 CONFIG_FILE=/target/.meta/config.json
 
 while true; do
-    CONFIG=$(cat $CONFIG_FILE)
-    standalone=$(echo "$CONFIG" | jq -r '.standalone')
+    standalone=$(cat "$CONFIG_FILE" | jq -r '.standalone')
 
     if [ -n "$standalone" ]; then
         touch /target/.meta/standalone_rendered
         /usr/local/bin/embed < /target/index.html > "/target/$standalone"
+        stat -c "%y %n" /target/index.html
+        stat -c "%y %n" /target/.meta/standalone_rendered
         [ /target/index.html -nt /target/.meta/standalone_rendered ] && continue
+        echo "finished"
     fi
     inotifywait -qq /target/index.html
 done
