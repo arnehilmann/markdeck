@@ -3,6 +3,7 @@
 CONFIG_FILE=/slides/.meta/config.json
 
 while true; do
+    touch /slides/.meta/pdf_rendered
     CONFIG=$(cat $CONFIG_FILE)
     pdf=$(echo "$CONFIG" | jq -r '.pdf')
 
@@ -11,7 +12,6 @@ while true; do
         pdf_delay=$(echo "$CONFIG" | jq -r '.pdf_delay')
         variant=$(echo "$CONFIG" | jq -r '.variant')
 
-        touch /slides/.meta/pdf_rendered
         node /decktape/decktape.js \
             --no-sandbox \
             --executablePath chromium-browser \
@@ -20,7 +20,10 @@ while true; do
             $variant \
             http://webserver:8080/index.html?render=pdf \
             /slides/$pdf
-        [ /slides/index.html -nt /slides/.meta/pdf_rendered ] && continue
     fi
+    stat -c "%y %n" /target/index.html
+    stat -c "%y %n" /target/.meta/pdf_rendered
+    [ /slides/index.html -nt /slides/.meta/pdf_rendered ] && continue
+    echo "finished"
     inotifywait -qq /slides/index.html
 done
