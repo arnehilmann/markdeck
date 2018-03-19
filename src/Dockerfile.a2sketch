@@ -1,0 +1,26 @@
+FROM node:9-alpine
+LABEL maintainer="arne@hilmann.de"
+
+RUN apk update && apk add curl python cairo-dev pkgconf pixman-dev pango-dev g++ make git php5 && rm -rf /var/cache/apk/*
+
+RUN npm install canvas --build-from-source
+RUN npm install underscore xpath xmldom express body-parser deasync
+
+WORKDIR /
+RUN git clone https://github.com/dhobsd/asciitosvg.git
+RUN ln -sf /usr/bin/php5 /usr/bin/php
+RUN ln -sf /asciitosvg/a2s /usr/bin/a2s
+RUN mkdir -p /root/.a2s/objects
+RUN curl -OL https://cdn.rawgit.com/pshihn/rough/9be60b1e/dist/rough.min.js
+RUN curl -OL https://cdn.rawgit.com/pshihn/rough/9be60b1e/dist/rough.js
+
+RUN mkdir /root/.fonts
+WORKDIR /root/.fonts
+RUN curl -OL https://github.com/ipython/xkcd-font/raw/master/xkcd-script/font/xkcd-script.ttf
+RUN fc-cache -v -f
+RUN fc-list
+
+WORKDIR /tmp
+COPY a2sketch.webserver .
+
+ENTRYPOINT ["node", "a2sketch.webserver"]

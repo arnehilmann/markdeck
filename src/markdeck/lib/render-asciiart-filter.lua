@@ -104,6 +104,26 @@ local renderer = {
     render_vegalite = function(text, attrs)
         return {"vl2svg", {}, text}, "svg"
     end,
+    render_a2s = function(text, attrs)
+        return {
+                    "curl",
+                    {"-s",
+                        "-H", "Content-Type: text/plain",
+                        "--data-binary",  "@-", "http://a2sketchconverter:3000/a2svg"},
+                    text
+                },
+               "svg"
+    end,
+    render_a2sketch = function(text, attrs)
+        return {
+                    "curl",
+                    {"-s",
+                        "-H", "Content-Type: text/plain",
+                        "--data-binary",  "@-", "http://a2sketchconverter:3000/a2sketch"},
+                    text
+                },
+               "svg"
+    end,
 }
 
 
