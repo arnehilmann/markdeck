@@ -15,6 +15,9 @@ RUN apk add --update \
 RUN npm -g config set user root
 RUN npm install -g mathjax-pandoc-filter vega vega-lite && npm cache clean --force
 
+RUN mkdir -p /usr/local/share/lua/5.3
+RUN curl -o /usr/local/share/lua/5.3/inspect.lua -L https://raw.githubusercontent.com/kikito/inspect.lua/master/inspect.lua
+
 COPY downloaded/ /usr
 RUN mkdir -p /markdeck/
 COPY markdeck/ /markdeck/
