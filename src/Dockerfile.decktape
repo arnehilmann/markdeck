@@ -7,6 +7,7 @@ RUN apk add --update inotify-tools jq curl && rm -rf /var/cache/apk/*
 RUN npm -g config set user root
 RUN npm install -g http-server && npm cache clean --force
 COPY markdeck/loop.decktape /usr/local/bin/loop.decktape
+RUN ln -sf /slides /target
 USER node
 
 VOLUME /slides
