@@ -1,14 +1,14 @@
 version: "3.2"
 
 services:
-  converter:
+  markdeck:
     build:
       context: .
       dockerfile: Dockerfile.pandoc
       args:
         version: 0.22
         motto: impress-ive bundle, again
-    image: "arne/markdeck-pandoc:0.22"
+    image: "arne/markdeck:0.22"
     volumes:
       - type: bind
         source: ./
@@ -18,7 +18,7 @@ services:
         source: ./deck
         target: /target
 
-  webserver:
+  web:
     build:
       context: .
       dockerfile: Dockerfile.liveserver
@@ -29,28 +29,28 @@ services:
       - type: bind
         source: ./deck
         target: /target
-    depends_on: [converter]
-#
-#  pdfexporter:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile.decktape
-#    image: "arne/markdeck-decktape:0.1"
-#    volumes:
-#      - type: bind
-#        source: ./deck
-#        target: /slides
-#    shm_size: 1G
-#    depends_on: [converter, webserver]
-#
-#  helper:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile.helper
-#    image: "arne/markdeck-helper:0.1"
-#    ports:
-#      - "8081:8081"
-#
+    depends_on: [markdeck]
+
+  pdf:
+    build:
+      context: .
+      dockerfile: Dockerfile.decktape
+    image: "arne/markdeck-decktape:0.1"
+    volumes:
+      - type: bind
+        source: ./deck
+        target: /slides
+    shm_size: 1G
+    depends_on: [markdeck, web]
+
+  helper:
+    build:
+      context: .
+      dockerfile: Dockerfile.helper
+    image: "arne/markdeck-helper:0.1"
+    ports:
+      - "8081:8081"
+
 #  standaloneexporter:
 #    build:
 #      context: .
@@ -62,9 +62,6 @@ services:
 #        target: /target
 #    depends_on: [converter]
 
-  a2sketchconverter:
-    build:
-      context: .
-      dockerfile: Dockerfile.a2sketch
-    image: "arne/markdeck-a2sketch:0.1"
+  a2sketch:
+    image: "arne/a2sketch:0.5"
 
