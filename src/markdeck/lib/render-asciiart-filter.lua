@@ -109,7 +109,7 @@ local renderer = {
                     "curl",
                     {"-s",
                         "-H", "Content-Type: text/plain",
-                        "--data-binary",  "@-", "http://a2sketch:3000/a2svg"},
+                        "--data-binary",  "@-", "http://a2sketch:22753/a2svg"},
                     text
                 },
                "svg"
@@ -119,7 +119,7 @@ local renderer = {
                     "curl",
                     {"-s",
                         "-H", "Content-Type: text/plain",
-                        "--data-binary",  "@-", "http://a2sketch:3000/a2sketch"},
+                        "--data-binary",  "@-", "http://a2sketch:22753/a2sketch"},
                     text
                 },
                "svg"
