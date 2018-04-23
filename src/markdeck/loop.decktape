@@ -1,13 +1,17 @@
 #!/bin/ash
 
 CONFIG_FILE=/slides/.meta/config.json
+WEBSERVER=web
+PORT=8080
 
 while true; do
+    echo "touching pdf_rendered file"
     touch /slides/.meta/pdf_rendered
     CONFIG=$(cat $CONFIG_FILE)
     pdf=$(echo "$CONFIG" | jq -r '.pdf')
 
     if [ -n "$pdf" ]; then
+        echo "starting pdf rendering"
         pdf_size=$(echo "$CONFIG" | jq -r '.pdf_size')
         pdf_delay=$(echo "$CONFIG" | jq -r '.pdf_delay')
         variant=$(echo "$CONFIG" | jq -r '.variant')
@@ -18,11 +22,13 @@ while true; do
             -s $pdf_size \
             -p $pdf_delay \
             $variant \
-            http://webserver:8080/index.html?render=pdf \
+            http://$WEBSERVER:$PORT/index.html?render=pdf \
             /slides/$pdf
+        echo "pdf rendering finished"
     fi
     stat -c "%y %n" /target/index.html
     stat -c "%y %n" /target/.meta/pdf_rendered
+    sleep 1
     [ /slides/index.html -nt /slides/.meta/pdf_rendered ] && continue
     echo "finished"
     inotifywait -qq /slides/index.html
