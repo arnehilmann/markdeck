@@ -70,6 +70,6 @@ services:
 #    depends_on: [converter]
 
   a2sketch:
-    image: "arne/a2sketch:0.6"
+    image: "arne/a2sketch:0.7"
     ports:
       - "22753:22753"

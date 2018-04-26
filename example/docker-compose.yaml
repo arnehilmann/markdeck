@@ -37,4 +37,4 @@ services:
       - "8081:8081"
 
   a2sketch:
-    image: "arne/a2sketch:0.6"
+    image: "arne/a2sketch:0.7"
