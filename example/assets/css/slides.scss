@@ -12,6 +12,13 @@
   src: url("fonts/EBGaramond12-Regular.ttf") format('truetype');
 }
 
+@font-face {
+  font-family: "xkcd Script";
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/xkcd-script.ttf") format('truetype');
+}
+
 .reveal,
 .reveal h1,
 .reveal h2,
