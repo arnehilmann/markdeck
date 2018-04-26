@@ -1,0 +1,75 @@
+version: "3.2"
+
+services:
+  markdeck:
+    build:
+      context: .
+      dockerfile: Dockerfile.pandoc
+      args:
+        version: 0.23
+        motto: impress-ive bundle, again
+    image: "arne/markdeck-pandoc:0.23"
+    volumes:
+      - type: bind
+        source: ./
+        target: /source
+        read_only: true
+      - type: bind
+        source: ./deck
+        target: /target
+      - type: bind
+        source: ../src/markdeck
+        target: /markdeck
+    stdin_open: true
+    tty: true
+    entrypoint: /bin/sh
+
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.liveserver
+    image: "arne/markdeck-liveserver:0.1"
+    ports:
+      - "8080:8080"
+    volumes:
+      - type: bind
+        source: ./deck
+        target: /target
+    depends_on: [markdeck]
+
+  pdf:
+    build:
+      context: .
+      dockerfile: Dockerfile.decktape
+    image: "arne/markdeck-decktape:0.1"
+    volumes:
+      - type: bind
+        source: ./deck
+        target: /slides
+    shm_size: 1G
+    depends_on: [markdeck, web]
+
+  helper:
+    build:
+      context: .
+      dockerfile: Dockerfile.helper
+    image: "arne/markdeck-helper:0.1"
+    ports:
+      - "8081:8081"
+
+#  standaloneexporter:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile.standalone
+#    image: "arne/markdeck-standalone:0.1"
+#    volumes:
+#      - type: bind
+#        source: ./deck
+#        target: /target
+#    depends_on: [converter]
+
+  a2sketch:
+    image: "arne/a2sketch:0.6"
+    ports:
+      - "22753:22753"
