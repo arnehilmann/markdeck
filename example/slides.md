@@ -1,6 +1,6 @@
 ---
 title: markdeck
-variant: impress
+# variant: impress
 pdf: markdeck-example.pdf
 # standalone: markdeck-example.html
 # slideNumber: true
@@ -9,7 +9,7 @@ pdf: markdeck-example.pdf
 # controlsTutorial: true
 # controlsLayout: edges
 # pdf_size: 1189x841
-pdf_size: 1024x768
+# pdf_size: 1024x768
 asciinema: true
 ---
 
@@ -21,7 +21,7 @@ create cool slide decks using markdown only
 
 | [markdeck on docker hub](https://hub.docker.com/r/arne/markdeck/)
 
-<small> arne@hilmann.de | 2018-01 🙃</small>
+<small> arne@hilmann.de | 2018-04 🙃</small>
 
 
 # features {rel-x=1}
@@ -143,6 +143,30 @@ vega-lite
 ```
 
 
+# asciiart: sketchart {bg=White}
+
+a2sketch
+
+```render_a2sketch
+     #-------------------.
+     |[0]                |
+     | .---# .---# #---. |
+     | |[1]| |[1]| |[1]| |
+     | #---' #---' '---# |
+     |                   |
+     |   ^     ^     ^   |
+     #---+-----+-----+---#
+     |   |     |     |   |
+     |   a     2  sketch |
+     '-------------------#
+ github.com/arnehilmann/a2sketch
+
+
+[0]: {"fill": "#933", "a2s:delref": true, "fillStyle": "solid"}
+[1]: {"fill": "#bbb", "a2s:delref": true, "fillStyle": "solid"}
+```
+
+
 # asciiart: equations {bg=Teal}
 
 mathjax
@@ -180,24 +204,3 @@ $$e = \mathop {\lim }\limits_{n \to \infty } \left( {1 + \frac{1}{n}} \right)^n$
 # {bg=White;assets/img/wordcloud.svg .flush-right}
 
 [`https://github.com/arnehilmann/markdeck`{.render_qr}](https://github.com/arnehilmann/markdeck)
-
-
-
-
-
-
-# {id=big bg=White;assets/img/temperature_preferences_2x.png x=6 y=0 scale=3 .skip}
-
-# {x-of=big rel-x=-1 y-of=big rel-y=-1.2 scale=1.4}
-
-# {x-of=big rel-x=-.8 y-of=big rel-y=-.4 scale=1}
-
-# {rel-x=.2 rel-y=.1 scale=1.4}
-
-# {x-of=big rel-x=-1 y-of=big rel-y=1}
-
-# {x-of=big y-of=big scale=3}
-
-
-
-# {x-of=markdeck rel-x=3 y-of=markdeck scale=8}
