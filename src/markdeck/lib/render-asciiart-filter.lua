@@ -107,19 +107,16 @@ local renderer = {
     render_a2s = function(text, attrs)
         return {
                     "curl",
-                    {"-s",
-                        "-H", "Content-Type: text/plain",
-                        "--data-binary",  "@-", "http://a2sketch:22753/a2svg"},
+                    {"-s", "-S", "--data-binary",  "@-", "http://a2sketch:22753/a2svg"},
                     text
                 },
                "svg"
     end,
     render_a2sketch = function(text, attrs)
+        io.stderr:write("a2sketch: source text:\n" .. text .. "\n\n")
         return {
                     "curl",
-                    {"-s",
-                        "-H", "Content-Type: text/plain",
-                        "--data-binary",  "@-", "http://a2sketch:22753/a2sketch"},
+                    {"-s", "-S", "--data-binary",  "@-", "http://a2sketch:22753/a2sketch"},
                     text
                 },
                "svg"
