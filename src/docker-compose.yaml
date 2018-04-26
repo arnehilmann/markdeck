@@ -6,9 +6,9 @@ services:
       context: .
       dockerfile: Dockerfile.pandoc
       args:
-        version: 0.22
+        version: 0.23
         motto: impress-ive bundle, again
-    image: "arne/markdeck:0.22"
+    image: "arne/markdeck-pandoc:0.23"
     volumes:
       - type: bind
         source: ./
@@ -17,6 +17,9 @@ services:
       - type: bind
         source: ./deck
         target: /target
+        #      - type: bind
+        #source: ./markdeck
+        #target: /markdeck
 
   web:
     build:
@@ -63,5 +66,4 @@ services:
 #    depends_on: [converter]
 
   a2sketch:
-    image: "arne/a2sketch:0.5"
-
+    image: "arne/a2sketch:0.6"

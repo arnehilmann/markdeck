@@ -120,6 +120,7 @@ while true; do
         --lua-filter /markdeck/lib/render-emojis-filter.lua \
         --lua-filter /markdeck/lib/bg-shortcut-filter.lua \
         --lua-filter /markdeck/lib/${variant}-shortcut-filter.lua \
+        --lua-filter /markdeck/lib/inline-svg.lua \
         $PANDOC_ARGS \
         -o /target/index.html.tmp \
         /target/slides.combined.md.txt /markdeck/defaults.yaml 2>&1 | tee /tmp/pandoc.output;
