@@ -146,7 +146,7 @@ while true; do
     sleep .5
     print_usage
 
-    ./wait-for-changes
+    /markdeck/wait-for-changes
 
     echo -e "\n\n\n\n\n\n\n\n\n\n"
 done
