@@ -1,0 +1,18 @@
+#!/bin/bash
+set -e -E -u
+
+SOURCE="/source/slides.md /source/assets /source/include-before /source/include-after"
+TARGET=/target/index.html
+
+no_change=true
+while $no_change; do
+	for F in $SOURCE; do
+		[[ -e $F ]] || continue
+		if [[ $F -nt $TARGET ]]; then
+			echo $F
+			no_change=false
+		fi
+	done
+	$no_change && sleep 2
+done
+exit 0
