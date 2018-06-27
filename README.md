@@ -2,6 +2,12 @@
 
 markdown to cool slides deck
 
+# tl;dr
+```
+curl https://raw.githubusercontent.com/arnehilmann/markdeck/master/scaffold|bash
+```
+
+
 # example
 
 [slide deck](https://arnehilmann.github.io/markdeck/)
@@ -14,7 +20,7 @@ markdown to cool slides deck
 [markdown source](https://raw.githubusercontent.com/arnehilmann/markdeck/master/example/slides.md)
 
 
-# tl;dr
+# how to start
 
 ```
 mkdir my-slides && cd my-slides
