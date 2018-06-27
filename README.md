@@ -3,9 +3,12 @@
 markdown to cool slides deck
 
 ## install markdeck
+You need `bash`, `curl`, `docker-compose` and an empty directory to run the following command:
 ```
 curl https://raw.githubusercontent.com/arnehilmann/markdeck/master/scaffold|bash
 ```
+
+This script will download a minimal setup, then it will start markdeck...
 
 
 ## showcase
