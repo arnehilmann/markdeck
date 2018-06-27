@@ -1,0 +1,216 @@
+/* Shared
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.button {
+  border-radius: 10px;
+}
+
+/* Sections
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.section {
+  padding: 4rem 0 7rem;
+  text-align: center;
+  /*box-shadow: 0 3px 6px rgba(0, 0, 0, .5);*/
+}
+
+.bggrey {
+    background: #eee;
+}
+
+.small {
+    font-size: 5pt;
+}
+
+.section-heading,
+.section-description {
+  margin-bottom: 1.2rem;
+}
+
+/* Hero
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+/* Values
+  background-image: url('../images/values-bg.jpg');
+  background-size: cover;
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.values {
+  color: #fff;
+  padding-bottom: 5rem;
+}
+.value-multiplier {
+  margin-bottom: .5rem;
+  color: #11DFC7;
+}
+.value-heading {
+  margin-bottom: .3rem;
+}
+.value-description {
+  opacity: .8;
+  font-weight: 300;
+}
+
+/* Help
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.get-help {
+  border-bottom: 1px solid #ddd;
+}
+
+/* Categories
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.categories {
+  background-image: url('../images/values-bg.jpg');
+  background-size: cover;
+  color: #fff;
+}
+.categories .section-description {
+  margin-bottom: 4rem;
+}
+
+/* Bigger than 550 */
+@media (min-width: 550px) {
+  .section {
+    padding: 12rem 0 11rem;
+  }
+  .hero {
+    padding-bottom: 12rem;
+    text-align: left;
+    height: 165px;
+  }
+  .hero-heading {
+    font-size: 2.4rem;
+  }
+}
+
+/* Bigger than 750 */
+@media (min-width: 750px) {
+  .hero {
+    height: 190px;
+  }
+  .hero-heading {
+    font-size: 2.6rem;
+  }
+  .section {
+    padding: 4rem 0 8rem;
+  }
+  .hero {
+    padding: 6rem 0 12rem;
+  }
+  .section-description {
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .categories {
+    padding: 15rem 0 8rem;
+  }
+}
+
+/* Bigger than 1000 */
+@media (min-width: 1000px) {
+  .section {
+    padding: 10rem 0 20rem;
+  }
+  .hero {
+    padding: 6rem 0 12rem;
+  }
+  .hero-heading {
+    font-size: 3.0rem;
+  }
+}
+
+
+
+
+
+@font-face {
+  font-family: "EB Garamond";
+  font-style: normal;
+  font-weight: 400;
+  src: url("../webfonts/EBGaramond12-Regular.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: url("../webfonts/Raleway-Regular.ttf") format('truetype');
+}
+
+body {
+    font-family: "Raleway", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "EB Garamond", serif;
+}
+
+
+.hero {
+    background: Teal;
+    color: #eee;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, .5);
+}
+
+ul {
+    list-style: disc outside;
+    margin-left: 2em;
+}
+
+li {
+    margin-bottom: 0;
+}
+
+.features {
+    text-align: left;
+}
+
+.screenshot img {
+    max-width: 100%;
+}
+
+html {
+    font-size: 12px;
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 1.6em;
+    z-index: 99;
+    border-bottom: 1px solid grey;
+    font-family: "Raleway";
+}
+
+nav .section {
+    padding: 0;
+    background: rgba(255, 255, 255, .95);
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+}
+
+footer {
+    width: 100%;
+    border-top: 1px solid grey;
+    background: Teal;
+    color: white;
+}
+
+footer a {
+    color: white;
+}
+
+footer .container {
+    padding: 1em 0;
+}
+
+a:hover {
+    color: black;
+}

@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+
+    <title>markdeck</title>
+
+    <meta name="description" content="markdeck" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/reveal.css" />
+            <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/theme/simple.css" id="theme" />
+    
+            <link rel="stylesheet" href="assets/3rdparty/reveal.js/lib/css/zenburn.css" />
+    
+            <link rel="stylesheet" type="text/css" href="assets/3rdparty/asciinema-player.css" />
+        <link rel="stylesheet" href="assets/markdeck/css/markdeck.revealjs.css" />
+    <link rel="stylesheet" href="assets/css/slides.css" />
+
+    <script>
+        window.pdf_render = window.location.search.match(/render=pdf/gi) != null;
+        if (window.pdf_render) {
+            document.write('<link rel="stylesheet" href="assets/css/render-pdf.css" type="text/css">');
+        }
+    </script>
+
+    
+</head>
+<body>
+
+
+    <div class="reveal">
+        <div class="slides">
+
+<section id="markdeck" class="level1 colorfull" data-background="black" data-background-image="assets/img/bg.colorfull.png">
+<h1>markdeck</h1>
+<p>create cool slide decks using markdown only</p>
+<div class="line-block"><a href="https://github.com/arnehilmann/markdeck">github.com/arnehilmann/markdeck</a></div>
+<div class="line-block"><a href="https://hub.docker.com/r/arne/markdeck/">markdeck on docker hub</a></div>
+<p><small> arne@hilmann.de | 2018-01 <img src="assets/markdeck/emojis/1f643.png" alt="🙃" class="emoji" /></small></p>
+</section>
+<section id="features" class="level1">
+<h1>features</h1>
+<p>the whole deck as markdown</p>
+<p>cool ui, based on reveal.js</p>
+</section>
+<section id="features-1" class="level1" data-background="Teal">
+<h1>features</h1>
+<p>on-the-fly rendering of asciiart</p>
+<p><small> boxes, uml, graphs, charts, equations, qrcodes, … </small></p>
+</section>
+<section id="features-2" class="level1" data-background="DarkSlateBlue">
+<h1>features</h1>
+<p>emojis and terminal sessions</p>
+<p>on-the-fly reload when changing sources</p>
+</section>
+<section id="asciiart-boxes" class="level1" data-background="SteelBlue">
+<h1>asciiart: boxes</h1>
+<p>ditaa</p>
+<p><img src="rendered/render_ditaa-9b640a24353b57fd1917e83605be97d49742b929.png" alt="" /></p>
+</section>
+<section id="asciiart-uml" class="level1" data-background="lightblue">
+<h1>asciiart: uml</h1>
+<p>plantuml</p>
+<p><img src="rendered/render_plantuml-047a5319e22e81ae01f40f229b063651e11d6514.svg" alt="" /></p>
+</section>
+<section id="asciiart-graphs" class="level1" data-background="DarkOrange">
+<h1>asciiart: graphs</h1>
+<p>graphviz</p>
+<p><img src="rendered/render_dot-ce1712e14df8807d0a213fc83376aa7cf7992b52.svg" alt="" /></p>
+</section>
+<section id="asciiart-charts" class="level1" data-background="GhostWhite">
+<h1>asciiart: charts</h1>
+<p>vega-lite</p>
+<p><img src="rendered/render_vegalite-4ab1fb1b310f83757471d394406d64650a11868b.svg" alt="" /></p>
+</section>
+<section id="asciiart-equations" class="level1" data-background="Teal">
+<h1>asciiart: equations</h1>
+<p>mathjax</p>
+<p><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="12.333ex" height="2.167ex" style="vertical-align: -0.333ex; margin-bottom: 1px; margin-top: 1px;" viewBox="0 -854.8 5343.3 960.8" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<path stroke-width="10" id="E1-MJMATHI-61" d="M33 157Q33 258 109 349T280 441Q331 441 370 392Q386 422 416 422Q429 422 439 414T449 394Q449 381 412 234T374 68Q374 43 381 35T402 26Q411 27 422 35Q443 55 463 131Q469 151 473 152Q475 153 483 153H487Q506 153 506 144Q506 138 501 117T481 63T449 13Q436 0 417 -8Q409 -10 393 -10Q359 -10 336 5T306 36L300 51Q299 52 296 50Q294 48 292 46Q233 -10 172 -10Q117 -10 75 30T33 157ZM351 328Q351 334 346 350T323 385T277 405Q242 405 210 374T160 293Q131 214 119 129Q119 126 119 118T118 106Q118 61 136 44T179 26Q217 26 254 59T298 110Q300 114 325 217T351 328Z"></path>
+<path stroke-width="10" id="E1-MJMAIN-32" d="M109 429Q82 429 66 447T50 491Q50 562 103 614T235 666Q326 666 387 610T449 465Q449 422 429 383T381 315T301 241Q265 210 201 149L142 93L218 92Q375 92 385 97Q392 99 409 186V189H449V186Q448 183 436 95T421 3V0H50V19V31Q50 38 56 46T86 81Q115 113 136 137Q145 147 170 174T204 211T233 244T261 278T284 308T305 340T320 369T333 401T340 431T343 464Q343 527 309 573T212 619Q179 619 154 602T119 569T109 550Q109 549 114 549Q132 549 151 535T170 489Q170 464 154 447T109 429Z"></path>
+<path stroke-width="10" id="E1-MJMAIN-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path>
+<path stroke-width="10" id="E1-MJMATHI-62" d="M73 647Q73 657 77 670T89 683Q90 683 161 688T234 694Q246 694 246 685T212 542Q204 508 195 472T180 418L176 399Q176 396 182 402Q231 442 283 442Q345 442 383 396T422 280Q422 169 343 79T173 -11Q123 -11 82 27T40 150V159Q40 180 48 217T97 414Q147 611 147 623T109 637Q104 637 101 637H96Q86 637 83 637T76 640T73 647ZM336 325V331Q336 405 275 405Q258 405 240 397T207 376T181 352T163 330L157 322L136 236Q114 150 114 114Q114 66 138 42Q154 26 178 26Q211 26 245 58Q270 81 285 114T318 219Q336 291 336 325Z"></path>
+<path stroke-width="10" id="E1-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path>
+<path stroke-width="10" id="E1-MJMATHI-63" d="M34 159Q34 268 120 355T306 442Q362 442 394 418T427 355Q427 326 408 306T360 285Q341 285 330 295T319 325T330 359T352 380T366 386H367Q367 388 361 392T340 400T306 404Q276 404 249 390Q228 381 206 359Q162 315 142 235T121 119Q121 73 147 50Q169 26 205 26H209Q321 26 394 111Q403 121 406 121Q410 121 419 112T429 98T420 83T391 55T346 25T282 0T202 -11Q127 -11 81 37T34 159Z"></path>
+</defs>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)">
+ <use xlink:href="#E1-MJMATHI-61" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#E1-MJMAIN-32" x="755" y="513"></use>
+ <use xlink:href="#E1-MJMAIN-2B" x="1213" y="0"></use>
+<g transform="translate(2218,0)">
+ <use xlink:href="#E1-MJMATHI-62" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#E1-MJMAIN-32" x="613" y="513"></use>
+</g>
+ <use xlink:href="#E1-MJMAIN-3D" x="3387" y="0"></use>
+<g transform="translate(4448,0)">
+ <use xlink:href="#E1-MJMATHI-63" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#E1-MJMAIN-32" x="619" y="513"></use>
+</g>
+</g>
+</svg></p>
+<p><p><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="19.833ex" height="5.833ex" style="vertical-align: -2.333ex; margin-bottom: 1px; margin-top: 1px;" viewBox="0 -1520.7 8532.6 2494.2" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<path stroke-width="10" id="E2-MJMATHI-65" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path>
+<path stroke-width="10" id="E2-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path>
+<path stroke-width="10" id="E2-MJMAIN-6C" d="M42 46H56Q95 46 103 60V68Q103 77 103 91T103 124T104 167T104 217T104 272T104 329Q104 366 104 407T104 482T104 542T103 586T103 603Q100 622 89 628T44 637H26V660Q26 683 28 683L38 684Q48 685 67 686T104 688Q121 689 141 690T171 693T182 694H185V379Q185 62 186 60Q190 52 198 49Q219 46 247 46H263V0H255L232 1Q209 2 183 2T145 3T107 3T57 1L34 0H26V46H42Z"></path>
+<path stroke-width="10" id="E2-MJMAIN-69" d="M69 609Q69 637 87 653T131 669Q154 667 171 652T188 609Q188 579 171 564T129 549Q104 549 87 564T69 609ZM247 0Q232 3 143 3Q132 3 106 3T56 1L34 0H26V46H42Q70 46 91 49Q100 53 102 60T104 102V205V293Q104 345 102 359T88 378Q74 385 41 385H30V408Q30 431 32 431L42 432Q52 433 70 434T106 436Q123 437 142 438T171 441T182 442H185V62Q190 52 197 50T232 46H255V0H247Z"></path>
+<path stroke-width="10" id="E2-MJMAIN-6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path>
+<path stroke-width="10" id="E2-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path>
+<path stroke-width="10" id="E2-MJMAIN-2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path>
+<path stroke-width="10" id="E2-MJMAIN-221E" d="M55 217Q55 305 111 373T254 442Q342 442 419 381Q457 350 493 303L507 284L514 294Q618 442 747 442Q833 442 888 374T944 214Q944 128 889 59T743 -11Q657 -11 580 50Q542 81 506 128L492 147L485 137Q381 -11 252 -11Q166 -11 111 57T55 217ZM907 217Q907 285 869 341T761 397Q740 397 720 392T682 378T648 359T619 335T594 310T574 285T559 263T548 246L543 238L574 198Q605 158 622 138T664 94T714 61T765 51Q827 51 867 100T907 217ZM92 214Q92 145 131 89T239 33Q357 33 456 193L425 233Q364 312 334 337Q285 380 233 380Q171 380 132 331T92 214Z"></path>
+<path stroke-width="10" id="E2-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path>
+<path stroke-width="10" id="E2-MJMAIN-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path>
+<path stroke-width="10" id="E2-MJMAIN-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path>
+<path stroke-width="10" id="E2-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path>
+<path stroke-width="10" id="E2-MJSZ3-28" d="M701 -940Q701 -943 695 -949H664Q662 -947 636 -922T591 -879T537 -818T475 -737T412 -636T350 -511T295 -362T250 -186T221 17T209 251Q209 962 573 1361Q596 1386 616 1405T649 1437T664 1450H695Q701 1444 701 1441Q701 1436 681 1415T629 1356T557 1261T476 1118T400 927T340 675T308 359Q306 321 306 250Q306 -139 400 -430T690 -924Q701 -936 701 -940Z"></path>
+<path stroke-width="10" id="E2-MJSZ3-29" d="M34 1438Q34 1446 37 1448T50 1450H56H71Q73 1448 99 1423T144 1380T198 1319T260 1238T323 1137T385 1013T440 864T485 688T514 485T526 251Q526 134 519 53Q472 -519 162 -860Q139 -885 119 -904T86 -936T71 -949H56Q43 -949 39 -947T34 -937Q88 -883 140 -813Q428 -430 428 251Q428 453 402 628T338 922T245 1146T145 1309T46 1425Q44 1427 42 1429T39 1433T36 1436L34 1438Z"></path>
+</defs>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)">
+ <use xlink:href="#E2-MJMATHI-65" x="0" y="0"></use>
+ <use xlink:href="#E2-MJMAIN-3D" x="748" y="0"></use>
+<g transform="translate(1809,0)">
+<g transform="translate(222,0)">
+ <use xlink:href="#E2-MJMAIN-6C"></use>
+ <use xlink:href="#E2-MJMAIN-69" x="283" y="0"></use>
+ <use xlink:href="#E2-MJMAIN-6D" x="566" y="0"></use>
+</g>
+<g transform="translate(0,-610)">
+ <use transform="scale(0.707)" xlink:href="#E2-MJMATHI-6E" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#E2-MJMAIN-2192" x="605" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#E2-MJMAIN-221E" x="1610" y="0"></use>
+</g>
+</g>
+<g transform="translate(3825,0)">
+ <use xlink:href="#E2-MJSZ3-28"></use>
+<g transform="translate(741,0)">
+ <use xlink:href="#E2-MJMAIN-31" x="0" y="0"></use>
+ <use xlink:href="#E2-MJMAIN-2B" x="727" y="0"></use>
+<g transform="translate(1510,0)">
+<g transform="translate(342,0)">
+<rect stroke="none" width="725" height="60" x="0" y="220"></rect>
+ <use xlink:href="#E2-MJMAIN-31" x="110" y="676"></use>
+ <use xlink:href="#E2-MJMATHI-6E" x="60" y="-686"></use>
+</g>
+</g>
+</g>
+ <use xlink:href="#E2-MJSZ3-29" x="3438" y="-1"></use>
+ <use transform="scale(0.707)" xlink:href="#E2-MJMATHI-6E" x="5910" y="1677"></use>
+</g>
+</g>
+</svg></p></p>
+</section>
+<section id="terminal-session-asciinema" class="level1" data-background="#121314">
+<h1>terminal session: asciinema</h1>
+<p><asciinema-player src="./assets/img/test.json"
+    poster="npt:0:21"
+    idle-time-limit=1
+    speed=2
+    rows=18
+    font-size="medium"
+></asciinema-player></p>
+</section>
+<section id="thank-you" class="level1" data-background="AliceBlue">
+<h1>Thank You!</h1>
+<p><a href="http://pandoc.org">pandoc</a> <a href="http://lab.hakim.se/reveal-js/#/">reveal.js</a> <a href="http://plantuml.com">plantuml</a> <a href="https://github.com/pepijnve/ditaa.git">ditaamini</a> <a href="http://www.graphviz.org">graphviz</a> <a href="https://github.com/asciinema/asciinema-player">asciinema</a> <a href="https://github.com/astefanutti/decktape">decktape</a> <a href="https://vega.github.io/vega-lite/">vega-lite</a> <a href="https://www.mathjax.org">math-jax</a> <img src="assets/markdeck/emojis/1f643.png" alt="🙃" class="emoji" /></p>
+</section>
+<section id="section" class="level1 flushleft textcentered" data-background="White" data-background-image="assets/img/wordcloud.svg">
+<h1></h1>
+<p><a href="https://github.com/arnehilmann/markdeck"><img src="rendered/render_qr-fed31fc248171fc94983b1ad73f1992eb9b85533.png" alt="" /></a></p>
+</section>
+
+        </div>
+    </div>
+
+    <script src="assets/3rdparty/jquery.js"></script>
+
+    <script src="assets/3rdparty/reveal.js/lib/js/head.min.js"></script>
+    <script src="assets/3rdparty/reveal.js/js/reveal.js"></script>
+
+    <script>
+        // Full list of configuration options available here:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: true,
+            controlsTutorial: true,
+            controlsLayout: 'edges',
+            controlsBackArrows: 'faded',
+            progress: true,
+            defaultTiming: 120,
+            slideNumber: true,
+            history: true,
+            keyboard: true,
+            overview: true,
+            center: true,
+            touch: true,
+            loop: false,
+            rtl: false,
+            shuffle: false,
+            fragments: true,
+            embedded: false,
+            help: true,
+            showNotes: false,
+            autoPlayMedia: null,
+
+            autoSlide: (window.pdf_render) ? 0 : 0,
+
+            autoSlideStoppable: true,
+            autoSlideMethod: Reveal.navigateNext,
+            mouseWheel: false,
+            hideAddressBar: true,
+            previewLinks: false,
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+
+            // available themes are in /css/theme
+                            theme: Reveal.getQueryHash().theme || 'simple',
+            
+            // Optional libraries used to extend on reveal.js
+            dependencies: [
+                { src: 'assets/3rdparty/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                { src: 'assets/markdeck/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                { src: 'assets/3rdparty/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                { src: 'assets/3rdparty/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            ]
+        });
+    </script>
+
+            <script src="assets/3rdparty/asciinema-player.js"></script>
+    
+    <script src="assets/markdeck/revealjs-helper.js"></script>
+    <script>
+        flushleft(".slides .flushleft");
+    </script>
+
+
+</body>
+</html>
