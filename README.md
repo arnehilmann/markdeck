@@ -2,13 +2,13 @@
 
 markdown to cool slides deck
 
-# tl;dr
+## install markdeck
 ```
 curl https://raw.githubusercontent.com/arnehilmann/markdeck/master/scaffold|bash
 ```
 
 
-# example
+## showcase
 
 [slide deck](https://arnehilmann.github.io/markdeck/showcase/)
 
@@ -20,7 +20,7 @@ curl https://raw.githubusercontent.com/arnehilmann/markdeck/master/scaffold|bash
 [markdown source](https://raw.githubusercontent.com/arnehilmann/markdeck/master/example/showcase/slides.md)
 
 
-# how to start from scratch
+## how to start from scratch
 
 ```
 mkdir my-slides && cd my-slides
@@ -41,7 +41,7 @@ open http://localhost:8080
 ```
 
 
-# how does this work
+## how does this work
 
 *markdeck* takes ```slide-*.md``` files in markdown format
 and the assets subdir
@@ -54,7 +54,7 @@ to get an idea how markdeck works and looks like, or have a look
 at the [documentation](DOCUMENTATION.md).
 
 
-# why should I use this
+## why should I use this
 
 * cool looking slides
 * fast/easy to write
@@ -63,12 +63,12 @@ at the [documentation](DOCUMENTATION.md).
 * no binary formats
 
 
-# known issues
+## known issues
 
 * custom layout hard, but possible
 * pixel-perfect layout nearly impossible
 
 
-# documentation
+## documentation
 
 see the [separate documentation](DOCUMENTATION.md) and [todos](TODOS.md).
