@@ -10,17 +10,17 @@ curl https://raw.githubusercontent.com/arnehilmann/markdeck/master/scaffold|bash
 
 # example
 
-[slide deck](https://arnehilmann.github.io/markdeck/)
+[slide deck](https://arnehilmann.github.io/markdeck/showcase/)
 
-[side-by-side view](https://arnehilmann.github.io/markdeck/explain.html)<br/>
+[side-by-side view](https://arnehilmann.github.io/markdeck/showcase/explain.html)<br/>
 (markdown source on the right side, the rendered slide on the left)
 
-[handout](https://arnehilmann.github.io/markdeck/markdeck-example.pdf)
+[handout](https://arnehilmann.github.io/markdeck/showcase/markdeck-example.pdf)
 
-[markdown source](https://raw.githubusercontent.com/arnehilmann/markdeck/master/example/slides.md)
+[markdown source](https://raw.githubusercontent.com/arnehilmann/markdeck/master/example/showcase/slides.md)
 
 
-# how to start
+# how to start from scratch
 
 ```
 mkdir my-slides && cd my-slides
@@ -41,7 +41,7 @@ open http://localhost:8080
 ```
 
 
-# how
+# how does this work
 
 *markdeck* takes ```slide-*.md``` files in markdown format
 and the assets subdir
@@ -49,12 +49,12 @@ and renders a html5 slidedeck, using [pandoc](http://pandoc.org) as converter
 and [reveal.js](http://lab.hakim.se/reveal-js/) as the presenter framework.
 
 see the
-[side-by-side view](https://arnehilmann.github.io/markdeck/explain.html),
+[side-by-side view](https://arnehilmann.github.io/markdeck/showcase/explain.html),
 to get an idea how markdeck works and looks like, or have a look
 at the [documentation](DOCUMENTATION.md).
 
 
-# why
+# why should I use this
 
 * cool looking slides
 * fast/easy to write
