@@ -1,11 +1,29 @@
 #!/bin/bash
-curl -O https://raw.githubusercontent.com/arnehilmann/markdeck/master/docker-compose.yaml
+
+echo
+echo "scaffolding markdeck"
+echo
+
+echo "checking environment"
+curl --version > /dev/null 2>&1 || { echo "Please install 'curl' first!"; exit 2; }
+docker-compose version > /dev/null 2>&1 || { echo "Please install 'docker-compose' first! On MacOS, use 'brew install docker-compose'"; exit 2; }
+echo "ok"
+echo
+
+CURL="curl -# -S -f"
+MASTER=https://raw.githubusercontent.com/arnehilmann/markdeck/master
+
+echo "pulling minimal config"
+$CURL -O $MASTER/docker-compose.yaml
+mkdir -p assets/css/fonts
 for F in slides.md assets/css/slides.scss assets/css/fonts/EBGaramond12-Regular.ttf assets/css/fonts/xkcd-script.ttf assets/css/fonts/Inconsolata-Regular.ttf; do
-    curl -o $F https://raw.githubusercontent.com/arnehilmann/markdeck/master/example/minimal/$F
+    $CURL -o $F $MASTER/example/minimal/$F
 done
+echo
 
+echo "pulling docker images"
 docker-compose pull
-docker-compose up
+echo
 
-echo "open http://localhost:8080"
-echo "edit slides.md"
+echo "starting markdeck"
+docker-compose up
