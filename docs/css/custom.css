@@ -107,7 +107,7 @@
 /* Bigger than 1000 */
 @media (min-width: 1000px) {
   .section {
-    padding: 10rem 0 20rem;
+    padding: 5rem 0 10rem;
   }
   .hero {
     padding: 6rem 0 12rem;
@@ -184,7 +184,7 @@ nav {
 }
 
 nav .section {
-    padding: 0;
+    padding: 1ex 0;
     background: rgba(255, 255, 255, .95);
 }
 
