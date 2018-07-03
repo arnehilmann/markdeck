@@ -2,6 +2,9 @@
 
 markdown to cool slides deck
 
+visit the shiny [landing page](https://arnehilmann.github.io/markdeck/)
+
+
 ## install markdeck
 You need `bash`, `curl`, `docker-compose` and an empty directory to run the following command:
 ```
