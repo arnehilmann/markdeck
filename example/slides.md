@@ -52,6 +52,15 @@ emojis and terminal sessions
 on-the-fly reload when changing sources
 
 
+# code, highlighted
+
+```
+public static final void main(String[] args) {
+    // foo
+}
+```
+
+
 # asciiart: boxes {bg=SteelBlue}
 
 ditaa
