@@ -2,7 +2,7 @@ version: "3.2"
 
 services:
   markdeck:
-    image: "arne/markdeck-pandoc:0.23"
+    image: "arne/markdeck-pandoc:0.26"
     volumes:
       - type: bind
         source: ./
