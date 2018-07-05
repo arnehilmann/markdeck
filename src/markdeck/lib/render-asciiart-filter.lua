@@ -166,12 +166,17 @@ function Render(elem, attr)
             return fname
         end
     end
+    return nil
 end
 
 
 function RenderCodeBlock(elem, attr)
     local fname = Render(elem, attr)
-    return pandoc.Para{ pandoc.Image({pandoc.Str("")}, fname) }
+    if fname ~= nil then
+        return pandoc.Para{ pandoc.Image({pandoc.Str("")}, fname) }
+    else
+        return nil
+    end
 end
 
 
@@ -179,6 +184,8 @@ function RenderCode(elem, attr)
     local fname = Render(elem, attr)
     if fname ~= nil then
         return pandoc.Image({pandoc.Str("")}, fname)
+    else
+        return nil
     end
 end
 
