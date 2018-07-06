@@ -12,6 +12,7 @@ curl https://raw.githubusercontent.com/arnehilmann/markdeck/master/scaffold|bash
 ```
 
 This script will download a minimal setup, then it will start markdeck...
+Use `Ctrl-C` to stop markdeck, `./start` to start markdeck, and `./update-markdeck` to update markdeck.
 
 
 ## showcase
