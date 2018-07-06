@@ -3,6 +3,7 @@ REVEALJS_VERSION=3.6.0
 ASCIINEMAPLAYER_VERSION=v2.6.0
 JQUERY_VERSION=3.2.1.slim.min
 IMPRESSJS_VERSION=1.0.0-beta2
+VERSION:=$$(yq '.services.markdeck.build.args.version' docker-compose.yaml)
 
 
 all:	prepare
@@ -10,6 +11,7 @@ all:	prepare
 
 
 tag:	all
+	@echo $(VERSION)
 	git tag -a v$(VERSION) -m v$(VERSION)
 	git push --tags
 
@@ -19,18 +21,18 @@ push:	all
 
 
 prepare:	downloaded/bin/pandoc \
-		markdeck/lib/plantuml.jar \
-		markdeck/lib/plantuml.jar \
-		markdeck/lib/ditaa.jar \
-		markdeck/assets/3rdparty/asciinema-player.js \
-		markdeck/assets/3rdparty/asciinema-player.css \
-		markdeck/assets/3rdparty/reveal.js \
-		markdeck/assets/3rdparty/impress.js \
-		jqueryemoji \
-		markdeck/helper/downloaded/trianglify-background-generator-master \
-		markdeck/helper/downloaded/colorful-background \
-		markdeck/helper/downloaded/gradient-generator \
-		markdeck/helper/downloaded/unique-gradient-generator
+	markdeck/lib/plantuml.jar \
+	markdeck/lib/plantuml.jar \
+	markdeck/lib/ditaa.jar \
+	markdeck/assets/3rdparty/asciinema-player.js \
+	markdeck/assets/3rdparty/asciinema-player.css \
+	markdeck/assets/3rdparty/reveal.js \
+	markdeck/assets/3rdparty/impress.js \
+	jqueryemoji \
+	markdeck/helper/downloaded/trianglify-background-generator-master \
+	markdeck/helper/downloaded/colorful-background \
+	markdeck/helper/downloaded/gradient-generator \
+	markdeck/helper/downloaded/unique-gradient-generator
 
 
 downloaded/bin/pandoc:
