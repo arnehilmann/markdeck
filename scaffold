@@ -16,8 +16,8 @@ MASTER=https://raw.githubusercontent.com/arnehilmann/markdeck/master
 echo "pulling minimal config"
 $CURL -O $MASTER/docker-compose.yaml
 mkdir -p assets/css/fonts
-for F in slides.md assets/css/slides.scss assets/css/fonts/EBGaramond12-Regular.ttf assets/css/fonts/xkcd-script.ttf assets/css/fonts/Inconsolata-Regular.ttf; do
-    $CURL -o $F $MASTER/example/minimal/$F
+for F in slides.md start-markdeck Makefile assets/css/slides.scss assets/css/fonts/EBGaramond12-Regular.ttf assets/css/fonts/xkcd-script.ttf assets/css/fonts/Inconsolata-Regular.ttf; do
+    [[ -e $F ]] || $CURL -o $F $MASTER/example/minimal/$F
 done
 echo
 
