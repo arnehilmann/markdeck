@@ -1,6 +1,3 @@
-VERSION=0.20
-MOTTO="charts-n-math"
-
 PANDOC_VERSION=2.1.1
 REVEALJS_VERSION=3.6.0
 ASCIINEMAPLAYER_VERSION=v2.6.0
@@ -9,15 +6,7 @@ IMPRESSJS_VERSION=1.0.0-beta2
 
 
 all:	prepare
-	docker build \
-		--rm \
-		--build-arg VERSION=$(VERSION) \
-		--build-arg MOTTO=$(MOTTO) \
-		--build-arg http_proxy=$${http_proxy:-} \
-		--build-arg https_proxy=$${https_proxy:-} \
-		-t arne/markdeck:latest \
-		-t arne/markdeck:$(VERSION) \
-		.
+	docker-compose build
 
 
 tag:	all
@@ -26,8 +15,7 @@ tag:	all
 
 
 push:	all
-	docker push arne/markdeck:$(VERSION)
-	docker push arne/markdeck:latest
+	docker-compose push
 
 
 prepare:	downloaded/bin/pandoc \
