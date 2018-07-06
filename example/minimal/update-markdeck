@@ -1,5 +1,2 @@
-#!/bin/bash
-set -e -E -u
-curl -O https://raw.githubusercontent.com/arnehilmann/markdeck/master/scaffold
-./scaffold
-rm -f scaffold
+#!/bin/sh
+curl -O https://raw.githubusercontent.com/arnehilmann/markdeck/master/scaffold|bash
