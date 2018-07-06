@@ -19,6 +19,7 @@ mkdir -p assets/css/fonts
 for F in slides.md start update-markdeck Makefile assets/css/slides.scss assets/css/fonts/EBGaramond12-Regular.ttf assets/css/fonts/xkcd-script.ttf assets/css/fonts/Inconsolata-Regular.ttf; do
     [[ -e $F ]] || $CURL -o $F $MASTER/example/minimal/$F
 done
+chmod a+x start update-markdeck
 echo
 
 echo "pulling docker images"
