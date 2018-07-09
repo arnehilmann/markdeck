@@ -181,6 +181,7 @@ end
 
 
 function RenderCode(elem, attr)
+    elem.text = elem.text:gsub("\\n.", "\n")
     local fname = Render(elem, attr)
     if fname ~= nil then
         return pandoc.Image({pandoc.Str("")}, fname)
