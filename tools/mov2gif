@@ -1,0 +1,7 @@
+#!/bin/sh
+palette="/tmp/palette.png"
+#filters="fps=10,crop=530:533:16:14,scale=350:-1:flags=bicubic"
+filters="fps=5,scale=350:-1:flags=bicubic"
+ffmpeg -v warning -i $1 -vf "$filters,palettegen" -y $palette
+ffmpeg -v warning -i $1 -i $palette -lavfi "$filters [x]; [x][1:v] paletteuse" -y $2
+
