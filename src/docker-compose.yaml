@@ -6,9 +6,9 @@ services:
       context: .
       dockerfile: Dockerfile.pandoc
       args:
-        version: 0.27
-        motto: inline asciiart
-    image: "arne/markdeck-pandoc:0.27"
+        version: 0.28
+        motto: general updates
+    image: "arne/markdeck-pandoc:0.28"
     volumes:
       - type: bind
         source: ./
@@ -38,7 +38,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.decktape
-    image: "arne/markdeck-decktape:0.1"
+    image: "arne/markdeck-decktape:0.2"
     volumes:
       - type: bind
         source: ./deck
@@ -50,7 +50,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.helper
-    image: "arne/markdeck-helper:0.1"
+    image: "arne/markdeck-helper:0.2"
     ports:
       - "8081:8081"
 
