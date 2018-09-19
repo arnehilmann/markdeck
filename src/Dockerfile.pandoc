@@ -1,4 +1,4 @@
-FROM node:9-alpine
+FROM node:alpine
 
 LABEL maintainer="arne@hilmann.de"
 
