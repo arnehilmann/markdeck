@@ -15,6 +15,18 @@ document.addEventListener("impress:init", function(event){
         step.dataset.x = (step.dataset.x / window_scale) * window.innerWidth;
         step.dataset.y = (step.dataset.y / window_scale) * window.innerHeight;
     });
+    api.lib.util.$$(".step.left", root).forEach(function(step){
+        step.style.left = (step.dataset.scale / window_scale * (step.clientWidth * window_scale - window.innerWidth) / 2) + "px";
+    });
+    api.lib.util.$$(".step.right", root).forEach(function(step){
+        step.style.left = (-step.dataset.scale / window_scale * (step.clientWidth * window_scale - window.innerWidth) / 2) + "px";
+    });
+    api.lib.util.$$(".step.top", root).forEach(function(step){
+        step.style.top = (step.dataset.scale / window_scale * (step.clientHeight * window_scale - window.innerHeight) / 2) + "px";
+    });
+    api.lib.util.$$(".step.bottom", root).forEach(function(step){
+        step.style.top = (-step.dataset.scale / window_scale * (step.clientHeight * window_scale - window.innerHeight) / 2) + "px";
+    });
     impress().goto(0);
     steps.forEach(function(step){
         var background = step.dataset.background;
@@ -22,17 +34,20 @@ document.addEventListener("impress:init", function(event){
         if (background || background_image) {
             var bg_div = document.getElementById(step.id + "__bg");
             if (bg_div) {
+                bg_div.style.width = (window.innerWidth / window_scale) + "px";
+                bg_div.style.height = (window.innerHeight / window_scale) + "px";
                 bg_div.style.zIndex = step.style.zIndex - 10;
                 bg_div.style.position = "absolute";
                 bg_div.style.background = background;
                 if (background_image) {
                     bg_div.style.backgroundImage = "url('" + background_image + "')";
-                    bg_div.style.backgroundSize = "cover";
+                    //bg_div.style.backgroundSize = "cover";
+                    bg_div.style.backgroundSize = bg_div.style.width + " " + bg_div.style.height;
                 }
                 bg_div.style.transform = step.style.transform;
                 var step_scale = step.dataset.scale;
-                bg_div.style.width = (window.innerWidth / window_scale) + "px";
-                bg_div.style.height = (window.innerHeight / window_scale) + "px";
+                //bg_div.style.width = (window.innerWidth / window_scale) + "px";
+                //bg_div.style.height = (window.innerHeight / window_scale) + "px";
                 root.children[0].insertBefore(bg_div, root.children[0].childNodes[0]);
 
                 var computedBackgroundStyle = window.getComputedStyle(bg_div);

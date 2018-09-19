@@ -1,6 +1,14 @@
-local change = {x=0, y=0, z=0, scale=0, rotate=0}
-local last = {x=0, y=0, z=0, scale=1, rotate=0}
+local change = {x=1, y=0, z=0, scale=0, ["rotate-z"]=0}
+local last = {x=0, y=0, z=0, scale=1, ["rotate-z"]=0}
 local history = {}
+
+local dimensions = {"x", "y", "z", "scale", "rotate-z"}
+
+io.write(string.format("%20s", "slide"))
+for _, dim in pairs(dimensions) do
+    io.write(string.format("%9s", dim))
+end
+io.write("\n")
 
 
 function calc_pos(elem, dim)
@@ -13,11 +21,11 @@ function calc_pos(elem, dim)
         elem.attributes[attr_name] = elem.attributes[dim]
         change[dim] = 0
     end
-    if elem.attributes["rel-" .. dim] then
+    if elem.attributes["r" .. dim] then
         if elem.attributes[attr_name] then
-            elem.attributes[attr_name] = elem.attributes[attr_name] + elem.attributes["rel-" .. dim]
+            elem.attributes[attr_name] = elem.attributes[attr_name] + elem.attributes["r" .. dim]
         else
-            elem.attributes[attr_name] = last[dim] + elem.attributes["rel-" .. dim]
+            elem.attributes[attr_name] = last[dim] + elem.attributes["r" .. dim]
         end
         change[dim] = elem.attributes[attr_name] - last[dim]
     end
@@ -30,14 +38,14 @@ end
 
 
 function calc_position(elem)
-    for _, dim in pairs({"x", "y", "z", "scale", "rotate"}) do
+    for _, dim in pairs(dimensions) do
         calc_pos(elem, dim)
     end
 end
 
 function remember_position(elem)
     local entry = {}
-    for _, dim in pairs({"x", "y", "z", "scale", "rotate"}) do
+    for _, dim in pairs(dimensions) do
         local attr_name = "data-" .. dim
         entry[attr_name] = elem.attributes[attr_name]
     end
@@ -45,12 +53,15 @@ function remember_position(elem)
 end
 
 function dump_position(elem)
-    local attrs = {elem.identifier}
-    for _, dim in pairs({"x", "y", "z", "scale", "rotate"}) do
+    -- local attrs = {elem.identifier}
+    io.write(string.format("%20s", elem.identifier))
+    for _, dim in pairs(dimensions) do
         local attr_name = "data-" .. dim
-        table.insert(attrs, elem.attributes[attr_name])
+        io.write(string.format("%9.1f", elem.attributes[attr_name]))
+        -- table.insert(attrs, elem.attributes[attr_name])
     end
-    print(table.concat(attrs, "\t"))
+    -- print(table.concat(attrs, "\t"))
+    io.write("\n")
 end
 
 function calc_positions(elem)
