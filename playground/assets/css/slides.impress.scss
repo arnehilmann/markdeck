@@ -80,7 +80,7 @@ body.impress-enabled {
             background: radial-gradient(circle, rgba(0,212,255,1) 0%, rgba(9,9,121,1) 90%, rgba(2,0,36,1) 100%);
         }
 
-        .step.right, .left, .bottom, .top {
+        .step.right, .step.left, .step.bottom, .step.top {
             padding: 1ex;
             margin: 0;
         }
