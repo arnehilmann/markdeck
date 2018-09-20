@@ -27,15 +27,19 @@ body.impress-enabled {
             font-family: "EB Garamond", sans-serif;
         }
 
+        section > * {
+            font-size: 100%;
+        }
+
         section {
-            * {
-                font-size: 100%;
-            }
             h1 {
                 font-size: 140%;
             }
             img {
                 max-width: 100%;
+            }
+            svg {
+                font-size: 80%;
             }
         }
 

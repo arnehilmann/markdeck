@@ -4,7 +4,7 @@ local history = {}
 
 local dimensions = {"x", "y", "z", "scale", "rotate-z"}
 
-io.write(string.format("%20s", "slide"))
+io.write(string.format("%30s", "slide"))
 for _, dim in pairs(dimensions) do
     io.write(string.format("%9s", dim))
 end
@@ -54,7 +54,7 @@ end
 
 function dump_position(elem)
     -- local attrs = {elem.identifier}
-    io.write(string.format("%20s", elem.identifier))
+    io.write(string.format("%30s", elem.identifier))
     for _, dim in pairs(dimensions) do
         local attr_name = "data-" .. dim
         io.write(string.format("%9.1f", elem.attributes[attr_name]))
