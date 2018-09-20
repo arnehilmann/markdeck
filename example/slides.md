@@ -1,7 +1,7 @@
 ---
 title: markdeck
-# variant: impress
-pdf: markdeck-example.pdf
+variant: impress
+# pdf: markdeck-example.pdf
 # standalone: markdeck-example.html
 # slideNumber: true
 # autoSlide: 5000
@@ -21,17 +21,19 @@ create cool slide decks using markdown only
 
 | [markdeck on docker hub](https://hub.docker.com/r/arne/markdeck/)
 
-<small> arne@hilmann.de | 2018-04 🙃</small>
+<small> arne@hilmann.de | 2018-09 🙃</small>
 
 
-# features {rel-x=1}
+# features {rx=1}
 
 the whole deck as markdown
 
-cool ui, based on reveal.js
+cool ui, based on
+<span style="display: inline-block; vertical-align: middle; line-height: 1em;">reveal<br/>impress</span>
+.js
 
 
-# features {bg=Teal rel-x=0 rel-y=1}
+# features {bg=Teal rx=0 ry=1}
 
 on-the-fly rendering of asciiart
 
@@ -45,7 +47,7 @@ qrcodes, …
 </small>
 
 
-# features {bg=DarkSlateBlue rel-x=-1 rel-y=0}
+# features {bg=DarkSlateBlue rx=-1 ry=0}
 
 emojis and terminal sessions
 
@@ -61,7 +63,7 @@ public static final void main(String[] args) {
 ```
 
 
-# asciiart: boxes {bg=SteelBlue}
+# asciiart: boxes {bg=SteelBlue rx=0 ry=-1}
 
 ditaa
 
@@ -87,7 +89,7 @@ ditaa
 ```
 
 
-# asciiart: uml {bg=lightblue rel-x=0 rel-y=-1}
+# asciiart: uml {bg=lightblue}
 
 plantuml
 
@@ -100,7 +102,7 @@ Bob->Alice : ??
 ```
 
 
-# asciiart: graphs {bg=DarkOrange}
+# asciiart: graphs {bg=DarkOrange rx=1 ry=0}
 
 graphviz
 
@@ -115,7 +117,7 @@ digraph G {
 }
 ```
 
-# asciiart: charts {bg=GhostWhite rel-x=1 rel-y=0}
+# asciiart: charts {bg=GhostWhite}
 
 vega-lite
 
@@ -174,7 +176,7 @@ vega-lite
 ```
 
 
-# asciiart: sketchart {bg=White .xkcd}
+# asciiart: sketchart {bg=White .xkcd rx=0 ry=1}
 
 ```render_a2sketch
      #-------------------.
@@ -249,7 +251,7 @@ $a^2 + b^2 = c^2$
 $$e = \mathop {\lim }\limits_{n \to \infty } \left( {1 + \frac{1}{n}} \right)^n$$
 
 
-# terminal session: asciinema {bg=#121314}
+# terminal session: asciinema {bg=#121314 rx=-1 ry=0}
 
 <asciinema-player src="./assets/img/test.json"
     poster="npt:0:21"
@@ -260,7 +262,7 @@ $$e = \mathop {\lim }\limits_{n \to \infty } \left( {1 + \frac{1}{n}} \right)^n$
 ></asciinema-player>
 
 
-# Thank You! {bg=AliceBlue rel-x=0 rel-y=1}
+# Thank You! {bg=AliceBlue}
 
 [pandoc](http://pandoc.org)
 [reveal.js](http://lab.hakim.se/reveal-js/#/)
@@ -277,3 +279,13 @@ $$e = \mathop {\lim }\limits_{n \to \infty } \left( {1 + \frac{1}{n}} \right)^n$
 # {bg=White;assets/img/wordcloud.svg .flush-right}
 
 [`https://github.com/arnehilmann/markdeck`{.render_qr}](https://github.com/arnehilmann/markdeck)
+
+
+# {x=.5 y=.5 z=0 scale=4 skipon="reveal"}
+
+
+# markdeck rulez! {x=3 y=-1.5 rotate-y=60 scale=3 skipon="reveal"}
+
+![](assets/img/buddy-egyptian.svg)
+
+
