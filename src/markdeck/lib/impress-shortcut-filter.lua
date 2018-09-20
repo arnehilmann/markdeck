@@ -1,5 +1,5 @@
 local change = {x=1, y=0, z=0, scale=0, ["rotate-z"]=0}
-local last = {x=0, y=0, z=0, scale=1, ["rotate-z"]=0}
+local last = {x=-1, y=0, z=0, scale=1, ["rotate-z"]=0}
 local history = {}
 
 local dimensions = {"x", "y", "z", "scale", "rotate-z"}
