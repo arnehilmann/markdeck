@@ -12,15 +12,18 @@
   src: url("fonts/EBGaramond12-Regular.ttf") format('truetype');
 }
 
+@font-face {
+  font-family: "xkcd Script";
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/xkcd-script.ttf") format('truetype');
+}
+
 body.impress-enabled {
     background: #fff;
 
-    .step {
-        text-align: center;
-    }
-
     #impress {
-        * {
+        h1, h2, h3, h4, h5, h6, div {
             font-family: "EB Garamond", sans-serif;
         }
 
@@ -31,12 +34,15 @@ body.impress-enabled {
             h1 {
                 font-size: 140%;
             }
+            img {
+                max-width: 100%;
+            }
         }
 
         a {
             background: none;
             text-shadow: none;
-            text-decoration: underline;
+            text-decoration: none;
             font-size: 80%;
         }
 
@@ -48,9 +54,14 @@ body.impress-enabled {
             text-align: right;
         }
 
-        div pre.asciinema-terminal * {
+        asciinema-player * {
             font-family: "Inconsolata", monospace;
             font-size: 80%;
+        }
+
+        .asciinema-player .line {
+            height: 1em;
+            line-height: 1em;
         }
 
         code {
@@ -62,14 +73,57 @@ body.impress-enabled {
         }
 
         .step {
+            text-align: center;
             opacity: 1;
-            //opacity: 0.3;
-            //transition: opacity 1s;
+
+            .hljs {
+                text-align: left;
+            }
         }
 
         .step.active {
             opacity: 1;
         }
 
+        .step.onlywhenactive {
+            opacity: 0;
+            transitian: opacity 1s;
+        }
+
+        .step.onlywhenactive.active {
+            opacity: 1;
+        }
+
+        .step.radialbg {
+            background: rgb(0,212,255);
+            background: radial-gradient(circle, rgba(0,212,255,1) 0%, rgba(9,9,121,1) 90%, rgba(2,0,36,1) 100%);
+        }
+
+        .step.right, .step.left, .step.bottom, .step.top {
+            padding: 1ex;
+            margin: 0;
+        }
+
+        .step.right {
+            text-align: right;
+        }
+
+        .step.left {
+            text-align: left;
+        }
+
+        .step.bottom {
+            vertical-align: bottom;
+        }
+
+        .step.top {
+            vertical-align: top;
+        }
+
+        .step.xkcd {
+            font-family: "xkcd Script";
+        }
+
     }
 }
+
