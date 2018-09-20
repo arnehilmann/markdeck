@@ -1,0 +1,14 @@
+#!/bin/sh
+set -e -E -u
+
+IN=${1:?no input file given!?}
+OUT=${2:-${IN%%.*}.svg}
+WIDTH=${3:-4cm}
+
+INDIR=$(dirname "$IN")
+OUTDIR=$(dirname "$OUT")
+TMP=$OUTDIR/$(basename "$OUT").bmp
+
+convert "$IN" "$TMP"
+potrace --svg --opaque --group -o "$OUT" -W "$WIDTH" "$TMP"
+rm -f "$TMP"
