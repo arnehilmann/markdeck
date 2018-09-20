@@ -1,4 +1,4 @@
-function ImageXXX(elem, attr)
+function Image(elem, attr)
     local suffix = string.sub(elem.src, -4)
     if suffix == ".svg" then
         io.stderr:write("svg found: " .. elem.src .. "\n")
