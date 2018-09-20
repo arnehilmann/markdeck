@@ -6,9 +6,9 @@ services:
       context: .
       dockerfile: Dockerfile.pandoc
       args:
-        version: 0.28
-        motto: general updates
-    image: "arne/markdeck-pandoc:0.28"
+        version: 0.29
+        motto: impressjs is near
+    image: "arne/markdeck-pandoc:0.29"
     volumes:
       - type: bind
         source: ./
@@ -66,4 +66,4 @@ services:
 #    depends_on: [converter]
 
   a2sketch:
-    image: "arne/a2sketch:0.6"
+    image: "arne/a2sketch:0.7"

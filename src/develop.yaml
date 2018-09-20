@@ -6,9 +6,9 @@ services:
       context: .
       dockerfile: Dockerfile.pandoc
       args:
-        version: 0.28
+        version: 0.29
         motto: impress-ive bundle, again
-    image: "arne/markdeck-pandoc:0.28"
+    image: "arne/markdeck-pandoc:0.29"
     volumes:
       - type: bind
         source: ./
