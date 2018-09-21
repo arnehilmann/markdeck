@@ -29,7 +29,7 @@ create cool slide decks using markdown only
 the whole deck as markdown
 
 cool ui, based on
-<span style="display: inline-block; vertical-align: middle; line-height: 1.1em;">reveal<br/>impress</span>
+<span class="inline-stack">reveal<br/>impress</span>
 .js
 
 
