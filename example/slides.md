@@ -1,7 +1,7 @@
 ---
 title: markdeck
 variant: impress
-# pdf: markdeck-example.pdf
+pdf: markdeck-example.pdf
 # standalone: markdeck-example.html
 # slideNumber: true
 # autoSlide: 5000
@@ -29,7 +29,7 @@ create cool slide decks using markdown only
 the whole deck as markdown
 
 cool ui, based on
-<span style="display: inline-block; vertical-align: middle; line-height: 1em;">reveal<br/>impress</span>
+<span style="display: inline-block; vertical-align: middle; line-height: 1.1em;">reveal<br/>impress</span>
 .js
 
 
@@ -56,7 +56,7 @@ on-the-fly reload when changing sources
 
 # code, highlighted
 
-```
+```java
 public static final void main(String[] args) {
     // foo
 }
@@ -175,9 +175,6 @@ vega-lite
 [1]: {"fill": "#bbb", "a2s:delref": true, "fillStyle": "solid"}
 ```
 
-
-# asciiart: sketchart {bg=White .xkcd rx=0 ry=1}
-
 ```render_a2sketch
      #-------------------.
      |[0]                |
@@ -198,7 +195,7 @@ vega-lite
 ```
 
 
-# asciiart: sketchart 2 {bg=White}
+# asciiart: sketchart 2 {bg=White rx=0 ry=1}
 
 ```render_a2s
 #=----------------------------#   #=----------------------------#
@@ -251,7 +248,7 @@ $a^2 + b^2 = c^2$
 $$e = \mathop {\lim }\limits_{n \to \infty } \left( {1 + \frac{1}{n}} \right)^n$$
 
 
-# terminal session: asciinema {bg=#121314 rx=-1 ry=0}
+# terminal session: asciinema {bg=#121314}
 
 <asciinema-player src="./assets/img/test.json"
     poster="npt:0:21"
@@ -262,7 +259,7 @@ $$e = \mathop {\lim }\limits_{n \to \infty } \left( {1 + \frac{1}{n}} \right)^n$
 ></asciinema-player>
 
 
-# Thank You! {bg=AliceBlue}
+# Thank You! {bg=AliceBlue rx=-1 ry=0}
 
 [pandoc](http://pandoc.org)
 [reveal.js](http://lab.hakim.se/reveal-js/#/)
