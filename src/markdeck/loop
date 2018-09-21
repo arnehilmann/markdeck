@@ -115,6 +115,7 @@ while true; do
         --standalone \
         --template=$template \
         --section-divs \
+        --lua-filter /markdeck/lib/skip-slide-filter.lua \
         --filter mathjax-pandoc-filter \
         --lua-filter /markdeck/lib/render-asciiart-filter.lua \
         --lua-filter /markdeck/lib/render-emojis-filter.lua \
