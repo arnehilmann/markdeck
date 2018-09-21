@@ -109,9 +109,10 @@ while true; do
 
     template=/markdeck/template-${variant}.html
     if pandoc \
-        --no-highlight \
         -f markdown+yaml_metadata_block \
         -t html5 \
+        --no-highlight \
+        --wrap=preserve \
         --standalone \
         --template=$template \
         --section-divs \
