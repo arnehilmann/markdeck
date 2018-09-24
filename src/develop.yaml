@@ -6,9 +6,9 @@ services:
       context: .
       dockerfile: Dockerfile.pandoc
       args:
-        version: 0.29
+        version: 0.30
         motto: impress-ive bundle, again
-    image: "arne/markdeck-pandoc:0.29"
+    image: "arne/markdeck-pandoc:0.30"
     volumes:
       - type: bind
         source: ./
@@ -29,7 +29,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.liveserver
-    image: "arne/markdeck-liveserver:0.1"
+    image: "arne/markdeck-liveserver:0.2"
     ports:
       - "8080:8080"
     volumes:
@@ -42,7 +42,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.decktape
-    image: "arne/markdeck-decktape:0.2"
+    image: "arne/markdeck-decktape:0.4"
     volumes:
       - type: bind
         source: ./deck
