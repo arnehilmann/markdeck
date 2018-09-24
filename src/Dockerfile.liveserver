@@ -9,4 +9,4 @@ EXPOSE 8080
 VOLUME /target
 WORKDIR /target
 
-ENTRYPOINT live-server --no-browser --wait=1 --watch=/target/index.html /target
+ENTRYPOINT node /usr/local/bin/live-server --no-browser --wait=100 --watch=/target/index.html,assets/css/ .
