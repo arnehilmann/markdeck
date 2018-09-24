@@ -1,0 +1,7 @@
+#impress {
+    filter: blur(4px);
+}
+
+.rerendering-message {
+    display: block;
+}

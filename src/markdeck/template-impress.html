@@ -26,6 +26,8 @@
         }
     </script>
 
+    <link href="assets/css/rerendering.css" rel="stylesheet"></link>
+
     $for(header-includes)$
         $header-includes$
     $endfor$
@@ -37,6 +39,8 @@
 $for(include-before)$
 $include-before$
 $endfor$
+
+    <div class="rerendering-message"><h1>R E R E N D E R I N G</h1></div>
 
     <div class="fallback-message">
         <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
@@ -52,16 +56,6 @@ $body$
     </div>
 
     <div id="impress-toolbar"></div>
-
-    <div class="hint">
-        <p>Use a spacebar or arrow keys to navigate. <br/>
-        Press 'P' to launch speaker console.</p>
-    </div>
-    <script>
-    if ("ontouchstart" in document.documentElement) {
-        document.querySelector(".hint").innerHTML = "<p>Swipe left or right to navigate</p>";
-    }
-    </script>
 
     <script src="assets/3rdparty/impress.js/js/impress.js"></script>
     <script src="assets/markdeck/impressjs-helper.js"></script>

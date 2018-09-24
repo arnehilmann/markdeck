@@ -26,3 +26,17 @@ img.emoji {
     margin: 0;
     vertical-align: baseline;
 }
+
+.rerendering-message {
+    display: none;
+    position: absolute;
+    text-align: center;
+    top: 20%;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1000;
+    color: white;
+    font-size: 60pt;
+    text-shadow: 2px 2px #000000;
+}

@@ -51,6 +51,9 @@ export ASCIIART_LIBDIR=/markdeck/lib
 
 while true; do
     cd /target
+
+    cp -v /markdeck/assets/markdeck/css/when-rerendering.css /target/assets/css/rerendering.css
+
     [[ -d /target/rendered ]] || mkdir -p /target/rendered
 
     echo "-------- rsync output --------"
@@ -128,6 +131,7 @@ while true; do
         /target/slides.combined.md.txt /markdeck/defaults.yaml 2>&1 | tee /tmp/pandoc.output;
     then
         if [[ -e /target/index.html.tmp ]]; then
+            echo "" > /target/assets/css/rerendering.css
             mv /target/index.html.tmp /target/index.html
         else
             show_errors
