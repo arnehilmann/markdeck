@@ -1,4 +1,5 @@
 #!/bin/sh
 set -e -E -u
 
-docker-compose -f ../src/develop.yaml --project-directory $PWD up
+CMD=${1:-up}
+docker-compose -f ../src/develop.yaml --project-directory $PWD $CMD
