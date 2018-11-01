@@ -1,8 +1,8 @@
 ---
 title: markdeck
 variant: impress
-pdf: markdeck-example.pdf
-# standalone: markdeck-example.html
+# pdf: markdeck-example.pdf
+standalone: markdeck-example.html
 # slideNumber: true
 # autoSlide: 5000
 # controls: true
@@ -21,7 +21,7 @@ create cool slide decks using markdown only
 
 | [markdeck on docker hub](https://hub.docker.com/r/arne/markdeck/)
 
-<small> arne@hilmann.de | 2018-09 🙃</small>
+<small> arne@hilmann.de | 2018-11 🙃</small>
 
 
 # features {rx=1}
@@ -286,3 +286,5 @@ $$e = \mathop {\lim }\limits_{n \to \infty } \left( {1 + \frac{1}{n}} \right)^n$
 ![](assets/img/buddy-egyptian.svg)
 
 
+a
+a
