@@ -31,6 +31,14 @@ services:
     shm_size: 1G
     depends_on: [markdeck, web]
 
+  standalone:
+    image: "arne/markdeck-standalone:0.2"
+    volumes:
+      - type: bind
+        source: ./deck
+        target: /target
+    depends_on: [web]
+
   helper:
     image: "arne/markdeck-helper:0.2"
     ports:

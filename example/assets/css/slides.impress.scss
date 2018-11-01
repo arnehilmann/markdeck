@@ -80,20 +80,14 @@ body.impress-enabled {
 
         .step {
             text-align: center;
-            opacity: 1;
 
             .hljs {
                 text-align: left;
             }
         }
 
-        .step.active {
-            opacity: 1;
-        }
-
         .step.onlywhenactive {
             opacity: 0;
-            transitian: opacity 1s;
         }
 
         .step.onlywhenactive.active {
@@ -156,4 +150,3 @@ body.impress-enabled {
 
     }
 }
-
