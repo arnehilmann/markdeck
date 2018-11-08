@@ -21,14 +21,17 @@
   src: url("fonts/xkcd-script.ttf") format('truetype');
 }
 
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/Raleway-Regular.ttf") format('truetype');
+}
+
 body.impress-enabled {
-    background: #fff;
+    background: #f8f8f8;
 
     #impress {
-        h1, h2, h3, h4, h5, h6, div {
-            font-family: "EB Garamond", sans-serif;
-        }
-
         section > * {
             font-size: 100%;
         }
@@ -79,6 +82,12 @@ body.impress-enabled {
         }
 
         .step {
+            font-family: "Raleway", sans-serif;
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: "EB Garamond", serif;
+            }
+
             text-align: center;
 
             .hljs {
@@ -149,4 +158,22 @@ body.impress-enabled {
         }
 
     }
+}
+
+body.impress-on-overview {
+    #impress {
+        section.step {
+            opacity: 1;
+        }
+    }
+}
+
+.sky-gradient-13 { background: linear-gradient(to bottom, #57c1eb 0%,#246fa8 100%); }
+
+.sea-gradient {
+    background: #2C3E50;
+    background: -webkit-linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
+    background: linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
+    -webkit-clip-path: polygon(0% 25%, 0% 75%, 100% 75%, 100% 25%);
+    clip-path: polygon(0% 25%, 0% 75%, 100% 75%, 100% 25%);
 }

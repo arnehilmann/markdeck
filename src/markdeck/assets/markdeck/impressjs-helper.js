@@ -31,41 +31,40 @@ document.addEventListener("impress:init", function(event){
     steps.forEach(function(step){
         var background = step.dataset.background;
         var background_image = step.dataset.backgroundImage;
-        if (background || background_image) {
+        var background_css = step.dataset.state;
+        if (background || background_image || background_css) {
             var bg_div = document.getElementById(step.id + "__bg");
             if (bg_div) {
                 bg_div.style.width = (window.innerWidth / window_scale) + "px";
                 bg_div.style.height = (window.innerHeight / window_scale) + "px";
                 bg_div.style.zIndex = step.style.zIndex - 10;
                 bg_div.style.position = "absolute";
+                bg_div.style.transform = step.style.transform;
                 bg_div.style.background = background;
-                if (background_image) {
+                if (background_css) {
+                    bg_div.classList.add(background_css);
+                } else if (background_image) {
                     bg_div.style.backgroundImage = "url('" + background_image + "')";
                     //bg_div.style.backgroundSize = "cover";
                     bg_div.style.backgroundSize = bg_div.style.width + " " + bg_div.style.height;
                 }
-                bg_div.style.transform = step.style.transform;
-                var step_scale = step.dataset.scale;
-                //bg_div.style.width = (window.innerWidth / window_scale) + "px";
-                //bg_div.style.height = (window.innerHeight / window_scale) + "px";
                 root.children[0].insertBefore(bg_div, root.children[0].childNodes[0]);
 
                 var computedBackgroundStyle = window.getComputedStyle(bg_div);
                 if (computedBackgroundStyle && computedBackgroundStyle.backgroundColor) {
                     var rgb = colorToRgb(computedBackgroundStyle.backgroundColor);
-
-                    // Ignore fully transparent backgrounds. Some browsers return
-                    // rgba(0,0,0,0) when reading the computed background color of
-                    // an element with no background
                     if (rgb && rgb.a !== 0) {
                         if (colorBrightness(computedBackgroundStyle.backgroundColor) < 128) {
                             step.classList.add('has-dark-background');
-                        }
-                        else {
+                        } else {
                             step.classList.add('has-light-background');
                         }
                     }
+                    if (background_css) {
+                        document.getElementById(step.id + "__bg").style["background"] = null;
+                    }
                 }
+
             }
         }
     });

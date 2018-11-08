@@ -13,18 +13,17 @@ standalone: markdeck-example.html
 asciinema: true
 ---
 
-# markdeck {bg=black;assets/img/bg.colorfull.png .colorfull}
+
+# markdeck {bg=black bgcss=sea-gradient x=0 y=0}
 
 create cool slide decks using markdown only
 
 | [github.com/arnehilmann/markdeck](https://github.com/arnehilmann/markdeck)
 
-| [markdeck on docker hub](https://hub.docker.com/r/arne/markdeck/)
-
 <small> arne@hilmann.de | 2018-11 🙃</small>
 
 
-# features {rx=1}
+# features {rx=1 bg=#123456}
 
 the whole deck as markdown
 
@@ -33,7 +32,7 @@ cool ui, based on
 .js
 
 
-# features {bg=Teal rx=0 ry=1}
+# features {rx=0 ry=1}
 
 on-the-fly rendering of asciiart
 
@@ -54,7 +53,7 @@ emojis and terminal sessions
 on-the-fly reload when changing sources
 
 
-# code, highlighted
+# code, highlighted {bg=#ffeedd}
 
 ```java
 public static final void main(String[] args) {
@@ -67,7 +66,7 @@ public static final void main(String[] args) {
 
 ditaa
 
-```{.render_ditaa args="--transparent --scale 2 --font 'EB Garamond 12'"}
+```{.render_ditaa args="--transparent --scale 2 --font 'Raleway 12'"}
 
 +=----------------------------+   +=----------------------------+
 | Node                        |   | Node                        |
@@ -93,7 +92,7 @@ ditaa
 
 plantuml
 
-```{.render_plantuml args="-Sbackgroundcolor=transparent -SdefaultFontSize=24 -SdefaultFontName=EB\ Garamond"}
+```{.render_plantuml args="-Sbackgroundcolor=transparent -SdefaultFontSize=24 -SdefaultFontName=Raleway"}
 @startuml
 Bob->Alice : hello
 Alice->Bob : oh, you again...
@@ -140,9 +139,9 @@ vega-lite
     },
     "config": {
         "axis": {
-            "labelFont": "EB Garamond",
+            "labelFont": "Raleway",
             "labelFontSize": 18,
-            "titleFont": "EB Garamond",
+            "titleFont": "Raleway",
             "titleFontSize": 24,
             "titleAngle": 0
         },
@@ -154,7 +153,7 @@ vega-lite
 ```
 
 
-# asciiart: a2s {bg=White}
+# asciiart: a2s {bg=White bgcss=sky-gradient-13}
 
 ```render_a2s
      #-------------------.
@@ -184,7 +183,7 @@ vega-lite
      |                   |
      |   ^     ^     ^   |
      #---+-----+-----+---#
-     |   |     |     |   |
+     |[2]|     |     |   |
      |   a     2  sketch |
      '-------------------#
  github.com/arnehilmann/a2sketch
@@ -192,6 +191,7 @@ vega-lite
 
 [0]: {"fill": "#933", "a2s:delref": true, "fillStyle": "solid"}
 [1]: {"fill": "#bbb", "a2s:delref": true, "fillStyle": "solid"}
+[2]: {"fill": "#fff", "fillStyle": "solid", "a2s:delref": true}
 ```
 
 
@@ -278,13 +278,16 @@ $$e = \mathop {\lim }\limits_{n \to \infty } \left( {1 + \frac{1}{n}} \right)^n$
 [`https://github.com/arnehilmann/markdeck`{.render_qr}](https://github.com/arnehilmann/markdeck)
 
 
-# {x=.5 y=.5 z=0 scale=4 skipon="reveal"}
+# {.skip}
+
+This page intentionally left blank.
 
 
-# markdeck rulez! {x=3 y=-1.5 rotate-y=60 scale=3 skipon="reveal"}
+
+# {x=.5 y=.5 z=0 scale=4 skipon="reveal" id=overview}
+
+
+# markdeck rulez! {x=3 y=-1.5 rotate-y=60 scale=3 skipon="reveal" bg=black bgcss=sea-gradient}
 
 ![](assets/img/buddy-egyptian.svg)
 
-
-a
-a
