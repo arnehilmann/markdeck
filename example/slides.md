@@ -278,7 +278,7 @@ $$e = \mathop {\lim }\limits_{n \to \infty } \left( {1 + \frac{1}{n}} \right)^n$
 [`https://github.com/arnehilmann/markdeck`{.render_qr}](https://github.com/arnehilmann/markdeck)
 
 
-# {.skip}
+# {.skip skipon="reveal"}
 
 This page intentionally left blank.
 
@@ -290,4 +290,3 @@ This page intentionally left blank.
 # markdeck rulez! {x=3 y=-1.5 rotate-y=60 scale=3 skipon="reveal" bg=black bgcss=sea-gradient}
 
 ![](assets/img/buddy-egyptian.svg)
-
