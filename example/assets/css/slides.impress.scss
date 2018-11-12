@@ -8,10 +8,10 @@
 }
 
 @font-face {
-  font-family: "EB Garamond";
+  font-family: "EB Garamond Bold";
   font-style: normal;
   font-weight: 400;
-  src: url("fonts/EBGaramond12-Regular.ttf") format('truetype');
+  src: url("fonts/EBGaramond-Bold.ttf") format('truetype');
 }
 
 @font-face {
@@ -85,7 +85,7 @@ body.impress-enabled {
             font-family: "Raleway", sans-serif;
 
             h1, h2, h3, h4, h5, h6 {
-                font-family: "EB Garamond", serif;
+                font-family: "EB Garamond Bold", serif;
             }
 
             text-align: center;
@@ -176,4 +176,18 @@ body.impress-on-overview {
     background: linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
     -webkit-clip-path: polygon(0% 25%, 0% 75%, 100% 75%, 100% 25%);
     clip-path: polygon(0% 25%, 0% 75%, 100% 75%, 100% 25%);
+}
+
+.markdeck-logo {
+    position: absolute;
+    bottom: 8px;
+    height: 8px;
+    font-size: 10px;
+    left: 50%;
+    width: 25%;
+    color: #5550;
+
+    a {
+        text-shadow: 1px 1px #5559;
+    }
 }

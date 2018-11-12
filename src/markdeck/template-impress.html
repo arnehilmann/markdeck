@@ -1,19 +1,27 @@
 <!doctype html>
 <html lang="en">
+<!--
+    Markdeck - create cool lookin slide decks, with markdown only
+
+    for further information, see https://github.com/arnehilmann/markdeck
+
+    by arne.hilmann@gmail.com
+-->
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=1024" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <title>$title$</title>
     <meta name="description" content="$title$" />
+    <meta name="generator" content="https://github.com/arnehilmann/markdeck" />
     $for(author)$
-        <meta name="author" content="$author$" />
+    <meta name="author" content="$author$" />
     $endfor$
 
     <link rel="stylesheet" href="assets/markdeck/styles/$highlight_style$.css" />
 
     $if(asciinema)$
-        <link rel="stylesheet" type="text/css" href="assets/3rdparty/asciinema-player.css" />
+    <link rel="stylesheet" type="text/css" href="assets/3rdparty/asciinema-player.css" />
     $endif$
 
     <link href="assets/3rdparty/impress.js/css/impress-demo.css" rel="stylesheet" />
@@ -28,13 +36,15 @@
 
     <link href="assets/css/rerendering.css" rel="stylesheet"></link>
 
-    $for(header-includes)$
-        $header-includes$
-    $endfor$
+$for(header-includes)$
+$header-includes$
+$endfor$
 
 </head>
-
+<!--
 <body class="impress-not-supported">
+-->
+<body>
 
 $for(include-before)$
 $include-before$
@@ -46,6 +56,8 @@ $endfor$
         <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
         <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
     </div>
+
+    <div class="markdeck-logo"><a href="https://github.com/arnehilmann/markdeck">created with markdeck</a></div>
 
     <div
         id="impress"
