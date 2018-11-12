@@ -1,6 +1,67 @@
+@font-face {
+  font-family: 'Inconsolata';
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/Inconsolata-Regular.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: "EB Garamond Bold";
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/EBGaramond-Bold.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: "xkcd Script";
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/xkcd-script.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/Raleway-Regular.ttf") format('truetype');
+}
+
 .inline-stack {
     display: inline-block;
     vertical-align: middle;
     line-height: 1.1em;
 }
 
+.sea-gradient {
+    background: #2C3E50;
+    background: -webkit-linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
+    background: linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
+    -webkit-clip-path: polygon(0% 25%, 0% 75%, 100% 75%, 100% 25%);
+    clip-path: polygon(0% 25%, 0% 75%, 100% 75%, 100% 25%);
+}
+
+.markdeck-logo {
+    position: absolute;
+    bottom: 8px;
+    height: 8px;
+    font-size: 10px;
+    left: 50%;
+    width: 25%;
+    color: #5550;
+    z-index: 1;
+
+    a {
+        color: #333a;
+        text-shadow: 1px 1px #bbba;
+        background: none;
+    }
+}
+
+.sky-gradient-01 .reveal { background: linear-gradient(to bottom, #020111 85%,#191621 100%); }
+.sky-gradient-02 .reveal { background: linear-gradient(to bottom, #020111 60%,#20202c 100%); }
+.sky-gradient-03 .reveal { background: linear-gradient(to bottom, #020111 10%,#3a3a52 100%); }
+.sky-gradient-04 .reveal { background: linear-gradient(to bottom, #20202c 0%,#515175 100%); }
+.light-on-dark, section.light-on-dark h1 {
+    color: #fff;
+    text-shadow: 0px 1px #000;
+}

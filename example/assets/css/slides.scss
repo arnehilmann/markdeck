@@ -1,23 +1,4 @@
-@font-face {
-  font-family: 'Inconsolata';
-  font-style: normal;
-  font-weight: 400;
-  src: url("fonts/Inconsolata-Regular.ttf") format('truetype');
-}
-
-@font-face {
-  font-family: "EB Garamond";
-  font-style: normal;
-  font-weight: 400;
-  src: url("fonts/EBGaramond12-Regular.ttf") format('truetype');
-}
-
-@font-face {
-  font-family: "xkcd Script";
-  font-style: normal;
-  font-weight: 400;
-  src: url("fonts/xkcd-script.ttf") format('truetype');
-}
+@import "common";
 
 .reveal,
 .reveal h1,
@@ -25,9 +6,12 @@
 .reveal h3,
 .reveal h4,
 .reveal h5,
-.reveal h6,
+.reveal h6 {
+    font-family: "EB Garamond Bold", serif;
+}
+
 .reveal div {
-    font-family: "EB Garamond", sans-serif;
+    font-family: "Raleway", sans-serif;
 }
 
 .reveal div pre.asciinema-terminal {
