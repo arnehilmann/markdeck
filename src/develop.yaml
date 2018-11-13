@@ -58,16 +58,16 @@ services:
     ports:
       - "8081:8081"
 
-#  standaloneexporter:
-#    build:
-#      context: .
-#      dockerfile: Dockerfile.standalone
-#    image: "arne/markdeck-standalone:0.1"
-#    volumes:
-#      - type: bind
-#        source: ./deck
-#        target: /target
-#    depends_on: [converter]
+  standalone:
+    build:
+      context: .
+      dockerfile: Dockerfile.standalone
+    image: "arne/markdeck-standalone:0.2"
+    volumes:
+      - type: bind
+        source: ./deck
+        target: /target
+    depends_on: [web]
 
   a2sketch:
     image: "arne/a2sketch:0.7"
