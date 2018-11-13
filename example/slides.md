@@ -14,7 +14,7 @@ asciinema: true
 ---
 
 
-# markdeck {bg=black bgcss=sea-gradient x=0 y=0}
+# markdeck {bgcss=sea-gradient x=0 y=0 .light-on-dark}
 
 create cool slide decks using markdown only
 
@@ -153,7 +153,27 @@ vega-lite
 ```
 
 
-# asciiart: a2s {bg=White bgcss=sky-gradient-13}
+# asciiart: a2s {bg=White bgcss=sky-gradient-13 .inline}
+
+```{.plaintext style="width: 40%; font-size: 40%;"}
+#-------------------.
+|[0]                |
+| .---# .---# #---. |
+| |[1]| |[1]| |[1]| |
+| #---' #---' '---# |
+|                   |
+|   ^     ^     ^   |
+#---+-----+-----+---#
+|   |     |     |   |
+|   a     2  sketch |
+'-------------------#
+github.com/arnehilmann/a2sketch
+
+[0]: {"fill": "#933"}
+[1]: {"fill": "#bbb"}
+```
+
+►
 
 ```render_a2s
      #-------------------.
@@ -172,26 +192,6 @@ vega-lite
 
 [0]: {"fill": "#933", "a2s:delref": true, "fillStyle": "solid"}
 [1]: {"fill": "#bbb", "a2s:delref": true, "fillStyle": "solid"}
-```
-
-```render_a2sketch
-     #-------------------.
-     |[0]                |
-     | .---# .---# #---. |
-     | |[1]| |[1]| |[1]| |
-     | #---' #---' '---# |
-     |                   |
-     |   ^     ^     ^   |
-     #---+-----+-----+---#
-     |[2]|     |     |   |
-     |   a     2  sketch |
-     '-------------------#
- github.com/arnehilmann/a2sketch
-
-
-[0]: {"fill": "#933", "a2s:delref": true, "fillStyle": "solid"}
-[1]: {"fill": "#bbb", "a2s:delref": true, "fillStyle": "solid"}
-[2]: {"fill": "#fff", "fillStyle": "solid", "a2s:delref": true}
 ```
 
 
@@ -290,3 +290,18 @@ This page intentionally left blank.
 # markdeck rulez! {x=3 y=-1.5 rotate-y=60 scale=3 skipon="reveal" bg=black bgcss=sea-gradient}
 
 ![](assets/img/buddy-egyptian.svg)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

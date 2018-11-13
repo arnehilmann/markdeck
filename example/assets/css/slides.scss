@@ -52,3 +52,11 @@
 .reveal .slides .xkcd * {
     font-family: "xkcd Script";
 }
+
+.reveal a {
+    color: inherit;
+    font-size: 0.6em;
+}
+
+.sea-gradient .reveal { @include sea-gradient; }
+.sky-gradient-13 .reveal { @include sky-gradient-13; }

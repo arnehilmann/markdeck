@@ -26,18 +26,10 @@
   src: url("fonts/Raleway-Regular.ttf") format('truetype');
 }
 
-.inline-stack {
+.reveal .inline-stack, .inline-stack {
     display: inline-block;
     vertical-align: middle;
     line-height: 1.1em;
-}
-
-.sea-gradient {
-    background: #2C3E50;
-    background: -webkit-linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
-    background: linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
-    -webkit-clip-path: polygon(0% 25%, 0% 75%, 100% 75%, 100% 25%);
-    clip-path: polygon(0% 25%, 0% 75%, 100% 75%, 100% 25%);
 }
 
 .markdeck-logo {
@@ -57,11 +49,27 @@
     }
 }
 
-.sky-gradient-01 .reveal { background: linear-gradient(to bottom, #020111 85%,#191621 100%); }
-.sky-gradient-02 .reveal { background: linear-gradient(to bottom, #020111 60%,#20202c 100%); }
-.sky-gradient-03 .reveal { background: linear-gradient(to bottom, #020111 10%,#3a3a52 100%); }
-.sky-gradient-04 .reveal { background: linear-gradient(to bottom, #20202c 0%,#515175 100%); }
 .light-on-dark, section.light-on-dark h1 {
     color: #fff;
     text-shadow: 0px 1px #000;
 }
+
+.inline {
+    p, pre {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
+@mixin sea-gradient {
+    background: linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
+    -webkit-clip-path: polygon(0% 25%, 0% 75%, 100% 75%, 100% 25%);
+    clip-path: polygon(0% 25%, 0% 75%, 100% 75%, 100% 25%);
+}
+
+@mixin sky-gradient-01 { background: linear-gradient(to bottom, #020111 85%,#191621 100%); }
+@mixin sky-gradient-02 { background: linear-gradient(to bottom, #020111 60%,#20202c 100%); }
+@mixin sky-gradient-03 { background: linear-gradient(to bottom, #020111 10%,#3a3a52 100%); }
+@mixin sky-gradient-04 { background: linear-gradient(to bottom, #20202c 0%,#515175 100%); }
+@mixin sky-gradient-13 { background: linear-gradient(to bottom, #57c1eb 0%,#246fa8 100%); }
+

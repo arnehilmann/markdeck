@@ -15,7 +15,7 @@ function Header(elem)
         if elem.attributes.bgcss then
             -- io.stderr:write("section " .. elem.identifier .. "\n")
             elem.attributes["data-state"]=elem.attributes.bgcss
-            elem.attributes.bgcss=nil
+            -- elem.attributes.bgcss=nil
         end
     end
 

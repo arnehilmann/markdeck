@@ -22,8 +22,8 @@ body.impress-enabled {
 
         a {
             background: none;
-            text-shadow: none;
-            text-decoration: none;
+            text-shadow: inherit;
+            text-decoration: inherit;
             font-size: 80%;
         }
 
@@ -55,6 +55,10 @@ body.impress-enabled {
 
         .step {
             font-family: "Raleway", sans-serif;
+
+            .line-block {
+                font-family: "Raleway", sans-serif;
+            }
 
             h1, h2, h3, h4, h5, h6 {
                 font-family: "EB Garamond Bold", serif;
@@ -140,4 +144,10 @@ body.impress-on-overview {
     }
 }
 
-.sky-gradient-13 { background: linear-gradient(to bottom, #57c1eb 0%,#246fa8 100%); }
+.sea-gradient { @include sea-gradient; }
+.sky-gradient-13 { @include sky-gradient-13; }
+
+body.impress-enabled #impress .step.inline pre {
+    display: inline-block;
+    vertical-align: middle;
+}
