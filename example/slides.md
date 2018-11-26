@@ -3,6 +3,7 @@ title: markdeck
 variant: impress
 # pdf: markdeck-example.pdf
 standalone: markdeck-example.html
+highlight_style: solarized-dark
 # slideNumber: true
 # autoSlide: 5000
 # controls: true
@@ -62,10 +63,22 @@ public static final void main(String[] args) {
 ```
 
 
-# asciiart: boxes {bg=SteelBlue rx=0 ry=-1}
+# asciiart: ditaa {bg=SteelBlue rx=0 ry=-1}
 
-ditaa
-
+```{.plaintext style="width: 80%; font-size: 40%;"}
++=----------------------------+   +=----------------------------+
+| Node                        |   | Node                        |
+|                             |   |                             |
+| +----------+   +----------+ |   | +----------+   +----------+ |
+| | Frontend |   | Foo      | |   | | Frontend |   | Bar      | |
+| |          |   |          | |   | |          |   |          | |
+| |          |   | {s}      | |   | |          |   | {s}      | |
+| +-----+----+   +----------+ |   | +-----+----+   +----------+ |
+|       ^                     |   |       ^                     |
+|       +-------------service-------------+                     |
++-----------------------------+   +-----------------------------+
+```
+▼
 ```{.render_ditaa args="--transparent --scale 2 --font 'Raleway 12'"}
 
 +=----------------------------+   +=----------------------------+
@@ -88,10 +101,16 @@ ditaa
 ```
 
 
-# asciiart: uml {bg=lightblue}
+# asciiart: plantuml {bg=lightblue .inline}
 
-plantuml
-
+```{.plaintext style="width: 40%; font-size: 40%;"}
+@startuml
+Bob->Alice : hello
+Alice->Bob : oh, you again...
+Bob->Alice : ??
+@enduml
+```
+►
 ```{.render_plantuml args="-Sbackgroundcolor=transparent -SdefaultFontSize=24 -SdefaultFontName=Raleway"}
 @startuml
 Bob->Alice : hello
@@ -101,10 +120,19 @@ Bob->Alice : ??
 ```
 
 
-# asciiart: graphs {bg=DarkOrange rx=1 ry=0}
+# asciiart: graphviz {bg=DarkOrange rx=1 ry=0 .inline}
 
-graphviz
+```{.plaintext style="width: 50%; font-size: 40%;"}
+digraph G {
+    bgcolor=transparent;
+    node [style=filled,color=white];
 
+    a -> b -> c;
+    a -> c;
+    b -> d;
+}
+```
+►
 ```render_dot
 digraph G {
     bgcolor=transparent;
@@ -116,11 +144,9 @@ digraph G {
 }
 ```
 
-# asciiart: charts {bg=GhostWhite}
+# asciiart: vega-lite {bg=GhostWhite .inline}
 
-vega-lite
-
-```render_vegalite
+```{.plaintext style="width: 50%; font-size: 20%;"}
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json",
     "data": {
@@ -131,6 +157,26 @@ vega-lite
         ]
     },
     "width": 600,
+    "height": 300,
+    "mark": "area",
+    "encoding": {
+        "x": {"field": "a", "type": "ordinal"},
+        "y": {"field": "b", "type": "quantitative", "scale": {"domain": [0, 100]}}
+    }
+}
+```
+►
+```render_vegalite
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json",
+    "data": {
+        "values": [
+            {"a": "A","b": 28}, {"a": "B","b": 55}, {"a": "C","b": 43},
+            {"a": "D","b": 91}, {"a": "E","b": 81}, {"a": "F","b": 53},
+            {"a": "G","b": 19}, {"a": "H","b": 87}, {"a": "I","b": 52}
+        ]
+    },
+    "width": 250,
     "height": 300,
     "mark": "area",
     "encoding": {
@@ -172,9 +218,7 @@ github.com/arnehilmann/a2sketch
 [0]: {"fill": "#933"}
 [1]: {"fill": "#bbb"}
 ```
-
 ►
-
 ```render_a2s
      #-------------------.
      |[0]                |
@@ -215,7 +259,7 @@ github.com/arnehilmann/a2sketch
 |                             |   |                             |
 #-----------------------------#   #-----------------------------#
 
-[s]: {"a2s:type": "storage", "a2s:delref": true, "font-family": "EB Garamond"}
+[s]: {"a2s:type": "storage", "a2s:delref": true, "font-family": "Raleway"}
 ```
 ```render_a2sketch
 #=----------------------------#   #=----------------------------#
@@ -235,13 +279,18 @@ github.com/arnehilmann/a2sketch
 |                             |   |                             |
 #-----------------------------#   #-----------------------------#
 
-[s]: {"a2s:type": "storage", "a2s:delref": true, "font-family": "EB Garamond"}
+[s]: {"a2s:type": "storage", "a2s:delref": true, "font-family": "Raleway"}
 ```
 
 
-# asciiart: equations {bg=Teal}
+# asciiart: mathjax {bg=Teal}
 
-mathjax
+```{.plaintext style="width: 100%; font-size: 40%;"}
+$a^2 + b^2 = c^2$
+
+$$e = \mathop {\lim }\limits_{n \to \infty } \left( {1 + \frac{1}{n}} \right)^n$$
+```
+▼
 
 $a^2 + b^2 = c^2$
 
@@ -290,18 +339,3 @@ This page intentionally left blank.
 # markdeck rulez! {x=3 y=-1.5 rotate-y=60 scale=3 skipon="reveal" bg=black bgcss=sea-gradient}
 
 ![](assets/img/buddy-egyptian.svg)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
