@@ -57,7 +57,7 @@ $endfor$
         <p>For the best experience please use the latest <b>Chrome</b>, <b>Safari</b> or <b>Firefox</b> browser.</p>
     </div>
 
-    <div class="markdeck-logo"><a href="https://github.com/arnehilmann/markdeck">created with markdeck</a></div>
+    <div class="markdeck-logo"><a href="https://github.com/arnehilmann/markdeck">powered by markdeck</a></div>
 
     <div
         id="impress"
@@ -69,9 +69,52 @@ $body$
 
     <div id="impress-toolbar"></div>
 
+    <!--
     <script src="assets/3rdparty/impress.js/js/impress.js"></script>
+    -->
+    <script src="assets/3rdparty/impress.js/src/impress.js"></script>
+    <script src="assets/3rdparty/impress.js/src/lib/util.js"></script>
+    <script src="assets/3rdparty/impress.js/src/lib/gc.js"></script>
+    <script src="assets/3rdparty/impress.js/src/plugins/skip/skip.js"></script>
+    <script src="assets/3rdparty/impress.js/src/plugins/progress/progress.js"></script>
+    <script src="assets/3rdparty/impress.js/src/plugins/mobile/mobile.js"></script>
+    <script src="assets/3rdparty/impress.js/src/plugins/resize/resize.js"></script>
+    <script src="assets/3rdparty/impress.js/src/plugins/navigation/navigation.js"></script>
     <script src="assets/markdeck/impressjs-helper.js"></script>
-    <script>impress().init();</script>
+    <script>
+        var click = function(event) {
+            if (100 * event.clientX / window.innerWidth > 33) {
+                window.impress().next();
+            } else {
+                window.impress().prev();
+            }
+        }
+
+        var touch = function(event) {
+            // console.log(event);
+            // console.log(window.innerWidth);
+            // console.log(event.touches[0].clientX);
+            if (100 * event.touches[0].clientX / window.innerWidth > 50) {
+                window.impress().next();
+            } else {
+                window.impress().prev();
+            }
+        }
+
+        document.addEventListener( "impress:init", function( event ) {
+            var api = event.detail.api;
+            var gc = api.lib.gc;
+            console.log(document.body.classList);
+            if (document.body.classList.contains("impress-mobile")) {
+                gc.addEventListener(document, "touchstart", touch);
+            } else {
+                gc.addEventListener(document, "click", click);
+            }
+            // gc.addEventListener(document, "touch", touch);
+        }, false );
+
+        impress().init();
+    </script>
 
     <script src="assets/markdeck/highlight.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
