@@ -2,12 +2,6 @@ version: "3.2"
 
 services:
   markdeck:
-    build:
-      context: .
-      dockerfile: Dockerfile.pandoc
-      args:
-        version: "0.31"
-        motto: impressjs arrived (again)
     image: "arne/markdeck-pandoc:0.31"
     volumes:
       - type: bind
@@ -19,9 +13,6 @@ services:
         target: /target
 
   web:
-    build:
-      context: .
-      dockerfile: Dockerfile.liveserver
     image: "arne/markdeck-liveserver:0.2"
     ports:
       - "8080:8080"
@@ -32,9 +23,6 @@ services:
     depends_on: [markdeck]
 
   pdf:
-    build:
-      context: .
-      dockerfile: Dockerfile.decktape
     image: "arne/markdeck-decktape:0.4"
     volumes:
       - type: bind
@@ -44,9 +32,6 @@ services:
     depends_on: [markdeck, web]
 
   standalone:
-    build:
-      context: .
-      dockerfile: Dockerfile.standalone
     image: "arne/markdeck-standalone:0.2"
     volumes:
       - type: bind
@@ -55,9 +40,6 @@ services:
     depends_on: [web]
 
   helper:
-    build:
-      context: .
-      dockerfile: Dockerfile.helper
     image: "arne/markdeck-helper:0.2"
     ports:
       - "8081:8081"
