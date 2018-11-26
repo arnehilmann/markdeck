@@ -3,7 +3,7 @@ REVEALJS_VERSION=3.7.0
 ASCIINEMAPLAYER_VERSION=v2.6.1
 JQUERY_VERSION=3.3.1.slim.min
 IMPRESSJS_VERSION=1.0.0
-VERSION:=$$(yq '.services.markdeck.build.args.version' docker-compose.yaml)
+VERSION:=$$(yq r docker-compose.yaml services.markdeck.build.args.version)
 
 
 all:	prepare
