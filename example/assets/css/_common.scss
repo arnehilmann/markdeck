@@ -34,11 +34,12 @@
 
 .markdeck-logo {
     position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
     bottom: 8px;
     height: 8px;
     font-size: 10px;
-    left: 50%;
-    width: 25%;
     color: #5550;
     z-index: 1;
 
