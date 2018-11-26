@@ -52,6 +52,7 @@ export ASCIIART_LIBDIR=/markdeck/lib
 while true; do
     cd /target
 
+    mkdir -p /target/assets/css/
     cp -v /markdeck/assets/markdeck/css/when-rerendering.css /target/assets/css/rerendering.css
 
     [[ -d /target/rendered ]] || mkdir -p /target/rendered
