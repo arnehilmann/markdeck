@@ -11,12 +11,11 @@ echo "ok"
 echo
 
 CURL="curl -# -S -f"
-MASTER=https://raw.githubusercontent.com/arnehilmann/markdeck/master
+MASTER=https://raw.githubusercontent.com/arnehilmann/markdeck/master/example/minimal
 
 echo "pulling minimal config"
-$CURL -O $MASTER/docker-compose.yaml
-for F in start update-markdeck Makefile; do
-    $CURL -O $MASTER/example/minimal/$F
+for F in start docker-compose.yaml update-markdeck Makefile; do
+    $CURL -O $MASTER/$F
 done
 chmod a+x start update-markdeck
 echo
@@ -24,7 +23,7 @@ echo
 echo "pulling minimal example"
 mkdir -p assets/css/fonts
 for F in slides.md assets/css/slides.scss assets/css/fonts/EBGaramond12-Regular.ttf assets/css/fonts/xkcd-script.ttf assets/css/fonts/Inconsolata-Regular.ttf; do
-    [[ -e $F ]] || $CURL -o $F $MASTER/example/minimal/$F
+    [[ -e $F ]] || $CURL -o $F $MASTER/$F
 done
 echo
 

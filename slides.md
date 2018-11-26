@@ -1,1 +1,0 @@
-# first slide {bg=lightblue}
