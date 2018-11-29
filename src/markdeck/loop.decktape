@@ -37,7 +37,7 @@ while true; do
         [ /slides/index.html -nt /slides/.meta/pdf_rendered ] && continue
 
         if [ $variant = "impress" ]; then
-            convert -density 300x300 $(ls -1r -tc /tmp/slides/*.png) /slides/$pdf
+            convert -density 300x300 $(ls -1r -tc /tmp/slides/*.png) /slides/$pdf.screenshots.pdf
         fi
 
         echo "pdf rendering finished"
