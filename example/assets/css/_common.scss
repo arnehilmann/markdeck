@@ -32,29 +32,6 @@
     line-height: 1.1em;
 }
 
-.markdeck-logo {
-    position: absolute;
-    left: 0;
-    right: 0;
-    text-align: center;
-    bottom: 8px;
-    height: 8px;
-    font-size: 10px;
-    color: #5550;
-    z-index: 1;
-
-    a {
-        color: #333a;
-        text-shadow: 1px 1px #bbba;
-        background: none;
-    }
-}
-
-.light-on-dark, section.light-on-dark h1 {
-    color: #fff;
-    text-shadow: 0px 1px #000;
-}
-
 .inline {
     p, pre {
         display: inline-block;
@@ -74,3 +51,7 @@
 @mixin sky-gradient-04 { background: linear-gradient(to bottom, #20202c 0%,#515175 100%); }
 @mixin sky-gradient-13 { background: linear-gradient(to bottom, #57c1eb 0%,#246fa8 100%); }
 
+
+pre.nohighlight code {
+    line-height: 90%;
+}

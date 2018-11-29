@@ -1,3 +1,5 @@
+@import "common";
+
 h1, h2, h3, h4, h5, h6, div {
     font-family: sans-serif;
 }
@@ -17,26 +19,4 @@ section {
 .slide-background {
     background-size: cover !important;
     background-repeat: no-repeat;
-}
-
-img.emoji {
-    width: 1.1em;
-    height: 1.1em;
-    padding: 0;
-    margin: 0;
-    vertical-align: baseline;
-}
-
-.rerendering-message {
-    display: none;
-    position: absolute;
-    text-align: center;
-    top: 20%;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 1000;
-    color: white;
-    font-size: 60pt;
-    text-shadow: 2px 2px #000000;
 }

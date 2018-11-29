@@ -14,17 +14,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/reveal.css" />
-    $if(theme)$
-        <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/theme/$theme$.css" id="theme" />
-    $else$
-        <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/theme/default.css" id="theme" />
-    $endif$
+    <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/theme/$theme$.css" id="theme" />
 
-    $if(highlight-style)$
-        <link rel="stylesheet" href="assets/markdeck/styles/$highlight-style$.css" />
-    $else$
-        <link rel="stylesheet" href="assets/3rdparty/reveal.js/lib/css/zenburn.css" />
-    $endif$
+    <link rel="stylesheet" href="assets/markdeck/styles/$highlight_style$.css" />
 
     $if(asciinema)$
         <link rel="stylesheet" type="text/css" href="assets/3rdparty/asciinema-player.css" />
@@ -39,9 +31,11 @@
         }
     </script>
 
-    $for(header-includes)$
-        $header-includes$
-    $endfor$
+    <link href="assets/css/rerendering.css" rel="stylesheet"></link>
+
+$for(header-includes)$
+$header-includes$
+$endfor$
 
 </head>
 <body>
@@ -49,6 +43,9 @@
 $for(include-before)$
 $include-before$
 $endfor$
+
+    <div class="rerendering-message"><h1>R E R E N D E R I N G</h1></div>
+    <div class="markdeck-logo"><a href="https://github.com/arnehilmann/markdeck">powered by markdeck</a></div>
 
     <div class="reveal">
         <div class="slides">

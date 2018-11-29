@@ -69,6 +69,10 @@ body.impress-enabled {
             .hljs {
                 text-align: left;
             }
+
+            pre.markdown .hljs {
+                line-height: 0.9rem;
+            }
         }
 
         .step.onlywhenactive {

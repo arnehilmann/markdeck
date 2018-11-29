@@ -1,3 +1,5 @@
+@import "common";
+
 .reveal {
     h1, h2, h3, h4, h5, h6, div {
         font-family: sans-serif;
@@ -73,4 +75,8 @@ section.has-dark-background.colorfull a {
 
 .flush-text-left {
     text-align: left;
+}
+
+.rerendering-message {
+    display: none;
 }

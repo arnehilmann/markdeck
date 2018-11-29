@@ -1,7 +1,7 @@
-#impress {
+body div:not(.rerendering-message) {
     filter: blur(4px);
 }
 
-.rerendering-message {
+body div.rerendering-message {
     display: block;
 }
