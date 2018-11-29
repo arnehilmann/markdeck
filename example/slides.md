@@ -2,8 +2,8 @@
 title: markdeck
 variant: impress
 # pdf: markdeck-example.pdf
-standalone: markdeck-example.html
-highlight_style: solarized-dark
+# standalone: markdeck-example.html
+highlight_style: grayscale
 # slideNumber: true
 # autoSlide: 5000
 # controls: true
@@ -63,47 +63,74 @@ public static final void main(String[] args) {
 ```
 
 
-# asciiart: ditaa {bg=SteelBlue rx=0 ry=-1}
+# asciiart: ditaa {bg=SteelBlue rx=0 ry=-1 .inline}
 
-```{.plaintext style="width: 80%; font-size: 40%;"}
-+=----------------------------+   +=----------------------------+
-| Node                        |   | Node                        |
-|                             |   |                             |
-| +----------+   +----------+ |   | +----------+   +----------+ |
-| | Frontend |   | Foo      | |   | | Frontend |   | Bar      | |
-| |          |   |          | |   | |          |   |          | |
-| |          |   | {s}      | |   | |          |   | {s}      | |
-| +-----+----+   +----------+ |   | +-----+----+   +----------+ |
-|       ^                     |   |       ^                     |
-|       +-------------service-------------+                     |
-+-----------------------------+   +-----------------------------+
+```{.nohighlight style="width: 40%; height: 100%; font-size: 40%;"}
++=----------------------------+
+| Node A                      |
+|                             |
+| +----------+   +----------+ |
+| |          |   |          | |
+| | Frontend |   | Foo      | |
+| |          |   |          | |
+| |          |   | {s}      | |
+| +-----+----+   +----------+ |
+|       ^                     |
+|       |                     |
+|       \-service-\           |
+|                 |           |
++-----------------|-----------+
+                  |
++=----------------|-----------+
+| Node B          |           |
+|       /---------/           |
+|       |                     |
+|       v                     |
+| +-----+----+   +----------+ |
+| |          |   |          | |
+| | Frontend |   | Bar      | |
+| |          |   |          | |
+| |          |   | {s}      | |
+| +----------+   +----------+ |
++-----------------------------+
 ```
-▼
-```{.render_ditaa args="--transparent --scale 2 --font 'Raleway 12'"}
+►
+```{.render_ditaa args="--transparent --scale 1 --font 'Raleway 12'"}
 
-+=----------------------------+   +=----------------------------+
-| Node                        |   | Node                        |
-|                             |   |                             |
-|                             |   |                             |
-| +----------+   +----------+ |   | +----------+   +----------+ |
-| |          |   |          | |   | |          |   |          | |
-| | Frontend |   | Foo      | |   | | Frontend |   | Bar      | |
-| |          |   |          | |   | |          |   |          | |
-| |          |   |          | |   | |          |   |          | |
-| |          |   | {s}      | |   | |          |   | {s}      | |
-| +-----+----+   +----------+ |   | +-----+----+   +----------+ |
-|       ^                     |   |       ^                     |
-|       |                     |   |       |                     |
-|       +-------------service-------------+                     |
-|                             |   |                             |
-+-----------------------------+   +-----------------------------+
++=----------------------------+
+| Node A                      |
+|                             |
+| +----------+   +----------+ |
+| |          |   |          | |
+| | Frontend |   | Foo      | |
+| |          |   |          | |
+| |          |   | {s}      | |
+| +-----+----+   +----------+ |
+|       ^                     |
+|       |                     |
+|       \-service-\           |
+|                 |           |
++-----------------|-----------+
+                  |
++=----------------|-----------+
+| Node B          |           |
+|       /---------/           |
+|       |                     |
+|       v                     |
+| +-----+----+   +----------+ |
+| |          |   |          | |
+| | Frontend |   | Bar      | |
+| |          |   |          | |
+| |          |   | {s}      | |
+| +----------+   +----------+ |
++-----------------------------+
 
 ```
 
 
 # asciiart: plantuml {bg=lightblue .inline}
 
-```{.plaintext style="width: 40%; font-size: 40%;"}
+```{.nohighlight style="width: 40%; font-size: 40%;"}
 @startuml
 Bob->Alice : hello
 Alice->Bob : oh, you again...
@@ -122,7 +149,7 @@ Bob->Alice : ??
 
 # asciiart: graphviz {bg=DarkOrange rx=1 ry=0 .inline}
 
-```{.plaintext style="width: 50%; font-size: 40%;"}
+```{.nohighlight style="width: 50%; font-size: 40%;"}
 digraph G {
     bgcolor=transparent;
     node [style=filled,color=white];
@@ -146,7 +173,7 @@ digraph G {
 
 # asciiart: vega-lite {bg=GhostWhite .inline}
 
-```{.plaintext style="width: 50%; font-size: 20%;"}
+```{.json style="width: 50%; font-size: 30%;"}
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json",
     "data": {
@@ -201,7 +228,7 @@ digraph G {
 
 # asciiart: a2s {bg=White bgcss=sky-gradient-13 .inline}
 
-```{.plaintext style="width: 40%; font-size: 40%;"}
+```{.nohighlight style="width: 40%;"}
 #-------------------.
 |[0]                |
 | .---# .---# #---. |
@@ -239,45 +266,47 @@ github.com/arnehilmann/a2sketch
 ```
 
 
-# asciiart: sketchart 2 {bg=White rx=0 ry=1}
+# asciiart: sketchy art {bg=White rx=0 ry=1 .inline}
 
-```render_a2s
-#=----------------------------#   #=----------------------------#
-| Node                        |   | Node                        |
-|                             |   |                             |
-|                             |   |                             |
-| #----------#   #----------# |   | #----------#   #----------# |
-| |          |   |[s]       | |   | |          |   |[s]       | |
-| | Frontend |   | Foo      | |   | | Frontend |   | Bar      | |
-| |          |   |          | |   | |          |   |          | |
-| |          |   |          | |   | |          |   |          | |
-| |          |   |          | |   | |          |   |          | |
-| #-----+----#   #----------# |   | #-----+----#   #----------# |
-|       ^                     |   |       ^                     |
-|       |                     |   |       |                     |
-|       #--------- service ---------------#                     |
-|                             |   |                             |
-#-----------------------------#   #-----------------------------#
+```{.nohighlight style="width: 55%;"}
+#=----------------------------#
+| Node                        |
+|                             |
+|                             |
+| #----------#   #----------# |
+| |          |   |[s]       | |
+| | Frontend |   | Foo      | |
+| |          |   |          | |
+| |  ^       |   |          | |
+| |  |       |   |          | |
+| #--|-------#   #----------# |
+|    |                ^       |
+|    |                |       |
+|    '---- service ---'       |
+|                             |
+#-----------------------------#
 
-[s]: {"a2s:type": "storage", "a2s:delref": true, "font-family": "Raleway"}
 ```
+►
 ```render_a2sketch
-#=----------------------------#   #=----------------------------#
-| Node                        |   | Node                        |
-|                             |   |                             |
-|                             |   |                             |
-| #----------#   #----------# |   | #----------#   #----------# |
-| |          |   |[s]       | |   | |          |   |[s]       | |
-| | Frontend |   | Foo      | |   | | Frontend |   | Bar      | |
-| |          |   |          | |   | |          |   |          | |
-| |          |   |          | |   | |          |   |          | |
-| |          |   |          | |   | |          |   |          | |
-| #-----+----#   #----------# |   | #-----+----#   #----------# |
-|       ^                     |   |       ^                     |
-|       |                     |   |       |                     |
-|       #--------- service ---+---+-------#                     |
-|                             |   |                             |
-#-----------------------------#   #-----------------------------#
+
+
+#=----------------------------#
+| Node                        |
+|                             |
+|                             |
+| #----------#   #----------# |
+| |          |   |[s]       | |
+| | Frontend |   | Foo      | |
+| |          |   |          | |
+| |  ^       |   |          | |
+| |  |       |   |          | |
+| #--|-------#   #----------# |
+|    |                ^       |
+|    |                |       |
+|    '---- service ---'       |
+|                             |
+#-----------------------------#
 
 [s]: {"a2s:type": "storage", "a2s:delref": true, "font-family": "Raleway"}
 ```
@@ -285,16 +314,21 @@ github.com/arnehilmann/a2sketch
 
 # asciiart: mathjax {bg=Teal}
 
-```{.plaintext style="width: 100%; font-size: 40%;"}
+```{.nohighlight style="width: 50%; font-size: 50%;"}
 $a^2 + b^2 = c^2$
-
-$$e = \mathop {\lim }\limits_{n \to \infty } \left( {1 + \frac{1}{n}} \right)^n$$
 ```
-▼
-
 $a^2 + b^2 = c^2$
 
-$$e = \mathop {\lim }\limits_{n \to \infty } \left( {1 + \frac{1}{n}} \right)^n$$
+&nbsp;
+
+```{.nohighlight style="width: 50%; font-size: 50%;"}
+$$e = \mathop
+    {\lim }\limits_{n \to \infty }
+    \left( {1 + \frac{1}{n}} \right)^n$$
+```
+$$e = \mathop
+    {\lim }\limits_{n \to \infty }
+    \left( {1 + \frac{1}{n}} \right)^n$$
 
 
 # terminal session: asciinema {bg=#121314}
@@ -336,6 +370,6 @@ This page intentionally left blank.
 # {x=.5 y=.5 z=0 scale=4 skipon="reveal" id=overview}
 
 
-# markdeck rulez! {x=3 y=-1.5 rotate-y=60 scale=3 skipon="reveal" bg=black bgcss=sea-gradient}
+# markdeck rulez! {x=3 y=-1.5 rotate-y=60 scale=3 bgcss=sea-gradient .light-on-dark}
 
 ![](assets/img/buddy-egyptian.svg)
