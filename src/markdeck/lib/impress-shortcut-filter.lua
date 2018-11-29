@@ -147,14 +147,9 @@ end
 
 
 function add_backgrounds(header)
-    io.write("adding bg?" .. header.identifier)
-    print(header.attributes.bg)
-    print(header.attributes.bgcss)
     if header.attributes.bg == nil and header.attributes.bgcss == nil then
-        io.write(" no...\n")
         return header
     else
-        io.write(" yes!\n")
         return {header, pandoc.Div(pandoc.Null(), pandoc.Attr(header.identifier .. "__bg"))}
     end
 end
