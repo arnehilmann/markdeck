@@ -30,7 +30,7 @@ services:
     depends_on: [markdeck]
 
   pdf:
-    image: "arne/markdeck-decktape:0.4"
+    image: "arne/markdeck-decktape:0.5"
     volumes:
       - type: bind
         source: ./deck

@@ -35,7 +35,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.decktape
-    image: "arne/markdeck-decktape:0.4"
+    image: "arne/markdeck-decktape:0.5"
     volumes:
       - type: bind
         source: ./deck
