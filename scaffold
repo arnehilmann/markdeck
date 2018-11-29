@@ -14,10 +14,10 @@ CURL="curl -# -S -f"
 MASTER=https://raw.githubusercontent.com/arnehilmann/markdeck/master/example/minimal
 
 echo "pulling minimal config"
-for F in start docker-compose.yaml update-markdeck Makefile; do
+for F in start stop docker-compose.yaml update-markdeck Makefile; do
     $CURL -O $MASTER/$F
 done
-chmod a+x start update-markdeck
+chmod a+x start stop update-markdeck
 echo
 
 echo "pulling minimal example"
