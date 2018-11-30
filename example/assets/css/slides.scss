@@ -10,6 +10,10 @@
     font-family: "EB Garamond Bold", serif;
 }
 
+.reveal h1 {
+    font-size: 1.6em;
+}
+
 .reveal div {
     font-family: "Raleway", sans-serif;
 }
@@ -56,6 +60,11 @@
 .reveal a {
     color: inherit;
     font-size: 0.6em;
+}
+
+.reveal a:hover {
+    color: inherit;
+    text-shadow: 0px 0px 10px black;
 }
 
 .sea-gradient .reveal { @include sea-gradient; }
