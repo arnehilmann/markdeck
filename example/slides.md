@@ -1,7 +1,7 @@
 ---
 title: markdeck
 # variant: impress
-# pdf: markdeck-example.pdf
+pdf: markdeck-example.pdf
 # standalone: markdeck-example.html
 # highlight_style: grayscale
 highlight_style: github-gist
