@@ -1,9 +1,10 @@
 ---
 title: markdeck
-variant: impress
+# variant: impress
 # pdf: markdeck-example.pdf
 # standalone: markdeck-example.html
-highlight_style: grayscale
+# highlight_style: grayscale
+highlight_style: github-gist
 # slideNumber: true
 # autoSlide: 5000
 # controls: true
@@ -17,56 +18,76 @@ asciinema: true
 
 # markdeck {bgcss=sea-gradient x=0 y=0 .light-on-dark}
 
-create cool slide decks using markdown only
+collaborative slide editing made easy
 
-| [github.com/arnehilmann/markdeck](https://github.com/arnehilmann/markdeck)
+<i class="fab fa-markdown"></i>
+<i class="fab fa-docker"></i>
+<i class="fab fa-html5"></i>
+<i class="fab fa-css3"></i>
+<i class="fab fa-js-square"></i>
 
-<small> arne@hilmann.de | 2018-11 🙃</small>
+<small> arne@hilmann.de • 2018-11</small>
+
+[<i class="fab fa-github"></i>](https://github.com/arnehilmann/markdeck)
+[<i class="fab fa-docker"></i>](https://hub.docker.com/r/arne/markdeck-pandoc/)
+[<i class="fas fa-envelope"></i>](email:arne@hilmann.de)
 
 
 # features {rx=1 bg=#123456}
 
-the whole deck as markdown
+converts markdown to complex HTML5 slides
 
-cool ui, based on
-<span class="inline-stack">reveal<br/>impress</span>
-.js
+comes as docker containers
 
-
-# features {rx=0 ry=1}
-
-on-the-fly rendering of asciiart
-
-<small>
-boxes,
-uml,
-graphs,
-charts,
-equations,
-qrcodes, …
-</small>
+should run on all *nix platforms, windows and MacOS
 
 
-# features {bg=DarkSlateBlue rx=-1 ry=0}
+# cool looking
 
-emojis and terminal sessions
+leaverages battle-proven</br>HTML5 presentation frameworks
 
-on-the-fly reload when changing sources
+revealjs • impressjs
 
 
-# code, highlighted {bg=#ffeedd}
+# easy
+
+completely text-based
+
+content as markdown (incl unicode)
+
+images as asciiart</br><small>charts, diagrams, graphs, math, …</small>
+
+style as css
+
+
+# collaborative
+
+presentation-as-code
+
+use your normal version control system
+
+
+# adaptable
+
+you can always fall back to</br>plain HTML/CSS
+
+
+# example: code, highlighted
 
 ```java
-public static final void main(String[] args) {
-    // foo
+public class Example {
+    public static final void main(String[] args) {
+        // foo
+        System.out.println("Hello World");
+    }
 }
 ```
 
 
-# asciiart: ditaa {bg=SteelBlue rx=0 ry=-1 .inline}
+# example: asciiart (ditaa) {bg=SteeBlue rx=0 ry=-1 .inline}
 
 ```{.nohighlight style="width: 40%; height: 100%; font-size: 40%;"}
-+=----------------------------+
++-----------------------------+
 | Node A                      |
 |                             |
 | +----------+   +----------+ |
@@ -81,12 +102,12 @@ public static final void main(String[] args) {
 |                 |           |
 +-----------------|-----------+
                   |
-+=----------------|-----------+
++-----------------|-----------+
 | Node B          |           |
 |       /---------/           |
 |       |                     |
 |       v                     |
-| +-----+----+   +----------+ |
+| +-----+----+   +=---------+ |
 | |          |   |          | |
 | | Frontend |   | Bar      | |
 | |          |   |          | |
@@ -97,7 +118,7 @@ public static final void main(String[] args) {
 ►
 ```{.render_ditaa args="--transparent --scale 1 --font 'Raleway 12'"}
 
-+=----------------------------+
++-----------------------------+
 | Node A                      |
 |                             |
 | +----------+   +----------+ |
@@ -112,12 +133,12 @@ public static final void main(String[] args) {
 |                 |           |
 +-----------------|-----------+
                   |
-+=----------------|-----------+
++-----------------|-----------+
 | Node B          |           |
 |       /---------/           |
 |       |                     |
 |       v                     |
-| +-----+----+   +----------+ |
+| +-----+----+   +=---------+ |
 | |          |   |          | |
 | | Frontend |   | Bar      | |
 | |          |   |          | |
@@ -128,7 +149,7 @@ public static final void main(String[] args) {
 ```
 
 
-# asciiart: plantuml {bg=lightblue .inline}
+# example: asciiart (plantuml) {bg=lightblue .inline}
 
 ```{.nohighlight style="width: 40%; font-size: 40%;"}
 @startuml
@@ -147,7 +168,7 @@ Bob->Alice : ??
 ```
 
 
-# asciiart: graphviz {bg=DarkOrange rx=1 ry=0 .inline}
+# example: asciiart (graphviz) {bg=lightblue rx=1 ry=0 .inline}
 
 ```{.nohighlight style="width: 50%; font-size: 40%;"}
 digraph G {
@@ -171,7 +192,7 @@ digraph G {
 }
 ```
 
-# asciiart: vega-lite {bg=GhostWhite .inline}
+# example: charts (vega-lite) {bg=GhostWhite .inline}
 
 ```{.json style="width: 50%; font-size: 30%;"}
 {
@@ -226,7 +247,7 @@ digraph G {
 ```
 
 
-# asciiart: a2s {bg=White bgcss=sky-gradient-13 .inline}
+# example: asciiart (a2s) {bg=White bgcss=sky-gradient-13 .inline}
 
 ```{.nohighlight style="width: 40%;"}
 #-------------------.
@@ -266,7 +287,7 @@ github.com/arnehilmann/a2sketch
 ```
 
 
-# asciiart: sketchy art {bg=White rx=0 ry=1 .inline}
+# example: asciiart (sketchy) {bg=White rx=0 ry=1 .inline}
 
 ```{.nohighlight style="width: 55%;"}
 #=----------------------------#
@@ -312,7 +333,7 @@ github.com/arnehilmann/a2sketch
 ```
 
 
-# asciiart: mathjax {bg=Teal}
+# example: math equations {bg=Teal}
 
 ```{.nohighlight style="width: 50%; font-size: 50%;"}
 $a^2 + b^2 = c^2$
@@ -331,7 +352,7 @@ $$e = \mathop
     \left( {1 + \frac{1}{n}} \right)^n$$
 
 
-# terminal session: asciinema {bg=#121314}
+# example: terminal session (asciinema) {bg=#121314}
 
 <asciinema-player src="./assets/img/test.json"
     poster="npt:0:21"
