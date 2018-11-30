@@ -1,16 +1,4 @@
-@font-face {
-  font-family: 'Inconsolata';
-  font-style: normal;
-  font-weight: 400;
-  src: url("fonts/Inconsolata-Regular.ttf") format('truetype');
-}
-
-@font-face {
-  font-family: "EB Garamond";
-  font-style: normal;
-  font-weight: 400;
-  src: url("fonts/EBGaramond12-Regular.ttf") format('truetype');
-}
+@import "common";
 
 .reveal,
 .reveal h1,
@@ -18,9 +6,16 @@
 .reveal h3,
 .reveal h4,
 .reveal h5,
-.reveal h6,
+.reveal h6 {
+    font-family: "EB Garamond Bold", serif;
+}
+
+.reveal h1 {
+    font-size: 1.6em;
+}
+
 .reveal div {
-    font-family: "EB Garamond", sans-serif;
+    font-family: "Raleway", sans-serif;
 }
 
 .reveal div pre.asciinema-terminal {
@@ -58,3 +53,19 @@
     text-align: center !important;
 }
 
+.reveal .slides .xkcd * {
+    font-family: "xkcd Script";
+}
+
+.reveal a {
+    color: inherit;
+    font-size: 0.6em;
+}
+
+.reveal a:hover {
+    color: inherit;
+    text-shadow: 0px 0px 10px black;
+}
+
+.sea-gradient .reveal { @include sea-gradient; }
+.sky-gradient-13 .reveal { @include sky-gradient-13; }

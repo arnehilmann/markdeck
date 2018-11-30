@@ -1,3 +1,43 @@
+img.emoji {
+  width: 1.1em;
+  height: 1.1em;
+  padding: 0;
+  margin: 0;
+  vertical-align: baseline; }
+
+.rerendering-message {
+  display: none;
+  position: absolute;
+  text-align: center;
+  top: 20%;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 1000;
+  color: white;
+  font-size: 200%;
+  text-shadow: 2px 2px #000000; }
+
+.markdeck-logo {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  bottom: 8px;
+  height: 8px;
+  font-size: 10px;
+  color: #5550;
+  z-index: 1; }
+  .markdeck-logo a {
+    color: #333a;
+    text-shadow: 1px 1px #bbba;
+    background: none;
+    text-decoration: none; }
+
+.light-on-dark, section.light-on-dark h1 {
+  color: #fff;
+  text-shadow: 0px 1px #000; }
+
 .reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6, .reveal div {
   font-family: sans-serif; }
 
@@ -55,4 +95,5 @@ section.has-dark-background.colorfull a {
 .flush-text-left {
   text-align: left; }
 
-/*# sourceMappingURL=markdeck.revealjs.css.map */
+.rerendering-message {
+  display: none; }

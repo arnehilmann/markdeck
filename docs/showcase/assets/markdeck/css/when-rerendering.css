@@ -1,0 +1,7 @@
+body div:not(.rerendering-message) {
+    filter: blur(4px);
+}
+
+body div.rerendering-message {
+    display: block;
+}
