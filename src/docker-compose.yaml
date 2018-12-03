@@ -6,9 +6,10 @@ services:
       context: .
       dockerfile: Dockerfile.pandoc
       args:
-        version: "0.31"
+        version: "0.32"
         motto: impressjs arrived (again)
-    image: "arne/markdeck-pandoc:0.31"
+    image: "arne/markdeck-pandoc:0.32"
+    user: nobody
     volumes:
       - type: bind
         source: ./
