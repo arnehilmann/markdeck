@@ -1,18 +1,24 @@
 #!/bin/bash
 set -e -E -u
 
-SOURCE="/source/*.md $(find /source/assets -type d) /source/include-before /source/include-after"
+SOURCES="/source/*.md $(find /source/assets -type d) /source/include-before /source/include-after"
 TARGET=/target/index.html
 
+last_sources=$(echo $SOURCES)
 no_change=true
 while $no_change; do
-	for F in $SOURCE; do
-		[[ -e $F ]] || continue
-		if [[ $F -nt $TARGET ]]; then
-			echo $F
-			no_change=false
-		fi
-	done
-	$no_change && sleep 2
+    if [[ $(echo $SOURCES) != $last_sources ]]; then
+        echo "sources changed!"
+        no_change=false
+        last_sources=$(echo $SOURCES)
+    fi
+    for F in $SOURCES; do
+        [[ -e $F ]] || continue
+        if [[ $F -nt $TARGET ]]; then
+            echo $F
+            no_change=false
+        fi
+    done
+    $no_change && sleep 2
 done
 exit 0
