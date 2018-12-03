@@ -3,6 +3,7 @@ version: "3.2"
 services:
   markdeck:
     image: "arne/markdeck-pandoc:0.31"
+    user: nobody
     volumes:
       - type: bind
         source: ./
