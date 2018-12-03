@@ -28,5 +28,13 @@ ENV VERSION $version
 ENV MOTTO $motto
 VOLUME ["/source", "/target"]
 
+RUN chown :1999 /target
+RUN chmod 755 /target
+RUN chmod g+s /target
+RUN addgroup -g 1999 markdeck
+# RUN adduser --disabled-password --gecos "" --force-badname --ingroup 1042 markdeck
+RUN adduser -D -H -G markdeck markdeck
+USER markdeck
+
 ENTRYPOINT ["/markdeck/loop"]
 # ENTRYPOINT sleep 1d
