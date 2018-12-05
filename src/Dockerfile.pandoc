@@ -9,7 +9,7 @@ ARG motto
 RUN apk add --update \
     graphviz inotify-tools rsync \
     libqrencode jq sassc zip openjdk8-jre \
-    python make g++ bash cairo curl \
+    python make g++ bash cairo curl fontconfig \
     && rm -rf /var/cache/apk/*
 
 RUN npm -g config set user root
@@ -22,7 +22,7 @@ COPY downloaded/ /usr
 RUN mkdir -p /markdeck/
 COPY markdeck/ /markdeck/
 WORKDIR /markdeck
-RUN ln -sf /source/assets/css/fonts /.fonts
+RUN ln -sf /source/assets/css/fonts /usr/share/fonts
 
 ENV VERSION $version
 ENV MOTTO $motto
@@ -32,7 +32,6 @@ RUN chown :1999 /target
 RUN chmod 755 /target
 RUN chmod g+s /target
 RUN addgroup -g 1999 markdeck
-# RUN adduser --disabled-password --gecos "" --force-badname --ingroup 1042 markdeck
 RUN adduser -D -H -G markdeck markdeck
 USER markdeck
 
