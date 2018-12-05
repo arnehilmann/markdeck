@@ -32,4 +32,4 @@ docker-compose pull
 echo
 
 echo "starting markdeck"
-docker-compose up
+./start
