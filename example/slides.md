@@ -289,28 +289,27 @@ github.com/arnehilmann/a2sketch
 ```
 ►
 ```render_a2s
-     +-------------------.
-     |[0]                |
-     | .---+ .---+ +---. |
-     | |[1]| |[1]| |[1]| |
-     | +---' +---' '---+ |
-     |                   |
-     |   ^     ^     ^   |
-     +---+-----+-----+---+
-     |   |     |     |   |
-     |   a     2  sketch |
-     '-------------------+
+#-------------------.
+|[0]                |
+| .---# .---# #---. |
+| |[1]| |[1]| |[1]| |
+| #---' #---' '---# |
+|                   |
+|   ^     ^     ^   |
+#---+-----+-----+---#
+|   |     |     |   |
+|   a     2  sketch |
+'-------------------#
+github.com/arnehilmann/a2sketch
 
- github.com/arnehilmann/a2sketch
-
-[0]: {"fill": "#933"}
-[1]: {"fill": "#bbb"}
+[0]: {"fill": "#933","a2s:delref":true}
+[1]: {"fill": "#bbb","a2s:delref":true}
 ```
 
 
 # example: asciiart (sketchy) {bg=White rx=0 ry=1 .ltr}
 
-```{.nohighlight style="width: 55%;"}
+```{.nohighlight style="width: 45%;"}
 #=----------------------------#
 | Node                        |
 |                             |
@@ -333,22 +332,22 @@ github.com/arnehilmann/a2sketch
 ```render_a2sketch
 
 
-+-----------------------------+
+#-----------------------------#
 | Node                        |
 |                             |
 |                             |
-| +----------+   +----------+ |
+| #----------#   #----------# |
 | |          |   |          | |
 | | Frontend |   | Foo      | |
 | |          |   |          | |
 | |  ^       |   |          | |
 | |  |       |   |          | |
-| +--|-------+   +----------+ |
+| #--|-------#   #----------# |
 |    |                ^       |
 |    |                |       |
 |    '---- service ---'       |
 |                             |
-+-----------------------------+
+#-----------------------------#
 ```
 
 
@@ -426,6 +425,15 @@ This page intentionally left blank.
 # {x=.5 y=.5 z=0 scale=4 skipon="reveal" id=overview}
 
 
-# markdeck rulez! {x=3 y=-1.5 rotate-y=60 scale=3 bgcss=sea-gradient .light-on-dark}
+# markdeck {x=3 y=-1.5 rotate-y=60 scale=3 bgcss=sea-gradient .light-on-dark}
+
+
+collaborative slide editing made easy
+
+![](fab fa-markdown)
+![](fab fa-docker)
+![](fab fa-html5)
+![](fab fa-css3)
+![](fab fa-js-square)
 
 ![](assets/img/buddy-egyptian.svg)
