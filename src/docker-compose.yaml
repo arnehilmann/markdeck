@@ -6,9 +6,9 @@ services:
       context: .
       dockerfile: Dockerfile.pandoc
       args:
-        version: "0.32"
-        motto: impressjs arrived (again)
-    image: "arne/markdeck-pandoc:0.32"
+        version: "0.33"
+        motto: the font-awesome edition
+    image: "arne/markdeck-pandoc:0.33"
     user: nobody
     volumes:
       - type: bind
@@ -64,4 +64,4 @@ services:
       - "8081:8081"
 
   a2sketch:
-    image: "arne/a2sketch:0.7"
+    image: "arne/a2sketch:0.9"
