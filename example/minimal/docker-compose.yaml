@@ -2,7 +2,7 @@ version: "3.2"
 
 services:
   markdeck:
-    image: "arne/markdeck-pandoc:0.32"
+    image: "arne/markdeck-pandoc:0.33"
     user: "$MARKDECK_USER"
     volumes:
       - type: bind
@@ -46,4 +46,4 @@ services:
       - "8081:8081"
 
   a2sketch:
-    image: "arne/a2sketch:0.5"
+    image: "arne/a2sketch:0.9"
