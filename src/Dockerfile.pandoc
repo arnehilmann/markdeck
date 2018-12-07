@@ -22,7 +22,8 @@ COPY downloaded/ /usr
 RUN mkdir -p /markdeck/
 COPY markdeck/ /markdeck/
 WORKDIR /markdeck
-RUN ln -sf /target/assets/css/fonts /usr/share/fonts
+RUN ln -sf /target/assets/css/fonts /.fonts
+RUN ln -sf /markdeck/assets/markdeck/css/fonts/ /usr/share/fonts
 
 ENV VERSION $version
 ENV MOTTO $motto
