@@ -52,8 +52,9 @@ export ASCIIART_LIBDIR=/markdeck/lib
 while true; do
     cd /target
 
+    echo "-------- rerendering ---------"
     mkdir -p /target/assets/css/
-    cp /markdeck/assets/markdeck/css/when-rerendering.css /target/assets/css/rerendering.css
+    cp -v /markdeck/assets/markdeck/css/when-rerendering.css /target/assets/css/rerendering.css
 
     [[ -d /target/rendered ]] || mkdir -p /target/rendered
 
@@ -105,7 +106,16 @@ while true; do
     [[ -e /source/include-before-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-before-body /source/include-before-body"
     [[ -e /source/include-after-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-after-body /source/include-after-body"
     rm -f /target/slides.combined.md.txt
-    cat ${SOURCE_MD:-/markdeck/note.md} > /target/slides.combined.md.txt
+    # cat ${SOURCE_MD:-/markdeck/note.md} > /target/slides.combined.md.txt
+    if [[ -n ${SOURCE_MD:-} ]]; then
+        for F in $SOURCE_MD; do
+            cat $F >> /target/slides.combined.md.txt
+            echo >> /target/slides.combined.md.txt
+        done
+    else
+        cp /markdeck/note.md /target/slides.combined.md.txt
+    fi
+
 
     template=/markdeck/template-${variant}.html
     if pandoc \
@@ -123,6 +133,7 @@ while true; do
         --lua-filter /markdeck/lib/bg-shortcut-filter.lua \
         --lua-filter /markdeck/lib/${variant}-shortcut-filter.lua \
         --lua-filter /markdeck/lib/inline-svg.lua \
+        --lua-filter /markdeck/lib/font-awesome.lua \
         $PANDOC_ARGS \
         -o /target/index.html.tmp \
         /target/slides.combined.md.txt /markdeck/defaults.yaml 2>&1 | tee /tmp/pandoc.output;
@@ -137,6 +148,8 @@ while true; do
         show_errors
     fi
     echo "-------- /pandoc output --------"
+    echo
+    echo "-------- /rerendering ----------"
     echo
 
     $ONCE && break
