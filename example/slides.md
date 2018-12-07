@@ -137,7 +137,7 @@ public class Example {
 +-----------------------------+
 ```
 ►
-```{.render_ditaa args="--transparent --scale 1 --font 'Raleway 12'"}
+```{.render_ditaa args="--transparent --scale 1 --font 'Raleway'"}
 
 +-----------------------------+
 | Node A                      |
@@ -202,7 +202,7 @@ digraph G {
 }
 ```
 ►
-```render_dot
+```{.render_dot args="-Nfontname=Raleway"}
 digraph G {
     bgcolor=transparent;
     node [style=filled,color=white];
