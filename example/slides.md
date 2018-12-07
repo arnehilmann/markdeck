@@ -1,7 +1,7 @@
 ---
 title: markdeck
 # variant: impress
-pdf: markdeck-example.pdf
+# pdf: markdeck-example.pdf
 # standalone: markdeck-example.html
 # highlight_style: grayscale
 highlight_style: github-gist
@@ -20,44 +20,65 @@ asciinema: true
 
 collaborative slide editing made easy
 
-<i class="fab fa-markdown"></i>
-<i class="fab fa-docker"></i>
-<i class="fab fa-html5"></i>
-<i class="fab fa-css3"></i>
-<i class="fab fa-js-square"></i>
+![](fab fa-markdown)
+![](fab fa-docker)
+![](fab fa-html5)
+![](fab fa-css3)
+![](fab fa-js-square)
 
-<small> arne@hilmann.de • 2018-11</small>
+<small> arne@hilmann.de • 2018-12</small>
 
-[<i class="fab fa-github"></i>](https://github.com/arnehilmann/markdeck)
-[<i class="fab fa-docker"></i>](https://hub.docker.com/r/arne/markdeck-pandoc/)
-[<i class="fas fa-envelope"></i>](email:arne@hilmann.de)
+[![](fab fa-github)](https://github.com/arnehilmann/markdeck)
+[![](fab fa-docker)](https://hub.docker.com/r/arne/markdeck-pandoc/)
+[![](fas fa-envelope)](email:arne@hilmann.de)
 
 
 # features {rx=1 bg=#123456}
 
-converts markdown to complex HTML5 slides
+converts markdown to complex</br> HTML5 slides
 
-comes as docker containers
+should run on all *nix platforms,</br> windows and MacOS
 
-should run on all *nix platforms, windows and MacOS
+
+# features, contd.
+
+cool
+• graphical
+• easy
+• robust
+• collaborative
+• adaptable
 
 
 # cool looking
 
-leaverages battle-proven</br>HTML5 presentation frameworks
+leverages battle-proven</br>HTML5 presentation frameworks:
 
 revealjs • impressjs
 
 
+# graphical
+
+content as markdown</br>
+<small>incl unicode, emojis, font-awesome: ♥ 😎  ![](fas fa-desktop)</small>
+
+images as asciiart</br>
+<small>charts, diagrams, graphs, math, …</small>
+
+
 # easy
 
-completely text-based
+completely text-based</br>
+<small>use your preferred editor/IDE</small>
 
-content as markdown (incl unicode)
+auto-reload 
+►
+fast feedback
 
-images as asciiart</br><small>charts, diagrams, graphs, math, …</small>
 
-style as css
+# robust
+
+modify and present your slides _without_ internet uplink
 
 
 # collaborative
@@ -84,7 +105,7 @@ public class Example {
 ```
 
 
-# example: asciiart (ditaa) {bg=SteeBlue rx=0 ry=-1 .inline}
+# example: asciiart (ditaa) {bg=SteeBlue rx=0 ry=-1 .ltr}
 
 ```{.nohighlight style="width: 40%; height: 100%; font-size: 40%;"}
 +-----------------------------+
@@ -149,7 +170,7 @@ public class Example {
 ```
 
 
-# example: asciiart (plantuml) {bg=lightblue .inline}
+# example: asciiart (plantuml) {bg=lightblue .ltr}
 
 ```{.nohighlight style="width: 40%; font-size: 40%;"}
 @startuml
@@ -168,7 +189,7 @@ Bob->Alice : ??
 ```
 
 
-# example: asciiart (graphviz) {bg=lightblue rx=1 ry=0 .inline}
+# example: asciiart (graphviz) {bg=lightblue rx=1 ry=0 .ltr}
 
 ```{.nohighlight style="width: 50%; font-size: 40%;"}
 digraph G {
@@ -192,7 +213,7 @@ digraph G {
 }
 ```
 
-# example: charts (vega-lite) {bg=GhostWhite .inline}
+# example: charts (vega-lite) {bg=GhostWhite .ltr}
 
 ```{.json style="width: 50%; font-size: 30%;"}
 {
@@ -247,7 +268,7 @@ digraph G {
 ```
 
 
-# example: asciiart (a2s) {bg=White bgcss=sky-gradient-13 .inline}
+# example: asciiart (a2s) {bg=White bgcss=sky-gradient-13 .ltr}
 
 ```{.nohighlight style="width: 40%;"}
 #-------------------.
@@ -268,26 +289,26 @@ github.com/arnehilmann/a2sketch
 ```
 ►
 ```render_a2s
-     #-------------------.
+     +-------------------.
      |[0]                |
-     | .---# .---# #---. |
+     | .---+ .---+ +---. |
      | |[1]| |[1]| |[1]| |
-     | #---' #---' '---# |
+     | +---' +---' '---+ |
      |                   |
      |   ^     ^     ^   |
-     #---+-----+-----+---#
+     +---+-----+-----+---+
      |   |     |     |   |
      |   a     2  sketch |
-     '-------------------#
+     '-------------------+
+
  github.com/arnehilmann/a2sketch
 
-
-[0]: {"fill": "#933", "a2s:delref": true, "fillStyle": "solid"}
-[1]: {"fill": "#bbb", "a2s:delref": true, "fillStyle": "solid"}
+[0]: {"fill": "#933"}
+[1]: {"fill": "#bbb"}
 ```
 
 
-# example: asciiart (sketchy) {bg=White rx=0 ry=1 .inline}
+# example: asciiart (sketchy) {bg=White rx=0 ry=1 .ltr}
 
 ```{.nohighlight style="width: 55%;"}
 #=----------------------------#
@@ -312,24 +333,22 @@ github.com/arnehilmann/a2sketch
 ```render_a2sketch
 
 
-#=----------------------------#
++-----------------------------+
 | Node                        |
 |                             |
 |                             |
-| #----------#   #----------# |
-| |          |   |[s]       | |
+| +----------+   +----------+ |
+| |          |   |          | |
 | | Frontend |   | Foo      | |
 | |          |   |          | |
 | |  ^       |   |          | |
 | |  |       |   |          | |
-| #--|-------#   #----------# |
+| +--|-------+   +----------+ |
 |    |                ^       |
 |    |                |       |
 |    '---- service ---'       |
 |                             |
-#-----------------------------#
-
-[s]: {"a2s:type": "storage", "a2s:delref": true, "font-family": "Raleway"}
++-----------------------------+
 ```
 
 
@@ -366,14 +385,30 @@ $$e = \mathop
 # Thank You! {bg=AliceBlue rx=-1 ry=0}
 
 [pandoc](http://pandoc.org)
+•
 [reveal.js](http://lab.hakim.se/reveal-js/#/)
+•
+[impress.js](https://github.com/impress/impress.js)
+</br>
+
 [plantuml](http://plantuml.com)
+•
 [ditaamini](https://github.com/pepijnve/ditaa.git)
+•
 [graphviz](http://www.graphviz.org)
+•
 [asciinema](https://github.com/asciinema/asciinema-player)
+</br>
+
 [decktape](https://github.com/astefanutti/decktape)
+•
 [vega-lite](https://vega.github.io/vega-lite/)
+•
 [math-jax](https://www.mathjax.org)
+•
+[font awesome](https://fontawesome.com/)
+</br>
+
 🙃
 
 
