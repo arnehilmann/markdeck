@@ -28,7 +28,7 @@ done
 echo
 
 echo "pulling docker images"
-docker-compose pull
+MARKDECK_USER="__NOT_NEEDED_HERE__" docker-compose pull
 echo
 
 echo "starting markdeck"
