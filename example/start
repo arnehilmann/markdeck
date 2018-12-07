@@ -1,2 +1,11 @@
 #!/bin/sh
-docker-compose up
+
+DIR=./deck/
+mkdir -p $DIR
+if [ $(stat -c "%u" $DIR) -eq 0 ]; then
+    echo "[ERR] The output folder '$DIR' MUST be owned by you!"
+    echo "[ERR] Please change ownership to yourself ('sudo chown $USER $DIR'), or"
+    echo "[ERR] remove '$DIR' completely ('sudo rm -rf $DIR')."
+    exit 1
+fi
+MARKDECK_USER=$(stat -c "%u:%g" $DIR) docker-compose up

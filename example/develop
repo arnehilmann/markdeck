@@ -2,4 +2,5 @@
 set -e -E -u
 
 CMD=${1:-up}
-docker-compose -f ../src/develop.yaml --project-directory $PWD $CMD
+DIR=./deck/
+MARKDECK_USER=$(stat -c "%u:%g" $DIR) docker-compose -f ../src/develop.yaml --project-directory $PWD $CMD
