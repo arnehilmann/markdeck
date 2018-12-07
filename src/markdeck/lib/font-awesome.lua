@@ -1,3 +1,5 @@
+
+-- blatantly copied from http://lua-users.org/wiki/StringRecipes
 function url_decode(str)
    str = str:gsub("+", " ")
    str = str:gsub("%%(%x%x)", function(h)
