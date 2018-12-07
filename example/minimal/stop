@@ -1,2 +1,4 @@
 #!/bin/sh
+
+export MARKDECK_USER="__NOT_NEEDED_HERE__"
 docker-compose down
