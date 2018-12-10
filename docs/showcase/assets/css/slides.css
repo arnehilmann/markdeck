@@ -1,63 +1,7 @@
-@import url(fontawesome.css);
-@font-face {
-  font-family: 'Inconsolata';
-  font-style: normal;
-  font-weight: 400;
-  src: url("fonts/Inconsolata-Regular.ttf") format("truetype"); }
-
-@font-face {
-  font-family: "EB Garamond Bold";
-  font-style: normal;
-  font-weight: 400;
-  src: url("fonts/EBGaramond-Bold.ttf") format("truetype"); }
-
-@font-face {
-  font-family: "xkcd Script";
-  font-style: normal;
-  font-weight: 400;
-  src: url("fonts/xkcd-script.ttf") format("truetype"); }
-
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 400;
-  src: url("fonts/Raleway-Regular.ttf") format("truetype"); }
-
-/*!
- * Font Awesome Free 5.5.0 by @fontawesome - https://fontawesome.com
- * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
- */
-@font-face {
-  font-family: "Font Awesome 5 Brands";
-  font-style: normal;
-  font-weight: normal;
-  src: url(fonts/fa-brands-400.ttf) format("truetype"); }
-
-.fab {
-  font-family: "Font Awesome 5 Brands"; }
-
-/*!
- * Font Awesome Free 5.5.0 by @fontawesome - https://fontawesome.com
- * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
- */
-@font-face {
-  font-family: "Font Awesome 5 Free";
-  font-style: normal;
-  font-weight: 900;
-  src: url(fonts/fa-solid-900.ttf) format("truetype"); }
-
-.fa, .fas {
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900; }
-
 .reveal .inline-stack, .inline-stack {
   display: inline-block;
   vertical-align: middle;
   line-height: 1.1em; }
-
-.inline p, .inline pre {
-  display: inline-block;
-  vertical-align: middle; }
 
 pre.nohighlight code {
   line-height: 90%; }
@@ -116,8 +60,8 @@ pre.nohighlight code {
 
 .sea-gradient .reveal {
   background: linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
-  -webkit-clip-path: polygon(0% 25%, 0% 75%, 100% 75%, 100% 25%);
-  clip-path: polygon(0% 25%, 0% 75%, 100% 75%, 100% 25%); }
+  -webkit-clip-path: polygon(0% 15%, 0% 85%, 100% 85%, 100% 15%);
+  clip-path: polygon(0% 15%, 0% 85%, 100% 85%, 100% 15%); }
 
 .sky-gradient-13 .reveal {
   background: linear-gradient(to bottom, #57c1eb 0%, #246fa8 100%); }
