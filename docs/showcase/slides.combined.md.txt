@@ -276,7 +276,6 @@ digraph G {
 | .---# .---# #---. |
 | |[1]| |[1]| |[1]| |
 | #---' #---' '---# |
-|                   |
 |   ^     ^     ^   |
 #---+-----+-----+---#
 |   |     |     |   |
@@ -294,7 +293,6 @@ github.com/arnehilmann/a2sketch
 | .---# .---# #---. |
 | |[1]| |[1]| |[1]| |
 | #---' #---' '---# |
-|                   |
 |   ^     ^     ^   |
 #---+-----+-----+---#
 |   |     |     |   |
@@ -303,7 +301,7 @@ github.com/arnehilmann/a2sketch
 github.com/arnehilmann/a2sketch
 
 [0]: {"fill": "#933","a2s:delref":true}
-[1]: {"fill": "#bbb","a2s:delref":true}
+[1]: {"fill": "#bbb","a2s:delref":true,"a2s:type":"storage"}
 ```
 
 
