@@ -93,7 +93,7 @@ markdeck/assets/3rdparty/reveal.js:
 
 markdeck/assets/3rdparty/impress.js:
 	mkdir -p $@
-	curl -L "https://github.com/impress/impress.js/archive/$(IMPRESSJS_VERSION).tar.gz" | tar -C $@ --strip-components=1 --exclude example --exclude test -zxvf -
+	curl -L "https://github.com/impress/impress.js/archive/$(IMPRESSJS_VERSION).tar.gz" | tar -C $@ --strip-components=1 --exclude examples --exclude test -zxvf -
 
 
 markdeck/helper/downloaded/trianglify-background-generator-master:
