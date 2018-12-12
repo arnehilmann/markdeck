@@ -10,6 +10,7 @@ RUN apk add --update \
     graphviz inotify-tools rsync \
     libqrencode jq sassc zip openjdk8-jre \
     python make g++ bash cairo curl fontconfig \
+    py2-pip \
     && rm -rf /var/cache/apk/*
 
 RUN npm -g config set user root
@@ -17,6 +18,8 @@ RUN npm install -g mathjax-pandoc-filter vega vega-lite && npm cache clean --for
 
 RUN mkdir -p /usr/local/share/lua/5.3
 RUN curl -o /usr/local/share/lua/5.3/inspect.lua -L https://raw.githubusercontent.com/kikito/inspect.lua/master/inspect.lua
+
+RUN pip install MarkdownPP
 
 COPY downloaded/ /usr
 RUN mkdir -p /markdeck/
