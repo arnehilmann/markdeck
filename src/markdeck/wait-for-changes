@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e -E -u
 
-SOURCES="/source/slide*.md $(find /source/assets -type d) /source/include-before /source/include-after"
+SOURCES="/source/slide*.md $(find /source/assets -type d) /source/include-before-body /source/include-after-body"
 TARGET=/target/index.html
 
 last_sources=$(echo $SOURCES)
