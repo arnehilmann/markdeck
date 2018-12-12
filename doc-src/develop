@@ -1,0 +1,9 @@
+#!/bin/sh
+set -e -E -u
+
+CMD=${1:-up}
+DIR=./deck/
+MARKDECK_USER=$(stat -c "%u:%g" $DIR) docker-compose \
+    -f $(dirname $0)/develop.yaml \
+    --project-directory $PWD \
+    $CMD
