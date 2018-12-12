@@ -6,9 +6,9 @@ services:
       context: .
       dockerfile: Dockerfile.pandoc
       args:
-        version: "0.33"
-        motto: the font-awesome edition
-    image: "arne/markdeck-pandoc:0.33"
+        version: "0.34"
+        motto: the pre-processor version
+    image: "arne/markdeck-pandoc:0.34"
     user: nobody
     volumes:
       - type: bind
