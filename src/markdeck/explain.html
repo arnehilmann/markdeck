@@ -9,20 +9,20 @@
             padding: 0;
         }
         .deck {
-            width: 66%;
+            width: 60%;
         }
         .source {
-            width: 32%;
+            width: 38%;
+            border-left: 4px dashed #ccc;
         }
 
     </style>
 </head>
 <body>
-
     <div class="box deck">
         <iframe
             id="deck"
-            src="index.html"
+            src="index.html?in_explain"
             style="border: 0;"
             frameborder="0"
             scrolling="no" height="100%" width="100%" align="left" ></iframe>
@@ -67,7 +67,7 @@
                     }
                     // console.log("slide header found: " + line);
                     currentSection = Array();
-                    currentSection.push("<pre>");
+                    currentSection.push('<pre>');
                     currentSection.push(line);
                 } else {
                     if (currentSection) {
@@ -86,7 +86,7 @@
             var update_source = function() {
                 // console.log("updating source view");
                 var slideNr = deckWindow.Reveal.getIndices().h;
-                source.contentDocument.documentElement.innerHTML = window.sections[slideNr];
+                source.contentDocument.documentElement.innerHTML = '<div style="padding-left: 1em; position: relative; top: 50%; transform: translateY(-50%);"><em>slide source</em></br></br>' + window.sections[slideNr] + "</div>";
             };
             update_source();
             deckWindow.Reveal.addEventListener('slidechanged', update_source);
