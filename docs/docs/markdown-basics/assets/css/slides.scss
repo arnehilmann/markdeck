@@ -1,0 +1,77 @@
+@import "common";
+
+.reveal,
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+    font-family: "EB Garamond Bold", serif;
+}
+
+.reveal h1 {
+    font-size: 1.6em;
+}
+
+.reveal div {
+    font-family: "Raleway", sans-serif;
+}
+
+.reveal div pre.asciinema-terminal {
+    font-family: "Inconsolata", monospace;
+}
+
+.reveal code {
+    font-family: "Inconsolata";
+}
+
+.colorful .reveal {
+    background:
+        linear-gradient(45deg, hsla(207, 93%, 44%, 1) 0%, hsla(207, 93%, 44%, 0) 70%),
+        linear-gradient(135deg, hsla(189, 95%, 50%, 1) 10%, hsla(189, 95%, 50%, 0) 80%);
+
+    section > * {
+        color: #fff;
+        text-shadow: 0px 0px 1px #000;
+    }
+}
+
+.reveal .slides .flushleft {
+    position: absolute;
+    width: 50%;
+    min-height: 240px;
+    top: -100px;
+    background-color: rgba(0, 128, 128, 0.7);
+    border-right: 2px solid Teal;
+    padding: 1em 2em 1em;
+    text-align: left;
+    font-size: 60%;
+}
+
+.reveal .slides .textcentered {
+    text-align: center !important;
+}
+
+.reveal .slides .xkcd * {
+    font-family: "xkcd Script";
+}
+
+.reveal a {
+    color: inherit;
+    font-size: 0.6em;
+}
+
+.reveal a:hover {
+    color: inherit;
+    text-shadow: 0px 0px 10px black;
+}
+
+.sea-gradient .reveal { @include sea-gradient; }
+.sky-gradient-13 .reveal { @include sky-gradient-13; }
+
+.reveal .slides section {
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
