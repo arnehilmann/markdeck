@@ -24,7 +24,7 @@ Use `Ctrl-C` to stop markdeck, `./start` to start markdeck, and `./update-markde
 
 [handout](https://arnehilmann.github.io/markdeck/showcase/markdeck-example.pdf)
 
-[markdown source](https://raw.githubusercontent.com/arnehilmann/markdeck/master/example/showcase/slides.md)
+[documentation](https://arnehilmann.github.io/markdeck/docs/markdown-basics/explain.html)
 
 
 ## how to start from scratch
