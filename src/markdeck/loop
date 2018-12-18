@@ -109,7 +109,7 @@ while true; do
     # cat ${SOURCE_MD:-/markdeck/note.md} > /target/slides.combined.md.txt
     if [[ -n ${SOURCE_MD:-} ]]; then
         for F in $SOURCE_MD; do
-            markdown-pp $F >> /target/slides.combined.md.txt
+            markdown-pp --exclude latexrender $F >> /target/slides.combined.md.txt
             echo >> /target/slides.combined.md.txt
         done
     else
