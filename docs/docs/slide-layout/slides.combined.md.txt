@@ -1,0 +1,74 @@
+---
+title: markdeck - slide layout
+highlight_style: github-gist
+# pdf: markdeck-scaffold.pdf
+# slideNumber: true
+controls: true
+controlsTutorial: true
+controlsLayout: edges
+---
+
+
+# the slide layout {bgcss=sea-gradient .light-on-dark}
+
+part of the
+[markdeck docs](https://github.com/arnehilmann/markdeck/blob/master/DOCUMENTATION.md){target="_parent"}
+
+|
+|
+
+<small>
+to proceed to the next slide,</br>
+press 'space', 'cursor right', or</br>
+click the nervous arrow at the edge.
+</small>
+
+
+# self-documenting {bg=#123456 .light-on-dark}
+
+You find the source of the current slide on the
+right side,
+and the rendered result on the left.\*
+
+
+```render_a2s
+#------------------#------------#
+|                  :            |
+|     rendered     |   slide    |
+|      slide       |   source   |
+|                  |            |
+|                  |            |
+|                  |            |
+#------------------#------------#
+```
+
+|
+|
+\*<small>: the only case where ```iframe```s are appropriate.</small>
+
+
+# slide background - solid color {bg=#222244}
+
+With the `bg` attribute, you can specify the background color of a slide.
+
+here: `bg=#222244`
+
+
+# slide background - image {bg=#222244;assets/bgimage.jpg}
+
+With the `bg` attribute, you can specify a background image for the slide:
+after the definition for the solid color, separated by a semicolon.
+
+here: `bg=#222244;assets/bgimage.jpg`
+
+
+# slide background - css
+
+TODO
+
+
+# next steps
+
+find more
+[documentation](https://github.com/arnehilmann/markdeck/blob/master/DOCUMENTATION.md#self-documenting-documentation-slides){target="_parent"}
+

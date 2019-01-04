@@ -1,0 +1,111 @@
+img.emoji {
+    width: 1.1em;
+    height: 1.1em;
+    padding: 0;
+    margin: 0;
+    vertical-align: baseline;
+}
+
+.rerendering-message {
+    display: none;
+    position: absolute;
+    text-align: center;
+    top: 20%;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1000;
+    color: white;
+    font-size: 200%;
+    text-shadow: 2px 2px #000000;
+}
+
+.markdeck-logo {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    bottom: 8px;
+    height: 8px;
+    font-size: 10px;
+    color: #5550;
+    z-index: 1;
+
+    a {
+        color: #333a;
+        text-shadow: 1px 1px #bbba;
+        background: none;
+        text-decoration: none;
+    }
+}
+
+.light-on-dark, section.light-on-dark h1 {
+    color: #fff;
+    text-shadow: 0px 1px #000;
+}
+
+.ltr, .inline {
+    p, pre {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
+/*!
+ * Font Awesome Free 5.5.0 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */
+@font-face {
+    font-family: "Font Awesome 5 Brands";
+    font-style: normal;
+    font-weight: normal;
+    src: url(fonts/fa-brands-400.ttf) format("truetype");
+}
+.fab {
+    font-family:"Font Awesome 5 Brands";
+}
+
+/*!
+ * Font Awesome Free 5.5.0 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */
+@font-face {
+    font-family: "Font Awesome 5 Free";
+    font-style: normal;
+    font-weight: 900;
+    src: url(fonts/fa-solid-900.ttf) format("truetype");
+}
+.fa, .fas {
+    font-family:"Font Awesome 5 Free";
+    font-weight:900;
+}
+
+@import "fontawesome.css";
+
+@font-face {
+    font-family: 'Inconsolata';
+    font-style: normal;
+    font-weight: 400;
+    src: url("fonts/Inconsolata-Regular.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "EB Garamond Bold";
+    font-style: normal;
+    font-weight: 400;
+    src: url("fonts/EBGaramond-Bold.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "xkcd Script";
+    font-style: normal;
+    font-weight: 400;
+    src: url("fonts/xkcd-script.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    src: url("fonts/Raleway-Regular.ttf") format('truetype');
+}

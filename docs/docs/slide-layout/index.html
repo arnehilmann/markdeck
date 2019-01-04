@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+
+    <title>markdeck - slide layout</title>
+
+    <meta name="description" content="markdeck - slide layout" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/reveal.css" />
+    <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/theme/simple.css" id="theme" />
+
+    <link rel="stylesheet" href="assets/markdeck/styles/github-gist.css" />
+
+        <link rel="stylesheet" href="assets/markdeck/css/markdeck.revealjs.css" />
+    <link rel="stylesheet" href="assets/css/slides.css" />
+
+    <script>
+        window.pdf_render = window.location.search.match(/render=pdf/gi) != null;
+        if (window.pdf_render) {
+            document.write('<link rel="stylesheet" href="assets/css/render-pdf.css" type="text/css">');
+        }
+    </script>
+
+    <link href="assets/css/rerendering.css" rel="stylesheet"></link>
+
+
+</head>
+<body>
+
+<script>
+    const l = window.location;
+    if (!/in_explain/.test(l.search)) {
+        console.log(l);
+        console.log("requesting something different from explain.html not sensible, redirecting to /explain.html...");
+        window.location.replace(l.protocol + "//" + l.host + l.pathname.match(/.*\//) + "explain.html");
+    }
+</script>
+
+    <div class="rerendering-message"><h1>R E R E N D E R I N G</h1></div>
+    <div class="markdeck-logo"><a href="https://github.com/arnehilmann/markdeck">powered by markdeck</a></div>
+
+    <div class="reveal">
+        <div class="slides">
+
+<section id="the-slide-layout" class="level1 light-on-dark" data-bgcss="sea-gradient" data-state="sea-gradient">
+<h1>the slide layout</h1>
+<p>part of the
+<a href="https://github.com/arnehilmann/markdeck/blob/master/DOCUMENTATION.md" target="_parent">markdeck docs</a></p>
+<div class="line-block"><br />
+</div>
+<p><small>
+to proceed to the next slide,</br>
+press ‘space’, ‘cursor right’, or</br>
+click the nervous arrow at the edge.
+</small></p>
+</section>
+<section id="self-documenting" class="level1 light-on-dark" data-bg="#123456" data-background="#123456">
+<h1>self-documenting</h1>
+<p>You find the source of the current slide on the
+right side,
+and the rendered result on the left.*</p>
+<p><svg xmlns="http://www.w3.org/2000/svg" width="307" height="128" version="1.1">
+    <defs>
+        <filter id="dsFilterNoBlur" width="150%" height="150%">
+            <feOffset dx="3" dy="3" in="SourceGraphic" result="offOut"/>
+            <feColorMatrix in="offOut" result="matrixOut" type="matrix" values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0"/>
+            <feBlend in="SourceGraphic" in2="matrixOut" mode="normal"/>
+        </filter>
+        <filter id="dsFilter" width="150%" height="150%">
+            <feOffset dx="3" dy="3" in="SourceGraphic" result="offOut"/>
+            <feColorMatrix in="offOut" result="matrixOut" type="matrix" values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0"/>
+            <feGaussianBlur in="matrixOut" result="blurOut" stdDeviation="3"/>
+            <feBlend in="SourceGraphic" in2="blurOut" mode="normal"/>
+        </filter>
+        <marker id="iPointer" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
+            <path d="M10 0v10L0 5z"/>
+        </marker>
+        <marker id="Pointer" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
+            <path d="M0 0l10 5-10 5z"/>
+        </marker>
+    </defs>
+    <g id="boxes" fill="none" stroke="#000" stroke-width="2">
+        <g id="group0">
+            <path id="path0" fill="#fff" d="M4.5 8h171v112H4.5z" filter="url(#dsFilter)"/>
+            <text id="text0" x="53.1" y="44.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                rendered
+            </text>
+            <text id="text2" x="62.1" y="60.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                slide
+            </text>
+        </g>
+        <g id="group1">
+            <path id="path1" fill="#fff" d="M175.5 8h117v112h-117z" filter="url(#dsFilter)"/>
+            <text id="text1" x="206.1" y="44.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                slide
+            </text>
+            <text id="text3" x="206.1" y="60.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                source
+            </text>
+        </g>
+    </g>
+</svg>
+</p>
+<div class="line-block"><br />
+</div>
+<p>*<small>: the only case where <code>iframe</code>s are appropriate.</small></p>
+</section>
+<section id="slide-background---solid-color" class="level1" data-bg="#222244" data-background="#222244">
+<h1>slide background - solid color</h1>
+<p>With the <code>bg</code> attribute, you can specify the background color of a slide.</p>
+<p>here: <code>bg=#222244</code></p>
+</section>
+<section id="slide-background---image" class="level1" data-bg="#222244;assets/bgimage.jpg" data-background="#222244" data-background-image="assets/bgimage.jpg">
+<h1>slide background - image</h1>
+<p>With the <code>bg</code> attribute, you can specify a background image for the slide:
+after the definition for the solid color, separated by a semicolon.</p>
+<p>here: <code>bg=#222244;assets/bgimage.jpg</code></p>
+</section>
+<section id="slide-background---css" class="level1">
+<h1>slide background - css</h1>
+<p>TODO</p>
+</section>
+<section id="next-steps" class="level1">
+<h1>next steps</h1>
+<p>find more
+<a href="https://github.com/arnehilmann/markdeck/blob/master/DOCUMENTATION.md#self-documenting-documentation-slides" target="_parent">documentation</a></p>
+</section>
+
+        </div>
+    </div>
+
+    <script src="assets/3rdparty/jquery.js"></script>
+
+    <script src="assets/3rdparty/reveal.js/lib/js/head.min.js"></script>
+    <script src="assets/3rdparty/reveal.js/js/reveal.js"></script>
+
+    <script>
+        // Full list of configuration options available here:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: 'true',
+            controlsTutorial: 'true',
+            controlsLayout: 'edges',
+            controlsBackArrows: 'faded',
+            progress: 'true',
+            defaultTiming: '120',
+            slideNumber: '',
+            history: 'true',
+            keyboard: 'true',
+            overview: 'true',
+            center: 'true',
+            touch: 'true',
+            loop: '',
+            rtl: '',
+            shuffle: '',
+            fragments: 'true',
+            embedded: '',
+            help: 'true',
+            showNotes: '',
+            autoPlayMedia: 'null',
+
+            autoSlide: (window.pdf_render) ? 0 : 0,
+
+            autoSlideStoppable: 'true',
+            autoSlideMethod: 'Reveal.navigateNext',
+            mouseWheel: '',
+            hideAddressBar: 'true',
+            previewLinks: '',
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+
+            theme: 'simple',
+
+            // Optional libraries used to extend on reveal.js
+            dependencies: [
+                { src: 'assets/3rdparty/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                { src: 'assets/markdeck/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                { src: 'assets/3rdparty/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                { src: 'assets/3rdparty/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            ]
+        });
+    </script>
+
+    
+    <script src="assets/markdeck/revealjs-helper.js"></script>
+    <script>
+        flushleft(".slides .flushleft");
+    </script>
+
+
+</body>
+</html>
