@@ -4,5 +4,5 @@ set -e -E -u
 for D in $(find . -type d -depth 1); do
     echo $D
     mkdir -p ../docs/docs/$D
-    rsync -Pav $D/deck/* ../docs/docs/$D/
+    rsync -Pav --delete $D/deck/* ../docs/docs/$D/
 done
