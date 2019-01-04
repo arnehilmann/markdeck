@@ -6,7 +6,6 @@ That means that you can see the rendered slide and its source side-by-side.
 
 * [the markdown basics](https://arnehilmann.github.io/markdeck/docs/markdown-basics/explain.html)
 * [the slide layout](https://arnehilmann.github.io/markdeck/docs/slide-layout/explain.html)
-* TODO: slide layout
 * TODO: metadata
 * TODO: asciiart
 
