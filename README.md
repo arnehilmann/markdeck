@@ -1,42 +1,46 @@
 # markdeck
 
-markdown to cool slides deck
-
-visit the shiny [landing page](https://arnehilmann.github.io/markdeck/)
+author cool slide decks, text-only, offline-ready, collaborative
 
 
-## install markdeck
-You need `bash`, `curl`, `docker-compose` and an empty directory to run the following command:
+## why?
+
+* cool looking slides
+* no uplink required, neither when authoring, nor presenting
+* text-only, easy syntax (markdown)
+* fast-n-easy to write
+* easy to collaborate/reuse
+* supports unicode, emojis, fontawesome, asciiart
+* self-documenting [documentation slides](DOCUMENTATION.md)
+
+You can also visit the shiny [landing page](https://arnehilmann.github.io/markdeck/)
+or the [showcase](https://arnehilmann.github.io/markdeck/showcase/).
+
+
+## install markdeck, tl;dr
+
+You need `bash`, `curl`, `docker-compose` and an empty directory, then run the following command:
 ```
-curl https://raw.githubusercontent.com/arnehilmann/markdeck/master/scaffold|bash
+curl https://raw.githubusercontent.com/arnehilmann/markdeck/master/scaffold | bash
 ```
 
-This script will download a minimal setup, then it will start markdeck...
-Use `Ctrl-C` to stop markdeck, `./start` to start markdeck, and `./update-markdeck` to update markdeck.
+This will download a minimal setup, download all needed docker images,
+then markdeck gets started...
+
+Use `Ctrl-C` to stop markdeck, and `./start` or `./update-markdeck` to do the suitable things.
 
 
-## showcase
+## documentation
 
-[slide deck](https://arnehilmann.github.io/markdeck/showcase/)
-
-[side-by-side view](https://arnehilmann.github.io/markdeck/showcase/explain.html)<br/>
-(markdown source on the right side, the rendered slide on the left)
-
-[handout](https://arnehilmann.github.io/markdeck/showcase/markdeck-example.pdf)
-
-[documentation](https://arnehilmann.github.io/markdeck/docs/markdown-basics/explain.html)
+... can be found in [DOCUMENTATION.md](DOCUMENTATION.md)
 
 
 ## how to start from scratch
 
 ```
 mkdir my-slides && cd my-slides
-curl -O https://raw.githubusercontent.com/arnehilmann/markdeck/master/docker-compose.yaml
-```
-
-```
-docker-compose pull
-docker-compose up
+curl -O https://raw.githubusercontent.com/arnehilmann/markdeck/master/scaffold
+./update-markdeck
 ```
 
 ```
@@ -61,21 +65,13 @@ to get an idea how markdeck works and looks like, or have a look
 at the [documentation](DOCUMENTATION.md).
 
 
-## why should I use this
-
-* cool looking slides
-* fast/easy to write
-* easy to collaborate/reuse
-* all sources under version control
-* no binary formats
-
-
 ## known issues
 
 * custom layout hard, but possible
 * pixel-perfect layout nearly impossible
+* see the [todos](TODOS.md)
 
 
-## documentation
+# similar projects
 
-see the [separate documentation](DOCUMENTATION.md) and [todos](TODOS.md).
+* https://github.com/divshot/markdeck

@@ -16,8 +16,3 @@ _You can find the old documentation [here](DOCUMENTATION-OLD.md)._
 
 Under ```http://localhost:8081``` you find some helpfull resources, like extended asciiart characters
 (• ♥ ♣ € ™ ©), an extensive list of emojis (🙄 🤔), and some background generators.
-
-
-# similar projects
-
-* https://github.com/divshot/markdeck
