@@ -1,4 +1,4 @@
-# Documentation
+# Self-documenting Documentation Slides
 
 The markdeck documentation gets a major overhaul:
 it gets rewritten as self-documenting slide decks!
