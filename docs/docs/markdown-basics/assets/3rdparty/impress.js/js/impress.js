@@ -2849,8 +2849,8 @@
         var api = event.detail.api;
         var gc = api.lib.gc;
         gc.addEventListener( document, "mousemove", show );
-        gc.addEventListener( document, "clickXXX", show );
-        gc.addEventListener( document, "touchXXX", show );
+        gc.addEventListener( document, "click", show );
+        gc.addEventListener( document, "touch", show );
 
         // Set first timeout
         show();
@@ -2978,7 +2978,7 @@
         }, false );
 
         // Delegated handler for clicking on the links to presentation steps
-        gc.addEventListener( document, "clickXXX", function( event ) {
+        gc.addEventListener( document, "click", function( event ) {
 
             // Event delegation with "bubbling"
             // check if event target (or any of its parents is a link)
@@ -3017,7 +3017,7 @@
         }, false );
 
         // Delegated handler for clicking on step elements
-        gc.addEventListener( document, "clickXXX", function( event ) {
+        gc.addEventListener( document, "click", function( event ) {
             var target = event.target;
             try {
 
@@ -3705,11 +3705,11 @@
     var lastDX = 0;
     var threshold = window.innerWidth / 20;
 
-    document.addEventListener( "touchstartXXX", function( event ) {
+    document.addEventListener( "touchstart", function( event ) {
         lastX = startX = event.touches[ 0 ].clientX;
     } );
 
-    document.addEventListener( "touchmoveXXX", function( event ) {
+    document.addEventListener( "touchmove", function( event ) {
          var x = event.touches[ 0 ].clientX;
          var diff = x - startX;
 
@@ -3720,7 +3720,7 @@
          window.impress().swipe( diff / window.innerWidth );
      } );
 
-     document.addEventListener( "touchendXXX", function() {
+     document.addEventListener( "touchend", function() {
          var totalDiff = lastX - startX;
          if ( Math.abs( totalDiff ) > window.innerWidth / 5 && ( totalDiff * lastDX ) <= 0 ) {
              if ( totalDiff > window.innerWidth / 5 && lastDX <= 0 ) {
@@ -3741,7 +3741,7 @@
          }
      } );
 
-     document.addEventListener( "touchcancelXXX", function() {
+     document.addEventListener( "touchcancel", function() {
 
              // Move (back) to the current slide
              window.impress().goto( document.querySelector( "#impress .step.active" ) );

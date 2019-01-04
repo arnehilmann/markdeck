@@ -51,12 +51,18 @@ pre.nohighlight code {
   font-family: "xkcd Script"; }
 
 .reveal a {
-  color: inherit;
-  font-size: 0.6em; }
+  color: inherit; }
+
+.reveal a:before {
+  font-family: "Font Awesome 5 free";
+  font-size: 50%;
+  content: "\f360 ";
+  content: "\f35d\a0";
+  vertical-align: middle; }
 
 .reveal a:hover {
   color: inherit;
-  text-shadow: 0px 0px 10px black; }
+  text-shadow: 2px 2px 4px black; }
 
 .sea-gradient .reveal {
   background: linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
@@ -70,3 +76,6 @@ pre.nohighlight code {
   width: 80%;
   margin-left: 10%;
   margin-right: 10%; }
+
+.reveal small {
+  vertical-align: initial; }

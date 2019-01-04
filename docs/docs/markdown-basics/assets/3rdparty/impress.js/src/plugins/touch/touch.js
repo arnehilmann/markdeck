@@ -35,7 +35,7 @@
          lastDX = lastX - x;
          lastX = x;
 
-         // window.impress().swipe( diff / window.innerWidth );
+         window.impress().swipe( diff / window.innerWidth );
      } );
 
      document.addEventListener( "touchend", function() {

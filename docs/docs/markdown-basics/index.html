@@ -46,21 +46,23 @@
     <div class="reveal">
         <div class="slides">
 
-<section id="markdeck---the-markdown-basics" class="level1 light-on-dark" data-bgcss="sea-gradient" data-state="sea-gradient">
-<h1>markdeck - the markdown basics</h1>
-<div class="line-block"> </div>
+<section id="the-markdown-basics" class="level1 light-on-dark" data-bgcss="sea-gradient" data-state="sea-gradient">
+<h1>the markdown basics</h1>
+<p>part of the
+<a href="https://github.com/arnehilmann/markdeck/blob/master/DOCUMENTATION.md" target="_parent">markdeck docs</a></p>
+<div class="line-block"><br />
+</div>
 <p><small>
 to proceed to the next slide,</br>
-press ‘space’ or ‘cursor right’
+press ‘space’, ‘cursor right’, or</br>
+click the nervous arrow at the edge.
 </small></p>
 </section>
-<section id="self-documenting-slides" class="level1 light-on-dark" data-bg="#123456" data-background="#123456">
-<h1>self-documenting slides</h1>
-<p>That means,
-you can see
-the rendered result on the left</p>
-<p>and
-the markdown source on the right side.</p>
+<section id="self-documenting" class="level1 light-on-dark" data-bg="#123456" data-background="#123456">
+<h1>self-documenting</h1>
+<p>You find the source of the current slide on the
+right side,
+and the rendered result on the left.*</p>
 <p><svg xmlns="http://www.w3.org/2000/svg" width="307" height="128" version="1.1">
     <defs>
         <filter id="dsFilterNoBlur" width="150%" height="150%">
@@ -103,122 +105,66 @@ the markdown source on the right side.</p>
     </g>
 </svg>
 </p>
+<div class="line-block"><br />
+</div>
+<p>*<small>: the only case where <code>iframe</code>s are appropriate.</small></p>
 </section>
 <section id="source-files" class="level1">
 <h1>source files</h1>
-<p>all files matching <code>slide*.md</code> are considered source files</p>
-<p>and get rendered on change, ordered by name</p>
-</section>
-<section id="meta-data" class="level1">
-<h1>meta data</h1>
-<p>every slide deck needs a set of meta data to begin with</p>
-<p>so start your slides with something like this:</p>
-<pre><code>---
-title: my slide deck title
----</code></pre>
-<p>You can find all valid parameters in the console output of the markdeck container,
-in the <code>config</code> section.</p>
-</section>
-<section id="meta-data-1" class="level1">
-<h1>meta data</h1>
-<p>As per v0.33, these parameters are:</p>
-<pre><code>-------- config --------
-{
-  &quot;controls&quot;: true,
-  &quot;autoSlideMethod&quot;: &quot;Reveal.navigateNext&quot;,
-  &quot;variant&quot;: &quot;reveal&quot;,
-  &quot;autoPlayMedia&quot;: &quot;null&quot;,
-  &quot;shuffle&quot;: false,
-  &quot;transition&quot;: &quot;slide&quot;,
-  &quot;hideAddressBar&quot;: true,
-  &quot;rtl&quot;: false,
-  &quot;history&quot;: true,
-  &quot;progress&quot;: true,
-  &quot;highlight_style&quot;: &quot;github-gist&quot;,
-  &quot;transitionSpeed&quot;: &quot;default&quot;,
-  &quot;pdf_size&quot;: &quot;1189x841&quot;,
-  &quot;pdf_delay&quot;: &quot;100&quot;,
-  &quot;center&quot;: true,
-  &quot;overview&quot;: true,
-  &quot;asciinema&quot;: false,
-  &quot;embedded&quot;: false,
-  &quot;help&quot;: true,
-  &quot;previewLinks&quot;: false,
-  &quot;backgroundTransition&quot;: &quot;fade&quot;,
-  &quot;slideNumber&quot;: false,
-  &quot;loop&quot;: false,
-  &quot;mouseWheel&quot;: false,
-  &quot;autoSlideStoppable&quot;: true,
-  &quot;pdf&quot;: &quot;&quot;,
-  &quot;keyboard&quot;: true,
-  &quot;touch&quot;: true,
-  &quot;standalone&quot;: &quot;&quot;,
-  &quot;html&quot;: &quot;index.html&quot;,
-  &quot;controlsBackArrows&quot;: &quot;faded&quot;,
-  &quot;controlsTutorial&quot;: false,
-  &quot;showNotes&quot;: false,
-  &quot;autoSlide&quot;: &quot;0&quot;,
-  &quot;title&quot;: &quot;markdeck basics&quot;,
-  &quot;fragments&quot;: true,
-  &quot;defaultTiming&quot;: &quot;120&quot;,
-  &quot;controlsLayout&quot;: &quot;bottom-right&quot;,
-  &quot;theme&quot;: &quot;simple&quot;
-}
-ASCIIART_CONFIG=/markdeck/lib/render-asciiart-filter.config
--------- /config --------</code></pre>
+<p>You can put all your slides in one <code>slides.md</code> file</p>
+<p>or
+you split them into different files
+(e.g. <code>slides-part-1.md, slides-part-2.md, ...</code>)</p>
+<p>all files matching <code>slide*.md</code> are source files</p>
 </section>
 <section id="a-new-slide" class="level1">
 <h1>a new slide</h1>
-<p>To begin a slide, add a section by starting
-a new line with <code>#</code></p>
-<p>The content gets centered and scaled appropriately.</p>
+<p>To begin a new slide,
+simply type a <code>#</code> followed by the headline</p>
 </section>
 <section id="section" class="level1">
 <h1></h1>
-<p>In case you don’t need a headline:
-empty headlines are allowed, too</p>
+<p>empty headlines are allowed, too</br>
+(just add a single space after the <code>#</code>)</p>
 </section>
-<section id="markdown" class="level1">
-<h1>markdown</h1>
+<section id="layout-basics" class="level1">
+<h1>layout basics</h1>
+<p>All content gets centered and scaled to fit
+nicely into the browser window.</p>
+</section>
+<section id="markdown-syntax-101" class="level1">
+<h1>markdown syntax 101</h1>
 <p>Normal text renders as normal text.<small>tadahh</small></p>
 <p>Single
 newlines
 get
-removed, so you can wrap
-your text
-whereever
-you want.</p>
-<p>To start a new paragraph,
+removed.</p>
+<p>To actually start a new paragraph,
 insert an empty line.</p>
-<p>TODO link to markdown, pandoc</p>
 </section>
-<section id="basic-markup" class="level1">
-<h1>basic markup</h1>
-<p>TODO link to markdown doc</p>
+<section id="lists" class="level1">
+<h1>lists</h1>
+<p>unordered</p>
 <ul>
-<li>list item a</li>
-<li>list item b</li>
+<li>item a</li>
+<li>item b</li>
 </ul>
-<p><em>emphasized text</em></p>
+<p>ordered</p>
 <ol type="1">
-<li>ordered list</li>
-<li>ordered list</li>
+<li>item a</li>
+<li>item b</li>
 </ol>
+<p><small>Note the automagical numbering</small></p>
 </section>
-<section id="code" class="level1">
-<h1>code</h1>
-<p>TODO</p>
+<section id="markup" class="level1">
+<h1>markup</h1>
+<p><em>emphasized text</em></p>
 </section>
 <section id="links" class="level1">
 <h1>links</h1>
-<p>internal, external, images</p>
-</section>
-<section id="eye-candy" class="level1">
-<h1>eye candy</h1>
-<p>unicode: <img src="assets/markdeck/emojis/2665.png" alt="♥" class="emoji" /></p>
-<p>emojis: <img src="assets/markdeck/emojis/1f60e.png" alt="😎" class="emoji" /></p>
-<p>font-awesome: <i class='fab fa-github'></i></p>
-<p>images: <?xml version="1.0" standalone="no"?>
+<p><a href="#code">link to other slide</a></p>
+<p><a href="https://arnehilmann.github.io/markdeck/" target="_blank">link to external url</a></p>
+<p><?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
  "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
 <svg version="1.0" xmlns="http://www.w3.org/2000/svg"
@@ -1638,16 +1584,45 @@ fill="#000000" stroke="none">
 </g>
 </svg>
 </p>
-<p>TODO: add links to docs/lists/8081 pages</p>
+</section>
+<section id="official-definitions" class="level1">
+<h1>official definitions</h1>
+<p><a href="https://daringfireball.net/projects/markdown/syntax" target="_blank">markdown syntax</a></p>
+<p><a href="https://pandoc.org/MANUAL.html#pandocs-markdown" target="_blank">pandoc extensions</a></p>
+</section>
+<section id="code" class="level1">
+<h1>code</h1>
+<pre class="java"><code>public static final void main(String[] args) {
+    // ...
+}</code></pre>
+<p><a href="https://highlightjs.org/static/demo/" target="_blank">list of all known languages</a></p>
+</section>
+<section id="eye-candy" class="level1">
+<h1>eye candy</h1>
+<p>unicode: <img src="assets/markdeck/emojis/2665.png" alt="♥" class="emoji" /></p>
+<p>emojis: <img src="assets/markdeck/emojis/1f60e.png" alt="😎" class="emoji" /></p>
+<p>font-awesome: <i class='fab fa-github'></i></p>
+</section>
+<section id="local-helper" class="level1">
+<h1>local helper</h1>
+<p>You can find a set of frequently used unicode characters,
+emojis, asciiart editors, and gradient tools
+<a href="http://localhost:8081/" target="_blank">on the helper pages</a>.</p>
 </section>
 <section id="raw-html" class="level1">
 <h1>raw html</h1>
-<p>if in dire need, add raw html
-<small>like this</small></p>
+<p>if in dire need,
+you can still add raw html:</br>
+<code>&lt;/br&gt;</code> to force a line break</p>
+<p><code>&lt;small&gt;&lt;/small&gt;</code>
+for <small>small font</small></p>
+<div class="line-block"><br />
+</div>
+<p><code>|</code> for vertical space</p>
 </section>
 <section id="next-steps" class="level1">
 <h1>next steps</h1>
-<p>TODO</p>
+<p><a href="https://github.com/arnehilmann/markdeck/blob/master/DOCUMENTATION.md" target="_parent">find more documentation, esp. slide design and metadata</a></p>
 </section>
 
         </div>
