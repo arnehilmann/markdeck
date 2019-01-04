@@ -1,15 +1,5 @@
 # Documentation
 
-The markdeck documentation gets a major overhaul:
-it gets rewritten as self-documenting slide decks!
-That means that you can see the rendered slide and its source side-by-side.
-
-* [the markdown basics](https://arnehilmann.github.io/markdeck/docs/markdown-basics/explain.html)
-* TODO
-
-_You can find the old documentation [here.](DOCUMENTATION-OLD.md)_
-
-
 ## author your deck
 
 To start with *markdeck*, see [the tl;dr](/markdeck/README.md#tldr) section.
