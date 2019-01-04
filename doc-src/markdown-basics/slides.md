@@ -9,163 +9,103 @@ controlsLayout: edges
 ---
 
 
-# markdeck - the markdown basics {bgcss=sea-gradient .light-on-dark}
+# the markdown basics {bgcss=sea-gradient .light-on-dark}
 
-| &nbsp;
+part of the
+[markdeck docs](https://github.com/arnehilmann/markdeck/blob/master/DOCUMENTATION.md){target="_parent"}
 
-<small>
-to proceed to the next slide,</br>
-press 'space' or 'cursor right'
-</small>
+|
+|
 
-
-# self-documenting slides {bg=#123456 .light-on-dark}
-
-That means,
-you can see
-the rendered result on the left
-
-and
-the markdown source on the right side.
-
-
-```render_a2s
-#------------------#------------#
-|                  :            |
-|     rendered     |   slide    |
-|      slide       |   source   |
-|                  |            |
-|                  |            |
-|                  |            |
-#------------------#------------#
-```
+!INCLUDE "/source/intro.md"
 
 
 # source files
 
-all files matching `slide*.md` are considered source files
+You can put all your slides in one ```slides.md``` file
 
-and get rendered on change, ordered by name
+or
+you split them into different files
+(e.g. ```slides-part-1.md, slides-part-2.md, ...```)
 
-
-# meta data
-
-every slide deck needs a set of meta data to begin with
-
-so start your slides with something like this:
-
-    ---
-    title: my slide deck title
-    ---
-
-You can find all valid parameters in the console output of the markdeck container,
-in the ```config``` section.
-
-
-# meta data
-
-As per v0.33, these parameters are:
-
-    -------- config --------
-    {
-      "controls": true,
-      "autoSlideMethod": "Reveal.navigateNext",
-      "variant": "reveal",
-      "autoPlayMedia": "null",
-      "shuffle": false,
-      "transition": "slide",
-      "hideAddressBar": true,
-      "rtl": false,
-      "history": true,
-      "progress": true,
-      "highlight_style": "github-gist",
-      "transitionSpeed": "default",
-      "pdf_size": "1189x841",
-      "pdf_delay": "100",
-      "center": true,
-      "overview": true,
-      "asciinema": false,
-      "embedded": false,
-      "help": true,
-      "previewLinks": false,
-      "backgroundTransition": "fade",
-      "slideNumber": false,
-      "loop": false,
-      "mouseWheel": false,
-      "autoSlideStoppable": true,
-      "pdf": "",
-      "keyboard": true,
-      "touch": true,
-      "standalone": "",
-      "html": "index.html",
-      "controlsBackArrows": "faded",
-      "controlsTutorial": false,
-      "showNotes": false,
-      "autoSlide": "0",
-      "title": "markdeck basics",
-      "fragments": true,
-      "defaultTiming": "120",
-      "controlsLayout": "bottom-right",
-      "theme": "simple"
-    }
-    ASCIIART_CONFIG=/markdeck/lib/render-asciiart-filter.config
-    -------- /config --------
+all files matching ```slide*.md``` are source files
 
 
 # a new slide
 
-To begin a slide, add a section by starting
-a new line with `#`
-
-The content gets centered and scaled appropriately.
+To begin a new slide,
+simply type a `#` followed by the headline
 
 
 # 
 
-In case you don't need a headline:
-empty headlines are allowed, too
+empty headlines are allowed, too</br>
+(just add a single space after the `#`)
 
 
-# markdown
+# layout basics
+
+All content gets centered and scaled to fit
+nicely into the browser window.
+
+
+# markdown syntax 101
 
 Normal text renders as normal text.<small>tadahh</small>
 
 Single
 newlines
 get
-removed, so you can wrap
-your text
-whereever
-you want.
+removed.
 
-To start a new paragraph,
+To actually start a new paragraph,
 insert an empty line.
 
+# lists
 
-TODO link to markdown, pandoc
+unordered
+
+* item a
+* item b
+
+ordered
+
+1. item a
+1. item b
+
+<small>Note the automagical numbering</small>
 
 
-# basic markup
-
-TODO link to markdown doc
-
-* list item a
-* list item b
+# markup
 
 _emphasized text_
-
-1. ordered list
-1. ordered list
-
-
-# code
-
-TODO
 
 
 # links
 
-internal, external, images
+[link to other slide](#code)
+
+[link to external url](https://arnehilmann.github.io/markdeck/){target="_blank"}
+
+![images](assets/buddy-egyptian.svg)
+
+
+# official definitions
+
+[markdown syntax](https://daringfireball.net/projects/markdown/syntax){target="_blank"}
+
+[pandoc extensions](https://pandoc.org/MANUAL.html#pandocs-markdown){target="_blank"}
+
+
+# code
+
+```java
+public static final void main(String[] args) {
+    // ...
+}
+```
+
+[list of all known languages](https://highlightjs.org/static/demo/){target="_blank"}
 
 
 # eye candy
@@ -176,17 +116,28 @@ emojis: 😎
 
 font-awesome: ![](fab fa-github)
 
-images: ![](assets/buddy-egyptian.svg)
 
-TODO: add links to docs/lists/8081 pages
+# local helper
+
+You can find a set of frequently used unicode characters,
+emojis, asciiart editors, and gradient tools
+[on the helper pages](http://localhost:8081/){target="_blank"}.
 
 
 # raw html
 
-if in dire need, add raw html
-<small>like this</small>
+if in dire need,
+you can still add raw html:</br>
+```</br>``` to force a line break
+
+```<small></small>```
+for <small>small font</small>
+
+|
+|
+```|``` for vertical space
 
 
 # next steps
 
-TODO
+[find more documentation, esp. slide design and metadata](https://github.com/arnehilmann/markdeck/blob/master/DOCUMENTATION.md){target="_parent"}
