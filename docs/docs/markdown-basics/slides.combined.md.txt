@@ -167,5 +167,7 @@ for <small>small font</small>
 
 # next steps
 
-[find more documentation, esp. slide design and metadata](https://github.com/arnehilmann/markdeck/blob/master/DOCUMENTATION.md){target="_parent"}
+find more
+[documentation](https://github.com/arnehilmann/markdeck/blob/master/DOCUMENTATION.md#self-documenting-documentation-slides){target="_parent"},
+esp. slide design and metadata
 
