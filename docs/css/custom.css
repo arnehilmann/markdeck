@@ -13,7 +13,12 @@
 }
 
 .bggrey {
-    background: #eee;
+    background: #112233;
+    background: linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
+    color: white;
+}
+.bggrey a {
+    color: white;
 }
 
 .small {
@@ -68,12 +73,11 @@
 /* Bigger than 550 */
 @media (min-width: 550px) {
   .section {
-    padding: 12rem 0 11rem;
+    padding: 4rem 0 4rem;
   }
   .hero {
-    padding-bottom: 12rem;
     text-align: left;
-    height: 165px;
+    #height: 165px;
   }
   .hero-heading {
     font-size: 2.4rem;
@@ -83,16 +87,16 @@
 /* Bigger than 750 */
 @media (min-width: 750px) {
   .hero {
-    height: 190px;
+    #height: 190px;
   }
   .hero-heading {
     font-size: 2.6rem;
   }
   .section {
-    padding: 4rem 0 8rem;
+    padding: 4rem 0 6rem;
   }
   .hero {
-    padding: 6rem 0 12rem;
+    padding: 6rem 0 6rem;
   }
   .section-description {
     max-width: 60%;
@@ -107,10 +111,10 @@
 /* Bigger than 1000 */
 @media (min-width: 1000px) {
   .section {
-    padding: 5rem 0 10rem;
+    padding: 5rem 0 6rem;
   }
   .hero {
-    padding: 6rem 0 12rem;
+    padding: 6rem 0 6rem;
   }
   .hero-heading {
     font-size: 3.0rem;
@@ -145,7 +149,7 @@ h1, h2, h3, h4, h5, h6 {
 
 
 .hero {
-    background: Teal;
+    background: linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
     color: #eee;
     text-shadow: 0 1px 3px rgba(0, 0, 0, .5);
 }
@@ -181,6 +185,7 @@ nav {
     z-index: 99;
     border-bottom: 1px solid grey;
     font-family: "Raleway";
+    color: #222;
 }
 
 nav .section {
@@ -199,12 +204,14 @@ nav .section {
 footer {
     width: 100%;
     border-top: 1px solid grey;
-    background: Teal;
-    color: white;
+    background: #112233;
+    background: linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
+    background: rgba(255, 255, 255, .95);
+    color: #222;
 }
 
 footer a {
-    color: white;
+    #color: white;
 }
 
 footer .container {
