@@ -5,13 +5,18 @@ author cool slide decks, text-only, offline-ready, collaborative
 
 ## why?
 
-* cool looking slides
-* no uplink required, neither when authoring, nor presenting
-* text-only, easy syntax (markdown)
-* fast-n-easy to write
-* easy to collaborate/reuse
-* supports unicode, emojis, fontawesome, asciiart
-* self-documenting [documentation slides](DOCUMENTATION.md)
+* converts markdown to a clean html5 slide deck
+* cool looking: based on battle-proven web frameworks, like reveal.js
+* no uplink required, neither when authoring, nor presenting:</br>
+    no awkward moments during presentation (no "I am waiting for the Internet, sorry!")
+* all batteries included: live renderer, pdf output, asciiart-converter
+* text-only, easy syntax: just markdown
+* fast-n-easy to write: bring your own editor!
+* easy to collaborate-n-reuse: text-only, so bring your own VCS
+* eye-candy: supports unicode, emojis, fontawesome, asciiart, math, charts, code highlighting,
+    recorded terminal sessions, ...
+* self-documenting [documentation slides](DOCUMENTATION.md):</br>
+    see the slide source and the result, side-by-side
 
 You can also visit the shiny [landing page](https://arnehilmann.github.io/markdeck/)
 or the [showcase](https://arnehilmann.github.io/markdeck/showcase/).
