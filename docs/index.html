@@ -5,8 +5,8 @@
   <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
-  <title>MarkDeck: Presentations written in Markdown</title>
-  <meta name="description" content="">
+  <title>MarkDeck - cool slide decks</title>
+  <meta name="description" content="MarkDeck - cool slide decks, text-only, offline ready, collaborative">
   <meta name="author" content="arne.hilmann@gmail.com">
 
   <!-- Mobile Specific Metas
@@ -30,7 +30,7 @@
 
   <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="icon" type="image/png" href="../../dist/images/favicon.png">
+  <link rel="icon" type="image/png" href="favicon.png">
 
 </head>
 <body>
@@ -92,14 +92,14 @@
               <li>converts markdown to a clean html5 slide deck</li>
               <li>cool looking: based on battle-proven web frameworks, like reveal.js</li>
               <li>no uplink required, neither when authoring, nor presenting:</br>
-                  no awkward moments during presentation (no "I am waiting for the Internet, sorry!")</li>
-              <li>all batteries included: live renderer, pdf output, asciiart-converter</li>
+                  no awkward moments during presentation (no "I am still waiting for the Internet, sorry!")</li>
+              <li>batteries included: live renderer, pdf output, asciiart-converter</li>
               <li>text-only, easy syntax: just markdown</li>
               <li>fast-n-easy to write: bring your own editor!</li>
               <li>easy to collaborate-n-reuse: text-only, so bring your own VCS</li>
               <li>eye-candy: supports unicode, emojis, fontawesome, asciiart, math, charts, code highlighting,
                   recorded terminal sessions, ...</li>
-              <li>self-documenting <a href="DOCUMENTATION.md">documentation slides</a>:</br>
+              <li>self-documenting <a href="https://github.com/arnehilmann/markdeck/blob/master/DOCUMENTATION.md">documentation slides</a>:</br>
                   see the slide source and the result, side-by-side</li>
           </ul>
         </div>
@@ -107,58 +107,80 @@
     </div>
   </div>
 
-  <div class="section asciiart bggrey">
+  <div class="section bggrey">
     <div class="container">
-      <div class="row">
-        <div class="one-half column">
-          <h2>AsciiArt</h2>
-          Converts this ascii drawing ...
-          <pre class="small">
-+=----------------------------+   +=----------------------------+
-| Node                        |   | Node                        |
-|                             |   |                             |
-|                             |   |                             |
-| +----------+   +----------+ |   | +----------+   +----------+ |
-| |          |   |          | |   | |          |   |          | |
-| | Frontend |   | Foo      | |   | | Frontend |   | Bar      | |
-| |          |   |          | |   | |          |   |          | |
-| |          |   |          | |   | |          |   |          | |
-| |          |   | {s}      | |   | |          |   | {s}      | |
-| +-----+----+   +----------+ |   | +-----+----+   +----------+ |
-|       ^                     |   |       ^                     |
-|       |                     |   |       |                     |
-|       +-------------service-------------+                     |
-|                             |   |                             |
-+-----------------------------+   +-----------------------------+
-          </pre>
-        </div>
-        <div class="one-half column screenshot">
-            ... into this image
-          <img class="screenshot" alt="" src="images/screenshot.png">
-        </div>
-      </div>
       <div class="row left">
-        <hr>
-        You want a complete showcase?<br>
+        <h2>Showcase</h2>
         Have a look at the
-        <a href="https://arnehilmann.github.io/markdeck/showcase/index.html" target="_blank">
-            example
-        </a>
+        <a href="showcase/index.html" target="_blank">example slides</a>
         and the corresponding
-        <a href="https://arnehilmann.github.io/markdeck/showcase/markdeck-example.pdf">
-            markdeck-example.pdf
-        </a>
+        <a href="showcase/markdeck-example.pdf">pdf file</a>.
+        </br>
+        And browse thru the self-documenting</br>
+        <a href="docs/markdown-basics/explain.html">basics</a> and
+        <a href="ocs/slide-layout/explain.html">layout</a> slides.
       </div>
     </div>
   </div>
 
+  <div class="section asciiart">
+    <div class="container">
+      <div class="row left">
+        <div class="one-half column">
+          <h2>Example AsciiArt</h2>
+        </div>
+      </div>
+      <div class="row left">
+        <div class="one-half column">
+          <center>
+            MarkDeck converts this ascii drawing ...
+            <pre class="small">
++-----------------------------+
+| Node A                      |
+|                             |
+| +----------+   +----------+ |
+| |          |   |          | |
+| | Frontend |   | Foo      | |
+| |          |   |          | |
+| |          |   | {s}      | |
+| +-----+----+   +----------+ |
+|       ^                     |
+|       |                     |
+|       \-service-\           |
+|                 |           |
++-----------------|-----------+
+                  |            
++-----------------|-----------+
+| Node B          |           |
+|       /---------/           |
+|       |                     |
+|       v                     |
+| +-----+----+   +=---------+ |
+| |          |   |          | |
+| | Frontend |   | Bar      | |
+| |          |   |          | |
+| |          |   | {s}      | |
+| +----------+   +----------+ |
++-----------------------------+
+            </pre>
+          </center>
+        </div>
+        <div class="one-half column screenshot">
+            ... into this image, auto-magically and on-the-fly!
+          <img class="screenshot" alt="" src="images/asciiart.png">
+        </div>
+      </div>
+    </div>
+  </div>
 
-
-  <footer>
+  <footer class="bggrey">
     <div class="container">
       <div class="row">
         <div class="one-half column left">
+          <a class="button button-primary" href="https://github.com/arnehilmann/markdeck/blob/master/README.md#install-markdeck-tldr">Try MarkDeck</a>
+          <!--
           MarkDeck is maintained by <a href="https://github.com/arnehilmann">Arne Hilmann</a>.
+          -->
         </div>
         <div class="one-half column right">
           <a href="https://arnehilmann.github.io/markdeck/">
