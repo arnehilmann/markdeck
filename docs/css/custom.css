@@ -70,9 +70,17 @@
 .categories .section-description {
   margin-bottom: 4rem;
 }
+@media (min-width: 0px) {
+  .nav-text {
+      display: none;
+  }
+}
 
 /* Bigger than 550 */
 @media (min-width: 550px) {
+  .nav-text {
+      display: inline;
+  }
   .section {
     padding: 4rem 0 4rem;
   }
@@ -182,7 +190,6 @@ nav {
     left: 0;
     display: block;
     width: 100%;
-    height: 1.6em;
     z-index: 99;
     border-bottom: 1px solid grey;
     font-family: "Raleway";
@@ -192,6 +199,8 @@ nav {
 nav .section {
     padding: 1ex 0;
     background: rgba(255, 255, 255, .95);
+    height: 1.6em;
+    max-height: 1.6em;
 }
 
 .left {
