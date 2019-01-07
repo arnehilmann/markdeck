@@ -1,4 +1,4 @@
-# markdeck
+# markdeck - presentations as code</br>
 
 author cool slide decks, text-only, offline-ready, collaborative
 
@@ -8,7 +8,7 @@ author cool slide decks, text-only, offline-ready, collaborative
 * converts markdown to a clean html5 slide deck
 * cool looking: based on battle-proven web frameworks, like reveal.js
 * no uplink required, neither when authoring, nor presenting:</br>
-    no awkward moments during presentation (no "I am waiting for the Internet, sorry!")
+    no awkward moments during presentation (no "I am still waiting for the Internet, sorry!")
 * all batteries included: live renderer, pdf output, asciiart-converter
 * text-only, easy syntax: just markdown
 * fast-n-easy to write: bring your own editor!
@@ -32,7 +32,7 @@ curl https://raw.githubusercontent.com/arnehilmann/markdeck/master/scaffold | ba
 This will download a minimal setup, download all needed docker images,
 then markdeck gets started...
 
-Use `Ctrl-C` to stop markdeck, and `./start` or `./update-markdeck` to do the suitable things.
+Use `Ctrl-C` to stop markdeck, and `./start`, `./stop` or `./update-markdeck` to do the suitable things.
 
 
 ## documentation
@@ -68,6 +68,11 @@ see the
 [side-by-side view](https://arnehilmann.github.io/markdeck/showcase/explain.html),
 to get an idea how markdeck works and looks like, or have a look
 at the [documentation](DOCUMENTATION.md).
+
+
+## Based on
+
+markdown, pandoc, reveal.js, plantuml, ditaamini, graphviz, asciinema, decktape, vega-lite, math-jax, and font-awesome.
 
 
 ## known issues

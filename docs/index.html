@@ -5,7 +5,7 @@
   <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
-  <title>MarkDeck - cool slide decks</title>
+  <title>MarkDeck - presentations as code</title>
   <meta name="description" content="MarkDeck - cool slide decks, text-only, offline ready, collaborative">
   <meta name="author" content="arne.hilmann@gmail.com">
 
@@ -42,7 +42,7 @@
           <div class="one-half column left">
             MarkDeck
             -
-            cool slide decks
+            presentations as code
           </div>
           <div class="one-half column right">
             <a href="https://github.com/arnehilmann/markdeck">
@@ -67,7 +67,10 @@
         <div class="one-half column">
           <h1>MarkDeck</h1>
           <p class="hero-heading">
-            author cool slide decks, text-only, offline-ready, collaborative
+            presentations as code
+          </p>
+          <p>
+          author cool slide decks, text-only, offline-ready, collaborative
           </p>
           <a class="button button-primary" href="https://github.com/arnehilmann/markdeck/blob/master/README.md#install-markdeck-tldr">
               Try MarkDeck
@@ -110,7 +113,7 @@
   <div class="section bggrey">
     <div class="container">
       <div class="row left">
-        <h2>Showcase</h2>
+        <h2>Showcases</h2>
         Have a look at the
         <a href="showcase/index.html" target="_blank">example slides</a>
         and the corresponding
@@ -120,20 +123,58 @@
         <a href="docs/markdown-basics/explain.html">basics</a> and
         <a href="docs/slide-layout/explain.html">layout</a> slides.
       </div>
+      <div class="row left" style="margin-top: 2rem; border-top: 1pt solid grey; padding-top: 2rem;">
+          <h3>the minimal example</h3>
+      </div>
+      <div class="row left">
+        <div class="one-half column">
+          source:
+          <pre class="small">
+---
+title: markdeck scaffold
+pdf: markdeck-scaffold.pdf
+slideNumber: true
+controls: true
+---
+
+# first slide {bg=#eee}
+
+made with [markdeck](https://arnehilmann.github.io/markdeck/){target="_blank"}
+
+```render_a2s
+#----------.
+|[markdeck]|
+'----------#
+[markdeck]: {"fill": "Teal", "fillStyle": "solid"}
+```
+
+&lt;small>
+interesting links:
+  [your main deck](/){target="_parent"}
+• [markdown/slide side-by-side](/explain.html)
+• [utilities](//localhost:8081/){target="_blank"}
+&lt;/small>
+
+⚪ ⚪ ⚪
+          </pre>
+        </div>
+        <div class="one-half column">
+          result:
+          <img src="images/minimal.png" alt="" class="u-max-full-width">
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="section asciiart">
     <div class="container">
       <div class="row left">
-        <div class="one-half column">
-          <h2>Example AsciiArt</h2>
-        </div>
+        <h2>Example: Inline AsciiArt</h2>
       </div>
       <div class="row left">
         <div class="one-half column">
           <center>
-            MarkDeck converts this ascii drawing ...
+            MarkDeck converts inline ascii drawings ...
             <pre class="small">
 +-----------------------------+
 | Node A                      |
@@ -166,9 +207,28 @@
           </center>
         </div>
         <div class="one-half column screenshot">
-            ... into this image, auto-magically and on-the-fly!
+            ... into images, auto-magically and on-the-fly!
           <img class="screenshot" alt="" src="images/asciiart.png">
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section bggrey">
+    <div class="container">
+      <div class="row left">
+        Based on
+        markdown,
+        pandoc,
+        reveal.js,
+        plantuml,
+        ditaamini,
+        graphviz,
+        asciinema,
+        decktape,
+        vega-lite,
+        math-jax,
+        font-awesome.
       </div>
     </div>
   </div>
@@ -181,6 +241,10 @@
           <!--
           MarkDeck is maintained by <a href="https://github.com/arnehilmann">Arne Hilmann</a>.
           -->
+          &nbsp;
+          <a href="https://github.com/arnehilmann/markdeck"><i class="fab fa-github">&nbsp;</i></a>
+          <a href="https://cloud.docker.com/u/arne/repository/docker/arne/markdeck-pandoc"><i class="fab fa-docker">&nbsp;</i></a>
+          <a href="https://twitter.com/ArneHilmann"><i class="fab fa-twitter">&nbsp;</i></a>
         </div>
         <div class="one-half column right">
           <a href="https://arnehilmann.github.io/markdeck/">
