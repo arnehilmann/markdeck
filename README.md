@@ -15,7 +15,7 @@ author cool slide decks, text-only, offline-ready, collaborative
 * easy to collaborate-n-reuse: text-only, so bring your own VCS
 * eye-candy: supports unicode, emojis, fontawesome, asciiart, math, charts, code highlighting,
     recorded terminal sessions, ...
-* self-documenting [documentation slides](DOCUMENTATION.md):</br>
+* self-documenting [documentation slides](DOCUMENTATION.md#self-documenting-documentation-slides):</br>
     see the slide source and the result, side-by-side
 
 You can also visit the shiny [landing page](https://arnehilmann.github.io/markdeck/)
