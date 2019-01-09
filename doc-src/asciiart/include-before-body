@@ -1,0 +1,8 @@
+<script>
+    const l = window.location;
+    if (!/in_explain/.test(l.search)) {
+        console.log(l);
+        console.log("requesting something different from explain.html not sensible, redirecting to /explain.html...");
+        window.location.replace(l.protocol + "//" + l.host + l.pathname.match(/.*\//) + "explain.html");
+    }
+</script>

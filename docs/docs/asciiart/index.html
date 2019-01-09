@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+
+    <title>markdeck - asciiart</title>
+
+    <meta name="description" content="markdeck - asciiart" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/reveal.css" />
+    <link rel="stylesheet" href="assets/3rdparty/reveal.js/css/theme/simple.css" id="theme" />
+
+    <link rel="stylesheet" href="assets/markdeck/styles/github-gist.css" />
+
+        <link rel="stylesheet" href="assets/markdeck/css/markdeck.revealjs.css" />
+    <link rel="stylesheet" href="assets/css/slides.css" />
+
+    <script>
+        window.pdf_render = window.location.search.match(/render=pdf/gi) != null;
+        if (window.pdf_render) {
+            document.write('<link rel="stylesheet" href="assets/css/render-pdf.css" type="text/css">');
+        }
+    </script>
+
+    <link href="assets/css/rerendering.css" rel="stylesheet"></link>
+
+
+</head>
+<body>
+
+<script>
+    const l = window.location;
+    if (!/in_explain/.test(l.search)) {
+        console.log(l);
+        console.log("requesting something different from explain.html not sensible, redirecting to /explain.html...");
+        window.location.replace(l.protocol + "//" + l.host + l.pathname.match(/.*\//) + "explain.html");
+    }
+</script>
+
+    <div class="rerendering-message"><h1>R E R E N D E R I N G</h1></div>
+    <div class="markdeck-logo"><a href="https://github.com/arnehilmann/markdeck">powered by markdeck</a></div>
+
+    <div class="reveal">
+        <div class="slides">
+
+<section id="asciiart" class="level1 light-on-dark" data-bgcss="sea-gradient" data-state="sea-gradient">
+<h1>asciiart</h1>
+<p>part of the
+<a href="https://github.com/arnehilmann/markdeck/blob/master/DOCUMENTATION.md" target="_parent">markdeck docs</a></p>
+<div class="line-block"><br />
+</div>
+<p><small>
+to proceed to the next slide,</br>
+press ‘space’, ‘cursor right’, or</br>
+click the nervous arrow at the edge.
+</small></p>
+</section>
+<section id="self-documenting" class="level1 light-on-dark" data-bg="#123456" data-background="#123456">
+<h1>self-documenting</h1>
+<p>You find the source of the current slide on the
+right side,
+and the rendered result on the left.*</p>
+<p><svg xmlns="http://www.w3.org/2000/svg" width="307" height="128" version="1.1">
+    <defs>
+        <filter id="dsFilterNoBlur" width="150%" height="150%">
+            <feOffset dx="3" dy="3" in="SourceGraphic" result="offOut"/>
+            <feColorMatrix in="offOut" result="matrixOut" type="matrix" values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0"/>
+            <feBlend in="SourceGraphic" in2="matrixOut" mode="normal"/>
+        </filter>
+        <filter id="dsFilter" width="150%" height="150%">
+            <feOffset dx="3" dy="3" in="SourceGraphic" result="offOut"/>
+            <feColorMatrix in="offOut" result="matrixOut" type="matrix" values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0"/>
+            <feGaussianBlur in="matrixOut" result="blurOut" stdDeviation="3"/>
+            <feBlend in="SourceGraphic" in2="blurOut" mode="normal"/>
+        </filter>
+        <marker id="iPointer" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
+            <path d="M10 0v10L0 5z"/>
+        </marker>
+        <marker id="Pointer" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
+            <path d="M0 0l10 5-10 5z"/>
+        </marker>
+    </defs>
+    <g id="boxes" fill="none" stroke="#000" stroke-width="2">
+        <g id="group0">
+            <path id="path0" fill="#fff" d="M4.5 8h171v112H4.5z" filter="url(#dsFilter)"/>
+            <text id="text0" x="53.1" y="44.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                rendered
+            </text>
+            <text id="text2" x="62.1" y="60.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                slide
+            </text>
+        </g>
+        <g id="group1">
+            <path id="path1" fill="#fff" d="M175.5 8h117v112h-117z" filter="url(#dsFilter)"/>
+            <text id="text1" x="206.1" y="44.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                slide
+            </text>
+            <text id="text3" x="206.1" y="60.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                source
+            </text>
+        </g>
+    </g>
+</svg>
+</p>
+<div class="line-block"><br />
+</div>
+<p>*<small>: the only case where <code>iframe</code>s are appropriate.</small></p>
+</section>
+<section id="ditaa" class="level1">
+<h1>ditaa</h1>
+<p><img src="rendered/render_ditaa-ba6beb819a8e3ab72c4dc14f391398e6ab20cd35.png" alt="" /></p>
+<p><a href="http://ditaa.sourceforge.net/">ditaa.sourceforge.net/</a></p>
+</section>
+<section id="plantuml" class="level1">
+<h1>plantuml</h1>
+<p><?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="248px" preserveAspectRatio="none" style="width:268px;height:248px;" version="1.1" viewBox="0 0 268 248" width="268px" zoomAndPan="magnify"><defs><filter height="300%" id="f1c4i96sgv920m" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="39" x2="39" y1="50.1759" y2="196.7037"/><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="224" x2="224" y1="50.1759" y2="196.7037"/><rect fill="#FEFECE" filter="url(#f1c4i96sgv920m)" height="42.1759" style="stroke: #A80036; stroke-width: 1.5;" width="59" x="8" y="3"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="45" x="15" y="32.5599">Bob</text><rect fill="#FEFECE" filter="url(#f1c4i96sgv920m)" height="42.1759" style="stroke: #A80036; stroke-width: 1.5;" width="59" x="8" y="195.7037"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="45" x="15" y="225.2636">Bob</text><rect fill="#FEFECE" filter="url(#f1c4i96sgv920m)" height="42.1759" style="stroke: #A80036; stroke-width: 1.5;" width="69" x="188" y="3"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="55" x="195" y="32.5599">Alice</text><rect fill="#FEFECE" filter="url(#f1c4i96sgv920m)" height="42.1759" style="stroke: #A80036; stroke-width: 1.5;" width="69" x="188" y="195.7037"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="55" x="195" y="225.2636">Alice</text><polygon fill="#A80036" points="212.5,90.3518,222.5,94.3518,212.5,98.3518,216.5,94.3518" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.0;" x1="39.5" x2="218.5" y1="94.3518" y2="94.3518"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="56" x="46.5" y="86.7358">hello</text><polygon fill="#A80036" points="50.5,132.5278,40.5,136.5278,50.5,140.5278,46.5,136.5278" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.0;" x1="44.5" x2="223.5" y1="136.5278" y2="136.5278"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="161" x="56.5" y="128.9118">oh, you again...</text><polygon fill="#A80036" points="212.5,174.7037,222.5,178.7037,212.5,182.7037,216.5,178.7037" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.0;" x1="39.5" x2="218.5" y1="178.7037" y2="178.7037"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="22" x="46.5" y="171.0877">??</text><!--
+@startuml
+skinparamlocked backgroundcolor transparent
+skinparamlocked backgroundcolor transparent
+skinparamlocked defaultFontSize 24
+skinparamlocked defaultFontName Raleway
+Bob->Alice : hello
+Alice->Bob : oh, you again...
+Bob->Alice : ??
+@enduml
+
+PlantUML version 1.2018.10(Sat Aug 25 17:02:59 GMT 2018)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 1.8.0_181-b13
+Operating System: Linux
+OS Version: 4.9.125-linuxkit
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg></p>
+<p><a href="http://wiki.plantuml.net/site/index">http://wiki.plantuml.net/site/index</a></p>
+</section>
+<section id="a2s" class="level1">
+<h1>a2s</h1>
+<p><svg xmlns="http://www.w3.org/2000/svg" width="289" height="208" version="1.1">
+    <defs>
+        <filter id="dsFilterNoBlur" width="150%" height="150%">
+            <feOffset dx="3" dy="3" in="SourceGraphic" result="offOut"/>
+            <feColorMatrix in="offOut" result="matrixOut" type="matrix" values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0"/>
+            <feBlend in="SourceGraphic" in2="matrixOut" mode="normal"/>
+        </filter>
+        <filter id="dsFilter" width="150%" height="150%">
+            <feOffset dx="3" dy="3" in="SourceGraphic" result="offOut"/>
+            <feColorMatrix in="offOut" result="matrixOut" type="matrix" values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0"/>
+            <feGaussianBlur in="matrixOut" result="blurOut" stdDeviation="3"/>
+            <feBlend in="SourceGraphic" in2="blurOut" mode="normal"/>
+        </filter>
+        <marker id="iPointer" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
+            <path d="M10 0v10L0 5z"/>
+        </marker>
+        <marker id="Pointer" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
+            <path d="M0 0l10 5-10 5z"/>
+        </marker>
+    </defs>
+    <g id="boxes" fill="none" stroke="#000" stroke-width="2">
+        <g id="group0">
+            <path id="path0" fill="#933" d="M40.5 8h170q10 0 10 10v86h-180z" filter="url(#dsFilter)"/>
+        </g>
+        <g id="group1">
+            <path id="path1" fill="#bbb" d="M58.5 46.4V72a18 4.8 0 0 0 36 0V46.4a18 4.8 0 0 0-36 0z" filter="url(#dsFilter)"/>
+            <path id="path1" d="M58.5 46.4a18 4.8 0 0 0 36 0"/>
+        </g>
+        <g id="group1">
+            <path id="path1" fill="#bbb" d="M112.5 46.4V72a18 4.8 0 0 0 36 0V46.4a18 4.8 0 0 0-36 0z" filter="url(#dsFilter)"/>
+            <path id="path1" d="M112.5 46.4a18 4.8 0 0 0 36 0"/>
+        </g>
+        <g id="group1">
+            <path id="path1" fill="#bbb" d="M166.5 46.4V72a18 4.8 0 0 0 36 0V46.4a18 4.8 0 0 0-36 0z" filter="url(#dsFilter)"/>
+            <path id="path1" d="M166.5 46.4a18 4.8 0 0 0 36 0"/>
+        </g>
+        <g id="group14">
+            <path id="path14" fill="#fff" d="M40.5 104h180v48h-170q-10 0-10-10z" filter="url(#dsFilter)"/>
+            <text id="text0" x="71.1" y="140.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                a
+            </text>
+            <text id="text1" x="125.1" y="140.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                2
+            </text>
+            <text id="text2" x="152.1" y="140.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                sketch
+            </text>
+        </g>
+    </g>
+    <g id="lines" fill="none" stroke="#000" stroke-width="2">
+        <g id="group131">
+            <path id="path131" marker-start="url(#iPointer)" d="M76.5 88v32"/>
+        </g>
+        <g id="group209">
+            <path id="path209" marker-start="url(#iPointer)" d="M130.5 88v32"/>
+        </g>
+        <g id="group287">
+            <path id="path287" marker-start="url(#iPointer)" d="M184.5 88v32"/>
+        </g>
+    </g>
+    <g id="text" fill="#000" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+        <text id="text3" x="-.9" y="172.8" fill="#000">
+            github.com/arnehilmann/a2sketch
+        </text>
+    </g>
+</svg>
+</p>
+<p><a href="https://github.com/dhobsd/asciitosvg#how-do-i-draw">https://github.com/dhobsd/asciitosvg</a></p>
+</section>
+<section id="a2sketch" class="level1">
+<h1>a2sketch</h1>
+<p><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="288" height="208" version="1.1" viewBox="0 0 216 156">
+    <defs>
+        <clipPath id="clip1">
+            <path d="M0 0h216v156H0z"/>
+        </clipPath>
+        <g id="surface125" clip-path="url(#clip1)">
+            <path fill="none" stroke="#fff" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-opacity="1" stroke-width="1" d="M3.863.723C2.867 1.137.82 3.629-.738 3.683m4.574-3.75C2.652 1 2.012 2.079.086 4.564m16.59-6.54C8.277 2.82 3.418 7.993 1.44 16.895M14.57-.165c-4 3.067-7.798 9.466-15.536 15.442M26.55-2.683C20.875 6.612 12.938 13.015-.863 27.823M25.19-1.383C16.246 10.242 5.383 21.074.566 27.402M36.84 1.543C24.465 12.383 10.098 30.066 1.53 38.125M36.676-1.211C23.184 13.594 12.223 26.88-.984 40.02m48.25-42.25C32.629 19.212 19.332 33.528 1.32 52.49M44.8-1.044C36.064 13.887 22.099 25.844.685 52.007M59.313-1.644c-12.02 16.23-24.88 31.907-57.333 65.59M57.688-1.242C41.242 17.332 23.906 38.262-1.234 64.48M64.687 2.57C50.992 21.082 32.446 43.086.097 77.754M68.06-.742C50.824 19.762 33.079 39.05.418 76.457M77.137.766C54.247 31.71 22.793 65.102 2.62 86.856M77.652.41C57.766 21.945 39.641 43.96.277 88.328M89.82 1.664C60.06 29.06 37.16 62.746 2.61 101.72M87.823-.04C58.457 34.3 28.984 66.293.551 101.652M100.926 2.734C77.586 26.27 54.039 54.707-2.141 115.098M97.992-.543c-22.176 28.852-46.742 57.55-99 114.898M109.148-.355C71.234 43.902 29.778 87.085 1.773 127.637M109.243-.598C66.397 48.972 25.632 95.06-.622 125.562M117.922-.757C93.527 33.195 67.882 63.746-1.535 139.551m122.5-140.555C88.559 36.062 56.418 72.266.656 139.203M132.746 2.734C98.34 36.418 64.684 72.082 1.504 152.02M130.816-.828C99.187 38.352 65.191 76.945 1.133 149.39M139.993.887C93.98 56.199 40.538 113.059 7.092 153.867M141.95-.582C114.027 32.094 87.93 63.266 6.547 156.113M151.66-2.687c-44.07 55.886-89.293 104.19-136.941 156.93M151.91-.45C117.105 40.406 82.363 80.883 15.738 155.12M163.734 1.836C129.762 38.546 95.551 74.69 29.707 154.719M163.281.477C113.297 54.16 67.195 106.785 26.97 154.902M174.285-.34C128.738 49.492 88.32 100.64 38.075 153.855M172.984.335c-34.61 37.231-66.575 76.33-136.676 156.333M186.21 2.496c-39.906 43.29-80.762 90.356-136.074 152.84M182.578 1.102C145.36 42.734 110.734 84.406 48.754 157.113M192.05-.012C152.39 46.652 112.828 92.45 56.758 154.07M193.645-.582c-43.372 51.668-87.407 104.84-133.563 156.234M205.324-1.234c-33.648 40.062-64.816 76.441-135.449 156.066M204.359-.609c-37.164 39.89-73.558 81.863-136.238 155.773M217.86-.672C164.574 63.227 108.941 118.871 77.49 156.336M216.088-.551C174.396 46.273 137.864 88.438 79 155.375M214.898 12.59c-33.714 37.574-64.484 73.18-122.355 140.863m122.32-142.402c-39.508 48.14-80.816 94.101-124.504 144.676M218.762 25.078c-35.598 36.906-69.246 81.168-119.063 133.559M216.582 23.46c-30.945 36.63-64.594 76.005-115.332 131.778m114.117-119.11c-24.304 24.997-51.87 57.427-105.937 117.446M216.516 35.367c-37.414 42.52-73.989 86.356-105.309 120.14M214.953 50.333C193.133 70 174.07 93.574 121.27 158.551m94.632-109.633c-26.25 28.77-53.351 59.996-94.48 106.215m95.21-91.93c-26.292 27.926-50.706 54.25-83.034 90.371m82.41-92.465c-20.953 19.403-38.285 41.274-84.153 94.68m83.993-84.746c-18.051 22.156-37.496 44.836-73.22 87.219m74.52-85.825c-25.054 27.489-45.918 54.024-74.105 84.438m73.133-71.996c-14.414 18.906-29.715 37.312-60.297 73.012m59.016-71.633c-21.684 26.902-42.317 50.195-60.102 70.11m61.238-60.106c-11.09 14.46-22.336 32.722-49.183 57.097m49.343-55.957c-18.336 23.575-39.285 43.653-50.695 59.926m48.645-50.418c-14.43 16.906-28.563 34.867-36.645 50.957m38.402-47.816c-12.753 11.261-23.687 23.554-40.34 47.02m39.403-34.747c-11.887 14.188-19.457 22.969-28.395 35.969m29.579-36.676c-12.649 9.192-23.34 22.063-30.305 33.809m32.12-18.996c-11.573 4.425-18.218 11.773-18.843 17.218m15.711-19.109c-7.152 7.8-11.941 17.703-17.734 20.738m18.12-10.941c-3.003-.207-1.398 3.781-7.714 12.258m9.348-11.137c-4.2 5.465-6.246 7.973-8.743 10.004"/>
+        </g>
+        <pattern id="pattern0" width="216" height="156" patternUnits="userSpaceOnUse">
+            <use xlink:href="#surface125"/>
+        </pattern>
+        <clipPath id="clip2">
+            <path d="M0 0h216v156H0z"/>
+        </clipPath>
+        <g id="surface140" clip-path="url(#clip2)">
+            <path fill="none" stroke="#fff" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-opacity="1" stroke-width="1" d="M4.277.766c-2.324.3-3.285 2.449-4.285 2.898M3.598-.262c-1.02 1.86-2.5 3.586-3.453 4.133m13.812-2.137c-5.66 6.418-7.773 9.934-16.59 13.543M13.133-.07C11.176 3.066 7.488 6.879-.543 16.637M24.497-.324C17.253 10.496 5.026 20.02-1.142 30.125M24.941-.015C18.145 8.674 11.934 16.351.625 28.882M33.883-2.07C22.863 9.336 13.332 25.969-1.47 38.137M34.965-1.324C27.957 10.457 18.52 17.87-.883 41.379m47.66-42.602C27.31 17.48 13.473 40.067-.043 53.47M45.719.512C33.344 15.582 18.852 29.766-.105 53.547M57.879-1.148C33.547 22.758 11.824 49.027.019 65.137M57.25.949C39.398 20.164 22.496 39.461-1.383 65.137M68.402.605c-28.93 27.86-53.359 55.946-66.55 77.293M67.25-.449C48.777 18.492 32.809 38.3-.156 76.637M76.28-.656C60.141 19.699 39.921 46.719.043 91.367M77.641-.809C50.133 32.336 22.609 61.836-1.215 90.227M86.742-1.801C57.461 36.547 29.594 69.973-2.574 102.598M89.379.808C58.758 34.869 29.082 67.685 1.086 101.165M99.008-.426C64.125 38.86 32.742 75.758-2.36 115.531M99.66.324C70.991 29.52 44.546 60.582 1.386 114.043M112.03 1.445C77.72 32.215 49.504 70.758.883 128.738M108.617-.039C72.051 42.973 36.633 84.055-.605 125.27M121.93 2.352C93.125 37.258 57.19 73.754.633 136.535M120.25 1.238c-44.262 50.899-88.219 99.88-119.941 137M133.62.2C98.488 36.48 70.121 71.152-1.582 151.125M130.191.73C86.88 49.453 45.661 97.56.004 150.703M143.59-.402C99.965 44.613 63.508 88.113 5.605 155.468M142.555.739C100.273 44.368 62.703 90.445 5.309 156.637M149.339 2.77c-25.74 34.203-56.756 69.12-133.002 152.437M153.168.907C121.312 33.14 93.434 66.75 16.637 155.52M164.824 1.543C131.204 30.547 104.36 65.59 24.82 154.625M163.871-.207C108.312 59.781 58.687 119.086 27.547 157.316M172.832-.766C119.782 59.48 68.828 116.051 38.043 154.73M173.125.176c-32.805 36.765-63.492 72.82-136.71 155.34M182.468.488c-32.18 38.418-63.473 73.11-131.438 154.09M182.86 1.113C133.672 59.176 80.566 121.243 48.145 155.27M197.129-2.688C140.625 59.715 89.82 123.376 59.285 158.048M195.31-.406c-49.274 58.14-99.38 115.242-137.329 156.25M204.246-2.02C175.332 34.348 147.488 67.05 68.77 158.523M204.89.641c-31.64 36.101-66.558 76.285-135.859 154.195M216.055-1.22c-32.512 39.07-63.25 72.38-134.774 156.617M215.34.308c-43.508 52.235-90.625 106.684-135.528 156.547M215.305 10.352C165.738 69.07 119.3 121.703 91.55 154.285M214.988 12.2c-48.12 56.167-96.578 109.863-123.633 145.03M216.777 21.398c-39.675 45.657-76.539 88.086-115.078 132.34M216.613 23.453C174.148 70.27 132.945 116.97 100.77 155.777M213.246 36.102c-37.55 45.293-74.55 90.046-98.73 117.691M215.012 36.766c-22.746 26.738-47.762 53.84-102.84 118.355M218.113 49.547c-34.636 32.512-64.922 73.726-97.894 104.68M216.89 48.148c-31.961 38.141-65.368 76.012-94.758 107.98m93.086-93.874c-29.516 36.086-60.82 71.375-83.371 96.398m83.785-98.726c-33.246 36.672-62.98 73.39-81.86 96.363m81.954-83.43c-23.172 26.008-42.25 50.793-74.543 81.235m74.195-80.207c-17.594 20.386-36.524 41.527-72.426 82.379m70.442-72.395c-13.532 16.879-30.848 38.914-56.88 74.684m59.31-73.914c-21.5 26.449-43.52 52.511-61.177 71.836m63.016-61.223c-18.437 21.191-31.844 35.324-54.11 58.11m53.364-55.528c-11.23 14.25-24.402 27.96-51.938 57.719m50.7-48.946c-15.41 16.704-26.407 33.407-38.52 51.04m38.48-48.766c-11.136 14.914-24.28 29.05-39.144 47.105m40.914-31.808c-11.176 4.515-18.937 16.441-32.637 30.39m32.293-34.308c-11.761 14.707-19.832 24.215-31.492 34.414m31.07-18.992c-5.292-.442-10.874 11.597-18.64 19.171m16.75-21.12c-4.39 3.163-6.977 8.581-18.742 22.35m19.93-11.937c-3.981 6.258-6.985 11.57-8.993 12.383m9.426-11.207c-1.668 2.16-3.379 4.297-8.238 10.88"/>
+        </g>
+        <pattern id="pattern1" width="216" height="156" patternUnits="userSpaceOnUse">
+            <use xlink:href="#surface140"/>
+        </pattern>
+    </defs>
+    <g id="surface115">
+        <path fill="url(#pattern0)" fill-rule="nonzero" stroke="none" d="M40.5 8h170c6.668 0 10 3.332 10 10v86h-180zm0 0" transform="scale(.75)"/>
+        <path fill="none" stroke="#000" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-opacity="1" stroke-width="1.5" d="M30.381 8.543c32.493-.768 61.93-.348 128.558-2.191m-127.72.782c47.593-.44 93.685-.982 126.56-.48m1.942-.566c3.782.926 5.771 3.723 5.974 8.396m-5.745-5.455c2.964-2.138 4.725-.7 5.272 4.319m-.465.284c.667 20.545 1.005 41.256-.449 65.215m.133-65.608c-.338 16.896.679 37.427.465 65.11m.765.064c-43.029-1.875-83.584.352-136.342.68m134.898-.258c-34.011.056-69.492-.887-133.805-.955m-.478.237c.492-24.228-.366-48.02 2.819-72.102m-3.416 71.543c.999-15.61 1.002-34.046 1.684-70.19"/>
+        <path fill="none" stroke="#000" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-opacity="1" stroke-width="1.5" d="M40.895 32.66c.935 5.56 1.365 12.841 2.529 20.253m.246-20.37c-1.444 7.934-.908 17.406-.434 22.02M42.68 54c-.454 1.377 4.547 2.311 13.869 2.34m-15.477-2.56c3.875 3.841 8.193 1.398 15.12 2.581m0 0c5.906 3.32 15.398-1.76 14.449-1.157m-13.492.54c7.926 2.434 11.625 1.792 10.875-.915m-1.294-1.245c1.125-4.26.41-9.776-.466-19.682m1.08 20.754c.783-6.055.056-14.191-.034-19.227m.714-.63c-1.699-1.289-4.368-1.925-12.064-2.941m10.101 4.417c1.055-4.989-5.64-6.395-12.366-7.441m0 0c-5.973.316-10.717 4.612-10.875 6.613m9.46-8.505c-3.129 6.532-10.678 7.758-9.907 8.071m.237.035c-.378-.993-.387-1.679.075-2.502m-.465 2.46c.228-.948.489-1.942.38-2.03"/>
+        <path fill="none" stroke="#000" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-opacity="1" stroke-width="1.5" d="M42.525 33.782c-1.527 4.052 3.981 3.519 13.121 2.658m-13.784-3.68c1.688 1.62 4.987 5.725 15.006 5.156m0 0c8.297-2.437 10.761-2.692 13.374-4.725M57.685 37.98c3.566-1.102 13.343-4.257 9.36-3.51"/>
+        <path fill="none" stroke="#000" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-opacity="1" stroke-width="1.5" d="M85.838 33.741c-2.243 8.494.567 15.18-.965 21.056m1.53-21.542c-.355 6.54-.789 13.435-.296 21.498M85.675 54c-1.417-.074 6.382 4.09 12.288 5.528M84.53 53.265c-.38 3.521 7.57 5.64 16.697 4.3m0 0c4.781.379 11.865-1.754 11.531-2.92m-13.085.969c6.52-.538 14.819-.243 13.38-1.101m-1.81-1.36c2.845-5.03 4.02-9.556 1.368-19.924m.577 20.367c-.507-5.648.572-10.102-1.057-17.833m.922-.964c-.22-.65-7.77-2.051-12.758-5.346m11.381 3.58c.695 1.655-4.039-4.138-10.452-.66m0 0c-9.085-1.022-16.05 2.262-13.51 3.536m14.195-3.2c-8.57-.33-17.58 2.093-17.93 3.086m.314.225c.474-1.203.41-1.755 1.538-2.422m-1.676 2.098c.103.515.516-.24 1.471-2.244"/>
+        <path fill="none" stroke="#000" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-opacity="1" stroke-width="1.5" d="M84.51 35.34c1.406 3.566 6.228 1.817 11.578 1.51m-11.599-.873c-1.087-.54 4.913 3.712 14.136 4.869m0 0c8.367-2.444 12.442-4.943 11.03-6.308m-9.469 6.416c6.724-1.412 10.047-1.588 10.98-5.61"/>
+        <path fill="none" stroke="#000" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-opacity="1" stroke-width="1.5" d="M125.224 33.132c1.14 10.283-1.102 17.651-2.742 20.959m.993-19.96c.732 5.373 1.488 11.004.504 19.814m.082.055c.506.893 3.984 3.475 12.055 4.28m-12.847-3.304c-1.078 2.092 5.558 3.996 14.224 3.958m0 0c8.786.73 12.759-3.747 15.05-4.067m-16.726 2.719c9.111.595 15.572-2.885 15.747-1.166m1.363-1.242c-.07-6.876.545-10.635-1.348-22.365m-.823 23.578c1.681-4.624 1.134-11.692 1.482-21.964m-.673.372c-.768-3.188-4.831-3.182-13.811-3.354m11.722 2.762c.108-3.155-1.515-3.334-12.164-2.29m0 0c-5.254-1.8-14.84 2.627-11.485 2.188m10.673-1.208c-5.385-3.948-9.454.715-11.722 2.508m.038.135c-.304-1.175-.275-1.4-.829-.852m.794.712c-.322.046-.475-.261-.65-.66"/>
+        <path fill="none" stroke="#000" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-opacity="1" stroke-width="1.5" d="M123.653 33.747c1.39 3.542 7.82 3.917 11.854 4.617m-11.71-3.097c.422 2.921 3.568 2.38 12.419-.155m0 0c6.74 4.254 13.784.81 16.397-1.957m-15.934 1.35c5.65.537 13.99-1.359 14.317 1.023"/>
+        <path fill="url(#pattern1)" fill-rule="nonzero" stroke="none" d="M40.5 104h180v48h-170c-6.668 0-10-3.332-10-10zm0 0" transform="scale(.75)"/>
+        <path fill="none" stroke="#000" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-opacity="1" stroke-width="1.5" d="M31.4 78.65c30.663 1.163 60.968 2.15 131.435-2.452m-132.638.416c47.577-.334 95.14 1.035 133.944 1.503m1.806-.996c-1.533 15.223-.35 28.076-1.263 37.316m-.826-36.912c.858 15.443 1.863 29.77 1.285 35.505m-2.777.794c-36.767 1.717-79.265 1.357-127.219-2.118m128.751.688c-44.806-.483-90.07.704-127.755 1.9m1.63-.962c-5.81-.36-8.464-3.126-7.96-8.303m8.407 6.612c-6.375 1.826-9.53-.712-9.465-7.61m-1.084-.109c2.092-9.9 1.722-17.944 2.847-28.591m-1.94 29.508c.306-8.965.877-16.746 1.343-26.959"/>
+        <path fill="none" stroke="#000" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-opacity="1" stroke-width="1.5" d="M57.627 66.928c-1.427 7.205.68 12.56-1.799 25.28m1.137-25.127c-.938 7.28-1.058 13.995-.882 24.293"/>
+        <path fill="none" stroke="#000" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-opacity="1" stroke-width="1.5" d="M99.73 66.141c-.422 5.584.363 14.493-1.196 23.868m.111-23.655c.534 10.8.065 20.306.384 24.528"/>
+        <path fill="none" stroke="#000" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-opacity="1" stroke-width="1.5" d="M141.337 63.73c-.961 4.122-2.913 12.787-3.516 25.792m1.43-25.345c1.245 9.3 1.371 17.863.469 24.59"/>
+    </g>
+    <defs xmlns="http://www.w3.org/2000/svg">
+        <filter id="dsFilterNoBlur" width="150%" height="150%">
+            <feOffset dx="3" dy="3" in="SourceGraphic" result="offOut"/>
+            <feColorMatrix in="offOut" result="matrixOut" type="matrix" values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0"/>
+            <feBlend in="SourceGraphic" in2="matrixOut" mode="normal"/>
+        </filter>
+        <filter id="dsFilter" width="150%" height="150%">
+            <feOffset dx="3" dy="3" in="SourceGraphic" result="offOut"/>
+            <feColorMatrix in="offOut" result="matrixOut" type="matrix" values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0"/>
+            <feGaussianBlur in="matrixOut" result="blurOut" stdDeviation="3"/>
+            <feBlend in="SourceGraphic" in2="blurOut" mode="normal"/>
+        </filter>
+        <marker id="iPointer" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
+            <path d="M10 0v10L0 5z"/>
+        </marker>
+        <marker id="Pointer" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
+            <path d="M0 0l10 5-10 5z"/>
+        </marker>
+    </defs>
+    <defs>
+        <style type="text/css">
+            @font-face{font-family:&quot;xkcd Script&quot;;src:url(./xkcd-script.ttf)}
+        </style>
+    </defs>
+    <g xmlns="http://www.w3.org/2000/svg" id="lines" fill="none" stroke="#000" stroke-width="2" transform="scale(.75)">
+        <g id="group131">
+            <path id="path131" marker-start="url(#iPointer)" d="M76.5 88v32"/>
+        </g>
+        <g id="group209">
+            <path id="path209" marker-start="url(#iPointer)" d="M130.5 88v32"/>
+        </g>
+        <g id="group287">
+            <path id="path287" marker-start="url(#iPointer)" d="M184.5 88v32"/>
+        </g>
+    </g>
+    <text id="text0" x="53.325" y="105.6" fill="#000" stroke="none" font-family="xkcd Script" font-size="15">
+        a
+    </text>
+    <text id="text1" x="93.825" y="105.6" fill="#000" stroke="none" font-family="xkcd Script" font-size="15">
+        2
+    </text>
+    <text id="text2" x="114.075" y="105.6" fill="#000" stroke="none" font-family="xkcd Script" font-size="15">
+        sketch
+    </text>
+    <text id="text3" x="-.675" y="129.6" fill="#000" font-family="xkcd Script" font-size="15">
+        github.com/arnehilmann/a2sketch
+    </text>
+</svg>
+</p>
+<p><a href="https://github.com/dhobsd/asciitosvg#how-do-i-draw">https://github.com/dhobsd/asciitosvg</a></p>
+</section>
+<section id="graphviz" class="level1">
+<h1>graphviz</h1>
+<p><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (0)
+ -->
+<!-- Title: G Pages: 1 -->
+<svg width="134pt" height="188pt"
+ viewBox="0.00 0.00 134.00 188.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)">
+<title>G</title>
+<!-- a -->
+<g id="node1" class="node">
+<title>a</title>
+<ellipse fill="#ffffff" stroke="#ffffff" cx="54" cy="-162" rx="27" ry="18"/>
+<text text-anchor="middle" x="54" y="-158.3" font-family="Raleway" font-size="14.00" fill="#000000">a</text>
+</g>
+<!-- b -->
+<g id="node2" class="node">
+<title>b</title>
+<ellipse fill="#ffffff" stroke="#ffffff" cx="82" cy="-90" rx="27" ry="18"/>
+<text text-anchor="middle" x="82" y="-86.3" font-family="Raleway" font-size="14.00" fill="#000000">b</text>
+</g>
+<!-- a&#45;&gt;b -->
+<g id="edge1" class="edge">
+<title>a&#45;&gt;b</title>
+<path fill="none" stroke="#000000" d="M60.778,-144.5708C63.9872,-136.3187 67.8935,-126.2738 71.4758,-117.0623"/>
+<polygon fill="#000000" stroke="#000000" points="74.8248,-118.1069 75.1874,-107.5182 68.3008,-115.5697 74.8248,-118.1069"/>
+</g>
+<!-- c -->
+<g id="node3" class="node">
+<title>c</title>
+<ellipse fill="#ffffff" stroke="#ffffff" cx="27" cy="-18" rx="27" ry="18"/>
+<text text-anchor="middle" x="27" y="-14.3" font-family="Raleway" font-size="14.00" fill="#000000">c</text>
+</g>
+<!-- a&#45;&gt;c -->
+<g id="edge3" class="edge">
+<title>a&#45;&gt;c</title>
+<path fill="none" stroke="#000000" d="M50.635,-144.0535C46.027,-119.4774 37.7064,-75.1008 32.2683,-46.0974"/>
+<polygon fill="#000000" stroke="#000000" points="35.6904,-45.3564 30.4074,-36.1727 28.8103,-46.6465 35.6904,-45.3564"/>
+</g>
+<!-- b&#45;&gt;c -->
+<g id="edge2" class="edge">
+<title>b&#45;&gt;c</title>
+<path fill="none" stroke="#000000" d="M69.5196,-73.6621C62.4876,-64.4564 53.5653,-52.7764 45.7117,-42.4953"/>
+<polygon fill="#000000" stroke="#000000" points="48.2828,-40.0953 39.431,-34.2733 42.72,-44.3446 48.2828,-40.0953"/>
+</g>
+<!-- d -->
+<g id="node4" class="node">
+<title>d</title>
+<ellipse fill="#ffffff" stroke="#ffffff" cx="99" cy="-18" rx="27" ry="18"/>
+<text text-anchor="middle" x="99" y="-14.3" font-family="Raleway" font-size="14.00" fill="#000000">d</text>
+</g>
+<!-- b&#45;&gt;d -->
+<g id="edge4" class="edge">
+<title>b&#45;&gt;d</title>
+<path fill="none" stroke="#000000" d="M86.2022,-72.2022C88.0821,-64.2406 90.3425,-54.6671 92.4371,-45.7957"/>
+<polygon fill="#000000" stroke="#000000" points="95.8955,-46.3792 94.7872,-35.8425 89.0828,-44.7706 95.8955,-46.3792"/>
+</g>
+</g>
+</svg>
+</p>
+<p><a href="https://www.graphviz.org/documentation/">https://www.graphviz.org/documentation/</a></p>
+</section>
+<section id="vega-lite" class="level1">
+<h1>vega-lite</h1>
+<p><svg class="marks" width="336" height="376" viewBox="0 0 336 376" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><g transform="translate(81,15)"><g class="mark-group role-frame root"><g transform="translate(0,0)"><path class="background" d="M0.5,0.5h250v300h-250Z" style="fill: none; stroke: #ddd;"></path><g><g class="mark-group role-axis"><g transform="translate(0.5,0.5)"><path class="background" d="M0,0h0v0h0Z" style="pointer-events: none; fill: none;"></path><g><g class="mark-rule role-axis-grid" style="pointer-events: none;"><line transform="translate(0,300)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,270)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,240)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,210)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,180)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,150)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,120)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,90)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,60)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,30)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,0)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line></g></g></g></g><g class="mark-area role-mark marks"><path d="M236.11111111111111,144L208.33333333333334,39L180.55555555555557,243L152.77777777777777,141L125,56.99999999999997L97.22222222222223,27L69.44444444444444,171L41.666666666666664,135L13.888888888888886,216L13.888888888888886,300L41.666666666666664,300L69.44444444444444,300L97.22222222222223,300L125,300L152.77777777777777,300L180.55555555555557,300L208.33333333333334,300L236.11111111111111,300Z" style="fill: #4c78a8;"></path></g><g class="mark-group role-axis"><g transform="translate(0.5,300.5)"><path class="background" d="M0,0h0v0h0Z" style="pointer-events: none; fill: none;"></path><g><g class="mark-rule role-axis-tick" style="pointer-events: none;"><line transform="translate(14,0)" x2="0" y2="5" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(42,0)" x2="0" y2="5" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(69,0)" x2="0" y2="5" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(97,0)" x2="0" y2="5" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(125,0)" x2="0" y2="5" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(153,0)" x2="0" y2="5" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(181,0)" x2="0" y2="5" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(208,0)" x2="0" y2="5" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(236,0)" x2="0" y2="5" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line></g><g class="mark-text role-axis-label" style="pointer-events: none;"><text text-anchor="middle" transform="translate(13.888888888888886,21)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">A</text><text text-anchor="middle" transform="translate(41.666666666666664,21)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">B</text><text text-anchor="middle" transform="translate(69.44444444444444,21)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">C</text><text text-anchor="middle" transform="translate(97.22222222222223,21)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">D</text><text text-anchor="middle" transform="translate(125,21)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">E</text><text text-anchor="middle" transform="translate(152.77777777777777,21)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">F</text><text text-anchor="middle" transform="translate(180.55555555555557,21)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">G</text><text text-anchor="middle" transform="translate(208.33333333333334,21)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">H</text><text text-anchor="middle" transform="translate(236.11111111111111,21)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">I</text></g><g class="mark-rule role-axis-domain" style="pointer-events: none;"><line transform="translate(0,0)" x2="250" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line></g><g class="mark-text role-axis-title" style="pointer-events: none;"><text text-anchor="middle" transform="translate(125,49)" style="font-family: Raleway; font-size: 24px; font-weight: bold; fill: #000; opacity: 1;">a</text></g></g></g></g><g class="mark-group role-axis"><g transform="translate(0.5,0.5)"><path class="background" d="M0,0h0v0h0Z" style="pointer-events: none; fill: none;"></path><g><g class="mark-rule role-axis-tick" style="pointer-events: none;"><line transform="translate(0,300)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,270)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,240)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,210)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,180)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,150)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,120)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,90)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,60)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,30)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,0)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line></g><g class="mark-text role-axis-label" style="pointer-events: none;"><text text-anchor="end" transform="translate(-7,305)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">0</text><text text-anchor="end" transform="translate(-7,275)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">10</text><text text-anchor="end" transform="translate(-7,245)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">20</text><text text-anchor="end" transform="translate(-7,215)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">30</text><text text-anchor="end" transform="translate(-7,185)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">40</text><text text-anchor="end" transform="translate(-7,155)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">50</text><text text-anchor="end" transform="translate(-7,125)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">60</text><text text-anchor="end" transform="translate(-7,95)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">70</text><text text-anchor="end" transform="translate(-7,65)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">80</text><text text-anchor="end" transform="translate(-7,35)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">90</text><text text-anchor="end" transform="translate(-7,5)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">100</text></g><g class="mark-rule role-axis-domain" style="pointer-events: none;"><line transform="translate(0,300)" x2="0" y2="-300" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line></g><g class="mark-text role-axis-title" style="pointer-events: none;"><text text-anchor="middle" transform="translate(-55,145)" style="font-family: Raleway; font-size: 24px; font-weight: bold; fill: #000; opacity: 1;">b</text></g></g></g></g></g></g></g></g></svg></p>
+<p><a href="https://vega.github.io/vega-lite/docs/">https://vega.github.io/vega-lite/docs/</a></p>
+</section>
+<section id="mathjax" class="level1">
+<h1>mathjax</h1>
+<p><p><svg xmlns:xlink="http://www.w3.org/1999/xlink" width="19.715ex" height="6.176ex" style="vertical-align: -2.505ex;" viewBox="0 -1580.7 8488.3 2659.1" role="img" focusable="false" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<path stroke-width="1" id="E2-MJMATHI-65" d="M39 168Q39 225 58 272T107 350T174 402T244 433T307 442H310Q355 442 388 420T421 355Q421 265 310 237Q261 224 176 223Q139 223 138 221Q138 219 132 186T125 128Q125 81 146 54T209 26T302 45T394 111Q403 121 406 121Q410 121 419 112T429 98T420 82T390 55T344 24T281 -1T205 -11Q126 -11 83 42T39 168ZM373 353Q367 405 305 405Q272 405 244 391T199 357T170 316T154 280T149 261Q149 260 169 260Q282 260 327 284T373 353Z"></path>
+<path stroke-width="1" id="E2-MJMAIN-3D" d="M56 347Q56 360 70 367H707Q722 359 722 347Q722 336 708 328L390 327H72Q56 332 56 347ZM56 153Q56 168 72 173H708Q722 163 722 153Q722 140 707 133H70Q56 140 56 153Z"></path>
+<path stroke-width="1" id="E2-MJMAIN-6C" d="M42 46H56Q95 46 103 60V68Q103 77 103 91T103 124T104 167T104 217T104 272T104 329Q104 366 104 407T104 482T104 542T103 586T103 603Q100 622 89 628T44 637H26V660Q26 683 28 683L38 684Q48 685 67 686T104 688Q121 689 141 690T171 693T182 694H185V379Q185 62 186 60Q190 52 198 49Q219 46 247 46H263V0H255L232 1Q209 2 183 2T145 3T107 3T57 1L34 0H26V46H42Z"></path>
+<path stroke-width="1" id="E2-MJMAIN-69" d="M69 609Q69 637 87 653T131 669Q154 667 171 652T188 609Q188 579 171 564T129 549Q104 549 87 564T69 609ZM247 0Q232 3 143 3Q132 3 106 3T56 1L34 0H26V46H42Q70 46 91 49Q100 53 102 60T104 102V205V293Q104 345 102 359T88 378Q74 385 41 385H30V408Q30 431 32 431L42 432Q52 433 70 434T106 436Q123 437 142 438T171 441T182 442H185V62Q190 52 197 50T232 46H255V0H247Z"></path>
+<path stroke-width="1" id="E2-MJMAIN-6D" d="M41 46H55Q94 46 102 60V68Q102 77 102 91T102 122T103 161T103 203Q103 234 103 269T102 328V351Q99 370 88 376T43 385H25V408Q25 431 27 431L37 432Q47 433 65 434T102 436Q119 437 138 438T167 441T178 442H181V402Q181 364 182 364T187 369T199 384T218 402T247 421T285 437Q305 442 336 442Q351 442 364 440T387 434T406 426T421 417T432 406T441 395T448 384T452 374T455 366L457 361L460 365Q463 369 466 373T475 384T488 397T503 410T523 422T546 432T572 439T603 442Q729 442 740 329Q741 322 741 190V104Q741 66 743 59T754 49Q775 46 803 46H819V0H811L788 1Q764 2 737 2T699 3Q596 3 587 0H579V46H595Q656 46 656 62Q657 64 657 200Q656 335 655 343Q649 371 635 385T611 402T585 404Q540 404 506 370Q479 343 472 315T464 232V168V108Q464 78 465 68T468 55T477 49Q498 46 526 46H542V0H534L510 1Q487 2 460 2T422 3Q319 3 310 0H302V46H318Q379 46 379 62Q380 64 380 200Q379 335 378 343Q372 371 358 385T334 402T308 404Q263 404 229 370Q202 343 195 315T187 232V168V108Q187 78 188 68T191 55T200 49Q221 46 249 46H265V0H257L234 1Q210 2 183 2T145 3Q42 3 33 0H25V46H41Z"></path>
+<path stroke-width="1" id="E2-MJMATHI-6E" d="M21 287Q22 293 24 303T36 341T56 388T89 425T135 442Q171 442 195 424T225 390T231 369Q231 367 232 367L243 378Q304 442 382 442Q436 442 469 415T503 336T465 179T427 52Q427 26 444 26Q450 26 453 27Q482 32 505 65T540 145Q542 153 560 153Q580 153 580 145Q580 144 576 130Q568 101 554 73T508 17T439 -10Q392 -10 371 17T350 73Q350 92 386 193T423 345Q423 404 379 404H374Q288 404 229 303L222 291L189 157Q156 26 151 16Q138 -11 108 -11Q95 -11 87 -5T76 7T74 17Q74 30 112 180T152 343Q153 348 153 366Q153 405 129 405Q91 405 66 305Q60 285 60 284Q58 278 41 278H27Q21 284 21 287Z"></path>
+<path stroke-width="1" id="E2-MJMAIN-2192" d="M56 237T56 250T70 270H835Q719 357 692 493Q692 494 692 496T691 499Q691 511 708 511H711Q720 511 723 510T729 506T732 497T735 481T743 456Q765 389 816 336T935 261Q944 258 944 250Q944 244 939 241T915 231T877 212Q836 186 806 152T761 85T740 35T732 4Q730 -6 727 -8T711 -11Q691 -11 691 0Q691 7 696 25Q728 151 835 230H70Q56 237 56 250Z"></path>
+<path stroke-width="1" id="E2-MJMAIN-221E" d="M55 217Q55 305 111 373T254 442Q342 442 419 381Q457 350 493 303L507 284L514 294Q618 442 747 442Q833 442 888 374T944 214Q944 128 889 59T743 -11Q657 -11 580 50Q542 81 506 128L492 147L485 137Q381 -11 252 -11Q166 -11 111 57T55 217ZM907 217Q907 285 869 341T761 397Q740 397 720 392T682 378T648 359T619 335T594 310T574 285T559 263T548 246L543 238L574 198Q605 158 622 138T664 94T714 61T765 51Q827 51 867 100T907 217ZM92 214Q92 145 131 89T239 33Q357 33 456 193L425 233Q364 312 334 337Q285 380 233 380Q171 380 132 331T92 214Z"></path>
+<path stroke-width="1" id="E2-MJMAIN-28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"></path>
+<path stroke-width="1" id="E2-MJMAIN-31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"></path>
+<path stroke-width="1" id="E2-MJMAIN-2B" d="M56 237T56 250T70 270H369V420L370 570Q380 583 389 583Q402 583 409 568V270H707Q722 262 722 250T707 230H409V-68Q401 -82 391 -82H389H387Q375 -82 369 -68V230H70Q56 237 56 250Z"></path>
+<path stroke-width="1" id="E2-MJMAIN-29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"></path>
+<path stroke-width="1" id="E2-MJSZ3-28" d="M701 -940Q701 -943 695 -949H664Q662 -947 636 -922T591 -879T537 -818T475 -737T412 -636T350 -511T295 -362T250 -186T221 17T209 251Q209 962 573 1361Q596 1386 616 1405T649 1437T664 1450H695Q701 1444 701 1441Q701 1436 681 1415T629 1356T557 1261T476 1118T400 927T340 675T308 359Q306 321 306 250Q306 -139 400 -430T690 -924Q701 -936 701 -940Z"></path>
+<path stroke-width="1" id="E2-MJSZ3-29" d="M34 1438Q34 1446 37 1448T50 1450H56H71Q73 1448 99 1423T144 1380T198 1319T260 1238T323 1137T385 1013T440 864T485 688T514 485T526 251Q526 134 519 53Q472 -519 162 -860Q139 -885 119 -904T86 -936T71 -949H56Q43 -949 39 -947T34 -937Q88 -883 140 -813Q428 -430 428 251Q428 453 402 628T338 922T245 1146T145 1309T46 1425Q44 1427 42 1429T39 1433T36 1436L34 1438Z"></path>
+</defs>
+<g stroke="currentColor" fill="currentColor" stroke-width="0" transform="matrix(1 0 0 -1 0 0)">
+ <use xlink:href="#E2-MJMATHI-65" x="0" y="0"></use>
+ <use xlink:href="#E2-MJMAIN-3D" x="744" y="0"></use>
+<g transform="translate(1800,0)">
+<g transform="translate(224,0)">
+ <use xlink:href="#E2-MJMAIN-6C"></use>
+ <use xlink:href="#E2-MJMAIN-69" x="278" y="0"></use>
+ <use xlink:href="#E2-MJMAIN-6D" x="557" y="0"></use>
+</g>
+<g transform="translate(0,-601)">
+ <use transform="scale(0.707)" xlink:href="#E2-MJMATHI-6E" x="0" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#E2-MJMAIN-2192" x="600" y="0"></use>
+ <use transform="scale(0.707)" xlink:href="#E2-MJMAIN-221E" x="1601" y="0"></use>
+</g>
+</g>
+<g transform="translate(3806,0)">
+ <use xlink:href="#E2-MJSZ3-28"></use>
+<g transform="translate(736,0)">
+ <use xlink:href="#E2-MJMAIN-31" x="0" y="0"></use>
+ <use xlink:href="#E2-MJMAIN-2B" x="722" y="0"></use>
+<g transform="translate(1501,0)">
+<g transform="translate(342,0)">
+<rect stroke="none" width="720" height="60" x="0" y="220"></rect>
+ <use xlink:href="#E2-MJMAIN-31" x="110" y="676"></use>
+ <use xlink:href="#E2-MJMATHI-6E" x="60" y="-686"></use>
+</g>
+</g>
+</g>
+ <use xlink:href="#E2-MJSZ3-29" x="3420" y="-1"></use>
+ <use transform="scale(0.707)" xlink:href="#E2-MJMATHI-6E" x="5878" y="1665"></use>
+</g>
+</g>
+</svg></p></p>
+<p><a href="https://www.npmjs.com/package/mathjax-pandoc-filter">https://www.npmjs.com/package/mathjax-pandoc-filter</a></p>
+</section>
+<section id="qr-code" class="level1">
+<h1>qr code</h1>
+<p><img src="rendered/render_qr-fed31fc248171fc94983b1ad73f1992eb9b85533.png" alt="" /></p>
+<p><a href="https://github.com/fukuchi/libqrencode">https://github.com/fukuchi/libqrencode</a></p>
+</section>
+<section id="next-steps" class="level1 light-on-dark" data-bgcss="sea-gradient" data-state="sea-gradient">
+<h1>next steps</h1>
+<p>find more
+<a href="https://github.com/arnehilmann/markdeck/blob/master/DOCUMENTATION.md#self-documenting-documentation-slides" target="_parent">documentation</a></p>
+</section>
+
+        </div>
+    </div>
+
+    <script src="assets/3rdparty/jquery.js"></script>
+
+    <script src="assets/3rdparty/reveal.js/lib/js/head.min.js"></script>
+    <script src="assets/3rdparty/reveal.js/js/reveal.js"></script>
+
+    <script>
+        // Full list of configuration options available here:
+        // https://github.com/hakimel/reveal.js#configuration
+        Reveal.initialize({
+            controls: 'true',
+            controlsTutorial: 'true',
+            controlsLayout: 'edges',
+            controlsBackArrows: 'faded',
+            progress: 'true',
+            defaultTiming: '120',
+            slideNumber: '',
+            history: 'true',
+            keyboard: 'true',
+            overview: 'true',
+            center: 'true',
+            touch: 'true',
+            loop: '',
+            rtl: '',
+            shuffle: '',
+            fragments: 'true',
+            embedded: '',
+            help: 'true',
+            showNotes: '',
+            autoPlayMedia: 'null',
+
+            autoSlide: (window.pdf_render) ? 0 : 0,
+
+            autoSlideStoppable: 'true',
+            autoSlideMethod: 'Reveal.navigateNext',
+            mouseWheel: '',
+            hideAddressBar: 'true',
+            previewLinks: '',
+            transition: 'slide',
+            transitionSpeed: 'default',
+            backgroundTransition: 'fade',
+
+            theme: 'simple',
+
+            // Optional libraries used to extend on reveal.js
+            dependencies: [
+                { src: 'assets/3rdparty/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+                { src: 'assets/markdeck/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+                { src: 'assets/3rdparty/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+                { src: 'assets/3rdparty/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            ]
+        });
+    </script>
+
+    
+    <script src="assets/markdeck/revealjs-helper.js"></script>
+    <script>
+        flushleft(".slides .flushleft");
+    </script>
+
+
+</body>
+</html>

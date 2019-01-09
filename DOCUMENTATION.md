@@ -7,7 +7,7 @@ That means that you can see the rendered slide and its source side-by-side.
 * [the markdown basics](https://arnehilmann.github.io/markdeck/docs/markdown-basics/explain.html)
 * [the slide layout](https://arnehilmann.github.io/markdeck/docs/slide-layout/explain.html)
 * TODO: metadata
-* TODO: asciiart
+* [asciiart](https://arnehilmann.github.io/markdeck/docs/asciiart/explain.html)
 
 _You can find the old documentation [here](DOCUMENTATION-OLD.md)._
 

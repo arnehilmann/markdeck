@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="289" height="208" version="1.1">
+    <defs>
+        <filter id="dsFilterNoBlur" width="150%" height="150%">
+            <feOffset dx="3" dy="3" in="SourceGraphic" result="offOut"/>
+            <feColorMatrix in="offOut" result="matrixOut" type="matrix" values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0"/>
+            <feBlend in="SourceGraphic" in2="matrixOut" mode="normal"/>
+        </filter>
+        <filter id="dsFilter" width="150%" height="150%">
+            <feOffset dx="3" dy="3" in="SourceGraphic" result="offOut"/>
+            <feColorMatrix in="offOut" result="matrixOut" type="matrix" values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0"/>
+            <feGaussianBlur in="matrixOut" result="blurOut" stdDeviation="3"/>
+            <feBlend in="SourceGraphic" in2="blurOut" mode="normal"/>
+        </filter>
+        <marker id="iPointer" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
+            <path d="M10 0v10L0 5z"/>
+        </marker>
+        <marker id="Pointer" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
+            <path d="M0 0l10 5-10 5z"/>
+        </marker>
+    </defs>
+    <g id="boxes" fill="none" stroke="#000" stroke-width="2">
+        <g id="group0">
+            <path id="path0" fill="#933" d="M40.5 8h170q10 0 10 10v86h-180z" filter="url(#dsFilter)"/>
+        </g>
+        <g id="group1">
+            <path id="path1" fill="#bbb" d="M58.5 46.4V72a18 4.8 0 0 0 36 0V46.4a18 4.8 0 0 0-36 0z" filter="url(#dsFilter)"/>
+            <path id="path1" d="M58.5 46.4a18 4.8 0 0 0 36 0"/>
+        </g>
+        <g id="group1">
+            <path id="path1" fill="#bbb" d="M112.5 46.4V72a18 4.8 0 0 0 36 0V46.4a18 4.8 0 0 0-36 0z" filter="url(#dsFilter)"/>
+            <path id="path1" d="M112.5 46.4a18 4.8 0 0 0 36 0"/>
+        </g>
+        <g id="group1">
+            <path id="path1" fill="#bbb" d="M166.5 46.4V72a18 4.8 0 0 0 36 0V46.4a18 4.8 0 0 0-36 0z" filter="url(#dsFilter)"/>
+            <path id="path1" d="M166.5 46.4a18 4.8 0 0 0 36 0"/>
+        </g>
+        <g id="group14">
+            <path id="path14" fill="#fff" d="M40.5 104h180v48h-170q-10 0-10-10z" filter="url(#dsFilter)"/>
+            <text id="text0" x="71.1" y="140.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                a
+            </text>
+            <text id="text1" x="125.1" y="140.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                2
+            </text>
+            <text id="text2" x="152.1" y="140.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+                sketch
+            </text>
+        </g>
+    </g>
+    <g id="lines" fill="none" stroke="#000" stroke-width="2">
+        <g id="group131">
+            <path id="path131" marker-start="url(#iPointer)" d="M76.5 88v32"/>
+        </g>
+        <g id="group209">
+            <path id="path209" marker-start="url(#iPointer)" d="M130.5 88v32"/>
+        </g>
+        <g id="group287">
+            <path id="path287" marker-start="url(#iPointer)" d="M184.5 88v32"/>
+        </g>
+    </g>
+    <g id="text" fill="#000" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
+        <text id="text3" x="-.9" y="172.8" fill="#000">
+            github.com/arnehilmann/a2sketch
+        </text>
+    </g>
+</svg>
