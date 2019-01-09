@@ -72,7 +72,18 @@ at the [documentation](DOCUMENTATION.md).
 
 ## based on
 
-markdown, pandoc, reveal.js, plantuml, ditaamini, graphviz, asciinema, decktape, vega-lite, math-jax, and font-awesome.
+[markdown](https://daringfireball.net/projects/markdown/syntax),
+[pandoc](https://pandoc.org/),
+[reveal.js](https://revealjs.com/#/),
+[plantuml](http://wiki.plantuml.net/site/index),
+[ditaamini](http://ditaa.sourceforge.net/),
+[asciitosvg](https://github.com/dhobsd/asciitosvg),
+[graphviz](https://www.graphviz.org/),
+[asciinema](https://asciinema.org/),
+[decktape](https://github.com/astefanutti/decktape), 
+[vega-lite](https://vega.github.io/vega-lite/),
+[mathjax-pandoc-filter](https://www.npmjs.com/package/mathjax-pandoc-filter), and
+[font-awesome](https://fontawesome.com/).
 
 
 ## known issues
