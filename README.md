@@ -45,7 +45,7 @@ Use `Ctrl-C` to stop markdeck, and `./start`, `./stop` or `./update-markdeck` to
 ```
 mkdir my-slides && cd my-slides
 curl -O https://raw.githubusercontent.com/arnehilmann/markdeck/master/scaffold
-./update-markdeck
+./scaffold
 ```
 
 ```
