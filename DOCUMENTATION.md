@@ -14,5 +14,5 @@ _You can find the old documentation [here](DOCUMENTATION-OLD.md)._
 
 # helper
 
-Under ```http://localhost:8081``` you find some helpfull resources, like extended asciiart characters
+Under ```http://localhost:8081``` you find some helpfull resources, like extended unicode characters
 (• ♥ ♣ € ™ ©), an extensive list of emojis (🙄 🤔), and some background generators.
