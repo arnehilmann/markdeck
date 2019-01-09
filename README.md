@@ -84,4 +84,15 @@ markdown, pandoc, reveal.js, plantuml, ditaamini, graphviz, asciinema, decktape,
 
 ## similar projects
 
+* http://bigsense.github.io/
+* http://slideshow-s9.github.io
+* https://github.com/FormidableLabs/spectacle
 * https://github.com/divshot/markdeck
+* https://github.com/jxnblk/mdx-deck
+* https://github.com/munen/p_slides
+* https://github.com/regebro/hovercraft
+* https://github.com/sinedied/backslide
+* https://gitpitch.com/
+* https://godoc.org/golang.org/x/tools/cmd/present
+* https://www.deckset.com/
+* https://yhatt.github.io/marp/
