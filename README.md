@@ -70,7 +70,7 @@ to get an idea how markdeck works and looks like, or have a look
 at the [documentation](DOCUMENTATION.md).
 
 
-## Based on
+## based on
 
 markdown, pandoc, reveal.js, plantuml, ditaamini, graphviz, asciinema, decktape, vega-lite, math-jax, and font-awesome.
 
@@ -82,6 +82,6 @@ markdown, pandoc, reveal.js, plantuml, ditaamini, graphviz, asciinema, decktape,
 * see the [todos](TODOS.md)
 
 
-# similar projects
+## similar projects
 
 * https://github.com/divshot/markdeck
