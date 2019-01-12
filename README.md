@@ -3,10 +3,10 @@
 author cool slide decks, text-only, offline-ready, collaborative
 
 
-https://img.shields.io/github/stars/arnehilmann/markdeck.svg
-https://img.shields.io/github/forks/arnehilmann/markdeck.svg
-https://img.shields.io/github/issues/arnehilmann/markdeck.svg
-https://img.shields.io/github/license/arnehilmann/markdeck.svg
+![](https://img.shields.io/github/forks/arnehilmann/markdeck.svg)
+![](https://img.shields.io/github/stars/arnehilmann/markdeck.svg)
+![](https://img.shields.io/github/issues/arnehilmann/markdeck.svg)
+![](https://img.shields.io/github/license/arnehilmann/markdeck.svg)
 <!--
 https://img.shields.io/twitter/url/https/github.com/arnehilmann/markdeck.svg?style=social
 -->
