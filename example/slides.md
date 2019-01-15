@@ -40,7 +40,7 @@ converts markdown to complex</br> HTML5 slides
 should run on all *nix platforms,</br> windows<small>?</small> and MacOS
 
 
-# features, contd. {rx=0 ry=1}
+# features, contd.
 
 cool
 • graphical
@@ -50,14 +50,14 @@ cool
 • adaptable
 
 
-# cool looking {rx=-1 ry=0}
+# cool looking {rx=0 ry=-1}
 
 leverages battle-proven</br>HTML5 presentation frameworks:
 
 revealjs • impressjs
 
 
-# graphical
+# graphical {rx=-1 ry=-.4 rz=-2000}
 
 content as markdown</br>
 <small>incl unicode, emojis, font-awesome: ♥ 😎  ![](fas fa-desktop)</small>
@@ -66,7 +66,7 @@ images as asciiart</br>
 <small>charts, diagrams, graphs, math, …</small>
 
 
-# easy {rx=0 ry=-1}
+# easy
 
 completely text-based</br>
 <small>use your preferred editor/IDE</small>
@@ -81,7 +81,7 @@ fast feedback
 modify and present your slides _without_ internet uplink
 
 
-# collaborative {rx=1 ry=0}
+# collaborative {rx=0 ry=-1}
 
 presentation-as-code
 
@@ -105,7 +105,7 @@ public class Example {
 ```
 
 
-# example: asciiart (ditaa) {bg=SteeBlue rx=0 ry=1 .ltr}
+# example: asciiart (ditaa) {bg=SteeBlue .ltr}
 
 ```{.nohighlight style="width: 40%; height: 100%; font-size: 40%;"}
 +-----------------------------+
@@ -170,7 +170,7 @@ public class Example {
 ```
 
 
-# example: asciiart (plantuml) {bg=lightblue .ltr}
+# example: asciiart (plantuml) {bg=lightblue .ltr rx=1.4 ry=-.2}
 
 ```{.nohighlight style="width: 40%; font-size: 40%;"}
 @startuml
@@ -213,7 +213,7 @@ digraph G {
 }
 ```
 
-# example: charts (vega-lite) {rx=-1 ry=0 bg=GhostWhite .ltr}
+# example: charts (vega-lite) {.ltr}
 
 ```{.json style="width: 50%; font-size: 30%;"}
 {
@@ -268,7 +268,7 @@ digraph G {
 ```
 
 
-# example: asciiart (a2s) {bg=White bgcss=sky-gradient-13 .ltr}
+# example: asciiart (a2s) {.ltr}
 
 ```{.nohighlight style="width: 40%;"}
 #-------------------.
@@ -305,7 +305,7 @@ github.com/arnehilmann/a2sketch
 ```
 
 
-# example: asciiart (sketchy) {bg=White .ltr}
+# example: asciiart (sketchy) {.ltr}
 
 ```{.nohighlight style="width: 45%;"}
 #=----------------------------#
@@ -349,16 +349,16 @@ github.com/arnehilmann/a2sketch
 ```
 
 
-# example: math equations {bg=Teal}
+# example: math equations
 
-```{.nohighlight style="width: 50%; font-size: 50%;"}
+```{.nohighlight style="width: 80%; font-size: 50%;"}
 $a^2 + b^2 = c^2$
 ```
 $a^2 + b^2 = c^2$
 
 &nbsp;
 
-```{.nohighlight style="width: 50%; font-size: 50%;"}
+```{.nohighlight style="width: 80%; font-size: 50%;"}
 $$e = \mathop
     {\lim }\limits_{n \to \infty }
     \left( {1 + \frac{1}{n}} \right)^n$$
@@ -368,7 +368,7 @@ $$e = \mathop
     \left( {1 + \frac{1}{n}} \right)^n$$
 
 
-# example: terminal session (asciinema) {bg=#121314 rx=0 ry=-1}
+# example: terminal session (asciinema) {bg=#121314}
 
 <asciinema-player src="./assets/img/test.json"
     poster="npt:0:21"
@@ -379,7 +379,7 @@ $$e = \mathop
 ></asciinema-player>
 
 
-# Thank You! {bg=AliceBlue}
+# Thank You!
 
 [pandoc](http://pandoc.org)
 •
@@ -420,7 +420,7 @@ This space intentionally left blank.
 
 
 
-# {x=0 y=0 z=0 scale=5 skipon="reveal" id=overview}
+# {x=1 y=0 z=0 scale=3 skipon="reveal" id=overview}
 
 
 # markdeck {x=3 y=-1.5 rotate-y=60 scale=3 bgcss=sea-gradient .light-on-dark}
