@@ -137,6 +137,9 @@ body.impress-enabled {
             word-wrap: normal;
         }
 
+        .step.ltr pre, .step.ltr p {
+            display: inline-block;
+        }
     }
 }
 

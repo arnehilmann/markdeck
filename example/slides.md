@@ -1,6 +1,6 @@
 ---
 title: markdeck
-# variant: impress
+variant: impress
 # pdf: markdeck-example.pdf
 # standalone: markdeck-example.html
 # highlight_style: grayscale
@@ -26,21 +26,21 @@ collaborative slide editing made easy
 ![](fab fa-css3)
 ![](fab fa-js-square)
 
-<small> arne@hilmann.de • 2018-12</small>
+<small> arne@hilmann.de • 2019-01</small>
 
 [![](fab fa-github)](https://github.com/arnehilmann/markdeck)
 [![](fab fa-docker)](https://hub.docker.com/r/arne/markdeck-pandoc/)
 [![](fas fa-envelope)](email:arne@hilmann.de)
 
 
-# features {rx=1 bg=#123456}
+# features {rx=1 bgcss=sea-gradient .light-on-dark}
 
 converts markdown to complex</br> HTML5 slides
 
-should run on all *nix platforms,</br> windows and MacOS
+should run on all *nix platforms,</br> windows<small>?</small> and MacOS
 
 
-# features, contd.
+# features, contd. {rx=0 ry=1}
 
 cool
 • graphical
@@ -50,7 +50,7 @@ cool
 • adaptable
 
 
-# cool looking
+# cool looking {rx=-1 ry=0}
 
 leverages battle-proven</br>HTML5 presentation frameworks:
 
@@ -66,12 +66,12 @@ images as asciiart</br>
 <small>charts, diagrams, graphs, math, …</small>
 
 
-# easy
+# easy {rx=0 ry=-1}
 
 completely text-based</br>
 <small>use your preferred editor/IDE</small>
 
-auto-reload 
+auto-reload
 ►
 fast feedback
 
@@ -81,7 +81,7 @@ fast feedback
 modify and present your slides _without_ internet uplink
 
 
-# collaborative
+# collaborative {rx=1 ry=0}
 
 presentation-as-code
 
@@ -105,7 +105,7 @@ public class Example {
 ```
 
 
-# example: asciiart (ditaa) {bg=SteeBlue rx=0 ry=-1 .ltr}
+# example: asciiart (ditaa) {bg=SteeBlue rx=0 ry=1 .ltr}
 
 ```{.nohighlight style="width: 40%; height: 100%; font-size: 40%;"}
 +-----------------------------+
@@ -189,7 +189,7 @@ Bob->Alice : ??
 ```
 
 
-# example: asciiart (graphviz) {bg=lightblue rx=1 ry=0 .ltr}
+# example: asciiart (graphviz) {.ltr}
 
 ```{.nohighlight style="width: 50%; font-size: 40%;"}
 digraph G {
@@ -213,7 +213,7 @@ digraph G {
 }
 ```
 
-# example: charts (vega-lite) {bg=GhostWhite .ltr}
+# example: charts (vega-lite) {rx=-1 ry=0 bg=GhostWhite .ltr}
 
 ```{.json style="width: 50%; font-size: 30%;"}
 {
@@ -276,7 +276,6 @@ digraph G {
 | .---# .---# #---. |
 | |[1]| |[1]| |[1]| |
 | #---' #---' '---# |
-|                   |
 |   ^     ^     ^   |
 #---+-----+-----+---#
 |   |     |     |   |
@@ -294,7 +293,6 @@ github.com/arnehilmann/a2sketch
 | .---# .---# #---. |
 | |[1]| |[1]| |[1]| |
 | #---' #---' '---# |
-|                   |
 |   ^     ^     ^   |
 #---+-----+-----+---#
 |   |     |     |   |
@@ -303,11 +301,11 @@ github.com/arnehilmann/a2sketch
 github.com/arnehilmann/a2sketch
 
 [0]: {"fill": "#933","a2s:delref":true}
-[1]: {"fill": "#bbb","a2s:delref":true}
+[1]: {"fill": "#bbb","a2s:delref":true,"a2s:type":"storage"}
 ```
 
 
-# example: asciiart (sketchy) {bg=White rx=0 ry=1 .ltr}
+# example: asciiart (sketchy) {bg=White .ltr}
 
 ```{.nohighlight style="width: 45%;"}
 #=----------------------------#
@@ -370,7 +368,7 @@ $$e = \mathop
     \left( {1 + \frac{1}{n}} \right)^n$$
 
 
-# example: terminal session (asciinema) {bg=#121314}
+# example: terminal session (asciinema) {bg=#121314 rx=0 ry=-1}
 
 <asciinema-player src="./assets/img/test.json"
     poster="npt:0:21"
@@ -381,7 +379,7 @@ $$e = \mathop
 ></asciinema-player>
 
 
-# Thank You! {bg=AliceBlue rx=-1 ry=0}
+# Thank You! {bg=AliceBlue}
 
 [pandoc](http://pandoc.org)
 •
@@ -416,13 +414,13 @@ $$e = \mathop
 [`https://github.com/arnehilmann/markdeck`{.render_qr}](https://github.com/arnehilmann/markdeck)
 
 
-# {.skip skipon="reveal"}
+# {.skip skipon="reveal" scale=5 rx=2}
 
-This page intentionally left blank.
+This space intentionally left blank.
 
 
 
-# {x=.5 y=.5 z=0 scale=4 skipon="reveal" id=overview}
+# {x=0 y=0 z=0 scale=5 skipon="reveal" id=overview}
 
 
 # markdeck {x=3 y=-1.5 rotate-y=60 scale=3 bgcss=sea-gradient .light-on-dark}
