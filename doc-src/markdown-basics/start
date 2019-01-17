@@ -1,17 +1,11 @@
 #!/bin/sh
 
-if [ "$(uname)" = "Darwin" ]; then
-  STATCMD='stat -f'
-else
-  STATCMD='stat -c'
-fi
-
 DIR=./deck/
 mkdir -p $DIR
-if [ $(${STATCMD} "%u" $DIR) -eq 0 ]; then
+if [ $(ls -ld $DIR | awk '{print $3}') != $USER ]; then
     echo "[ERR] The output folder '$DIR' MUST be owned by you!"
     echo "[ERR] Please change ownership to yourself ('sudo chown $USER $DIR'), or"
     echo "[ERR] remove '$DIR' completely ('sudo rm -rf $DIR')."
     exit 1
 fi
-MARKDECK_USER=$(${STATCMD} "%u:%g" $DIR) docker-compose up
+MARKDECK_USER=$(ls -ldn $DIR | awk '{print $3 ":" $4}') docker-compose up
