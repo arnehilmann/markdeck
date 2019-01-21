@@ -2,14 +2,14 @@
   font-family: "EB Garamond";
   font-style: normal;
   font-weight: 400;
-  src: url("webfonts/EBGaramond12-Regular.ttf") format('truetype');
+  src: url("../webfonts/EBGaramond12-Regular.ttf") format('truetype');
 }
 
 @font-face {
   font-family: 'Raleway';
   font-style: normal;
   font-weight: 400;
-  src: url("webfonts/Raleway-Regular.ttf") format('truetype');
+  src: url("../webfonts/Raleway-Regular.ttf") format('truetype');
 }
 
 html, *{
