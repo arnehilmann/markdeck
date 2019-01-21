@@ -1,15 +1,23 @@
-/* Shared
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-.button {
-  border-radius: 10px;
+@font-face {
+  font-family: "EB Garamond";
+  font-style: normal;
+  font-weight: 400;
+  src: url("webfonts/EBGaramond12-Regular.ttf") format('truetype');
 }
 
-/* Sections
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-.section {
-  padding: 4rem 0 7rem;
-  text-align: center;
-  /*box-shadow: 0 3px 6px rgba(0, 0, 0, .5);*/
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src: url("webfonts/Raleway-Regular.ttf") format('truetype');
+}
+
+html, *{
+    font-family: "Raleway", sans-serif;
+}
+
+h1, h2, h3 {
+    font-family: "EB Garamond", serif;
 }
 
 .bggrey {
@@ -17,6 +25,7 @@
     background: linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
     color: white;
 }
+
 .bggrey a {
     color: white;
 }
@@ -25,209 +34,19 @@
     font-size: 50%;
 }
 
-
-.section-heading,
-.section-description {
-  margin-bottom: 1.2rem;
-}
-
-/* Hero
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-
-/* Values
-  background-image: url('../images/values-bg.jpg');
-  background-size: cover;
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-.values {
-  color: #fff;
-  padding-bottom: 5rem;
-}
-.value-multiplier {
-  margin-bottom: .5rem;
-  color: #11DFC7;
-}
-.value-heading {
-  margin-bottom: .3rem;
-}
-.value-description {
-  opacity: .8;
-  font-weight: 300;
-}
-
-/* Help
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-.get-help {
-  border-bottom: 1px solid #ddd;
-}
-
-/* Categories
-–––––––––––––––––––––––––––––––––––––––––––––––––– */
-.categories {
-  background-image: url('../images/values-bg.jpg');
-  background-size: cover;
-  color: #fff;
-}
-.categories .section-description {
-  margin-bottom: 4rem;
-}
-@media (min-width: 0px) {
-  .nav-text {
-      display: none;
-  }
-}
-
-/* Bigger than 550 */
-@media (min-width: 550px) {
-  .nav-text {
-      display: inline;
-  }
-  .section {
-    padding: 4rem 0 4rem;
-  }
-  .hero {
-    text-align: left;
-    #height: 165px;
-  }
-  .hero-heading {
-    font-size: 2.4rem;
-  }
-}
-
-/* Bigger than 750 */
-@media (min-width: 750px) {
-  .hero {
-    #height: 190px;
-  }
-  .hero-heading {
-    font-size: 2.6rem;
-  }
-  .section {
-    padding: 4rem 0 6rem;
-  }
-  .hero {
-    padding: 6rem 0 6rem;
-  }
-  .section-description {
-    max-width: 60%;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .categories {
-    padding: 15rem 0 8rem;
-  }
-}
-
-/* Bigger than 1000 */
-@media (min-width: 1000px) {
-  .section {
-    padding: 5rem 0 6rem;
-  }
-  .hero {
-    padding: 6rem 0 6rem;
-  }
-  .hero-heading {
-    font-size: 3.0rem;
-  }
-}
-
-
-
-
-
-@font-face {
-  font-family: "EB Garamond";
-  font-style: normal;
-  font-weight: 400;
-  src: url("../webfonts/EBGaramond12-Regular.ttf") format('truetype');
-}
-
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 400;
-  src: url("../webfonts/Raleway-Regular.ttf") format('truetype');
-}
-
-body {
-    font-family: "Raleway", sans-serif;
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: "EB Garamond", serif;
-}
-
-
 .hero {
-    background: linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
-    color: #eee;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, .5);
+    font-size: 144%;
 }
 
-ul {
-    list-style: disc outside;
-    margin-left: 2em;
+.section {
+    padding: calc(4 * var(--universal-padding)) calc(8 * var(--universal-padding));
 }
 
-li {
-    margin-bottom: 0;
+:root {
+    --footer-link-color: white;
+    --heading-ratio: 1.4;`
 }
 
-.features {
-    text-align: left;
-}
-
-.screenshot img {
-    max-width: 100%;
-}
-
-html {
-    font-size: 12px;
-}
-
-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: block;
-    width: 100%;
-    z-index: 99;
-    border-bottom: 1px solid grey;
-    font-family: "Raleway";
-    color: #222;
-}
-
-nav .section {
-    padding: 1ex 0;
-    background: rgba(255, 255, 255, .95);
-    height: 1.6em;
-    max-height: 1.6em;
-}
-
-.left {
-    text-align: left;
-}
-
-.right {
-    text-align: right;
-}
-
-footer {
-    width: 100%;
-    border-top: 1px solid grey;
-    background: #112233;
-    background: linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
-    background: rgba(255, 255, 255, .95);
-    color: #222;
-}
-
-footer a {
-    #color: white;
-}
-
-footer .container {
-    padding: 1em 0;
-}
-
-a:hover {
-    color: black;
+header {
+    padding: calc(0 * var(--universal-padding)) calc(8 * var(--universal-padding));
 }
