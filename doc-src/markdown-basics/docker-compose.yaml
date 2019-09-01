@@ -25,6 +25,7 @@ services:
 
   pdf:
     image: "arne/markdeck-decktape:0.5"
+    user: "$MARKDECK_USER"
     volumes:
       - type: bind
         source: ./deck
