@@ -68,7 +68,7 @@ $body$
             controlsLayout: '$controlsLayout$',
             controlsBackArrows: '$controlsBackArrows$',
             progress: '$progress$',
-            defaultTiming: '$defaultTiming$',
+            defaultTiming: Number($defaultTiming$) >= 0? Number($defaultTiming$) : 120,
             slideNumber: '$slideNumber$',
             history: '$history$',
             keyboard: '$keyboard$',
@@ -94,6 +94,12 @@ $body$
             transition: '$transition$',
             transitionSpeed: '$transitionSpeed$',
             backgroundTransition: '$backgroundTransition$',
+            viewDistance: Number($viewDistance$) >= 0? Number($viewDistance$) : 3,
+
+            parallaxBackgroundImage: '$parallaxBackgroundImage$',
+            parallaxBackgroundSize: '$parallaxBackgroundSize$',
+            parallaxBackgroundHorizontal: Number($parallaxBackgroundHorizontal$) >= 0 ? Number($parallaxBackgroundHorizontal$) : null,
+            parallaxBackgroundVertical: Number($parallaxBackgroundVertical$) >= 0 ? Number($parallaxBackgroundVertical$) : null,
 
             theme: '$theme$',
 
