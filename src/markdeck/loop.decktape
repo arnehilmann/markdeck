@@ -25,8 +25,8 @@ while true; do
         fi
 
         node /decktape/decktape.js \
-            --no-sandbox \
-            --executablePath chromium-browser \
+            --chrome-arg=--no-sandbox \
+            --chrome-path chromium-browser \
             -s $pdf_size \
             -p $pdf_delay \
             $variant \

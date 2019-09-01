@@ -1,7 +1,7 @@
-PANDOC_VERSION=2.5
-REVEALJS_VERSION=3.7.0
+PANDOC_VERSION=2.7.3
+REVEALJS_VERSION=3.8.0
 ASCIINEMAPLAYER_VERSION=v2.6.1
-JQUERY_VERSION=3.3.1.slim.min
+JQUERY_VERSION=3.4.1.slim.min
 IMPRESSJS_VERSION=1.0.0
 VERSION:=$$(yq r docker-compose.yaml services.markdeck.build.args.version)
 
@@ -37,7 +37,7 @@ prepare:	downloaded/bin/pandoc \
 
 downloaded/bin/pandoc:
 	mkdir -p downloaded/bin
-	curl -L "https://github.com/jgm/pandoc/releases/download/$(PANDOC_VERSION)/pandoc-$(PANDOC_VERSION)-linux.tar.gz" | tar --strip-components=1 -C downloaded -zxvf - "pandoc-*/bin/pandoc"
+	curl -L "https://github.com/jgm/pandoc/releases/download/$(PANDOC_VERSION)/pandoc-$(PANDOC_VERSION)-linux.tar.gz" | tar --strip-components=1 --wildcards -C downloaded -zxvf - "pandoc-*/bin/pandoc"
 
 
 jqueryemoji:	jquery.js markdeck/lib/emojis
