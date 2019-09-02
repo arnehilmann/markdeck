@@ -69,7 +69,7 @@ $body$
             controlsLayout: '$controlsLayout$',
             controlsBackArrows: '$controlsBackArrows$',
             progress: '$progress$',
-            defaultTiming: Number($defaultTiming$) >= 0? Number($defaultTiming$) : 120,
+            defaultTiming: (Number($defaultTiming$) >= 0) ? Number($defaultTiming$) : 120,
             slideNumber: '$slideNumber$',
             history: '$history$',
             keyboard: '$keyboard$',
@@ -85,7 +85,7 @@ $body$
             showNotes: '$showNotes$',
             autoPlayMedia: '$autoPlayMedia$',
 
-            autoSlide: (window.pdf_render) ? 0 : $autoSlide$,
+            autoSlide: (window.pdf_render) ? 0 : Number($autoSlide$),
 
             autoSlideStoppable: '$autoSlideStoppable$',
             autoSlideMethod: '$autoSlideMethod$',
@@ -95,12 +95,12 @@ $body$
             transition: '$transition$',
             transitionSpeed: '$transitionSpeed$',
             backgroundTransition: '$backgroundTransition$',
-            viewDistance: Number($viewDistance$) >= 0? Number($viewDistance$) : 3,
+            viewDistance: (Number($viewDistance$) >= 0) ? Number($viewDistance$) : 3,
 
             parallaxBackgroundImage: '$parallaxBackgroundImage$',
             parallaxBackgroundSize: '$parallaxBackgroundSize$',
-            parallaxBackgroundHorizontal: Number($parallaxBackgroundHorizontal$) >= 0 ? Number($parallaxBackgroundHorizontal$) : null,
-            parallaxBackgroundVertical: Number($parallaxBackgroundVertical$) >= 0 ? Number($parallaxBackgroundVertical$) : null,
+            parallaxBackgroundHorizontal: ($parallaxBackgroundHorizontal$ != null && Number($parallaxBackgroundHorizontal$) >= 0) ? Number($parallaxBackgroundHorizontal$) : null,
+            parallaxBackgroundVertical: ($parallaxBackgroundVertical$ != null && Number($parallaxBackgroundVertical$) >= 0) ? Number($parallaxBackgroundVertical$) : null,
 
             theme: '$theme$',
 

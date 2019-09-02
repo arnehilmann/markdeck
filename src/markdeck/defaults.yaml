@@ -44,5 +44,10 @@ previewLinks: false
 transition: slide  # none/fade/slide/convex/concave/zoom
 transitionSpeed: default  # default/fast/slow
 backgroundTransition: fade  # none/fade/slide/convex/concave/zoom
+viewDistance: 3
+parallaxBackgroundImage: ''
+parallaxBackgroundSize: ''
+parallaxBackgroundHorizontal: null
+parallaxBackgroundVertical: null
 highlight_style: zenburn
 ---
