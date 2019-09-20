@@ -120,11 +120,12 @@ while true; do
     template=/markdeck/template-${variant}.html
     if pandoc \
         -f markdown+yaml_metadata_block \
-        -t html5 \
+        -t revealjs \
         --no-highlight \
         --wrap=preserve \
         --standalone \
         --template=$template \
+        --slide-level=2 \
         --section-divs \
         --lua-filter /markdeck/lib/skip-slide-filter.lua \
         --filter mathjax-pandoc-filter \
