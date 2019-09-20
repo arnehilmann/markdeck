@@ -9,11 +9,18 @@ pdf:
 pdf_size: 1189x841  # 1024x768  # 1280x720
 pdf_delay: 100
 
+width: 960
+height: 700
+
+margin: 0.1
+minScale: 0.2
+maxScale: 1.5
+
 standalone:
 
 asciinema: false
 
-theme: simple
+theme: black
 transition: slide
 controls: false
 controlsTutorial: false
