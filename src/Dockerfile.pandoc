@@ -19,7 +19,7 @@ RUN apk add --update --virtual .build-deps \
     pango-dev libjpeg-turbo-dev giflib-dev
 
 RUN npm -g config set user root
-RUN npm install -g mathjax-pandoc-filter vega vega-cli vega-lite@^3.4.0 && npm cache clean --force
+RUN npm install -g mathjax-pandoc-filter vega@^5.6.0 vega-cli@^5.6.0 vega-lite@^3.4.0
 
 RUN mkdir -p /usr/local/share/lua/5.3
 RUN curl -o /usr/local/share/lua/5.3/inspect.lua -L https://raw.githubusercontent.com/kikito/inspect.lua/master/inspect.lua
