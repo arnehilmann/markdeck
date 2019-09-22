@@ -6,16 +6,17 @@ ARG pandoc_version
 ARG version
 ARG motto
 
-RUN apk add --update \
+RUN apk add \
+    make bash curl \
     graphviz inotify-tools rsync \
     libqrencode jq sassc zip openjdk8-jre \
-    python make g++ bash cairo curl fontconfig \
-    py2-pip \
-    pkgconf pixman pixman-dev cairo cairo-dev \
-    pango pango-dev \
-    libjpeg-turbo libjpeg-turbo-dev \
-    giflib giflib-dev \
-    && rm -rf /var/cache/apk/*
+    python py2-pip fontconfig \
+    pixman cairo pango libjpeg-turbo giflib
+
+RUN apk add --update --virtual .build-deps \
+    g++ \
+    pkgconf pixman-dev cairo-dev \
+    pango-dev libjpeg-turbo-dev giflib-dev
 
 RUN npm -g config set user root
 RUN npm install -g mathjax-pandoc-filter vega vega-cli vega-lite@^3.4.0 && npm cache clean --force
@@ -24,6 +25,11 @@ RUN mkdir -p /usr/local/share/lua/5.3
 RUN curl -o /usr/local/share/lua/5.3/inspect.lua -L https://raw.githubusercontent.com/kikito/inspect.lua/master/inspect.lua
 
 RUN pip install MarkdownPP
+
+# cleanup
+RUN apk del .build-deps \
+    && rm -rf /var/cache/apk/* \
+    && npm cache clean --force
 
 COPY downloaded/ /usr
 RUN mkdir -p /markdeck/
