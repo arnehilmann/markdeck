@@ -17,6 +17,7 @@ minScale: 0.2
 maxScale: 1.5
 
 markdeckFooter: true
+slideLevel: 1
 
 standalone:
 

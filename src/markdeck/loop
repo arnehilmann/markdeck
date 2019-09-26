@@ -97,6 +97,7 @@ while true; do
     echo "$METADATA" > /target/.meta/config.json
     jq -S '.' <<<$METADATA
     variant=$(jq -r '.variant' <<< "$METADATA")
+    slideLevel=$(jq -r '.slideLevel' <<< "$METADATA")
     echo "ASCIIART_CONFIG=$ASCIIART_CONFIG"
     echo "-------- /config --------"
     echo
@@ -125,7 +126,7 @@ while true; do
         --wrap=preserve \
         --standalone \
         --template=$template \
-        --slide-level=2 \
+        --slide-level=$slideLevel \
         --section-divs \
         --lua-filter /markdeck/lib/skip-slide-filter.lua \
         --filter mathjax-pandoc-filter \
