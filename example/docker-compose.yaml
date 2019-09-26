@@ -46,7 +46,7 @@ services:
       - "8081:8081"
 
   a2sketch:
-    image: "arne/a2sketch:0.11"
+    image: "arne/a2sketch:0.12"
     volumes:
       - type: bind
         source: ./a2s-custom-types
