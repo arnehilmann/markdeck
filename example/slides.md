@@ -1,6 +1,6 @@
 ---
 title: markdeck
-variant: impress
+# variant: impress
 # pdf: markdeck-example.pdf
 # standalone: markdeck-example.html
 # highlight_style: grayscale
