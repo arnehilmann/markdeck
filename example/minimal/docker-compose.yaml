@@ -2,8 +2,8 @@ version: "3.2"
 
 services:
   markdeck:
-    image: "arne/markdeck-pandoc:0.34"
-    user: "$MARKDECK_USER"
+    image: "arne/markdeck-pandoc:0.35"
+    user: nobody
     volumes:
       - type: bind
         source: ./
@@ -14,7 +14,7 @@ services:
         target: /target
 
   web:
-    image: "arne/markdeck-liveserver:0.2"
+    image: "arne/markdeck-liveserver:0.3"
     ports:
       - "8080:8080"
     volumes:
@@ -24,7 +24,7 @@ services:
     depends_on: [markdeck]
 
   pdf:
-    image: "arne/markdeck-decktape:0.5"
+    image: "arne/markdeck-decktape:0.6"
     volumes:
       - type: bind
         source: ./deck
@@ -33,7 +33,7 @@ services:
     depends_on: [markdeck, web]
 
   standalone:
-    image: "arne/markdeck-standalone:0.2"
+    image: "arne/markdeck-standalone:0.3"
     volumes:
       - type: bind
         source: ./deck
