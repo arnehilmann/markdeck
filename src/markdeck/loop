@@ -58,13 +58,18 @@ while true; do
 
     [[ -d /target/rendered ]] || mkdir -p /target/rendered
 
-    echo "-------- rsync output --------"
+    echo "-------- sync output --------"
     rsync -a /markdeck/assets /target/ || :
     touch /target/assets/css/slides.css /target/assets/css/render-pdf.css
     [[ -d /source/assets ]] && rsync -av /source/assets /target/ || :
+    if [[ -e /target/assets/favicon.ico ]]; then
+        cp /target/assets/favicon.ico /target/
+    else
+        cp /markdeck/assets/markdeck/favicon.ico /target/
+    fi
     rsync -a /markdeck/explain.html /target/ || :
     fc-list
-    echo "-------- /rsync output --------"
+    echo "-------- /sync output --------"
     echo
 
     echo "-------- sass output --------"
