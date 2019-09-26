@@ -2,7 +2,7 @@ version: "3.2"
 
 services:
   markdeck:
-    image: "arne/markdeck-pandoc:0.34"
+    image: "arne/markdeck-pandoc:0.35"
     volumes:
       - type: bind
         source: ./
@@ -20,7 +20,7 @@ services:
 
 
   web:
-    image: "arne/markdeck-liveserver:0.2"
+    image: "arne/markdeck-liveserver:0.3"
     ports:
       - "8080:8080"
     volumes:
@@ -30,7 +30,7 @@ services:
     depends_on: [markdeck]
 
   pdf:
-    image: "arne/markdeck-decktape:0.5"
+    image: "arne/markdeck-decktape:0.6"
     volumes:
       - type: bind
         source: ./deck
@@ -44,7 +44,7 @@ services:
       - "8081:8081"
 
   standalone:
-    image: "arne/markdeck-standalone:0.2"
+    image: "arne/markdeck-standalone:0.3"
     volumes:
       - type: bind
         source: ./deck
@@ -52,7 +52,7 @@ services:
     depends_on: [web]
 
   a2sketch:
-    image: "arne/a2sketch:0.11"
+    image: "arne/a2sketch:0.12"
     volumes:
       - type: bind
         source: ./a2s-custom-types
