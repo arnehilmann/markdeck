@@ -22,7 +22,7 @@ standalone:
 
 asciinema: false
 
-theme: black
+theme: simple
 themePath: assets/3rdparty/reveal.js/css/theme
 transition: slide
 controls: false
