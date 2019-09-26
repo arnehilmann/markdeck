@@ -95,7 +95,7 @@ while true; do
     mkdir -p /target/.meta/
     rm -f /target/.meta/config.json
     echo "$METADATA" > /target/.meta/config.json
-    jq '. | .' <<<$METADATA
+    jq -S '.' <<<$METADATA
     variant=$(jq -r '.variant' <<< "$METADATA")
     echo "ASCIIART_CONFIG=$ASCIIART_CONFIG"
     echo "-------- /config --------"
