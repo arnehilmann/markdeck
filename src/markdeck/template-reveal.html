@@ -130,6 +130,12 @@ $body$
     <script src="assets/markdeck/revealjs-helper.js"></script>
     <script>
         flushleft(".slides .flushleft");
+
+        // add notes class to make sure controls are always displayed on the
+        // speaker notes
+        if (window.self !== window.top) {
+            document.body.className += " notes";
+        }
     </script>
 
 $for(include-after)$
