@@ -4,6 +4,7 @@ img.emoji {
     padding: 0;
     margin: 0;
     vertical-align: baseline;
+    box-shadow: none;
 }
 
 .rerendering-message {
@@ -49,7 +50,6 @@ img.emoji {
     font-weight: normal;
     src: url(fonts/fa-brands-400.ttf) format("truetype");
 }
-
 .fab {
     font-family:"Font Awesome 5 Brands";
 }
