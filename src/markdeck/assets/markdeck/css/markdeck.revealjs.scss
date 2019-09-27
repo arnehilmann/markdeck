@@ -1,24 +1,7 @@
-@import "common";
-
-.reveal {
-    h1, h2, h3, h4, h5, h6, div {
-        font-family: sans-serif;
-    }
-}
-
-.reveal h1 {
-    font-size: 1.4em; }
-
-.reveal h2 {
-    font-size: 0.8em; }
+@import "commoncommon";
 
 .reveal .license {
     font-size: 12pt;
-}
-
-.reveal section img {
-    border: 0;
-    background: transparent;
 }
 
 .reveal .footer {
@@ -26,35 +9,6 @@
     bottom: 1em;
     left: 1em;
     font-size: 0.5em;
-}
-
-.reveal .controls .navigate-up.enabled {
-    border-bottom-color: #444;
-}
-
-.reveal .controls .navigate-down.enabled {
-    border-top-color: #444;
-}
-
-.reveal .controls .navigate-right.enabled {
-    border-left-color: #444;
-}
-
-.reveal .controls .navigate-left.enabled {
-    border-right-color: #444;
-}
-
-.reveal .progress span {
-    background: #444;
-}
-
-.reveal section img {
-    box-shadow: none;
-}
-
-.slide-background {
-    background-size: cover !important;
-    background-repeat: no-repeat;
 }
 
 .reveal img.emoji {
@@ -65,14 +19,6 @@
     vertical-align: baseline;
 }
 
-section.has-dark-background.colorfull * {
-    // text-shadow: 1px 1px #000;
-}
-
-section.has-dark-background.colorfull a {
-    color: AliceBlue;
-}
-
 .flush-text-left {
     text-align: left;
 }
@@ -80,3 +26,9 @@ section.has-dark-background.colorfull a {
 .rerendering-message {
     display: none;
 }
+
+.reveal section img {
+    border: 0;
+    background: transparent;
+}
+
