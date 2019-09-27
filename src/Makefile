@@ -22,7 +22,6 @@ push:	all
 
 prepare:	downloaded/bin/pandoc \
 	markdeck/lib/plantuml.jar \
-	markdeck/lib/plantuml.jar \
 	markdeck/lib/ditaa.jar \
 	markdeck/assets/3rdparty/asciinema-player.js \
 	markdeck/assets/3rdparty/asciinema-player.css \
