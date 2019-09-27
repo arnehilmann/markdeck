@@ -73,6 +73,14 @@ while true; do
             /source/assets/css/slides.scss \
             /target/assets/css/slides.css || :
     fi
+    if [[ -e /source/assets/css/theme/source/ ]]; then
+        find /source/assets/css/theme/source/ -name \*.scss | while read filename; do
+            cp "$filename" /target/assets/3rdparty/reveal.js/css/theme/source/
+            sassc \
+                /target/assets/3rdparty/reveal.js/css/theme/source/$(basename "$filename") \
+                /target/assets/3rdparty/reveal.js/css/theme/$(basename "$filename" | sed -e 's/\.scss$/.css/') || :
+        done
+    fi
     if [[ -e /source/assets/css/slides.impress.scss ]]; then
         sassc \
             /source/assets/css/slides.impress.scss \
