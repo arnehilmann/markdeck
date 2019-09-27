@@ -1,0 +1,119 @@
+/**
+ * Markdeck theme for reveal.js presentations, similar
+ * to the simple theme. The accent color is darkblue.
+ *
+ * reveal.js is Copyright (C) 2011-2012 Hakim El Hattab, http://hakim.se
+ */
+
+
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+// ---------------------------------------------
+
+// Include theme-specific fonts
+@font-face {
+    font-family: 'Inconsolata';
+    font-style: normal;
+    font-weight: 400;
+    src: url("fonts/Inconsolata-Regular.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "EB Garamond Bold";
+    font-style: normal;
+    font-weight: 400;
+    src: url("fonts/EBGaramond-Bold.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "xkcd Script";
+    font-style: normal;
+    font-weight: 400;
+    src: url("fonts/xkcd-script.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: 'Raleway';
+    font-style: normal;
+    font-weight: 400;
+    src: url("fonts/Raleway-Regular.ttf") format('truetype');
+}
+
+// Override theme settings (see ../template/settings.scss)
+$mainFont: 'Lato', sans-serif;
+$mainColor: #000;
+$headingFont: sans-serif;
+$headingColor: #000;
+$headingTextShadow: none;
+$headingTextTransform: none;
+$backgroundColor: #fff;
+$linkColor: #00008B;
+$linkColorHover: lighten( $linkColor, 20% );
+$selectionBackgroundColor: rgba(0, 0, 0, 0.99);
+
+$heading1Size: 1.4em;
+$heading2Size: 0.8em;
+$heading3Size: 0.8em;
+$heading4Size: 0.8em;
+
+section.has-dark-background {
+	&, h1, h2, h3, h4, h5, h6 {
+		color: #fff;
+	}
+}
+
+.slide-background {
+    background-size: cover !important;
+    background-repeat: no-repeat;
+}
+
+.light-on-dark, section.light-on-dark h1 {
+    color: #fff;
+    text-shadow: 0px 1px #000;
+}
+
+section.has-dark-background.colorfull * {
+    // text-shadow: 1px 1px #000;
+}
+
+section.has-dark-background.colorfull a {
+    color: AliceBlue;
+}
+
+.ltr, .inline {
+    p, pre {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------
+
+// Override some settings from theme
+.reveal section img {
+    box-shadow: none;
+}
+
+.reveal .progress span {
+    background: #444;
+}
+
+.reveal .controls .navigate-up.enabled {
+    border-bottom-color: #444;
+}
+
+.reveal .controls .navigate-down.enabled {
+    border-top-color: #444;
+}
+
+.reveal .controls .navigate-right.enabled {
+    border-left-color: #444;
+}
+
+.reveal .controls .navigate-left.enabled {
+    border-right-color: #444;
+}
+

@@ -82,6 +82,9 @@ while true; do
         /markdeck/assets/markdeck/css/markdeck.revealjs.scss \
         /target/assets/markdeck/css/markdeck.revealjs.css || :
     sassc \
+        /markdeck/assets/3rdparty/reveal.js/css/theme/source/markdeck.scss \
+        /target/assets/3rdparty/reveal.js/css/theme/markdeck.css || :
+    sassc \
         /markdeck/assets/markdeck/css/markdeck.impressjs.scss \
         /target/assets/markdeck/css/markdeck.impressjs.css || :
     echo "-------- /sass output --------"

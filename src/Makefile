@@ -27,6 +27,7 @@ prepare:	downloaded/bin/pandoc \
 	markdeck/assets/3rdparty/asciinema-player.js \
 	markdeck/assets/3rdparty/asciinema-player.css \
 	markdeck/assets/3rdparty/reveal.js \
+	markdeck/assets/3rdparty/reveal.js/css/theme/source/markdeck.scss \
 	markdeck/assets/3rdparty/impress.js \
 	jqueryemoji \
 	markdeck/helper/downloaded/trianglify-background-generator-master \
@@ -90,6 +91,8 @@ markdeck/assets/3rdparty/reveal.js:
 	mkdir -p $@
 	curl -L "https://github.com/hakimel/reveal.js/archive/$(REVEALJS_VERSION).tar.gz" | tar -C $@ --strip-components=1 --exclude test --exclude font -zxvf -
 
+markdeck/assets/3rdparty/reveal.js/css/theme/source/markdeck.scss: markdeck/assets/markdeck/css/theme/source/markdeck.scss
+	cp $^ $@
 
 markdeck/assets/3rdparty/impress.js:
 	mkdir -p $@
