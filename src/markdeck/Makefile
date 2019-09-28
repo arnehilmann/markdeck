@@ -1,0 +1,152 @@
+SHELL := /bin/bash
+
+all: .info-all render sync config pandoc
+	@echo "-------- /rerendering ---------"
+	@echo
+
+.info-all:
+	@echo "-------- rerendering ---------"
+
+
+.info-render:
+	@echo "-------- rerendering prep ---------"
+
+render: .info-render /target/assets/css/rerendering.css /target/rendered
+	@echo "-------- /rerendering prep ---------"
+	@echo
+
+/target/assets/css/rerendering.css: /markdeck/assets/markdeck/css/when-rerendering.css /target/assets/css
+	cp $< $@
+
+/target/assets/css:
+	mkdir -p $@
+
+# FIXME not suer what this is good for?
+/target/rendered:
+	mkdir -p $@
+
+
+.info-sync:
+	@echo "-------- rsync output --------"
+
+sync: .info-sync .rsync .fc-list
+	@echo "-------- /rsync ---------"
+	@echo
+
+.rsync: /markdeck/assets /markdeck/explain.html /target /target/assets/css/slides.scss /target/assets/css/render-pdf.css
+	-rsync -au /markdeck/assets /target/
+	-if [ -d /source/assets ]; then rsync -auv /source/assets /target/; fi
+	-rsync -au /markdeck/explain.html /target/
+
+.fc-list:
+	@echo
+	@echo "Know fonts:"
+	@fc-list
+
+/target/assets/css/slides.scss /target/assets/css/slides.impress.css /target/assets/css/render-pdf.css:
+	touch $@
+
+
+.info-sass:
+	@echo "-------- sass output --------"
+
+sass: .info-sass \
+	/target/assets/css/slides.css \
+	/target/assets/css/slides.impress.css \
+	/target/assets/markdeck/css/markdeck.impressjs.css \
+	/target/assets/markdeck/css/markdeck.revealjs.css \
+	.sync-custom-themes \
+	$(addprefix /target/assets/3rdparty/reveal.js/css/theme/,$(addsuffix .css,$(basename $(notdir $(wildcard /target/assets/3rdparty/reveal.js/css/theme/source/*.scss)))))
+
+	@echo "-------- /sass ---------"
+	@echo
+
+.sync-custom-themes: $(wildcard /source/assets/css/theme/source/*.scss)
+	rsync -au $^ /target/assets/3rdparty/reveal.js/css/theme/source/
+
+
+.info-config:
+	@echo "-------- config --------"
+
+config: .info-config .metadata
+	jq '. | .' < /target/.meta/config.json
+	@echo "ASCIIART_CONFIG=${ASCIIART_CONFIG}"
+	@echo "-------- /config --------"
+	@echo
+
+.metadata: /target/.meta /target/.meta/config.json
+
+/target/.meta/config.json: $(wildcard /source/slide*.md) /markdeck/note.md /markdeck/defaults.yaml
+	pandoc --template=/markdeck/metadata.template $^ > $@
+
+/target/.meta:
+	mkdir -p $@
+
+
+.info-pandoc:
+	@echo "-------- pandoc output --------"
+
+pandoc: .info-pandoc /target/index.html
+	@echo "-------- /pandoc output --------"
+	@echo
+
+/target/slides.combined.md.txt: $(wildcard /source/slide*.md)
+	-rm -f $@
+	touch $@
+	if [ -n "$^" ]; then \
+		for F in $^; do \
+			markdown-pp --exclude latexrender $$F >> $@ ; \
+			echo >> $@; \
+		done; \
+	else \
+		cp /markdeck/note.md $@; \
+	fi
+
+PANDOC_ARGS=
+ifeq ($(shell test -e /source/include-before-body && echo 1),1)
+PANDOC_ARGS="$(PANDOC_ARGS) --include-before-body /source/include-before-body"
+endif
+ifeq ($(shell test -e /source/include-after-body && echo 1),1)
+PANDOC_ARGS="$(PANDOC_ARGS) --include-after-body /source/include-after-body"
+endif
+variant=$(shell jq -r '.variant' < /target/.meta/config.json)
+
+/target/index.html.tmp: /target/slides.combined.md.txt /target/.meta/config.json /markdeck/defaults.yaml
+	pandoc \
+		-f markdown+yaml_metadata_block \
+		-t revealjs \
+		--no-highlight \
+		--wrap=preserve \
+		--standalone \
+		--template=/markdeck/template-$(variant).html \
+		--slide-level=2 \
+		--section-divs \
+		--lua-filter /markdeck/lib/skip-slide-filter.lua \
+		--filter mathjax-pandoc-filter \
+		--lua-filter /markdeck/lib/render-asciiart-filter.lua \
+		--lua-filter /markdeck/lib/render-emojis-filter.lua \
+		--lua-filter /markdeck/lib/bg-shortcut-filter.lua \
+		--lua-filter /markdeck/lib/$(variant)-shortcut-filter.lua \
+		--lua-filter /markdeck/lib/inline-svg.lua \
+		--lua-filter /markdeck/lib/font-awesome.lua \
+		$(PANDOC_ARGS) \
+		-o $@ \
+		/target/slides.combined.md.txt /markdeck/defaults.yaml 2>&1 | tee /tmp/pandoc.output
+
+
+/target/index.html: /target/index.html.tmp
+	# clear rerendering styling
+	echo "" > /target/assets/css/rerendering.css
+	cp $< $@
+
+.SECONDEXPANSION:
+/target/assets/3rdparty/reveal.js/css/theme/%.css: $$(addsuffix /%.scss,/target/assets/3rdparty/reveal.js/css/theme/source)
+	sassc $< $@
+
+/target/assets/markdeck/css/%.css /target/assets/css/%.css: $$(subst .css,.scss,$$@)
+	sassc $< $@
+
+clean:
+	rm -rf /target/.??* /target/*
+
+.PHONY: all .info-all render .info-render sync .info-sync .rsync .fc-list sass .info-sass .sync-custom-themes clean config .info-config pandoc .info-pandoc

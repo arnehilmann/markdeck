@@ -27,7 +27,6 @@ function print_usage() {
 }
 
 function show_errors() {
-    rm -f /target/index.html
     echo '<html><head></head><body><pre>' > /target/index.html
     cat /tmp/pandoc.output >> /target/index.html
     echo '</pre></body></html>' >> /target/index.html
@@ -52,117 +51,15 @@ export ASCIIART_LIBDIR=/markdeck/lib
 while true; do
     cd /target
 
-    echo "-------- rerendering ---------"
-    mkdir -p /target/assets/css/
-    cp -v /markdeck/assets/markdeck/css/when-rerendering.css /target/assets/css/rerendering.css
+    make -f /markdeck/Makefile render
 
-    [[ -d /target/rendered ]] || mkdir -p /target/rendered
+    make -f /markdeck/Makefile sync
 
-    echo "-------- rsync output --------"
-    rsync -a /markdeck/assets /target/ || :
-    touch /target/assets/css/slides.css /target/assets/css/render-pdf.css
-    [[ -d /source/assets ]] && rsync -av /source/assets /target/ || :
-    rsync -a /markdeck/explain.html /target/ || :
-    fc-list
-    echo "-------- /rsync output --------"
-    echo
+    make -f /markdeck/Makefile sass
 
-    echo "-------- sass output --------"
-    if [[ -e /source/assets/css/slides.scss ]]; then
-        sassc \
-            /source/assets/css/slides.scss \
-            /target/assets/css/slides.css || :
-    fi
-    if [[ -e /source/assets/css/theme/source/ ]]; then
-        find /source/assets/css/theme/source/ -name \*.scss | while read filename; do
-            cp "$filename" /target/assets/3rdparty/reveal.js/css/theme/source/
-            sassc \
-                /target/assets/3rdparty/reveal.js/css/theme/source/$(basename "$filename") \
-                /target/assets/3rdparty/reveal.js/css/theme/$(basename "$filename" | sed -e 's/\.scss$/.css/') || :
-        done
-    fi
-    if [[ -e /source/assets/css/slides.impress.scss ]]; then
-        sassc \
-            /source/assets/css/slides.impress.scss \
-            /target/assets/css/slides.impress.css || :
-    fi
-    sassc \
-        /markdeck/assets/markdeck/css/markdeck.revealjs.scss \
-        /target/assets/markdeck/css/markdeck.revealjs.css || :
-    sassc \
-        /markdeck/assets/3rdparty/reveal.js/css/theme/source/markdeck.scss \
-        /target/assets/3rdparty/reveal.js/css/theme/markdeck.css || :
-    sassc \
-        /markdeck/assets/markdeck/css/markdeck.impressjs.scss \
-        /target/assets/markdeck/css/markdeck.impressjs.css || :
-    echo "-------- /sass output --------"
-    echo
+    make -f /markdeck/Makefile config
 
-    echo "-------- config --------"
-    shopt -s nullglob
-    SOURCE_MD=$(echo /source/slide*.md)
-    shopt -u nullglob
-    METADATA="$(pandoc --template=/markdeck/metadata.template ${SOURCE_MD:-/markdeck/note.md} /markdeck/defaults.yaml)"
-    mkdir -p /target/.meta/
-    rm -f /target/.meta/config.json
-    echo "$METADATA" > /target/.meta/config.json
-    jq '. | .' <<<$METADATA
-    variant=$(jq -r '.variant' <<< "$METADATA")
-    echo "ASCIIART_CONFIG=$ASCIIART_CONFIG"
-    echo "-------- /config --------"
-    echo
-
-    echo "-------- pandoc output --------"
-    PANDOC_ARGS=
-    [[ -e /source/include-before-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-before-body /source/include-before-body"
-    [[ -e /source/include-after-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-after-body /source/include-after-body"
-    rm -f /target/slides.combined.md.txt
-    # cat ${SOURCE_MD:-/markdeck/note.md} > /target/slides.combined.md.txt
-    if [[ -n ${SOURCE_MD:-} ]]; then
-        for F in $SOURCE_MD; do
-            markdown-pp --exclude latexrender $F >> /target/slides.combined.md.txt
-            echo >> /target/slides.combined.md.txt
-        done
-    else
-        cp /markdeck/note.md /target/slides.combined.md.txt
-    fi
-
-
-    template=/markdeck/template-${variant}.html
-    if pandoc \
-        -f markdown+yaml_metadata_block \
-        -t revealjs \
-        --no-highlight \
-        --wrap=preserve \
-        --standalone \
-        --template=$template \
-        --slide-level=2 \
-        --section-divs \
-        --lua-filter /markdeck/lib/skip-slide-filter.lua \
-        --filter mathjax-pandoc-filter \
-        --lua-filter /markdeck/lib/render-asciiart-filter.lua \
-        --lua-filter /markdeck/lib/render-emojis-filter.lua \
-        --lua-filter /markdeck/lib/bg-shortcut-filter.lua \
-        --lua-filter /markdeck/lib/${variant}-shortcut-filter.lua \
-        --lua-filter /markdeck/lib/inline-svg.lua \
-        --lua-filter /markdeck/lib/font-awesome.lua \
-        $PANDOC_ARGS \
-        -o /target/index.html.tmp \
-        /target/slides.combined.md.txt /markdeck/defaults.yaml 2>&1 | tee /tmp/pandoc.output;
-    then
-        if [[ -e /target/index.html.tmp ]]; then
-            echo "" > /target/assets/css/rerendering.css
-            mv /target/index.html.tmp /target/index.html
-        else
-            show_errors
-        fi
-    else
-        show_errors
-    fi
-    echo "-------- /pandoc output --------"
-    echo
-    echo "-------- /rerendering ----------"
-    echo
+    make -f /markdeck/Makefile pandoc || show_errors
 
     $ONCE && break
 
