@@ -143,6 +143,11 @@ pandoc: .info-pandoc /target/index.html
 /target/assets/markdeck/css/%.css /target/assets/css/%.css: $$(subst .css,.scss,$$@)
 	sassc $< $@
 
+waitforchanges: $(wildcard /source/slide*.md) /source/assets $(wildcard /source/include-before-body) $(wildcard /source/include-after-body)
+	# TODO currently inotify doesn't work on mounted volumes :-/
+	inotifywait -e modify,create,delete,move,attrib -r $^
+
+
 clean:
 	rm -rf /target/.??* /target/*
 

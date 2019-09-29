@@ -6,6 +6,7 @@ ARG pandoc_version
 ARG version
 ARG motto
 
+# TODO try watchman to get inotify working. Currently watchman in alpine edge ..
 RUN apk add \
     make bash curl \
     graphviz inotify-tools rsync \
