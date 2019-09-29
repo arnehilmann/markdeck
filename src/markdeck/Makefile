@@ -21,7 +21,6 @@ render: .info-render /target/assets/css/rerendering.css /target/rendered
 /target/assets/css:
 	mkdir -p $@
 
-# FIXME not suer what this is good for?
 /target/rendered:
 	mkdir -p $@
 
@@ -94,7 +93,7 @@ pandoc: .info-pandoc /target/index.html
 	@echo "-------- /pandoc output --------"
 	@echo
 
-/target/slides.combined.md.txt: $(wildcard /source/slide*.md)
+/target/.meta/slides.combined.md.txt: $(wildcard /source/slide*.md)
 	-rm -f $@
 	touch $@
 	if [ -n "$^" ]; then \
@@ -106,7 +105,7 @@ pandoc: .info-pandoc /target/index.html
 		cp /markdeck/note.md $@; \
 	fi
 
-/target/index.html.tmp: /target/slides.combined.md.txt /target/.meta/config.json /markdeck/defaults.yaml
+/target/.meta/index.html: /target/.meta/slides.combined.md.txt /target/.meta/config.json /markdeck/defaults.yaml
 	PANDOC_ARGS=; \
 	[ -e /source/include-before-body ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-before-body /source/include-before-body"; \
 	[ -e /source/include-after-body ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-after-body /source/include-after-body"; \
@@ -130,12 +129,12 @@ pandoc: .info-pandoc /target/index.html
 		--lua-filter /markdeck/lib/font-awesome.lua \
 		$${PANDOC_ARGS} \
 		-o $@ \
-		/target/slides.combined.md.txt /markdeck/defaults.yaml 2>&1 | tee /tmp/pandoc.output
+		$< /markdeck/defaults.yaml 2>&1 | tee /target/.meta/pandoc.output
 
-/target/index.html: /target/index.html.tmp
+/target/index.html: /target/.meta /target/.meta/index.html
 	# clear rerendering styling
 	echo "" > /target/assets/css/rerendering.css
-	cp $< $@
+	cp /target/.meta/index.html $@
 
 .SECONDEXPANSION:
 /target/assets/3rdparty/reveal.js/css/theme/%.css: $$(addsuffix /%.scss,/target/assets/3rdparty/reveal.js/css/theme/source)

@@ -28,11 +28,11 @@ function print_usage() {
 
 function show_errors() {
     echo '<html><head></head><body><pre>' > /target/index.html
-    cat /tmp/pandoc.output >> /target/index.html
+    cat /target/.meta/pandoc.output >> /target/index.html
     echo '</pre></body></html>' >> /target/index.html
     echo -e "${esc}[37m${esc}[43m"
     echo -e "\npandoc crashed\n"
-    cat /tmp/pandoc.output
+    cat /target/.meta/pandoc.output
     echo -e "${esc}[0m"
     sleep 4
 }
