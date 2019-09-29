@@ -1,0 +1,289 @@
+#!/bin/bash
+# combined script that includes the docker-compose configuration
+set -ue
+
+BUILD=deck
+VERSION=0.1
+
+printHelp () {
+    echo "$(basename "$0") [-h|--help|-v|--version] [command]"
+    echo
+    echo "Commands:"
+    echo -e "\tstart: start markdeck server in the current folder (default)"
+    echo -e "\tstop: stop markdeck server"
+    echo -e "\tpull: pull docker images (this only has to happen once, at the start it will happen automatically)"
+    echo -e "\tupdate: update markdeck executable"
+    echo -e "\tscaffold: create an example presentation in the current folder"
+}
+
+printVersion () {
+    echo "$(basename "$0") v${VERSION}"
+}
+
+testOwnership () {
+    local dir="$1"
+    if [ $(stat -c %U "${dir}") != "${USER}" ]; then
+        echo "[ERR] The output folder '${dir}' MUST be owned by you!" 1>&2
+        echo "[ERR] Please change ownership to yourself ('sudo chown ${USER} ${dir}'), or" 1>&2
+        echo "[ERR] remove '${dir}' completely ('sudo rm -rf ${dir}')." 1>&2
+        exit 1
+    fi
+}
+
+createFolder () {
+    mkdir -p "${1}"
+}
+
+createComposeFile () {
+    tmpfile=$(mktemp)
+    cat > "${tmpfile}" << EOF
+version: "3.2"
+
+services:
+  markdeck:
+    image: "arne/markdeck-pandoc:0.34"
+    user: "\$MARKDECK_USER"
+    volumes:
+      - type: bind
+        source: $PWD/
+        target: /source
+        read_only: true
+      - type: bind
+        source: $PWD/$BUILD
+        target: /target
+
+  web:
+    image: "arne/markdeck-liveserver:0.2"
+    ports:
+      - "8080:8080"
+    volumes:
+      - type: bind
+        source: $PWD/$BUILD
+        target: /target
+    depends_on: [markdeck]
+
+  pdf:
+    image: "arne/markdeck-decktape:0.5"
+    volumes:
+      - type: bind
+        source: $PWD/$BUILD
+        target: /slides
+    shm_size: 1G
+    depends_on: [markdeck, web]
+
+  standalone:
+    image: "arne/markdeck-standalone:0.2"
+    volumes:
+      - type: bind
+        source: $PWD/$BUILD
+        target: /target
+    depends_on: [web]
+
+  helper:
+    image: "arne/markdeck-helper:0.2"
+    ports:
+      - "8081:8081"
+
+  a2sketch:
+    image: "arne/a2sketch:0.11"
+    volumes:
+      - type: bind
+        source: $PWD/a2s-custom-types
+        target: /custom-types
+        read_only: true
+EOF
+
+    # trap "rm -f '${tmpfile}'; exit" EXIT SIGHUP SIGTERM SIGINT SIGKILL SIGQUIT
+    trap "echo trap triggered 1>&2" EXIT SIGHUP SIGTERM SIGINT SIGKILL SIGQUIT
+    echo "${tmpfile}"
+}
+
+dockerCompose () {
+    composefile="$(createComposeFile)"
+    docker-compose -f "${composefile}" "${@}"
+}
+
+update () {
+    curl -# -S -f -L -O "${0}" https://raw.githubusercontent.com/arnehilmann/markdeck/master/markdeck
+    chmod a+x "${0}"
+    echo "Updated from $(printVersion) to $("${0}" --version)"
+}
+
+scaffold () {
+    mkdir -p assets/css
+    cat > slides.md << "EOF"
+---
+title: markdeck scaffold
+pdf: markdeck-scaffold.pdf
+slideNumber: true
+controls: true
+---
+
+# first slide {bg=#eee}
+
+made with [markdeck](https://arnehilmann.github.io/markdeck/){target="_blank"}
+
+```render_a2s
+#----------.
+|[markdeck]|
+'----------#
+[markdeck]: {"fill": "Teal", "fillStyle": "solid"}
+```
+
+<small>
+interesting links:
+  [your main deck](/){target="_parent"}
+• [markdown/slide side-by-side](/explain.html)
+• [utilities](//localhost:8081/){target="_blank"}
+</small>
+
+⚪ ⚪ ⚪
+EOF
+
+    cat > assets/explain.html << "EOF"
+<html>
+<head>
+    <style>
+        body {
+            margin: 0;
+        }
+        .box {
+            display:inline-block;
+            padding: 0;
+        }
+        .deck {
+            width: 60%;
+        }
+        .source {
+            width: 38%;
+            border-left: 4px dashed #ccc;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="box deck">
+        <iframe
+            id="deck"
+            src="index.html?in_explain"
+            style="border: 0;"
+            frameborder="0"
+            scrolling="no" height="100%" width="100%" align="left" ></iframe>
+    </div>
+    <div class="box source">
+        <iframe
+            id="source"
+            src="slides.combined.md.txt"
+            frameborder="0"
+            height="100%" width="100%" align="left" ></iframe>
+    </div>
+
+    <script>
+        var deck = document.getElementById('deck');
+        var source = document.getElementById('source');
+
+        var split_source = function(doc) {
+            // console.log(doc);
+            var myText = doc.getElementsByTagName("pre")[0];
+            // console.log(myText);
+            var lines = myText.innerHTML.split("\n");
+            var numLines = lines.length;
+            var i;
+            var currentSection = undefined;
+            var header = false;
+
+            window.sections = Array();
+
+            for (i = 0; i < numLines; i++) {
+                var line = lines[i];
+                // console.log("line: " + line);
+                if (line.indexOf('---') == 0) {
+                    header = !header;
+                    continue;
+                }
+                if (header) {
+                    continue;
+                }
+                if (line.indexOf('# ') == 0) {
+                    if (currentSection) {
+                        window.sections.push(currentSection.join("\n"));
+                    }
+                    // console.log("slide header found: " + line);
+                    currentSection = Array();
+                    currentSection.push('<pre>');
+                    currentSection.push(line);
+                } else {
+                    if (currentSection) {
+                        currentSection.push(line);
+                    }
+                }
+            }
+            window.sections.push(currentSection.join("\n"));
+            console.log(window.sections);
+        }
+
+        document.getElementById('deck').onload = function(event) {
+            var sourceDoc = source.contentDocument;
+            split_source(sourceDoc.documentElement);
+            var deckWindow = deck.contentWindow;
+            var update_source = function() {
+                // console.log("updating source view");
+                var slideNr = deckWindow.Reveal.getIndices().h;
+                source.contentDocument.documentElement.innerHTML = '<div style="padding-left: 1em; position: relative; top: 50%; transform: translateY(-50%);"><em>slide source</em></br></br>' + window.sections[slideNr] + "</div>";
+            };
+            update_source();
+            deckWindow.Reveal.addEventListener('slidechanged', update_source);
+            deckWindow.focus();
+        };
+    </script>
+</body>
+</html>
+EOF
+
+    cat > assets/css/slides.scss << "EOF"
+/* put your styles in this file */
+EOF
+
+    echo "Yay, go ahead and create you presentation!"
+    echo "Write the slides in Markdown in slides.md"
+    echo "Store images and styles in assets/"
+    echo "Run '$(basename "${0}")' to compile the presentation"
+}
+
+startMarkdeck () {
+    createFolder "${BUILD}"
+    testOwnership "${BUILD}"
+    MARKDECK_USER=$(stat -c %u:%g "${BUILD}") dockerCompose up
+}
+
+if [ $# -ge 1 ]; then
+    case "${1}" in
+        'scaffold' )
+            scaffold
+            ;;
+        'pull' )
+            dockerCompose pull
+            ;;
+        'stop' )
+            dockerCompose down
+            ;;
+        'update' )
+            update
+            ;;
+        '-h' | '--help' )
+            printHelp
+            ;;
+        '-v' | '--version' )
+            printVersion
+            ;;
+        'start' )
+            startMarkdeck
+            ;;
+        * )
+            printHelp
+            exit 1
+            ;;
+    esac
+else
+    startMarkdeck
+fi
