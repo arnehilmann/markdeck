@@ -140,8 +140,10 @@ interesting links:
 
 ⚪ ⚪ ⚪
 EOF
+    if
 
-    cat > assets/explain.html << "EOF"
+    if [ ! -e assets/explain.html ]; then
+        cat > assets/explain.html << "EOF"
 <html>
 <head>
     <style>
