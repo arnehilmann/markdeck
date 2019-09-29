@@ -33,10 +33,14 @@ sync: .info-sync .rsync .fc-list
 	@echo "-------- /rsync ---------"
 	@echo
 
-.rsync: /markdeck/assets /markdeck/explain.html /target /target/assets/css/slides.scss /target/assets/css/render-pdf.css
-	-rsync -au /markdeck/assets /target/
-	-if [ -d /source/assets ]; then rsync -auv /source/assets /target/; fi
-	-rsync -au /markdeck/explain.html /target/
+.rsync: /target .rsync-sync /target/assets/css/slides.scss /target/assets/css/render-pdf.css
+
+.rsync-sync: /markdeck/assets $(wildcard /source/assets) /markdeck/explain.html
+	# FIXME the dynamically generated scss and css files are deleted by rsync.
+	# If there was a way to separate the files coming from rsync and the
+	# dynamically generated files this would be ideal
+	# -rsync -auv --delete $^ /target/
+	-rsync -auv $^ /target/
 
 .fc-list:
 	@echo
@@ -143,4 +147,4 @@ pandoc: .info-pandoc /target/index.html
 clean:
 	rm -rf /target/.??* /target/*
 
-.PHONY: all .info-all render .info-render sync .info-sync .rsync .fc-list sass .info-sass .sync-custom-themes clean config .info-config pandoc .info-pandoc
+.PHONY: all .info-all render .info-render sync .info-sync .rsync .rsync-sync .fc-list sass .info-sass .sync-custom-themes clean config .info-config pandoc .info-pandoc
