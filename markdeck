@@ -4,6 +4,7 @@ set -ue
 
 BUILD=deck
 VERSION=0.1
+PORT=8080
 
 printHelp () {
     echo "$(basename "$0") [-h|--help|-v|--version] [command]"
@@ -45,20 +46,20 @@ services:
     user: "\$MARKDECK_USER"
     volumes:
       - type: bind
-        source: $PWD/
+        source: ${PWD}/
         target: /source
         read_only: true
       - type: bind
-        source: $PWD/$BUILD
+        source: ${PWD}/${BUILD}
         target: /target
 
   web:
     image: "arne/markdeck-liveserver:0.2"
     ports:
-      - "8080:8080"
+      - "${PORT}:8080"
     volumes:
       - type: bind
-        source: $PWD/$BUILD
+        source: ${PWD}/${BUILD}
         target: /target
     depends_on: [markdeck]
 
@@ -66,7 +67,7 @@ services:
     image: "arne/markdeck-decktape:0.5"
     volumes:
       - type: bind
-        source: $PWD/$BUILD
+        source: ${PWD}/${BUILD}
         target: /slides
     shm_size: 1G
     depends_on: [markdeck, web]
@@ -75,20 +76,20 @@ services:
     image: "arne/markdeck-standalone:0.2"
     volumes:
       - type: bind
-        source: $PWD/$BUILD
+        source: ${PWD}/${BUILD}
         target: /target
     depends_on: [web]
 
   helper:
     image: "arne/markdeck-helper:0.2"
     ports:
-      - "8081:8081"
+      - "$((${PORT}+1)):8081"
 
   a2sketch:
     image: "arne/a2sketch:0.11"
     volumes:
       - type: bind
-        source: $PWD/a2s-custom-types
+        source: ${PWD}/a2s-custom-types
         target: /custom-types
         read_only: true
 EOF
