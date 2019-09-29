@@ -1,7 +1,6 @@
-# markdeck - presentations as code</br>
+# markdeck - presentations as code
 
 author cool slide decks, text-only, offline-ready, collaborative
-
 
 ![](https://img.shields.io/github/forks/arnehilmann/markdeck.svg)
 ![](https://img.shields.io/github/stars/arnehilmann/markdeck.svg)
@@ -33,15 +32,16 @@ or the [showcase](https://arnehilmann.github.io/markdeck/showcase/).
 
 ## install markdeck, tl;dr
 
-You need `bash`, `curl`, `docker-compose` and an empty directory, then run the following command:
+You need `bash`, `curl`, and `docker-compose`, then run the following
+commands that will download the docker images:
 ```
-curl https://raw.githubusercontent.com/arnehilmann/markdeck/master/scaffold | bash
+curl -LO https://raw.githubusercontent.com/arnehilmann/markdeck/master/markdeck
+chmod a+x markdeck
+./markdeck pull
 ```
 
-This will download a minimal setup, download all needed docker images,
-then markdeck gets started...
-
-Use `Ctrl-C` to stop markdeck, and `./start`, `./stop` or `./update-markdeck` to do the suitable things.
+The `markdeck` script can be stored in a folder in `$PATH` so that it
+can be executed from everywhere in the file system.
 
 
 ## documentation
@@ -51,19 +51,22 @@ Use `Ctrl-C` to stop markdeck, and `./start`, `./stop` or `./update-markdeck` to
 
 ## how to start from scratch
 
-```
-mkdir my-slides && cd my-slides
-curl -O https://raw.githubusercontent.com/arnehilmann/markdeck/master/scaffold
-./scaffold
-```
+Run the following command to create an empty presentation (if markdeck
+is not stored in `$PATH` prefix the command with `./`):
 
 ```
-open http://localhost:8080
+markdeck scaffold
 ```
 
+Run the following command to start markdeck:
+
 ```
+markdeck
+```
+
+Open the browser at `http://localhost:8080`.
+
 # edit slides.md, add assets/, consult documentation, ...
-```
 
 
 ## how does this work
@@ -89,7 +92,7 @@ at the [documentation](DOCUMENTATION.md).
 [asciitosvg](https://github.com/dhobsd/asciitosvg),
 [graphviz](https://www.graphviz.org/),
 [asciinema](https://asciinema.org/),
-[decktape](https://github.com/astefanutti/decktape), 
+[decktape](https://github.com/astefanutti/decktape),
 [vega-lite](https://vega.github.io/vega-lite/),
 [mathjax-pandoc-filter](https://www.npmjs.com/package/mathjax-pandoc-filter), and
 [font-awesome](https://fontawesome.com/).
