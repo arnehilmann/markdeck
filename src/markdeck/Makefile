@@ -102,23 +102,18 @@ pandoc: .info-pandoc /target/index.html
 		cp /markdeck/note.md $@; \
 	fi
 
-PANDOC_ARGS=
-ifeq ($(shell test -e /source/include-before-body && echo 1),1)
-PANDOC_ARGS="$(PANDOC_ARGS) --include-before-body /source/include-before-body"
-endif
-ifeq ($(shell test -e /source/include-after-body && echo 1),1)
-PANDOC_ARGS="$(PANDOC_ARGS) --include-after-body /source/include-after-body"
-endif
-variant=$(shell jq -r '.variant' < /target/.meta/config.json)
-
 /target/index.html.tmp: /target/slides.combined.md.txt /target/.meta/config.json /markdeck/defaults.yaml
+	PANDOC_ARGS=; \
+	[ -e /source/include-before-body ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-before-body /source/include-before-body"; \
+	[ -e /source/include-after-body ] && PANDOC_ARGS="$${PANDOC_ARGS} --include-after-body /source/include-after-body"; \
+	variant="$$(jq -r '.variant' < /target/.meta/config.json)"; \
 	pandoc \
 		-f markdown+yaml_metadata_block \
 		-t revealjs \
 		--no-highlight \
 		--wrap=preserve \
 		--standalone \
-		--template=/markdeck/template-$(variant).html \
+		--template=/markdeck/template-$${variant}.html \
 		--slide-level=2 \
 		--section-divs \
 		--lua-filter /markdeck/lib/skip-slide-filter.lua \
@@ -126,13 +121,12 @@ variant=$(shell jq -r '.variant' < /target/.meta/config.json)
 		--lua-filter /markdeck/lib/render-asciiart-filter.lua \
 		--lua-filter /markdeck/lib/render-emojis-filter.lua \
 		--lua-filter /markdeck/lib/bg-shortcut-filter.lua \
-		--lua-filter /markdeck/lib/$(variant)-shortcut-filter.lua \
+		--lua-filter /markdeck/lib/$${variant}-shortcut-filter.lua \
 		--lua-filter /markdeck/lib/inline-svg.lua \
 		--lua-filter /markdeck/lib/font-awesome.lua \
-		$(PANDOC_ARGS) \
+		$${PANDOC_ARGS} \
 		-o $@ \
 		/target/slides.combined.md.txt /markdeck/defaults.yaml 2>&1 | tee /tmp/pandoc.output
-
 
 /target/index.html: /target/index.html.tmp
 	# clear rerendering styling
