@@ -41,11 +41,11 @@ else
    io.stderr:write(err)
 end
 
-local outputdir=io.open("rendered","r")
+local outputdir=io.open("assets/rendered","r")
 if outputdir~=nil then
     io.close(outputdir)
 else
-    os.execute("mkdir rendered")
+    os.execute("mkdir assets/rendered")
 end
 
 LIBDIR=os.getenv("ASCIIART_LIBDIR") or "lib"
@@ -128,7 +128,7 @@ images = {}
 
 
 function Cleanup(doc)
-    local pfile = io.popen('ls -a rendered/*.png rendered/*.svg 2> /dev/null')
+    local pfile = io.popen('ls -a assets/rendered/*.png assets/rendered/*.svg 2> /dev/null')
     for fname in pfile:lines() do
         if not images[fname] then
             io.stderr:write("removing obsolete '" .. fname .. "'\n")
@@ -146,7 +146,7 @@ function Render(elem, attr)
         if elem.classes[1] == format then
             local cmd, filetype = render_cmd(elem.text, elem.attributes or {})
             local mimetype = "image/" .. filetype
-            local fname = "rendered/" .. format .. "-" .. pandoc.sha1(cmd[1] .. table.concat(cmd[2], " ") .. cmd[3]) .. "." .. filetype
+            local fname = "assets/rendered/" .. format .. "-" .. pandoc.sha1(cmd[1] .. table.concat(cmd[2], " ") .. cmd[3]) .. "." .. filetype
             local data = nil
 
             local f=io.open(fname,"rb")

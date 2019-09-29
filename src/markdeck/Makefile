@@ -11,7 +11,7 @@ all: .info-all render sync config pandoc
 .info-render:
 	@echo "-------- rerendering prep ---------"
 
-render: .info-render /target/assets/css/rerendering.css /target/rendered
+render: .info-render /target/assets/css/rerendering.css /target/assets/rendered
 	@echo "-------- /rerendering prep ---------"
 	@echo
 
@@ -21,7 +21,7 @@ render: .info-render /target/assets/css/rerendering.css /target/rendered
 /target/assets/css:
 	mkdir -p $@
 
-/target/rendered:
+/target/assets/rendered:
 	mkdir -p $@
 
 
