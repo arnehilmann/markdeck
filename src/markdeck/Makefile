@@ -34,7 +34,7 @@ sync: .info-sync .rsync .fc-list
 
 .rsync: /target .rsync-sync /target/assets/css/slides.scss /target/assets/css/render-pdf.css
 
-.rsync-sync: /markdeck/assets $(wildcard /source/assets) /markdeck/explain.html
+.rsync-sync: /markdeck/assets $(wildcard /source/assets)
 	# FIXME the dynamically generated scss and css files are deleted by rsync.
 	# If there was a way to separate the files coming from rsync and the
 	# dynamically generated files this would be ideal
