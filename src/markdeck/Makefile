@@ -145,7 +145,8 @@ pandoc: .info-pandoc /target/index.html
 
 waitforchanges: $(wildcard /source/slide*.md) /source/assets $(wildcard /source/include-before-body) $(wildcard /source/include-after-body)
 	# TODO currently inotify doesn't work on mounted volumes :-/
-	inotifywait -e modify,create,delete,move,attrib -r $^
+	# inotifywait -e modify,create,delete,move,attrib -r $^
+	/markdeck/wait-for-changes
 
 
 clean:

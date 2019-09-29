@@ -51,15 +51,7 @@ export ASCIIART_LIBDIR=/markdeck/lib
 while true; do
     cd /target
 
-    make -f /markdeck/Makefile render
-
-    make -f /markdeck/Makefile sync
-
-    make -f /markdeck/Makefile sass
-
-    make -f /markdeck/Makefile config
-
-    make -f /markdeck/Makefile pandoc || show_errors
+    make -f /markdeck/Makefile all || show_errors
 
     $ONCE && break
 
@@ -71,8 +63,7 @@ while true; do
     sleep .5
     print_usage
 
-    # make -f /markdeck/Makefile waitforchanges
-    /markdeck/wait-for-changes
+    make -f /markdeck/Makefile waitforchanges
 
     echo -e "\n\n\n\n\n\n\n\n\n\n"
 done
