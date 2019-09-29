@@ -93,13 +93,12 @@ services:
         read_only: true
 EOF
 
-    # trap "rm -f '${tmpfile}'; exit" EXIT SIGHUP SIGTERM SIGINT SIGKILL SIGQUIT
-    trap "echo trap triggered 1>&2" EXIT SIGHUP SIGTERM SIGINT SIGKILL SIGQUIT
     echo "${tmpfile}"
 }
 
 dockerCompose () {
     composefile="$(createComposeFile)"
+    trap "rm -f '${composefile}'; exit" EXIT SIGHUP SIGTERM SIGINT SIGKILL SIGQUIT
     docker-compose -f "${composefile}" "${@}"
 }
 
