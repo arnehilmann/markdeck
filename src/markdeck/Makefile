@@ -143,7 +143,7 @@ pandoc: .info-pandoc /target/index.html
 /target/assets/markdeck/css/%.css /target/assets/css/%.css: $$(subst .css,.scss,$$@)
 	sassc $< $@
 
-waitforchanges: $(wildcard /source/slide*.md) /source/assets $(wildcard /source/include-before-body) $(wildcard /source/include-after-body)
+wait-for-changes: $(wildcard /source/slide*.md) /source/assets $(wildcard /source/include-before-body) $(wildcard /source/include-after-body)
 	# TODO currently inotify doesn't work on mounted volumes :-/
 	# inotifywait -e modify,create,delete,move,attrib -r $^
 	/markdeck/wait-for-changes
@@ -152,4 +152,4 @@ waitforchanges: $(wildcard /source/slide*.md) /source/assets $(wildcard /source/
 clean:
 	rm -rf /target/.??* /target/*
 
-.PHONY: all .info-all render .info-render sync .info-sync .rsync .rsync-sync .fc-list sass .info-sass .sync-custom-themes clean config .info-config pandoc .info-pandoc
+.PHONY: all .info-all render .info-render sync .info-sync .rsync .rsync-sync .fc-list sass .info-sass .sync-custom-themes clean config .info-config pandoc .info-pandoc wait-for-changes
