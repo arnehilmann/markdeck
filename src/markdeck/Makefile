@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-build: .info-build render sync config pandoc
+build: .info-build render sync sass config pandoc
 	@echo "-------- /rerendering ---------"
 	@echo
 
