@@ -110,8 +110,10 @@ update () {
 }
 
 scaffold () {
-    mkdir -p assets/css
     if [ ! -e slides.md ]; then
+        mkdir -p assets/css
+
+        echo "Creating slides.md"
         cat > slides.md << "EOF"
 ---
 title: markdeck scaffold
@@ -140,10 +142,10 @@ interesting links:
 
 ⚪ ⚪ ⚪
 EOF
-    if
 
-    if [ ! -e assets/explain.html ]; then
-        cat > assets/explain.html << "EOF"
+        if [ ! -e assets/explain.html ]; then
+            echo "Creating assets/explain.html"
+            cat > assets/explain.html << "EOF"
 <html>
 <head>
     <style>
@@ -242,18 +244,23 @@ EOF
 </body>
 </html>
 EOF
-    fi
+        fi
 
-    if [ ! -e assets/css/slides.scss ]; then
-        cat > assets/css/slides.scss << "EOF"
+        if [ ! -e assets/css/slides.scss ]; then
+            echo "Creating assets/css/slides.scss"
+            cat > assets/css/slides.scss << "EOF"
 /* put your styles in this file */
 EOF
-    fi
+        fi
 
-    echo "Yay, go ahead and create you presentation!"
-    echo "Write the slides in Markdown in slides.md"
-    echo "Store images and styles in assets/"
-    echo "Run '$(basename "${0}")' to compile the presentation"
+        echo "Yay, go ahead and create you presentation!"
+        echo "Write the slides in slides.md"
+        echo "Store images and styles in assets/"
+        echo "Run '$(basename "${0}")' to compile the presentation"
+    else
+        echo "No scaffolding needed, there's already a presentation in this folder (slides.md)"
+        echo "Run '$(basename "${0}")' to compile the presentation"
+    fi
 }
 
 startMarkdeck () {
