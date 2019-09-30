@@ -1,10 +1,10 @@
 SHELL := /bin/bash
 
-all: .info-all render sync config pandoc
+build: .info-build render sync config pandoc
 	@echo "-------- /rerendering ---------"
 	@echo
 
-.info-all:
+.info-build:
 	@echo "-------- rerendering ---------"
 
 
@@ -152,4 +152,4 @@ wait-for-changes: $(wildcard /source/slide*.md) /source/assets $(wildcard /sourc
 clean:
 	rm -rf /target/.??* /target/*
 
-.PHONY: all .info-all render .info-render sync .info-sync .rsync .rsync-sync .fc-list sass .info-sass .sync-custom-themes clean config .info-config pandoc .info-pandoc wait-for-changes
+.PHONY: build .info-build render .info-render sync .info-sync .rsync .rsync-sync .fc-list sass .info-sass .sync-custom-themes clean config .info-config pandoc .info-pandoc wait-for-changes

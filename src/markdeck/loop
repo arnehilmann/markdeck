@@ -51,7 +51,7 @@ export ASCIIART_LIBDIR=/markdeck/lib
 while true; do
     cd /target
 
-    make -f /markdeck/Makefile all || show_errors
+    make -f /markdeck/Makefile build || show_errors
 
     $ONCE && break
 
