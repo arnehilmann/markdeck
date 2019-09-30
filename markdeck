@@ -106,15 +106,16 @@ dockerCompose () {
 update () {
     curl -# -S -f -L -O "${0}" https://raw.githubusercontent.com/arnehilmann/markdeck/master/markdeck
     chmod a+x "${0}"
-    echo "Updated from $(printVersion) to $("${0}" --version)"
+    echo "Updated from $(printVersion) to $("${0}" --version)."
 }
 
 scaffold () {
-    if [ ! -e slides.md ]; then
+    if ! isPresentationFolder; then
         mkdir -p assets/css
 
-        echo "Creating slides.md"
-        cat > slides.md << "EOF"
+        if [ ! -e slides.md ]; then
+            echo "Creating slides.md."
+            cat > slides.md << "EOF"
 ---
 title: markdeck scaffold
 pdf: markdeck-scaffold.pdf
@@ -142,9 +143,10 @@ interesting links:
 
 ⚪ ⚪ ⚪
 EOF
+        fi
 
         if [ ! -e assets/explain.html ]; then
-            echo "Creating assets/explain.html"
+            echo "Creating assets/explain.html."
             cat > assets/explain.html << "EOF"
 <html>
 <head>
@@ -247,23 +249,37 @@ EOF
         fi
 
         if [ ! -e assets/css/slides.scss ]; then
-            echo "Creating assets/css/slides.scss"
+            echo "Creating assets/css/slides.scss."
             cat > assets/css/slides.scss << "EOF"
 /* put your styles in this file */
 EOF
         fi
 
         echo "Yay, go ahead and create you presentation!"
-        echo "Write the slides in slides.md"
-        echo "Store images and styles in assets/"
-        echo "Run '$(basename "${0}")' to compile the presentation"
+        echo "Write the slides in slides.md."
+        echo "Store images and styles in assets/."
+        echo "Run '$(basename "${0}")' to compile the presentation."
     else
-        echo "No scaffolding needed, there's already a presentation in this folder (slides.md)"
-        echo "Run '$(basename "${0}")' to compile the presentation"
+        echo "No scaffolding needed, there's already a presentation in this folder (slides.md)."
+        echo "Run '$(basename "${0}")' to compile the presentation."
+        return 1
     fi
 }
 
+isPresentationFolder () {
+    shopt -s nullglob
+    res=1
+    [ -n "$(echo ${1:-.}/slide*.md)" ] && res=0
+    shopt -u nullglob
+    return $res
+}
+
 startMarkdeck () {
+    if ! isPresentationFolder; then
+        echo "This folder doesn't contain a markdeck presentation." 1>&2
+        echo "Run '$(basename "${0}") scaffold' to create one." 1>&2
+        return 1
+    fi
     createFolder "${BUILD}"
     testOwnership "${BUILD}"
     MARKDECK_USER=$(stat -c %u:%g "${BUILD}") dockerCompose up
@@ -300,3 +316,4 @@ if [ $# -ge 1 ]; then
 else
     startMarkdeck
 fi
+exit $?
