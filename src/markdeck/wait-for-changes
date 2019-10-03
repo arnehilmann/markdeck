@@ -2,7 +2,11 @@
 set -e -E -u
 
 SOURCES="/source/slide*.md $(find /source/assets -type d) /source/include-before-body /source/include-after-body"
-TARGET="$(mktemp)"
+TARGET="${1}"
+
+if [ ! -e "${TARGET}" ]; then
+    exit 1
+fi
 
 last_sources=$(echo $SOURCES)
 no_change=true
@@ -21,5 +25,5 @@ while $no_change; do
     done
     $no_change && sleep 1
 done
-rm -f "${TARGET}"
+
 exit 0

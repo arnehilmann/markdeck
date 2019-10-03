@@ -1,3 +1,5 @@
+#!/usr/bin/env make -f
+
 SHELL := /bin/bash
 
 build: .info-build render sync sass config pandoc
@@ -146,7 +148,7 @@ pandoc: .info-pandoc /target/index.html
 wait-for-changes: $(wildcard /source/slide*.md) /source/assets $(wildcard /source/include-before-body) $(wildcard /source/include-after-body)
 	# TODO currently inotify doesn't work on mounted volumes :-/
 	# inotifywait -e modify,create,delete,move,attrib -r $^
-	/markdeck/wait-for-changes
+	/markdeck/wait-for-changes "$(WAIT_REFERENCE)"
 
 
 clean:

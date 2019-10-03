@@ -48,8 +48,12 @@ fi
 export ASCIIART_CONFIG
 export ASCIIART_LIBDIR=/markdeck/lib
 
+export WAIT_REFERENCE="$(mktemp)"
+
 while true; do
     cd /target
+
+    touch "${WAIT_REFERENCE}"
 
     make -f /markdeck/Makefile build || show_errors
 
@@ -67,5 +71,7 @@ while true; do
 
     echo -e "\n\n\n\n\n\n\n\n\n\n"
 done
+
+rm -f "${WAIT_REFERENCE}"
 
 echo "done."
