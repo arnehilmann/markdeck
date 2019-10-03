@@ -1,2 +1,0 @@
-#!/bin/sh
-curl https://raw.githubusercontent.com/arnehilmann/markdeck/master/scaffold|bash
