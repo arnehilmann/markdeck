@@ -43,7 +43,7 @@ sync: .info-sync .rsync .fc-list
 
 .fc-list:
 	@echo
-	@echo "Know fonts:"
+	@echo "Known fonts:"
 	@fc-list
 
 /target/assets/css/slides.scss /target/assets/css/slides.impress.css /target/assets/css/render-pdf.css:
