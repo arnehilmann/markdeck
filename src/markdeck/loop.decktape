@@ -42,7 +42,7 @@ while true; do
 
         echo "PDF rendering finished."
     else
-        echo "No PDF specified, skip rendering."
+        echo "No PDF output file specified, skip rendering."
     fi
     sleep 1
 
