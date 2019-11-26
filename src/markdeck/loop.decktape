@@ -43,6 +43,7 @@ while true; do
         echo "pdf rendering finished"
     fi
     sleep 1
-    [ /slides/index.html -nt /slides/.meta/pdf_rendered ] && continue
+
+    [ -e /slides/index.html  ] && [ -e /slides/.meta/pdf_rendered ] && [ /slides/index.html -nt /slides/.meta/pdf_rendered ] && continue
     inotifywait -qq /slides/index.html
 done
