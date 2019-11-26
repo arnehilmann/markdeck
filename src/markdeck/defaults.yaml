@@ -16,7 +16,7 @@ margin: 0.1
 minScale: 0.2
 maxScale: 1.5
 
-markdeckFooter: true
+markdeckFooter: false
 
 standalone:
 
