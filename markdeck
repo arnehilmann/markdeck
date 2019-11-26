@@ -65,6 +65,7 @@ services:
 
   pdf:
     image: "arne/markdeck-decktape:0.5"
+    user: "\$MARKDECK_USER"
     volumes:
       - type: bind
         source: ${PWD}/${BUILD}
@@ -74,6 +75,7 @@ services:
 
   standalone:
     image: "arne/markdeck-standalone:0.2"
+    user: "\$MARKDECK_USER"
     volumes:
       - type: bind
         source: ${PWD}/${BUILD}
