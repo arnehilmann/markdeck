@@ -8,8 +8,6 @@ while true; do
     CONFIG=$(cat $CONFIG_FILE)
     pdf=$(echo "$CONFIG" | jq -r '.pdf')
 
-    echo "whoami $USER"
-
     if [ -n "$pdf" ]; then
         echo "Start PDF rendering."
         touch /slides/.meta/pdf_rendered
