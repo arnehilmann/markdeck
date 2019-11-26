@@ -52,10 +52,10 @@ $linkColor: #00008B;
 $linkColorHover: lighten( $linkColor, 20% );
 $selectionBackgroundColor: rgba(0, 0, 0, 0.99);
 
-$heading1Size: 1.4em;
-$heading2Size: 0.8em;
-$heading3Size: 0.8em;
-$heading4Size: 0.8em;
+$heading1Size: 2.5em;
+$heading2Size: 1.5em;
+$heading3Size: 1.3em;
+$heading4Size: 1.1em;
 
 section.has-dark-background {
 	&, h1, h2, h3, h4, h5, h6 {
