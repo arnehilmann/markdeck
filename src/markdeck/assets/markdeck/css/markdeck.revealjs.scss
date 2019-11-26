@@ -4,6 +4,11 @@
     display: flex;
 }
 
+.no-list-style ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
 .reveal .license {
     font-size: 12pt;
 }
