@@ -8,9 +8,11 @@ while true; do
     CONFIG=$(cat $CONFIG_FILE)
     pdf=$(echo "$CONFIG" | jq -r '.pdf')
 
+    echo "whoami $USER"
+
     if [ -n "$pdf" ]; then
+        echo "Start PDF rendering."
         touch /slides/.meta/pdf_rendered
-        echo "starting pdf rendering"
         # stat -c "%y %n" /target/index.html
         # stat -c "%y %n" /target/.meta/pdf_rendered
         pdf_size=$(echo "$CONFIG" | jq -r '.pdf_size')
@@ -40,10 +42,14 @@ while true; do
             convert -density 300x300 $(ls -1r -tc /tmp/slides/*.png) /slides/$pdf.screenshots.pdf
         fi
 
-        echo "pdf rendering finished"
+        echo "PDF rendering finished."
+    else
+        echo "No PDF specified, skip rendering."
     fi
     sleep 1
 
     [ -e /slides/index.html  ] && [ -e /slides/.meta/pdf_rendered ] && [ /slides/index.html -nt /slides/.meta/pdf_rendered ] && continue
     inotifywait -qq /slides/index.html
 done
+
+# vi: ft=sh:tw=80:sw=4:ts=4:sts=4:et

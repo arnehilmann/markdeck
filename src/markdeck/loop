@@ -10,7 +10,7 @@ case $PARAM in
     shell)  bash -i; exit;;
     --once) ONCE=true;;
     loop)   ;;
-    *)      echo "unknown parameter '$PARAM' given, aborting here..." && exit 1;;
+    *)      echo "Unknown parameter '$PARAM' given, aborting here." && exit 1;;
 esac
 
 shopt -s nullglob
@@ -20,7 +20,7 @@ function print_usage() {
     echo -e "\n\n\n${esc}[1mmarkdeck $VERSION - $MOTTO${esc}[0m\n"
     echo -e "       ${esc}[1mfor the slides:  open http://localhost:$PORT${esc}[0m"
     echo
-    echo -e "for side-by-side view:  open http://localhost:$PORT/explain.html"
+    echo -e "For side-by-side view:  open http://localhost:$PORT/explain.html"
     echo -e "     to stop markdeck:  hit Ctrl-C"
     echo
     echo
@@ -60,7 +60,7 @@ while true; do
     $ONCE && break
 
     if [[ /source -nt /target/index.html ]]; then
-        echo -e "\n\n\nchange detected: sources newer than rendered deck, rerendering started...\n\n\n"
+        echo -e "\n\n\nChange detected, restart rerendering.\n\n\n"
         continue
     fi
 
@@ -74,4 +74,4 @@ done
 
 rm -f "${WAIT_REFERENCE}"
 
-echo "done."
+echo "Markdeck done."
