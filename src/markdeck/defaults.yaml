@@ -24,7 +24,6 @@ asciinema: false
 
 theme: markdeck
 themePath: assets/3rdparty/reveal.js/css/theme
-transition: slide
 controls: false
 controlsTutorial: false
 controlsLayout: bottom-right
