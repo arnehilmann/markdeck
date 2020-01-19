@@ -6,7 +6,7 @@ PORT=8080
 
 while true; do
     CONFIG=$(cat $CONFIG_FILE)
-    pdf=$(echo "$CONFIG" | jq -r '.pdf')
+    pdf=$(echo "$CONFIG" | jq -r '.pdf // empty')
 
     if [ -n "$pdf" ]; then
         touch /slides/.meta/pdf_rendered

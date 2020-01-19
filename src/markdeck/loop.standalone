@@ -3,7 +3,7 @@
 CONFIG_FILE=/target/.meta/config.json
 
 while true; do
-    standalone=$(cat "$CONFIG_FILE" | jq -r '.standalone')
+    standalone=$(cat "$CONFIG_FILE" | jq -r '.standalone // empty')
 
     if [ -n "$standalone" ]; then
         touch /target/.meta/standalone_rendered
