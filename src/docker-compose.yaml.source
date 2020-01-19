@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile.pandoc
       args:
         version: 0.36
-        motto: the show must go on
+        motto: the next version
     image: arne/markdeck-pandoc:0.36
     user: nobody
     volumes:
