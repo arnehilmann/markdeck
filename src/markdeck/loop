@@ -58,6 +58,20 @@ while true; do
 
     [[ -d /target/rendered ]] || mkdir -p /target/rendered
 
+    echo "-------- config --------"
+    shopt -s nullglob
+    SOURCE_MD=$(echo /source/slide*.md)
+    shopt -u nullglob
+    METADATA="$(pandoc --template=/markdeck/metadata.template ${SOURCE_MD:-/markdeck/note.md} /markdeck/defaults.yaml)"
+    mkdir -p /target/.meta/
+    rm -f /target/.meta/config.json
+    echo "$METADATA" > /target/.meta/config.json
+    jq '. | .' <<<$METADATA
+    variant=$(jq -r '.variant' <<< "$METADATA")
+    echo "ASCIIART_CONFIG=$ASCIIART_CONFIG"
+    echo "-------- /config --------"
+    echo
+
     echo "-------- rsync output --------"
     rsync -a /markdeck/assets /target/ || :
     touch /target/assets/css/slides.css /target/assets/css/render-pdf.css
@@ -96,20 +110,6 @@ while true; do
         /markdeck/assets/markdeck/css/markdeck.impressjs.scss \
         /target/assets/markdeck/css/markdeck.impressjs.css || :
     echo "-------- /sass output --------"
-    echo
-
-    echo "-------- config --------"
-    shopt -s nullglob
-    SOURCE_MD=$(echo /source/slide*.md)
-    shopt -u nullglob
-    METADATA="$(pandoc --template=/markdeck/metadata.template ${SOURCE_MD:-/markdeck/note.md} /markdeck/defaults.yaml)"
-    mkdir -p /target/.meta/
-    rm -f /target/.meta/config.json
-    echo "$METADATA" > /target/.meta/config.json
-    jq '. | .' <<<$METADATA
-    variant=$(jq -r '.variant' <<< "$METADATA")
-    echo "ASCIIART_CONFIG=$ASCIIART_CONFIG"
-    echo "-------- /config --------"
     echo
 
     echo "-------- pandoc output --------"
