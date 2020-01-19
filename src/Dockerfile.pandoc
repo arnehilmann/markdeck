@@ -10,7 +10,7 @@ RUN apk add \
     make bash curl \
     graphviz inotify-tools rsync \
     libqrencode jq sassc zip openjdk8-jre \
-    python py2-pip fontconfig \
+    python3 fontconfig lua5.3 \
     pixman cairo pango libjpeg-turbo giflib
 
 RUN apk add --update --virtual .build-deps \
@@ -24,7 +24,7 @@ RUN npm install -g mathjax-pandoc-filter vega@^5.6.0 vega-cli@^5.6.0 vega-lite@^
 RUN mkdir -p /usr/local/share/lua/5.3
 RUN curl -o /usr/local/share/lua/5.3/inspect.lua -L https://raw.githubusercontent.com/kikito/inspect.lua/master/inspect.lua
 
-RUN pip install MarkdownPP
+RUN pip3 install MarkdownPP
 
 # cleanup
 RUN apk del .build-deps \
