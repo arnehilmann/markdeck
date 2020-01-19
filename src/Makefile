@@ -1,12 +1,19 @@
-PANDOC_VERSION=2.7.3
+PANDOC_VERSION=2.9.1.1
 REVEALJS_VERSION=3.8.0
 ASCIINEMAPLAYER_VERSION=v2.6.1
 JQUERY_VERSION=3.4.1.slim.min
 IMPRESSJS_VERSION=1.0.0
-VERSION:=$$(yq r docker-compose.yaml services.markdeck.build.args.version)
+
+VERSION=0.36
+MOTTO="'the show must go on' version"
+WEB_VERSION=0.2
+PDF_VERSION=0.6
+STANDALONE_VERSION=0.3
+HELPER_VERSION=0.2
+A2SKETCH_VERSION=0.11
 
 
-all:	prepare
+all:	prepare docker-compose.yaml develop.yaml
 	docker-compose build
 
 
@@ -18,6 +25,28 @@ tag:	all
 
 push:	all
 	docker-compose push
+
+
+docker-compose.yaml:	docker-compose.yaml.source Makefile
+	cp docker-compose.yaml.source docker-compose.yaml
+	yq w -i docker-compose.yaml services.markdeck.image "arne/markdeck-pandoc:$(VERSION)"
+	yq w -i docker-compose.yaml services.markdeck.build.args.version "$(VERSION)"
+	yq w -i docker-compose.yaml services.markdeck.build.args.motto "$(MOTTO)"
+	yq w -i docker-compose.yaml services.web.image "arne/markdeck-liveserver:$(WEB_VERSION)"
+	yq w -i docker-compose.yaml services.pdf.image "arne/markdeck-decktape:$(PDF_VERSION)"
+	yq w -i docker-compose.yaml services.standalone.image "arne/markdeck-standalone:$(STANDALONE_VERSION)"
+	yq w -i docker-compose.yaml services.helper.image "arne/markdeck-helper:$(HELPER_VERSION)"
+	yq w -i docker-compose.yaml services.a2sketch.image "arne/a2sketch:$(A2SKETCH_VERSION)"
+
+
+develop.yaml:	develop.yaml.source Makefile
+	cp develop.yaml.source develop.yaml
+	yq w -i develop.yaml services.markdeck.image "arne/markdeck-pandoc:$(VERSION)"
+	yq w -i develop.yaml services.web.image "arne/markdeck-liveserver:$(WEB_VERSION)"
+	yq w -i develop.yaml services.pdf.image "arne/markdeck-decktape:$(PDF_VERSION)"
+	yq w -i develop.yaml services.standalone.image "arne/markdeck-standalone:$(STANDALONE_VERSION)"
+	yq w -i develop.yaml services.helper.image "arne/markdeck-helper:$(HELPER_VERSION)"
+	yq w -i develop.yaml services.a2sketch.image "arne/a2sketch:$(A2SKETCH_VERSION)"
 
 
 prepare:	downloaded/bin/pandoc \
@@ -37,7 +66,7 @@ prepare:	downloaded/bin/pandoc \
 
 downloaded/bin/pandoc:
 	mkdir -p downloaded/bin
-	curl -L "https://github.com/jgm/pandoc/releases/download/$(PANDOC_VERSION)/pandoc-$(PANDOC_VERSION)-linux.tar.gz" | tar --strip-components=1 --wildcards -C downloaded -zxvf - "pandoc-*/bin/pandoc"
+	curl -L "https://github.com/jgm/pandoc/releases/download/$(PANDOC_VERSION)/pandoc-$(PANDOC_VERSION)-linux-amd64.tar.gz" | gtar --strip-components=1 --wildcards -C downloaded -zxvf - "pandoc-*/bin/pandoc"
 
 
 jqueryemoji:	jquery.js markdeck/lib/emojis
@@ -88,14 +117,14 @@ markdeck/assets/3rdparty/asciinema-player.css:
 
 markdeck/assets/3rdparty/reveal.js:
 	mkdir -p $@
-	curl -L "https://github.com/hakimel/reveal.js/archive/$(REVEALJS_VERSION).tar.gz" | tar -C $@ --strip-components=1 --exclude test --exclude font -zxvf -
+	curl -L "https://github.com/hakimel/reveal.js/archive/$(REVEALJS_VERSION).tar.gz" | gtar -C $@ --strip-components=1 --exclude test --exclude font -zxvf -
 
 markdeck/assets/3rdparty/reveal.js/css/theme/source/markdeck.scss: markdeck/assets/markdeck/css/theme/source/markdeck.scss
 	cp $^ $@
 
 markdeck/assets/3rdparty/impress.js:
 	mkdir -p $@
-	curl -L "https://github.com/impress/impress.js/archive/$(IMPRESSJS_VERSION).tar.gz" | tar -C $@ --strip-components=1 --exclude examples --exclude test -zxvf -
+	curl -L "https://github.com/impress/impress.js/archive/$(IMPRESSJS_VERSION).tar.gz" | gtar -C $@ --strip-components=1 --exclude examples --exclude test -zxvf -
 
 
 markdeck/helper/downloaded/trianglify-background-generator-master:
@@ -112,7 +141,7 @@ markdeck/helper/downloaded/colorful-background:
 
 
 markdeck/helper/downloaded/unique-gradient-generator:
-	mkdir -p @$
+	mkdir -p $@
 	curl -L -O https://github.com/tiborsaas/unique-gradient-generator/archive/gh-pages.zip
 	unzip gh-pages.zip
 	rm -f gh-pages.zip
