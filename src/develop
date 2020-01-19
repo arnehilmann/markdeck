@@ -1,7 +1,0 @@
-#!/bin/sh
-set -e -E -u
-
-echo "switching to example dir"
-cd ../example
-
-docker-compose -f ../src/develop.yaml --project-directory . up

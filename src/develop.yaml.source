@@ -1,0 +1,62 @@
+version: "3.2"
+
+services:
+  markdeck:
+    image: "arne/markdeck-pandoc:0.35"
+    volumes:
+      - type: bind
+        source: ./
+        target: /source
+        read_only: true
+      - type: bind
+        source: ./deck
+        target: /target
+      - type: bind
+        source: /Users/arnehilmann/dev/markdeck/src/markdeck
+        target: /markdeck
+    stdin_open: true
+    tty: true
+    entrypoint: /bin/sh
+
+
+  web:
+    image: "arne/markdeck-liveserver:0.2"
+    ports:
+      - "8080:8080"
+    volumes:
+      - type: bind
+        source: ./deck
+        target: /target
+    depends_on: [markdeck]
+
+  pdf:
+    image: "arne/markdeck-decktape:0.5"
+    volumes:
+      - type: bind
+        source: ./deck
+        target: /slides
+    shm_size: 1G
+    depends_on: [markdeck, web]
+
+  helper:
+    image: "arne/markdeck-helper:0.2"
+    ports:
+      - "8081:8081"
+
+  standalone:
+    image: "arne/markdeck-standalone:0.2"
+    volumes:
+      - type: bind
+        source: ./deck
+        target: /target
+    depends_on: [web]
+
+  a2sketch:
+    image: "arne/a2sketch:0.11"
+    volumes:
+      - type: bind
+        source: ./a2s-custom-types
+        target: /custom-types
+        read_only: true
+    ports:
+      - "22753:22753"

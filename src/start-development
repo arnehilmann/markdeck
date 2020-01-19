@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e -E -u
+
+echo "starting development"
+
+COMPOSE_FILE=$PWD/develop.yaml
+
+echo "switching to ../example dir"
+cd ../example
+
+CMD=${1:-up}
+DIR=./deck/
+MARKDECK_USER=$(stat -c "%u:%g" $DIR) docker-compose -f $COMPOSE_FILE --project-directory $PWD $CMD
