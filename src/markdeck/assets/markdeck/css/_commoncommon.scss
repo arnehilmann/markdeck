@@ -61,3 +61,11 @@
 }
 
 @import "fontawesome.css";
+
+pre code {
+    text-align: left;
+}
+
+.reveal.has-dark-background .slides {
+    color: #eee;
+}

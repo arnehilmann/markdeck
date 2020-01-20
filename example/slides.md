@@ -1,10 +1,12 @@
 ---
 title: markdeck
-variant: impress
+variant: reveal
 # pdf: markdeck-example.pdf
 # standalone: markdeck-example.html
 # highlight_style: grayscale
+
 highlight_style: github-gist
+
 # slideNumber: true
 # autoSlide: 5000
 # controls: true
@@ -14,7 +16,6 @@ highlight_style: github-gist
 # pdf_size: 1024x768
 asciinema: true
 ---
-
 
 # markdeck {bgcss=sea-gradient x=0 y=0 .light-on-dark}
 
@@ -107,7 +108,7 @@ public class Example {
 
 # example: asciiart (ditaa) {bg=SteeBlue .ltr}
 
-```{.nohighlight style="width: 40%; height: 100%; font-size: 40%;"}
+```{.nohighlight style="width: 40%; height: 100%; font-size: 60%;"}
 +-----------------------------+
 | Node A                      |
 |                             |
@@ -172,7 +173,7 @@ public class Example {
 
 # example: asciiart (plantuml) {bg=lightblue .ltr rx=1.4 ry=-.2}
 
-```{.nohighlight style="width: 40%; font-size: 40%;"}
+```{.nohighlight style="width: 40%; font-size: 100%;"}
 @startuml
 Bob->Alice : hello
 Alice->Bob : oh, you again...
@@ -191,7 +192,7 @@ Bob->Alice : ??
 
 # example: asciiart (graphviz) {.ltr}
 
-```{.nohighlight style="width: 50%; font-size: 40%;"}
+```{.nohighlight style="width: 50%; font-size: 60%;"}
 digraph G {
     bgcolor=transparent;
     node [style=filled,color=white];
@@ -215,7 +216,7 @@ digraph G {
 
 # example: charts (vega-lite) {.ltr}
 
-```{.json style="width: 50%; font-size: 30%;"}
+```{.json style="width: 50%; font-size: 40%;"}
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json",
     "data": {

@@ -62,7 +62,7 @@ while true; do
     shopt -s nullglob
     SOURCE_MD=$(echo /source/slide*.md)
     shopt -u nullglob
-    METADATA="$(pandoc --template=/markdeck/metadata.template ${SOURCE_MD:-/markdeck/note.md} /markdeck/defaults.yaml)"
+    METADATA="$(pandoc --template=/markdeck/metadata.template /markdeck/defaults.yaml ${SOURCE_MD:-/markdeck/note.md})"
     mkdir -p /target/.meta/
     rm -f /target/.meta/config.json
     echo "$METADATA" > /target/.meta/config.json
@@ -151,7 +151,7 @@ while true; do
         --lua-filter /markdeck/lib/font-awesome.lua \
         $PANDOC_ARGS \
         -o /target/index.html.tmp \
-        /target/slides.combined.md.txt /markdeck/defaults.yaml 2>&1 | tee /tmp/pandoc.output;
+        /markdeck/defaults.yaml /target/slides.combined.md.txt 2>&1 | tee /tmp/pandoc.output;
     then
         if [[ -e /target/index.html.tmp ]]; then
             echo "" > /target/assets/css/rerendering.css
