@@ -66,14 +66,17 @@ while true; do
     mkdir -p /target/.meta/
     rm -f /target/.meta/config.json
     echo "$METADATA" > /target/.meta/config.json
-    jq '. | .' <<<$METADATA
+    jq -S '. | .' <<<$METADATA
     variant=$(jq -r '.variant' <<< "$METADATA")
     echo "ASCIIART_CONFIG=$ASCIIART_CONFIG"
     echo "-------- /config --------"
     echo
 
     echo "-------- rsync output --------"
-    rsync -a /markdeck/assets /target/ || :
+    mkdir -p /target/assets
+    rsync -a /markdeck/assets/markdeck /target/assets
+    rsync -a /markdeck/assets/3rdparty /target/assets
+    rsync -ram --delete --include=$variant.js --exclude '*.js/' /markdeck/assets/framework /target/assets
     touch /target/assets/css/slides.css /target/assets/css/render-pdf.css
     [[ -d /source/assets ]] && rsync -av /source/assets /target/ || :
     rsync -a /markdeck/explain.html /target/ || :
@@ -89,10 +92,10 @@ while true; do
     fi
     if [[ -e /source/assets/css/theme/source/ ]]; then
         find /source/assets/css/theme/source/ -name \*.scss | while read filename; do
-            cp "$filename" /target/assets/3rdparty/reveal.js/css/theme/source/
+            cp "$filename" /target/assets/framework/reveal.js/css/theme/source/
             sassc \
-                /target/assets/3rdparty/reveal.js/css/theme/source/$(basename "$filename") \
-                /target/assets/3rdparty/reveal.js/css/theme/$(basename "$filename" | sed -e 's/\.scss$/.css/') || :
+                /target/assets/framework/reveal.js/css/theme/source/$(basename "$filename") \
+                /target/assets/framework/reveal.js/css/theme/$(basename "$filename" | sed -e 's/\.scss$/.css/') || :
         done
     fi
     if [[ -e /source/assets/css/slides.impress.scss ]]; then
@@ -104,8 +107,8 @@ while true; do
         /markdeck/assets/markdeck/css/markdeck.revealjs.scss \
         /target/assets/markdeck/css/markdeck.revealjs.css || :
     sassc \
-        /markdeck/assets/3rdparty/reveal.js/css/theme/source/markdeck.scss \
-        /target/assets/3rdparty/reveal.js/css/theme/markdeck.css || :
+        /markdeck/assets/framework/reveal.js/css/theme/source/markdeck.scss \
+        /target/assets/framework/reveal.js/css/theme/markdeck.css || :
     sassc \
         /markdeck/assets/markdeck/css/markdeck.impressjs.scss \
         /target/assets/markdeck/css/markdeck.impressjs.css || :

@@ -1,6 +1,7 @@
 .*.swp
 .DS_Store
 src/markdeck/assets/3rdparty/
+src/markdeck/assets/framework/
 src/downloaded/
 src/markdeck/helper/downloaded/
 src/markdeck/lib/ditaa.jar

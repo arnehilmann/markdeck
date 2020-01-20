@@ -54,9 +54,9 @@ prepare:	downloaded/bin/pandoc \
 	markdeck/lib/ditaa.jar \
 	markdeck/assets/3rdparty/asciinema-player.js \
 	markdeck/assets/3rdparty/asciinema-player.css \
-	markdeck/assets/3rdparty/reveal.js \
-	markdeck/assets/3rdparty/reveal.js/css/theme/source/markdeck.scss \
-	markdeck/assets/3rdparty/impress.js \
+	markdeck/assets/framework/reveal.js \
+	markdeck/assets/framework/reveal.js/css/theme/source/markdeck.scss \
+	markdeck/assets/framework/impress.js \
 	jqueryemoji \
 	markdeck/helper/downloaded/trianglify-background-generator-master \
 	markdeck/helper/downloaded/colorful-background \
@@ -115,14 +115,14 @@ markdeck/assets/3rdparty/asciinema-player.css:
 	curl -L -o $@ "https://github.com/asciinema/asciinema-player/releases/download/$(ASCIINEMAPLAYER_VERSION)/asciinema-player.css"
 
 
-markdeck/assets/3rdparty/reveal.js:
+markdeck/assets/framework/reveal.js:
 	mkdir -p $@
 	curl -L "https://github.com/hakimel/reveal.js/archive/$(REVEALJS_VERSION).tar.gz" | gtar -C $@ --strip-components=1 --exclude test --exclude font -zxvf -
 
-markdeck/assets/3rdparty/reveal.js/css/theme/source/markdeck.scss: markdeck/assets/markdeck/css/theme/source/markdeck.scss
+markdeck/assets/framework/reveal.js/css/theme/source/markdeck.scss: markdeck/assets/markdeck/css/theme/source/markdeck.scss
 	cp $^ $@
 
-markdeck/assets/3rdparty/impress.js:
+markdeck/assets/framework/impress.js:
 	mkdir -p $@
 	curl -L "https://github.com/impress/impress.js/archive/$(IMPRESSJS_VERSION).tar.gz" | gtar -C $@ --strip-components=1 --exclude examples --exclude test -zxvf -
 
@@ -161,7 +161,7 @@ markdeck/helper/downloaded/gradient-generator:
 
 clean:
 	rm -f downloaded/bin/*
-	rm -rf markdeck/assets/3rdparty
+	rm -rf markdeck/assets/3rdparty markdeck/assets/framework
 	git clean -fx
 
 
