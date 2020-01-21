@@ -13,7 +13,7 @@ HELPER_VERSION=0.2
 A2SKETCH_VERSION=0.11
 
 
-all:	prepare docker-compose.yaml develop.yaml
+all:	prepare docker-compose.yaml develop.yaml docker-compose-within-markdeck
 	docker-compose build
 
 
@@ -49,13 +49,31 @@ develop.yaml:	develop.yaml.source Makefile
 	yq w -i develop.yaml services.a2sketch.image "arne/a2sketch:$(A2SKETCH_VERSION)"
 
 
+docker-compose-within-markdeck:	docker-compose.yaml Makefile ../markdeck
+	sed -n '/EODCF/,/EODCF/{/EODCF/d;s/..MARKDECK_USER/______/;p;}' ../markdeck > dc.tmp
+	yq w -i dc.tmp services.markdeck.image "arne/markdeck-pandoc:$(VERSION)"
+	yq w -i dc.tmp services.markdeck.build.args.version "$(VERSION)"
+	yq d -i dc.tmp services.markdeck.build
+	yq w -i dc.tmp services.web.image "arne/markdeck-liveserver:$(WEB_VERSION)"
+	yq d -i dc.tmp services.web.build
+	yq w -i dc.tmp services.pdf.image "arne/markdeck-decktape:$(PDF_VERSION)"
+	yq d -i dc.tmp services.pdf.build
+	yq w -i dc.tmp services.standalone.image "arne/markdeck-standalone:$(STANDALONE_VERSION)"
+	yq d -i dc.tmp services.standalone.build
+	yq w -i dc.tmp services.helper.image "arne/markdeck-helper:$(HELPER_VERSION)"
+	yq d -i dc.tmp services.helper.build
+	yq w -i dc.tmp services.a2sketch.image "arne/a2sketch:$(A2SKETCH_VERSION)"
+	sed -i.bak 's/______/"\\$$MARKDECK_USER"/' dc.tmp
+	sed -i.bak -e '/ EODCF/r dc.tmp' -e '/ EODCF/,/EODCF/{/EODCF/p;d;}' ../markdeck
+	rm -f dc.tmp* ../markdeck.bak
+
+
 prepare:	downloaded/bin/pandoc \
 	markdeck/lib/plantuml.jar \
 	markdeck/lib/ditaa.jar \
 	markdeck/assets/3rdparty/asciinema-player.js \
 	markdeck/assets/3rdparty/asciinema-player.css \
 	markdeck/assets/framework/reveal.js \
-	markdeck/assets/framework/reveal.js/css/theme/source/markdeck.scss \
 	markdeck/assets/framework/impress.js \
 	jqueryemoji \
 	markdeck/helper/downloaded/trianglify-background-generator-master \
@@ -119,8 +137,6 @@ markdeck/assets/framework/reveal.js:
 	mkdir -p $@
 	curl -L "https://github.com/hakimel/reveal.js/archive/$(REVEALJS_VERSION).tar.gz" | gtar -C $@ --strip-components=1 --exclude test --exclude font -zxvf -
 
-markdeck/assets/framework/reveal.js/css/theme/source/markdeck.scss: markdeck/assets/markdeck/css/theme/source/markdeck.scss
-	cp $^ $@
 
 markdeck/assets/framework/impress.js:
 	mkdir -p $@

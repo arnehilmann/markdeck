@@ -37,62 +37,60 @@ createFolder () {
 
 createComposeFile () {
     tmpfile=$(mktemp)
-    cat > "${tmpfile}" << EOF
+    cat > "${tmpfile}" << EODCF
 version: "3.2"
-
 services:
   markdeck:
-    image: "arne/markdeck-pandoc:0.34"
+    image: arne/markdeck-pandoc:0.36
     user: "\$MARKDECK_USER"
     volumes:
-      - type: bind
-        source: ${PWD}/
-        target: /source
-        read_only: true
-      - type: bind
-        source: ${PWD}/${BUILD}
-        target: /target
-
+    - type: bind
+      source: ${PWD}/
+      target: /source
+      read_only: true
+    - type: bind
+      source: ${PWD}/${BUILD}
+      target: /target
   web:
-    image: "arne/markdeck-liveserver:0.2"
+    image: arne/markdeck-liveserver:0.2
     ports:
-      - "${PORT}:8080"
+    - ${PORT}:8080
     volumes:
-      - type: bind
-        source: ${PWD}/${BUILD}
-        target: /target
-    depends_on: [markdeck]
-
+    - type: bind
+      source: ${PWD}/${BUILD}
+      target: /target
+    depends_on:
+    - markdeck
   pdf:
-    image: "arne/markdeck-decktape:0.5"
+    image: arne/markdeck-decktape:0.6
     volumes:
-      - type: bind
-        source: ${PWD}/${BUILD}
-        target: /slides
+    - type: bind
+      source: ${PWD}/${BUILD}
+      target: /slides
     shm_size: 1G
-    depends_on: [markdeck, web]
-
+    depends_on:
+    - markdeck
+    - web
   standalone:
-    image: "arne/markdeck-standalone:0.2"
+    image: arne/markdeck-standalone:0.3
     volumes:
-      - type: bind
-        source: ${PWD}/${BUILD}
-        target: /target
-    depends_on: [web]
-
+    - type: bind
+      source: ${PWD}/${BUILD}
+      target: /target
+    depends_on:
+    - web
   helper:
-    image: "arne/markdeck-helper:0.2"
+    image: arne/markdeck-helper:0.2
     ports:
-      - "$((${PORT}+1)):8081"
-
+    - $((${PORT}+1)):8081
   a2sketch:
-    image: "arne/a2sketch:0.11"
+    image: arne/a2sketch:0.11
     volumes:
-      - type: bind
-        source: ${PWD}/a2s-custom-types
-        target: /custom-types
-        read_only: true
-EOF
+    - type: bind
+      source: ${PWD}/a2s-custom-types
+      target: /custom-types
+      read_only: true
+EODCF
 
     echo "${tmpfile}"
 }
