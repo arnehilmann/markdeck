@@ -4,8 +4,9 @@ variant: reveal
 # pdf: markdeck-example.pdf
 # standalone: markdeck-example.html
 # highlight_style: grayscale
-
 highlight_style: github-gist
+asciinema: true
+md_themes: example
 
 # slideNumber: true
 # autoSlide: 5000
@@ -14,7 +15,6 @@ highlight_style: github-gist
 # controlsLayout: edges
 # pdf_size: 1189x841
 # pdf_size: 1024x768
-asciinema: true
 ---
 
 # markdeck {bgcss=sea-gradient x=0 y=0 .light-on-dark}
@@ -410,7 +410,7 @@ $$e = \mathop
 🙃
 
 
-# {bg=White;assets/img/wordcloud.svg .flush-right}
+# {bg=White;themes/example/img/wordcloud.svg .flush-right}
 
 [`https://github.com/arnehilmann/markdeck`{.render_qr}](https://github.com/arnehilmann/markdeck)
 
@@ -435,4 +435,4 @@ collaborative slide editing made easy
 ![](fab fa-css3)
 ![](fab fa-js-square)
 
-![](assets/img/buddy-egyptian.svg)
+![](themes/example/img/buddy-egyptian.svg)

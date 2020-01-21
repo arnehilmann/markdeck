@@ -38,6 +38,12 @@ function show_errors() {
     sleep 4
 }
 
+function calc_css_path() {
+    local p=${1/source/target}
+    p=${p/.scss/.css}
+    echo $p
+}
+
 if ! $ONCE; then
     print_usage
     touch /target/index.html
@@ -66,8 +72,9 @@ while true; do
     mkdir -p /target/.meta/
     rm -f /target/.meta/config.json
     echo "$METADATA" > /target/.meta/config.json
-    jq -S '. | .' <<<$METADATA
+    jq -S . <<< "$METADATA"
     variant=$(jq -r '.variant' <<< "$METADATA")
+    md_themes=$(jq -r '.md_themes' <<< "$METADATA")
     echo "ASCIIART_CONFIG=$ASCIIART_CONFIG"
     echo "-------- /config --------"
     echo
@@ -79,6 +86,7 @@ while true; do
     rsync -ram --delete --include=$variant.js --exclude '*.js/' /markdeck/assets/framework /target/assets
     touch /target/assets/css/slides.css /target/assets/css/render-pdf.css
     [[ -d /source/assets ]] && rsync -av /source/assets /target/ || :
+    [[ -d /source/themes ]] && rsync -av /source/themes /target/ || :
     rsync -a /markdeck/explain.html /target/ || :
     fc-list
     echo "-------- /rsync output --------"
@@ -90,28 +98,19 @@ while true; do
             /source/assets/css/slides.scss \
             /target/assets/css/slides.css || :
     fi
-    if [[ -e /source/assets/css/theme/source/ ]]; then
-        find /source/assets/css/theme/source/ -name \*.scss | while read filename; do
-            cp "$filename" /target/assets/framework/reveal.js/css/theme/source/
-            sassc \
-                /target/assets/framework/reveal.js/css/theme/source/$(basename "$filename") \
-                /target/assets/framework/reveal.js/css/theme/$(basename "$filename" | sed -e 's/\.scss$/.css/') || :
-        done
-    fi
-    if [[ -e /source/assets/css/slides.impress.scss ]]; then
-        sassc \
-            /source/assets/css/slides.impress.scss \
-            /target/assets/css/slides.impress.css || :
-    fi
+    for md_theme in $md_themes; do
+        echo "theme '$md_theme' found"
+        SCSS=/source/themes/$md_theme/css/slides.scss
+        [[ -e $SCSS ]] && sassc $SCSS $(calc_css_path $SCSS)
+
+        CSS=/source/themes/$md_theme/css/slides.css
+        [[ -e $CSS ]] && cp $CSS $(calc_css_path $CSS)
+    done
+    SCSS=/source/assets/css/slides.$variant.scss
+    [[ -e $SCSS ]] && sassc $SCSS $(calc_css_path $SCSS)
     sassc \
-        /markdeck/assets/markdeck/css/markdeck.revealjs.scss \
-        /target/assets/markdeck/css/markdeck.revealjs.css || :
-    sassc \
-        /markdeck/assets/framework/reveal.js/css/theme/source/markdeck.scss \
-        /target/assets/framework/reveal.js/css/theme/markdeck.css || :
-    sassc \
-        /markdeck/assets/markdeck/css/markdeck.impressjs.scss \
-        /target/assets/markdeck/css/markdeck.impressjs.css || :
+        /markdeck/assets/markdeck/css/markdeck.${variant}js.scss \
+        /target/assets/markdeck/css/markdeck.${variant}js.css || :
     echo "-------- /sass output --------"
     echo
 
@@ -119,6 +118,9 @@ while true; do
     PANDOC_ARGS=
     [[ -e /source/include-before-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-before-body /source/include-before-body"
     [[ -e /source/include-after-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-after-body /source/include-after-body"
+    for md_theme in $md_themes; do
+        [[ -e /source/themes/$md_theme/include-in-header.html ]] && PANDOC_ARGS="$PANDOC_ARGS --include-in-header /source/themes/$md_theme/include-in-header.html"
+    done
     rm -f /target/slides.combined.md.txt
     # cat ${SOURCE_MD:-/markdeck/note.md} > /target/slides.combined.md.txt
     if [[ -n ${SOURCE_MD:-} ]]; then
