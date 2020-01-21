@@ -8,3 +8,4 @@ src/markdeck/lib/ditaa.jar
 src/markdeck/lib/plantuml.jar
 src/markdeck/lib/emojis/
 deck/
+.uuid
