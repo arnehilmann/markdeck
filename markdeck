@@ -3,8 +3,27 @@
 set -ue
 
 BUILD=deck
-VERSION=0.1
-PORT=8080
+VERSION=0.50
+PORT=${1:-8080}
+HELPER_PORT=$((${PORT} + 1))
+
+calcUser() {
+    local dir="$1"
+    if stat -c %U "$dir" > /dev/null 2>&1; then
+        stat -c %U "$dir"
+    else
+        stat -f %Su "$dir"
+    fi
+}
+
+calcUserIdAndGroupId() {
+    local dir="$1"
+    if stat -c %U "$dir" > /dev/null 2>&1; then
+        stat -c %u:%g "$dir"
+    else
+        stat -f %u:%g "$dir"
+    fi
+}
 
 printHelp () {
     echo "$(basename "$0") [-h|--help|-v|--version] [command]"
@@ -23,7 +42,7 @@ printVersion () {
 
 testOwnership () {
     local dir="$1"
-    if [ $(stat -c %U "${dir}") != "${USER}" ]; then
+    if [ $(calcUser "${dir}") != "${USER}" ]; then
         echo "[ERR] The output folder '${dir}' MUST be owned by you!" 1>&2
         echo "[ERR] Please change ownership to yourself ('sudo chown ${USER} ${dir}'), or" 1>&2
         echo "[ERR] remove '${dir}' completely ('sudo rm -rf ${dir}')." 1>&2
@@ -41,7 +60,7 @@ createComposeFile () {
 version: "3.2"
 services:
   markdeck:
-    image: arne/markdeck-pandoc:0.36
+    image: arne/markdeck-pandoc:0.50
     user: "\$MARKDECK_USER"
     volumes:
     - type: bind
@@ -62,7 +81,7 @@ services:
     depends_on:
     - markdeck
   pdf:
-    image: arne/markdeck-decktape:0.6
+    image: arne/markdeck-decktape:0.8
     volumes:
     - type: bind
       source: ${PWD}/${BUILD}
@@ -80,14 +99,14 @@ services:
     depends_on:
     - web
   helper:
-    image: arne/markdeck-helper:0.2
+    image: arne/markdeck-helper:0.3
     ports:
-    - $((${PORT}+1)):8081
+    - ${HELPER_PORT}:8081
   a2sketch:
     image: arne/a2sketch:0.11
     volumes:
     - type: bind
-      source: ${PWD}/a2s-custom-types
+      source: ${PWD}
       target: /custom-types
       read_only: true
 EODCF
@@ -280,7 +299,7 @@ startMarkdeck () {
     fi
     createFolder "${BUILD}"
     testOwnership "${BUILD}"
-    MARKDECK_USER=$(stat -c %u:%g "${BUILD}") dockerCompose up
+    MARKDECK_USER=$(calcUserIdAndGroupId "${BUILD}") dockerCompose up
 }
 
 if [ $# -ge 1 ]; then
