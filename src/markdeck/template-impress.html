@@ -26,6 +26,9 @@
 
     <link href="assets/framework/impress.js/css/impress-demo.css" rel="stylesheet" />
     <link href="assets/markdeck/css/markdeck.impressjs.css" rel="stylesheet" />
+    $for(themes)$
+        <link href="themes/$themes$/css/slides.impress.css" rel="stylesheet" />
+    $endfor$
     <link href="assets/css/slides.impress.css" rel="stylesheet" />
     <script>
         window.pdf_render = window.location.search.match(/render=pdf/gi) != null;
@@ -61,6 +64,7 @@ $endfor$
 
     <div
         id="impress"
+        class="markdeck"
         data-transition-duration="750">
 
 $body$
@@ -103,6 +107,7 @@ $body$
 
         document.addEventListener( "impress:init", function( event ) {
             var api = event.detail.api;
+
             var gc = api.lib.gc;
             console.log(document.body.classList);
             if (document.body.classList.contains("impress-mobile")) {
@@ -112,6 +117,11 @@ $body$
             }
             // gc.addEventListener(document, "touch", touch);
         }, false );
+
+        var sections = document.querySelectorAll("section.level1");
+        for (var i = 0; i < sections.length; i++) {
+            sections[i].classList.add("step");
+        }
 
         impress().init();
     </script>

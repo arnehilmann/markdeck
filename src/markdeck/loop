@@ -74,7 +74,7 @@ while true; do
     echo "$METADATA" > /target/.meta/config.json
     jq -S . <<< "$METADATA"
     variant=$(jq -r '.variant' <<< "$METADATA")
-    md_themes=$(jq -r '.md_themes' <<< "$METADATA")
+    themes=$(jq -r '.themes' <<< "$METADATA")
     echo "ASCIIART_CONFIG=$ASCIIART_CONFIG"
     echo "-------- /config --------"
     echo
@@ -98,12 +98,17 @@ while true; do
             /source/assets/css/slides.scss \
             /target/assets/css/slides.css || :
     fi
-    for md_theme in $md_themes; do
-        echo "theme '$md_theme' found"
-        SCSS=/source/themes/$md_theme/css/slides.scss
+    for theme in $themes; do
+        echo "theme '$theme' found"
+
+        SCSS=/source/themes/$theme/css/slides.scss
+        [[ -e $SCSS ]] && sassc $SCSS $(calc_css_path $SCSS)
+        SCSS=/source/themes/$theme/css/slides.impress.scss
         [[ -e $SCSS ]] && sassc $SCSS $(calc_css_path $SCSS)
 
-        CSS=/source/themes/$md_theme/css/slides.css
+        CSS=/source/themes/$theme/css/slides.css
+        [[ -e $CSS ]] && cp $CSS $(calc_css_path $CSS)
+        CSS=/source/themes/$theme/css/slides.impress.css
         [[ -e $CSS ]] && cp $CSS $(calc_css_path $CSS)
     done
     SCSS=/source/assets/css/slides.$variant.scss
@@ -118,9 +123,9 @@ while true; do
     PANDOC_ARGS=
     [[ -e /source/include-before-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-before-body /source/include-before-body"
     [[ -e /source/include-after-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-after-body /source/include-after-body"
-    for md_theme in $md_themes; do
-        [[ -e /source/themes/$md_theme/include-in-header.html ]] && PANDOC_ARGS="$PANDOC_ARGS --include-in-header /source/themes/$md_theme/include-in-header.html"
-    done
+#    for theme in $themes; do
+#        [[ -e /source/themes/$theme/include-in-header.html ]] && PANDOC_ARGS="$PANDOC_ARGS --include-in-header /source/themes/$theme/include-in-header.html"
+#    done
     rm -f /target/slides.combined.md.txt
     # cat ${SOURCE_MD:-/markdeck/note.md} > /target/slides.combined.md.txt
     if [[ -n ${SOURCE_MD:-} ]]; then
@@ -134,21 +139,22 @@ while true; do
 
 
     template=/markdeck/template-${variant}.html
+        # --slide-level=2 \
+
     if pandoc \
         -f markdown+yaml_metadata_block \
-        -t revealjs \
+        -t html \
         --no-highlight \
         --wrap=preserve \
         --standalone \
         --template=$template \
-        --slide-level=2 \
         --section-divs \
         --lua-filter /markdeck/lib/skip-slide-filter.lua \
+        --lua-filter /markdeck/lib/${variant}-shortcut-filter.lua \
         --filter mathjax-pandoc-filter \
         --lua-filter /markdeck/lib/render-asciiart-filter.lua \
         --lua-filter /markdeck/lib/render-emojis-filter.lua \
         --lua-filter /markdeck/lib/bg-shortcut-filter.lua \
-        --lua-filter /markdeck/lib/${variant}-shortcut-filter.lua \
         --lua-filter /markdeck/lib/inline-svg.lua \
         --lua-filter /markdeck/lib/font-awesome.lua \
         $PANDOC_ARGS \

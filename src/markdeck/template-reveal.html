@@ -14,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <link rel="stylesheet" href="assets/framework/reveal.js/css/reveal.css" />
+    <link rel="stylesheet" href="assets/framework/reveal.js/css/theme/$reveal_theme$.css" />
     <link rel="shortcut icon" href="assets/css/theme/favicon.ico" />
 
     <link rel="stylesheet" href="assets/markdeck/styles/$highlight_style$.css" />
@@ -21,6 +22,11 @@
     $if(asciinema)$
         <link rel="stylesheet" type="text/css" href="assets/3rdparty/asciinema-player.css" />
     $endif$
+
+    $for(themes)$
+        <link rel="stylesheet" href="themes/$themes$/css/slides.css" />
+    $endfor$
+
     <link rel="stylesheet" href="assets/markdeck/css/markdeck.revealjs.css" />
     <link rel="stylesheet" href="assets/css/slides.css" />
 
@@ -52,7 +58,7 @@ $endfor$
     <div class="header"></div>
     <div class="footer"></div>
 
-    <div class="reveal">
+    <div class="reveal markdeck">
         <div class="slides">
 
 $body$
@@ -136,6 +142,8 @@ $body$
         if (window.self !== window.top) {
             document.body.className += " notes";
         }
+
+        document.body.className += " $md_themes$";
     </script>
 
 $for(include-after)$

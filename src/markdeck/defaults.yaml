@@ -22,7 +22,9 @@ standalone:
 
 asciinema: "false"
 
-theme: simple
+themes:
+reveal_theme: simple
+
 controls:
 controlsTutorial: "false"
 controlsLayout: bottom-right

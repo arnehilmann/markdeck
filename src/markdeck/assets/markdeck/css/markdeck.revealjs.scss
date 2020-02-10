@@ -1,38 +1,71 @@
 @import "common";
 
-.reveal .license {
-    font-size: 12pt;
+.reveal {
+    h1 {
+        font-size: 1.6em;
+        margin-block-start: 0;
+        margin-block-end: 1ex;
+    }
+    div pre.asciinema-terminal {
+        font-family: "Inconsolata", monospace;
+    }
+    code {
+        font-family: "Inconsolata";
+    }
+    .slides .textcentered {
+        text-align: center !important;
+    }
+    .slides .xkcd * {
+        font-family: "xkcd Script";
+    }
+    a {
+        color: inherit;
+    }
+    a:hover {
+        color: inherit;
+        text-shadow: 0px 0px 10px black;
+    }
+    .license {
+        font-size: 12pt;
+    }
+    .footer {
+        position: absolute;
+        bottom: 1em;
+        left: 1em;
+        font-size: 0.5em;
+    }
+    img.emoji {
+        width: 1.1em;
+        height: 1.1em;
+        padding: 0;
+        margin: 0;
+        vertical-align: baseline;
+        box-shadow: none;
+    }
+    section img {
+        border: 0;
+        background: transparent;
+    }
+    .inline-stack {
+        display: inline-block;
+        vertical-align: middle;
+        line-height: 1.1em;
+    }
+    .slides .flushleft {
+        position: absolute;
+        width: 50%;
+        min-height: 240px;
+        top: -100px;
+        background-color: rgba(0, 128, 128, 0.7);
+        border-right: 2px solid Teal;
+        padding: 1em 2em 1em;
+        text-align: left;
+        font-size: 60%;
+    }
 }
-
-.reveal .footer {
-    position: absolute;
-    bottom: 1em;
-    left: 1em;
-    font-size: 0.5em;
-}
-
-.reveal img.emoji {
-    width: 1.1em;
-    height: 1.1em;
-    padding: 0;
-    margin: 0;
-    vertical-align: baseline;
-    box-shadow: none;
-}
-
-.flush-text-left {
-    text-align: left;
-}
-
-.rerendering-message {
-    display: none;
-}
-
-.reveal section img {
-    border: 0;
-    background: transparent;
-}
-
 .notes .reveal .controls {
     display: contents !important;
+}
+.reveal.has-dark-background .slides {
+    color: #eee;
 }

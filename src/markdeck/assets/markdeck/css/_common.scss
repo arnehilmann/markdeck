@@ -1,44 +1,57 @@
-// FIXME this is just the remainder of what has been moved into markdeck.scss
-// for revealjs but not yet for impressjs.
-@import "commoncommon";
+@import "fonts";
 
 .light-on-dark, section.light-on-dark h1 {
     color: #fff;
     text-shadow: 0px 1px #000;
 }
-
 .ltr, .inline {
     p, pre {
         display: inline-block;
         vertical-align: middle;
     }
 }
-
-
-@font-face {
-    font-family: 'Inconsolata';
-    font-style: normal;
-    font-weight: 400;
-    src: url("fonts/Inconsolata-Regular.ttf") format('truetype');
+.flush-text-left {
+    text-align: left;
 }
-
-@font-face {
-    font-family: "EB Garamond Bold";
-    font-style: normal;
-    font-weight: 400;
-    src: url("fonts/EBGaramond-Bold.ttf") format('truetype');
+pre.nohighlight {
+    line-height: 90%;
 }
-
-@font-face {
-    font-family: "xkcd Script";
-    font-style: normal;
-    font-weight: 400;
-    src: url("fonts/xkcd-script.ttf") format('truetype');
+.rerendering-message {
+    display: none;
+    position: absolute;
+    text-align: center;
+    top: 20%;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1000;
+    color: white;
+    font-size: 200%;
+    text-shadow: 2px 2px #000000;
 }
+.markdeck-logo {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    bottom: 8px;
+    height: 8px;
+    font-size: 10px;
+    color: #5550;
+    z-index: 1;
 
-@font-face {
-    font-family: 'Raleway';
-    font-style: normal;
-    font-weight: 400;
-    src: url("fonts/Raleway-Regular.ttf") format('truetype');
+    a {
+        color: #333a;
+        text-shadow: 1px 1px #bbba;
+        background: none;
+        text-decoration: none;
+    }
+}
+pre {
+    text-align: left;
+}
+.inline-stack {
+    display: inline-block;
+    vertical-align: middle;
+    line-height: 1.1em;
 }
