@@ -4,16 +4,16 @@ ASCIINEMAPLAYER_VERSION=v2.6.1
 JQUERY_VERSION=3.4.1.slim.min
 IMPRESSJS_VERSION=1.0.0
 
-VERSION=0.36
+VERSION=0.50
 MOTTO="'the show must go on' version"
 WEB_VERSION=0.2
-PDF_VERSION=0.6
+PDF_VERSION=0.8
 STANDALONE_VERSION=0.3
-HELPER_VERSION=0.2
+HELPER_VERSION=0.3
 A2SKETCH_VERSION=0.11
 
 
-all:	prepare docker-compose.yaml develop.yaml docker-compose-within-markdeck
+all:	prepare docker-compose.yaml develop.yaml markdeck-exe
 	docker-compose build
 
 
@@ -49,6 +49,11 @@ develop.yaml:	develop.yaml.source Makefile
 	yq w -i develop.yaml services.a2sketch.image "arne/a2sketch:$(A2SKETCH_VERSION)"
 
 
+markdeck-exe:	docker-compose-within-markdeck Makefile
+	sed -i.bak '/VERSION=/{s/=.*/=$(VERSION)/;}' ../markdeck
+	rm -f ../markdeck.bak
+
+
 docker-compose-within-markdeck:	docker-compose.yaml Makefile ../markdeck
 	sed -n '/EODCF/,/EODCF/{/EODCF/d;s/..MARKDECK_USER/______/;p;}' ../markdeck > dc.tmp
 	yq w -i dc.tmp services.markdeck.image "arne/markdeck-pandoc:$(VERSION)"
@@ -77,7 +82,6 @@ prepare:	downloaded/bin/pandoc \
 	markdeck/assets/framework/impress.js \
 	jqueryemoji \
 	markdeck/helper/downloaded/trianglify-background-generator-master \
-	markdeck/helper/downloaded/colorful-background \
 	markdeck/helper/downloaded/gradient-generator \
 	markdeck/helper/downloaded/unique-gradient-generator
 
@@ -148,12 +152,6 @@ markdeck/helper/downloaded/trianglify-background-generator-master:
 	curl -O -L https://github.com/alssndro/trianglify-background-generator/archive/master.zip
 	unzip -d $(shell dirname $@) master.zip
 	rm -f master.zip
-
-
-markdeck/helper/downloaded/colorful-background:
-	mkdir -p $(shell dirname $@)
-	wget -kr -np -nH http://www.webcore-it.com/colorful-background/
-	mv colorful-background $@
 
 
 markdeck/helper/downloaded/unique-gradient-generator:
