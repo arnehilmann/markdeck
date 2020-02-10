@@ -136,7 +136,7 @@ function dump_position(elem)
 end
 
 function calc_positions(elem)
-    table.insert(elem.classes, "step")
+    -- table.insert(elem.classes, "step")
 
     calc_position(elem)
     remember_position(elem)
