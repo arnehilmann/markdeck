@@ -18,11 +18,6 @@ while true; do
         variant=$(echo "$CONFIG" | jq -r '.variant')
 
         DECKTAPE_OPTS=
-        if [ $variant = "impress" ]; then
-            DECKTAPE_OPTS="--screenshots --screenshots-directory /tmp"
-            rm -rf /tmp/slides/*
-            mkdir -p /tmp/slides
-        fi
 
         node /decktape/decktape.js \
             --chrome-arg=--no-sandbox \
@@ -35,10 +30,6 @@ while true; do
             /slides/$pdf
 
         [ /slides/index.html -nt /slides/.meta/pdf_rendered ] && continue
-
-        if [ $variant = "impress" ]; then
-            convert -density 300x300 $(ls -1r -tc /tmp/slides/*.png) /slides/$pdf.screenshots.pdf
-        fi
 
         echo "pdf rendering finished"
     fi
