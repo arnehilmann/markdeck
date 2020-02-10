@@ -1,4 +1,4 @@
-FROM astefanutti/decktape:2.9
+FROM astefanutti/decktape:2.11.0
 
 LABEL maintainer="arne@hilmann.de"
 
