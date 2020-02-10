@@ -37,7 +37,7 @@ services:
     - markdeck
     - web
   helper:
-    image: arne/markdeck-helper:0.3
+    image: arne/markdeck-helper:0.2
     ports:
     - 8081:8081
   standalone:
@@ -57,3 +57,5 @@ services:
       read_only: true
     ports:
     - 22753:22753
+  friends:
+    image: arne/markdown-friends:0.4

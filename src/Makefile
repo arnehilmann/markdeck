@@ -9,7 +9,7 @@ MOTTO="'the show must go on' version"
 WEB_VERSION=0.2
 PDF_VERSION=0.8
 STANDALONE_VERSION=0.3
-HELPER_VERSION=0.3
+FRIENDS_VERSION=0.4
 A2SKETCH_VERSION=0.11
 
 
@@ -35,7 +35,7 @@ docker-compose.yaml:	docker-compose.yaml.source Makefile
 	yq w -i docker-compose.yaml services.web.image "arne/markdeck-liveserver:$(WEB_VERSION)"
 	yq w -i docker-compose.yaml services.pdf.image "arne/markdeck-decktape:$(PDF_VERSION)"
 	yq w -i docker-compose.yaml services.standalone.image "arne/markdeck-standalone:$(STANDALONE_VERSION)"
-	yq w -i docker-compose.yaml services.helper.image "arne/markdeck-helper:$(HELPER_VERSION)"
+	yq w -i docker-compose.yaml services.friends.image "arne/markdown-friends:$(FRIENDS_VERSION)"
 	yq w -i docker-compose.yaml services.a2sketch.image "arne/a2sketch:$(A2SKETCH_VERSION)"
 
 
@@ -45,7 +45,7 @@ develop.yaml:	develop.yaml.source Makefile
 	yq w -i develop.yaml services.web.image "arne/markdeck-liveserver:$(WEB_VERSION)"
 	yq w -i develop.yaml services.pdf.image "arne/markdeck-decktape:$(PDF_VERSION)"
 	yq w -i develop.yaml services.standalone.image "arne/markdeck-standalone:$(STANDALONE_VERSION)"
-	yq w -i develop.yaml services.helper.image "arne/markdeck-helper:$(HELPER_VERSION)"
+	yq w -i develop.yaml services.friends.image "arne/markdown-friends:$(FRIENDS_VERSION)"
 	yq w -i develop.yaml services.a2sketch.image "arne/a2sketch:$(A2SKETCH_VERSION)"
 
 
@@ -65,8 +65,8 @@ docker-compose-within-markdeck:	docker-compose.yaml Makefile ../markdeck
 	yq d -i dc.tmp services.pdf.build
 	yq w -i dc.tmp services.standalone.image "arne/markdeck-standalone:$(STANDALONE_VERSION)"
 	yq d -i dc.tmp services.standalone.build
-	yq w -i dc.tmp services.helper.image "arne/markdeck-helper:$(HELPER_VERSION)"
-	yq d -i dc.tmp services.helper.build
+	yq w -i dc.tmp services.friends.image "arne/markdown-friends:$(FRIENDS_VERSION)"
+	yq d -i dc.tmp services.friends.build
 	yq w -i dc.tmp services.a2sketch.image "arne/a2sketch:$(A2SKETCH_VERSION)"
 	sed -i.bak 's/______/"\\$$MARKDECK_USER"/' dc.tmp
 	sed -i.bak -e '/ EODCF/r dc.tmp' -e '/ EODCF/,/EODCF/{/EODCF/p;d;}' ../markdeck
@@ -80,10 +80,7 @@ prepare:	downloaded/bin/pandoc \
 	markdeck/assets/3rdparty/asciinema-player.css \
 	markdeck/assets/framework/reveal.js \
 	markdeck/assets/framework/impress.js \
-	jqueryemoji \
-	markdeck/helper/downloaded/trianglify-background-generator-master \
-	markdeck/helper/downloaded/gradient-generator \
-	markdeck/helper/downloaded/unique-gradient-generator
+	jqueryemoji
 
 
 downloaded/bin/pandoc:
@@ -145,30 +142,6 @@ markdeck/assets/framework/reveal.js:
 markdeck/assets/framework/impress.js:
 	mkdir -p $@
 	curl -L "https://github.com/impress/impress.js/archive/$(IMPRESSJS_VERSION).tar.gz" | gtar -C $@ --strip-components=1 --exclude examples --exclude test -zxvf -
-
-
-markdeck/helper/downloaded/trianglify-background-generator-master:
-	mkdir -p $(shell dirname $@)
-	curl -O -L https://github.com/alssndro/trianglify-background-generator/archive/master.zip
-	unzip -d $(shell dirname $@) master.zip
-	rm -f master.zip
-
-
-markdeck/helper/downloaded/unique-gradient-generator:
-	mkdir -p $@
-	curl -L -O https://github.com/tiborsaas/unique-gradient-generator/archive/gh-pages.zip
-	unzip gh-pages.zip
-	rm -f gh-pages.zip
-	mv unique-gradient-generator-gh-pages/ $@
-	echo $@/img
-	ls -al $@/img
-	#for F in $$(find $@/img -size +100k); do BN=$@/img/$$(basename $$F .png); rm -fv $$BN.png $${BN}_thumb.png; done
-
-
-markdeck/helper/downloaded/gradient-generator:
-	mkdir -p $(shell dirname $@)
-	wget -kr -np -nH https://tools.superdevresources.com/gradient-generator/
-	mv gradient-generator/ $@
 
 
 # https://raw.githubusercontent.com/neverpanic/google-font-download/master/google-font-download

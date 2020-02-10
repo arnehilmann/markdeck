@@ -54,11 +54,8 @@ services:
       target: /target
     depends_on:
     - web
-  helper:
-    build:
-      context: .
-      dockerfile: Dockerfile.helper
-    image: arne/markdeck-helper:0.2
+  friends:
+    image: arne/markdown-friends:0.4
     ports:
     - 8081:8081
   a2sketch:
