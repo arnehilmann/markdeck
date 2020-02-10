@@ -1,12 +1,14 @@
 ---
-title: markdeck
-variant: reveal
+title: markdeck example
+# variant: reveal
+# variant: impress
 # pdf: markdeck-example.pdf
 # standalone: markdeck-example.html
 # highlight_style: grayscale
 highlight_style: github-gist
 asciinema: true
-md_themes: example
+themes: example
+# themes: mono
 
 # slideNumber: true
 # autoSlide: 5000
@@ -17,7 +19,7 @@ md_themes: example
 # pdf_size: 1024x768
 ---
 
-# markdeck {bgcss=sea-gradient x=0 y=0 .light-on-dark}
+# markdeck {bgcss=sea-gradient x=0 y=0 rz=-10 .light-on-dark}
 
 collaborative slide editing made easy
 
@@ -27,7 +29,7 @@ collaborative slide editing made easy
 ![](fab fa-css3)
 ![](fab fa-js-square)
 
-<small> arne@hilmann.de • 2019-01</small>
+<small> arne@hilmann.de • 2020</small>
 
 [![](fab fa-github)](https://github.com/arnehilmann/markdeck)
 [![](fab fa-docker)](https://hub.docker.com/r/arne/markdeck-pandoc/)
@@ -41,7 +43,7 @@ converts markdown to complex</br> HTML5 slides
 should run on all *nix platforms,</br> windows<small>?</small> and MacOS
 
 
-# features, contd.
+# features, contd. {bg=black;assets/img/paperclip.gif rx=0 ry=1}
 
 cool
 • graphical
@@ -51,23 +53,24 @@ cool
 • adaptable
 
 
-# cool looking {rx=0 ry=-1}
+# cool looking {rx=-1 ry=0}
 
 leverages battle-proven</br>HTML5 presentation frameworks:
 
 revealjs • impressjs
 
 
-# graphical {rx=-1 ry=-.4 rz=-2000}
+# graphical
 
 content as markdown</br>
-<small>incl unicode, emojis, font-awesome: ♥ 😎  ![](fas fa-desktop)</small>
+<small>incl unicode, emojis, font-awesome<br/>
+♥ 😎 </small> ![](fas fa-desktop fa-2x)
 
 images as asciiart</br>
 <small>charts, diagrams, graphs, math, …</small>
 
 
-# easy
+# easy {rx=0 ry=-1}
 
 completely text-based</br>
 <small>use your preferred editor/IDE</small>
@@ -79,10 +82,15 @@ fast feedback
 
 # robust
 
-modify and present your slides _without_ internet uplink
+modify and present your slides<br/> _without_ <br/>internet uplink
+
+<span class="fa-stack fa-1x">
+  ![](fas fa-wifi fa-stack-1x)
+  ![](fas fa-slash fa-stack-1x)
+</span>
 
 
-# collaborative {rx=0 ry=-1}
+# collaborative {rx=1 ry=0}
 
 presentation-as-code
 
@@ -106,9 +114,9 @@ public class Example {
 ```
 
 
-# example: asciiart (ditaa) {bg=SteeBlue .ltr}
+# example: asciiart (ditaa) {bg=SteeBlue .ltr rx=0 ry=1}
 
-```{.nohighlight style="width: 40%; height: 100%; font-size: 60%;"}
+```{.nohighlight style="width: 40%; height: 100%; font-size: 40%;"}
 +-----------------------------+
 | Node A                      |
 |                             |
@@ -171,9 +179,9 @@ public class Example {
 ```
 
 
-# example: asciiart (plantuml) {bg=lightblue .ltr rx=1.4 ry=-.2}
+# example: asciiart (plantuml) {.ltr}
 
-```{.nohighlight style="width: 40%; font-size: 100%;"}
+```{.nohighlight style="width: 40%; font-size: 60%;"}
 @startuml
 Bob->Alice : hello
 Alice->Bob : oh, you again...
@@ -214,9 +222,9 @@ digraph G {
 }
 ```
 
-# example: charts (vega-lite) {.ltr}
+# example: charts (vega-lite) {bg=lightblue .ltr rx=-1 ry=0}
 
-```{.json style="width: 50%; font-size: 40%;"}
+```{.json style="width: 50%; font-size: 30%;"}
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json",
     "data": {
@@ -352,14 +360,14 @@ github.com/arnehilmann/a2sketch
 
 # example: math equations
 
-```{.nohighlight style="width: 80%; font-size: 50%;"}
+```{.nohighlight style="width: 100%; font-size: 70%;"}
 $a^2 + b^2 = c^2$
 ```
 $a^2 + b^2 = c^2$
 
 &nbsp;
 
-```{.nohighlight style="width: 80%; font-size: 50%;"}
+```{.nohighlight style="width: 100%; font-size: 70%;"}
 $$e = \mathop
     {\lim }\limits_{n \to \infty }
     \left( {1 + \frac{1}{n}} \right)^n$$
@@ -369,9 +377,9 @@ $$e = \mathop
     \left( {1 + \frac{1}{n}} \right)^n$$
 
 
-# example: terminal session (asciinema) {bg=#121314}
+# example: terminal session (asciinema) {rx=0 ry=-1 rz=0 bg=#121314}
 
-<asciinema-player src="./assets/img/test.json"
+<asciinema-player src="./assets/test.json"
     poster="npt:0:21"
     idle-time-limit=1
     speed=2
@@ -415,17 +423,10 @@ $$e = \mathop
 [`https://github.com/arnehilmann/markdeck`{.render_qr}](https://github.com/arnehilmann/markdeck)
 
 
-# {.skip skipon="reveal" scale=5 rx=2}
-
-This space intentionally left blank.
+# markdeck {.skip skipon="reveal" scale=5 x=0 ry=-.6}
 
 
-
-# {x=1 y=0 z=0 scale=3 skipon="reveal" id=overview}
-
-
-# markdeck {x=3 y=-1.5 rotate-y=60 scale=3 bgcss=sea-gradient .light-on-dark}
-
+# markdeck {x=3 y=-2.5 z=3000 rotate-y=60 scale=2 skipon="reveal"}
 
 collaborative slide editing made easy
 
@@ -435,4 +436,19 @@ collaborative slide editing made easy
 ![](fab fa-css3)
 ![](fab fa-js-square)
 
-![](themes/example/img/buddy-egyptian.svg)
+![](assets/img/buddy-egyptian.svg)
+
+
+# {x=0 y=0 scale=2 skipon="reveal" id=overview}
+
+
+# markdeck {skipon="impress" bgcss=sea-gradient .light-on-dark}
+
+collaborative slide editing made easy
+
+![](fab fa-markdown)
+![](fab fa-docker)
+![](fab fa-html5)
+![](fab fa-css3)
+![](fab fa-js-square)
+<img src="assets/img/buddy-egyptian.svg" style="height:120px; vertical-align:middle; box-shadow:none;"/>
