@@ -5,9 +5,9 @@ services:
       context: .
       dockerfile: Dockerfile.pandoc
       args:
-        version: 0.36
+        version: 0.5
         motto: the show must go on
-    image: arne/markdeck-pandoc:0.36
+    image: arne/markdeck-pandoc:0.50
     user: nobody
     volumes:
     - type: bind
@@ -34,7 +34,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.decktape
-    image: arne/markdeck-decktape:0.6
+    image: arne/markdeck-decktape:0.8
     volumes:
     - type: bind
       source: ./deck
@@ -58,7 +58,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.helper
-    image: arne/markdeck-helper:0.2
+    image: arne/markdeck-helper:0.3
     ports:
     - 8081:8081
   a2sketch:

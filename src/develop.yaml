@@ -1,7 +1,7 @@
 version: "3.2"
 services:
   markdeck:
-    image: arne/markdeck-pandoc:0.36
+    image: arne/markdeck-pandoc:0.50
     volumes:
     - type: bind
       source: ./
@@ -27,7 +27,7 @@ services:
     depends_on:
     - markdeck
   pdf:
-    image: arne/markdeck-decktape:0.6
+    image: arne/markdeck-decktape:0.8
     volumes:
     - type: bind
       source: ./deck
@@ -37,7 +37,7 @@ services:
     - markdeck
     - web
   helper:
-    image: arne/markdeck-helper:0.2
+    image: arne/markdeck-helper:0.3
     ports:
     - 8081:8081
   standalone:
