@@ -5,7 +5,7 @@ set -ue
 BUILD=deck
 VERSION=0.50
 PORT=${1:-8080}
-HELPER_PORT=$((${PORT} + 1))
+FRIENDS_PORT=$((${PORT} + 1))
 
 calcUser() {
     local dir="$1"
@@ -98,10 +98,10 @@ services:
       target: /target
     depends_on:
     - web
-  helper:
-    image: arne/markdeck-helper:0.3
+  friends:
+    image: arne/markdown-friends:0.4
     ports:
-    - ${HELPER_PORT}:8081
+    - ${FRIENDS_PORT}:8081
   a2sketch:
     image: arne/a2sketch:0.11
     volumes:
@@ -109,8 +109,6 @@ services:
       source: ${PWD}
       target: /custom-types
       read_only: true
-  friends:
-    image: arne/markdown-friends:0.4
 EODCF
 
     echo "${tmpfile}"
