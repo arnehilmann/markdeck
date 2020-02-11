@@ -7,6 +7,7 @@
 * try to run without docker
 * test on windows10
 * make svg inlining optional, or copy attributes
+* provide resource helper: download remote stuff (ala https://webpack.js.org/loaders/html-loader/ or so)
 * try papercss
 * impressjs: define new coordinate system on-the-fly
 
