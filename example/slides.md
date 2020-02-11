@@ -43,7 +43,7 @@ converts markdown to complex</br> HTML5 slides
 should run on all *nix platforms,</br> windows<small>?</small> and MacOS
 
 
-# features, contd. {bg=black;assets/img/paperclip.gif rx=0 ry=1}
+# features, contd. {rx=0 ry=1}
 
 cool
 • graphical
@@ -53,7 +53,7 @@ cool
 • adaptable
 
 
-# cool looking {rx=-1 ry=0}
+# cool looking {bg=black;assets/img/paperclip.gif rx=-1 ry=0}
 
 leverages battle-proven</br>HTML5 presentation frameworks:
 
