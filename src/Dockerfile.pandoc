@@ -1,3 +1,25 @@
+FROM gradle:6.1 as build-ditaa
+
+WORKDIR /
+RUN curl -OL https://github.com/pepijnve/ditaa/archive/mini-0.12.tar.gz
+RUN tar zxvf mini-*.tar.gz
+RUN mv ditaa-mini* ditaa-mini
+WORKDIR ditaa-mini
+RUN gradle jar --offline
+RUN cp build/libs/ditaa*.jar /ditaa.jar
+
+
+
+FROM node:lts-alpine as build-vega
+
+RUN apk add g++ make pkgconf pixman-dev cairo-dev pango-dev libjpeg-turbo-dev giflib-dev
+RUN npm -g config set user root
+RUN npm install -g vega vega-cli vega-lite \
+    && npm cache clean --force
+RUN tar zcvf vega.tgz /usr/local/bin/vl2* /usr/local/bin/vg2* /usr/local/lib/node_modules/vega*
+
+
+
 FROM node:lts-alpine
 
 LABEL maintainer="arne@hilmann.de"
@@ -11,29 +33,26 @@ RUN apk add \
     graphviz inotify-tools rsync \
     libqrencode jq sassc zip openjdk8-jre \
     python3 fontconfig lua5.3 \
-    pixman cairo pango libjpeg-turbo giflib
-
-RUN apk add --update --virtual .build-deps \
-    g++ \
-    pkgconf pixman-dev cairo-dev \
-    pango-dev libjpeg-turbo-dev giflib-dev
+    pixman cairo pango libjpeg-turbo giflib \
+    && rm -rf /var/cache/apk/*
 
 RUN npm -g config set user root
-RUN npm install -g mathjax-pandoc-filter vega@^5.6.0 vega-cli@^5.6.0 vega-lite@^3.4.0
+RUN npm install -g mathjax-pandoc-filter \
+    && npm cache clean --force
+
+COPY --from=build-vega /vega.tgz /
+WORKDIR /
+RUN tar zxvf vega.tgz
 
 RUN mkdir -p /usr/local/share/lua/5.3
 RUN curl -o /usr/local/share/lua/5.3/inspect.lua -L https://raw.githubusercontent.com/kikito/inspect.lua/master/inspect.lua
 
 RUN pip3 install MarkdownPP
 
-# cleanup
-RUN apk del .build-deps \
-    && rm -rf /var/cache/apk/* \
-    && npm cache clean --force
-
 COPY downloaded/ /usr
 RUN mkdir -p /markdeck/
 COPY markdeck/ /markdeck/
+COPY --from=build-ditaa /ditaa.jar /markdeck/lib/
 WORKDIR /markdeck
 RUN ln -sf /target/assets/css/fonts /.fonts
 RUN ln -sf /markdeck/assets/markdeck/css/fonts/ /usr/share/fonts
