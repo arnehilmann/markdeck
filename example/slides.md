@@ -19,7 +19,7 @@ themes: example
 # pdf_size: 1024x768
 ---
 
-# markdeck {bgcss=sea-gradient x=0 y=0 rz=-10 .light-on-dark}
+# markdeck {bgcss=sea-gradient x=0 y=0 rz=-.1 .light-on-dark}
 
 collaborative slide editing made easy
 
