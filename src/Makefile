@@ -141,10 +141,9 @@ clean:
 
 
 tabularasa:
-	docker images arne/markdeck
-	docker rmi arne/markdeck || :
-	for I in $$(docker images -q arne/markdeck); do docker rmi $$I; done
+	docker images "arne/markdeck*"
+	docker images -q "arne/markdeck*" | xargs docker rmi
 	docker system prune -f
-	docker images arne/markdeck
+	docker images "arne/markdeck*"
 
 .PHONY: all prepare jquery.js jqueryemoji push tag clean tabularasa
