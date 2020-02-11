@@ -75,7 +75,6 @@ docker-compose-within-markdeck:	docker-compose.yaml Makefile ../markdeck
 
 prepare:	downloaded/bin/pandoc \
 	markdeck/lib/plantuml.jar \
-	markdeck/lib/ditaa.jar \
 	markdeck/assets/3rdparty/asciinema-player.js \
 	markdeck/assets/3rdparty/asciinema-player.css \
 	markdeck/assets/framework/reveal.js \
@@ -110,17 +109,6 @@ markdeck/assets/3rdparty/jquery.js:
 markdeck/lib/plantuml.jar:
 	mkdir -p $(shell dirname $@)
 	curl -L -o $@ "https://sourceforge.net/projects/plantuml/files/plantuml.jar/download?use_mirror=10gbps-io"
-
-
-markdeck/lib/ditaa.jar:
-	# from https://github.com/pepijnve/ditaa/
-	mkdir -p $(shell dirname $@)
-	curl -L -o $@ "https://github.com/arnehilmann/deck-master-md-reveal-pdf-cc/raw/master/ditaamini-0.11-SNAPSHOT.jar"
-
-
-#markdeck/lib/render-asciiart-filter.lua:
-	#mkdir -p $(shell dirname $@)
-	#curl -L -o $@ "https://raw.githubusercontent.com/arnehilmann/pandoc-asciiart-filter/master/render-asciiart-filter.lua"
 
 
 markdeck/assets/3rdparty/asciinema-player.js:
