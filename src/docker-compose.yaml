@@ -47,7 +47,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.standalone
-    image: arne/markdeck-standalone:0.3
+    image: arne/markdeck-standalone:0.4
     volumes:
     - type: bind
       source: ./deck
@@ -55,7 +55,7 @@ services:
     depends_on:
     - web
   friends:
-    image: arne/markdown-friends:0.4
+    image: arne/markdown-friends:0.5
     ports:
     - 8081:8081
   a2sketch:

@@ -41,7 +41,7 @@ services:
     ports:
     - 8081:8081
   standalone:
-    image: arne/markdeck-standalone:0.3
+    image: arne/markdeck-standalone:0.4
     volumes:
     - type: bind
       source: ./deck
@@ -58,4 +58,4 @@ services:
     ports:
     - 22753:22753
   friends:
-    image: arne/markdown-friends:0.4
+    image: arne/markdown-friends:0.5

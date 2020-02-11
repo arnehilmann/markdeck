@@ -3,7 +3,7 @@ set -e -E -u
 
 VERBOSE=false
 
-while read -r line || [[ -n "$line" ]]; do
+while IFS= read -r line || [[ -n "$line" ]]; do
     if echo "$line" | grep -q "<script src="; then
         src=$(echo "$line" | sed "s/^.*<script.*src=['\"]//;s/['\"].*$//")
         $VERBOSE && du -h "$src" >&2
