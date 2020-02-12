@@ -4,7 +4,7 @@ set -ue
 
 BUILD=deck
 VERSION=0.50
-PORT=${1:-8080}
+PORT=${MARKDECK_PORT:-8080}
 FRIENDS_PORT=$((${PORT} + 1))
 
 calcUser() {
@@ -91,7 +91,7 @@ services:
     - markdeck
     - web
   standalone:
-    image: arne/markdeck-standalone:0.3
+    image: arne/markdeck-standalone:0.4
     volumes:
     - type: bind
       source: ${PWD}/${BUILD}
@@ -99,7 +99,7 @@ services:
     depends_on:
     - web
   friends:
-    image: arne/markdown-friends:0.4
+    image: arne/markdown-friends:0.5
     ports:
     - ${FRIENDS_PORT}:8081
   a2sketch:
