@@ -121,7 +121,7 @@ dockerCompose () {
 }
 
 update () {
-    curl -# -S -f -L -O "${0}" https://raw.githubusercontent.com/arnehilmann/markdeck/master/markdeck
+    curl -# -S -f -L -o "${0}" https://raw.githubusercontent.com/arnehilmann/markdeck/master/markdeck
     chmod a+x "${0}"
     echo "Updated from $(printVersion) to $("${0}" --version)."
 }
