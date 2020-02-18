@@ -5,9 +5,9 @@ services:
       context: .
       dockerfile: Dockerfile.pandoc
       args:
-        version: 0.5
-        motto: the show must go on
-    image: arne/markdeck-pandoc:0.50
+        version: 0.51
+        motto: the show still must go on
+    image: arne/markdeck-pandoc:0.51
     user: nobody
     volumes:
     - type: bind
@@ -62,6 +62,6 @@ services:
     image: arne/a2sketch:0.11
     volumes:
     - type: bind
-      source: ./a2s-custom-types
+      source: ./
       target: /custom-types
       read_only: true

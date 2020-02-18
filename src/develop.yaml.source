@@ -38,11 +38,6 @@ services:
     shm_size: 1G
     depends_on: [markdeck, web]
 
-  helper:
-    image: "arne/markdeck-helper:0.2"
-    ports:
-      - "8081:8081"
-
   standalone:
     image: "arne/markdeck-standalone:0.2"
     volumes:
@@ -55,8 +50,13 @@ services:
     image: "arne/a2sketch:0.11"
     volumes:
       - type: bind
-        source: ./a2s-custom-types
+        source: ./
         target: /custom-types
         read_only: true
     ports:
       - "22753:22753"
+
+  friends:
+    image: "arne/markdown-friends:0.5"
+    ports:
+      - "8081:8081"
