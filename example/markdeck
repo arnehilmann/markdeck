@@ -3,7 +3,7 @@
 set -ue
 
 BUILD=deck
-VERSION=0.50
+VERSION=0.51
 PORT=${MARKDECK_PORT:-8080}
 FRIENDS_PORT=$((${PORT} + 1))
 
@@ -60,7 +60,7 @@ createComposeFile () {
 version: "3.2"
 services:
   markdeck:
-    image: arne/markdeck-pandoc:0.50
+    image: arne/markdeck-pandoc:0.51
     user: "\$MARKDECK_USER"
     volumes:
     - type: bind
@@ -121,7 +121,7 @@ dockerCompose () {
 }
 
 update () {
-    curl -# -S -f -L -O "${0}" https://raw.githubusercontent.com/arnehilmann/markdeck/master/markdeck
+    curl -# -S -f -L -o "${0}" https://raw.githubusercontent.com/arnehilmann/markdeck/master/markdeck
     chmod a+x "${0}"
     echo "Updated from $(printVersion) to $("${0}" --version)."
 }

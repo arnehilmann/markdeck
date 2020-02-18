@@ -19,6 +19,7 @@ themes: example
 # pdf_size: 1024x768
 ---
 
+
 # markdeck {bgcss=sea-gradient x=0 y=0 rz=-.1 .light-on-dark}
 
 collaborative slide editing made easy
@@ -111,6 +112,41 @@ public class Example {
         System.out.println("Hello World");
     }
 }
+```
+
+
+# example: asciiart (svgbob)
+
+```{.render_svgbob args="--scale 20 --font-family Raleway --font-size 24"}
+        P *
+           \
+            \
+       v0    \       v3
+         *----\-----*
+        /      v X   \
+       /        o     \
+      /                \
+  v1 *------------------* v2
+```
+[svgbob](https://ivanceras.github.io/svgbob-editor/)
+
+<small>--font-family --font-size --scale --stroke-width</small>
+
+
+# example: asciiart (mermaid)
+
+```render_mermaid
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice->John: Hello John, how are you?
+    loop Healthcheck
+        John->John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts <br/>prevail...
+    John-->Alice: Great!
+    John->Bob: How about you?
+    Bob-->John: Jolly good!
 ```
 
 
