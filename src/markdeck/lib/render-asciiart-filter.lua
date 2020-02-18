@@ -121,6 +121,17 @@ local renderer = {
                 },
                "svg"
     end,
+    render_svgbob = function(text, attrs)
+        io.stderr:write("svgbob found: " .. text .. "\n")
+        if attrs[1] then
+            attrs = attrs[1][2]
+        end
+        params = {}
+        for _, w in pairs(shlex(attrs)) do
+            table.insert(params, w)
+        end
+        return {"svgbob", params, text}, "svg"
+    end,
 }
 
 
@@ -191,4 +202,15 @@ function RenderCode(elem, attr)
 end
 
 
-return {{CodeBlock=RenderCodeBlock, Code=RenderCode}, {Pandoc=Cleanup}}
+function ModifyCode(elem, attr)
+    if elem.classes[1] == "render_mermaid" then
+        io.stderr:write("mermaid found\n")
+        new_elem = pandoc.Div({pandoc.Plain({pandoc.Str(elem.text)})})
+        table.insert(new_elem.classes, "mermaid")
+        return new_elem
+    end
+    return nil
+end
+
+
+return {{CodeBlock=RenderCodeBlock, Code=RenderCode}, {CodeBlock=ModifyCode}, {Pandoc=Cleanup}}

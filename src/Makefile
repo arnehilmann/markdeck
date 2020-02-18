@@ -3,9 +3,10 @@ REVEALJS_VERSION=3.9.2
 ASCIINEMAPLAYER_VERSION=v2.6.1
 JQUERY_VERSION=3.4.1.slim.min
 IMPRESSJS_VERSION=1.0.0
+MERMAID_VERSION=8.4.6
 
-VERSION=0.50
-MOTTO="'the show must go on' version"
+VERSION=0.51
+MOTTO="'the show still must go on' version"
 WEB_VERSION=0.2
 PDF_VERSION=0.8
 STANDALONE_VERSION=0.4
@@ -13,8 +14,8 @@ FRIENDS_VERSION=0.5
 A2SKETCH_VERSION=0.11
 
 
-all:	prepare docker-compose.yaml develop.yaml markdeck-exe
-	docker-compose build
+all:	prepare docker-compose.yaml develop.yaml ../markdeck
+	docker-compose build --build-arg mermaid_version=$(MERMAID_VERSION)
 
 
 tag:	all
@@ -49,12 +50,7 @@ develop.yaml:	develop.yaml.source Makefile
 	yq w -i develop.yaml services.a2sketch.image "arne/a2sketch:$(A2SKETCH_VERSION)"
 
 
-markdeck-exe:	docker-compose-within-markdeck Makefile
-	sed -i.bak '/VERSION=/{s/=.*/=$(VERSION)/;}' ../markdeck
-	rm -f ../markdeck.bak
-
-
-docker-compose-within-markdeck:	docker-compose.yaml Makefile ../markdeck
+../markdeck:	docker-compose.yaml Makefile
 	sed -n '/EODCF/,/EODCF/{/EODCF/d;s/..MARKDECK_USER/______/;p;}' ../markdeck > dc.tmp
 	yq w -i dc.tmp services.markdeck.image "arne/markdeck-pandoc:$(VERSION)"
 	yq w -i dc.tmp services.markdeck.build.args.version "$(VERSION)"
@@ -71,6 +67,8 @@ docker-compose-within-markdeck:	docker-compose.yaml Makefile ../markdeck
 	sed -i.bak 's/______/"\\$$MARKDECK_USER"/' dc.tmp
 	sed -i.bak -e '/ EODCF/r dc.tmp' -e '/ EODCF/,/EODCF/{/EODCF/p;d;}' ../markdeck
 	rm -f dc.tmp* ../markdeck.bak
+	sed -i.bak '/VERSION=/{s/=.*/=$(VERSION)/;}' ../markdeck
+	rm -f ../markdeck.bak
 
 
 prepare:	downloaded/bin/pandoc \

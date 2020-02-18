@@ -20,6 +20,28 @@ RUN tar zcvf vega.tgz /usr/local/bin/vl2* /usr/local/bin/vg2* /usr/local/lib/nod
 
 
 
+FROM node:lts-alpine as build-mermaid
+
+ARG mermaid_version
+WORKDIR /tmp
+RUN yarn add mermaid
+RUN cp /tmp/node_modules/mermaid/dist/mermaid.min* /
+RUN ls -al /
+
+
+
+FROM instrumentisto/rust:nightly-alpine3.10 as build-svgbob
+
+WORKDIR /tmp
+RUN apk add git
+RUN git clone https://github.com/ivanceras/svgbob.git
+WORKDIR svgbob
+RUN cargo build
+RUN cargo test
+RUN cp target/debug/svgbob /
+
+
+
 FROM node:lts-alpine
 
 LABEL maintainer="arne@hilmann.de"
@@ -53,6 +75,11 @@ COPY downloaded/ /usr
 RUN mkdir -p /markdeck/
 COPY markdeck/ /markdeck/
 COPY --from=build-ditaa /ditaa.jar /markdeck/lib/
+RUN ls -al /markdeck/assets/3rdparty
+COPY --from=build-mermaid /mermaid.min.js /mermaid.min.js.map /markdeck/assets/3rdparty/
+RUN ls -al /markdeck/assets/3rdparty
+COPY --from=build-svgbob /svgbob /usr/local/bin/
+
 WORKDIR /markdeck
 RUN ln -sf /target/assets/css/fonts /.fonts
 RUN ln -sf /markdeck/assets/markdeck/css/fonts/ /usr/share/fonts
