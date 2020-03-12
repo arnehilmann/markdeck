@@ -30,15 +30,27 @@ RUN ls -al /
 
 
 
-FROM instrumentisto/rust:nightly-alpine3.10 as build-svgbob
+# FROM rust:1.41-alpine3.10 as build-svgbob
+#
+# WORKDIR /tmp
+# RUN rustup toolchain install nightly
+# RUN rustup override set nightly
+# RUN apk add git
+# RUN git clone https://github.com/ivanceras/svgbob.git
+# WORKDIR svgbob
+# RUN cargo build
+# RUN cargo test
+# RUN cp target/debug/svgbob /
+
+
+
+FROM alpine:3.11.2 as build-githubstyle
 
 WORKDIR /tmp
 RUN apk add git
-RUN git clone https://github.com/ivanceras/svgbob.git
-WORKDIR svgbob
-RUN cargo build
-RUN cargo test
-RUN cp target/debug/svgbob /
+RUN git clone https://github.com/tajmone/pandoc-goodies.git
+RUN cp pandoc-goodies/templates/html5/github/GitHub.html5 /
+
 
 
 
@@ -78,7 +90,9 @@ COPY --from=build-ditaa /ditaa.jar /markdeck/lib/
 RUN ls -al /markdeck/assets/3rdparty
 COPY --from=build-mermaid /mermaid.min.js /mermaid.min.js.map /markdeck/assets/3rdparty/
 RUN ls -al /markdeck/assets/3rdparty
-COPY --from=build-svgbob /svgbob /usr/local/bin/
+# COPY --from=build-svgbob /svgbob /usr/local/bin/
+COPY --from=build-githubstyle /GitHub.html5 /markdeck/template-github.html
+
 
 WORKDIR /markdeck
 RUN ln -sf /target/assets/css/fonts /.fonts
