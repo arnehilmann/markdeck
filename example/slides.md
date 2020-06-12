@@ -19,7 +19,6 @@ themes: example
 # pdf_size: 1024x768
 ---
 
-
 # markdeck {bgcss=sea-gradient x=0 y=0 rz=-.1 .light-on-dark}
 
 collaborative slide editing made easy
@@ -54,7 +53,7 @@ cool
 • adaptable
 
 
-# cool looking {bg=black;assets/img/paperclip.gif rx=-1 ry=0}
+# cool looking {bg=white;assets/img/paperclip.gif .light-on-dark rx=-1 ry=0}
 
 leverages battle-proven</br>HTML5 presentation frameworks:
 
@@ -64,8 +63,12 @@ revealjs • impressjs
 # graphical
 
 content as markdown</br>
-<small>incl unicode, emojis, font-awesome<br/>
-♥ 😎 </small> ![](fas fa-desktop fa-2x)
+<small>
+incl unicode ♥
+emojis 😎
+font-awesome
+![](fas fa-desktop)
+</small>
 
 images as asciiart</br>
 <small>charts, diagrams, graphs, math, …</small>
@@ -103,7 +106,7 @@ use your normal version control system
 you can always fall back to</br>plain HTML/CSS
 
 
-# example: code, highlighted
+# code, highlighted
 
 ```java
 public class Example {
@@ -115,42 +118,7 @@ public class Example {
 ```
 
 
-# example: asciiart (svgbob)
-
-```{.render_svgbob args="--scale 20 --font-family Raleway --font-size 24"}
-        P *
-           \
-            \
-       v0    \       v3
-         *----\-----*
-        /      v X   \
-       /        o     \
-      /                \
-  v1 *------------------* v2
-```
-[svgbob](https://ivanceras.github.io/svgbob-editor/)
-
-<small>--font-family --font-size --scale --stroke-width</small>
-
-
-# example: asciiart (mermaid)
-
-```render_mermaid
-sequenceDiagram
-    participant Alice
-    participant Bob
-    Alice->John: Hello John, how are you?
-    loop Healthcheck
-        John->John: Fight against hypochondria
-    end
-    Note right of John: Rational thoughts <br/>prevail...
-    John-->Alice: Great!
-    John->Bob: How about you?
-    Bob-->John: Jolly good!
-```
-
-
-# example: asciiart (ditaa) {bg=SteeBlue .ltr rx=0 ry=1}
+# asciiart (ditaa) {.ltr rx=0 ry=1}
 
 ```{.nohighlight style="width: 40%; height: 100%; font-size: 40%;"}
 +-----------------------------+
@@ -215,7 +183,132 @@ sequenceDiagram
 ```
 
 
-# example: asciiart (plantuml) {.ltr}
+# asciiart (a2s) {.ltr}
+
+```{.nohighlight style="width: 40%;"}
+#--------------------.
+|[0]                 |
+| .---# .---# #---.  |
+| |[1]| |[1]| |[1]|  |
+| #---' #---' '---#  |
+|   ^     ^     ^    |
+#---+-----+-----+----#
+|   |     |     |    |
+|   a     2 sketch   |
+'--------------------#
+
+[0]: {"fill": "#933"}
+[1]: {"fill": "#bbb","a2s:delref":true,"a2s:type":"storage"}
+```
+►
+```render_a2s
+#--------------------.
+|[0]                 |
+| .---# .---# #---.  |
+| |[1]| |[1]| |[1]|  |
+| #---' #---' '---#  |
+|   ^     ^     ^    |
+#---+-----+-----+----#
+|   |     |     |    |
+|   a     2 sketch   |
+'--------------------#
+
+[0]: {"fill": "#933","a2s:delref":true}
+[1]: {"fill": "#bbb","a2s:delref":true,"a2s:type":"storage"}
+```
+
+
+# asciiart (sketchy) {.ltr .font-xkcd-script}
+
+```{.nohighlight style="width: 45%;"}
+#=----------------------------#
+|[0]                          |
+| Node                        |
+|                             |
+| #----------#   #----------# |
+| |          |   |[1]       | |
+| | front    |   | foo      | |
+| |          |   |          | |
+| |  ^       |   |          | |
+| |  |       |   |          | |
+| #--|-------#   #----------# |
+|    |                ^       |
+|    |                |       |
+|    '-- service    --'       |
+|                             |
+#-----------------------------#
+[0]: {"fill":"#fff","fillStyle":"solid","a2s:delref":true}
+[1]: {"fill":"#eee","fillStyle":"solid","a2s:delref":true}
+```
+►
+```render_a2sketch
+
+
+#-----------------------------#
+|[0]                          |
+| Node                        |
+|                             |
+| #----------#   #----------# |
+| |          |   |[1]       | |
+| |front     |   | foo      | |
+| |          |   |          | |
+| |  ^       |   |          | |
+| |  |       |   |          | |
+| #--|-------#   #----------# |
+|    |                ^       |
+|    |                |       |
+|    '-- service    --'       |
+|                             |
+#-----------------------------#
+[0]: {"fill":"#fff","fillStyle":"solid","a2s:delref":true}
+[1]: {"fill":"#eee","fillStyle":"solid","a2s:delref":true}
+```
+
+
+# asciiart (svgbob) {.ltr rx=-1 ry=0}
+
+```{.nohighlight style="width: 40%; height: 100%;"}
+        P *
+           \
+            \
+       v0    \       v3
+         *----\-----*
+        /      v X   \
+       /        o     \
+      /                \
+  v1 *------------------* v2
+```
+►
+```{.render_svgbob args="--scale 10 --font-family Raleway --font-size 24"}
+
+        P *
+           \
+            \
+       v0    \       v3
+         *----\-----*
+        /      v X   \
+       /        o     \
+      /                \
+  v1 *------------------* v2
+```
+
+
+
+# asciiart (mermaid) {.ltr}
+
+```{.nohighlight style="width: 40%; height: 100%; font-size: 40%;"}
+graph LR
+   a --> b & c--> d
+```
+►
+```{.render_mermaid args="-w 400" style="font-size: 100%;"}
+graph LR
+   a --> b & c--> d
+```
+
+
+
+# asciiart (plantuml) {.ltr}
 
 ```{.nohighlight style="width: 40%; font-size: 60%;"}
 @startuml
@@ -234,7 +327,7 @@ Bob->Alice : ??
 ```
 
 
-# example: asciiart (graphviz) {.ltr}
+# asciiart (graphviz) {.ltr}
 
 ```{.nohighlight style="width: 50%; font-size: 60%;"}
 digraph G {
@@ -258,7 +351,7 @@ digraph G {
 }
 ```
 
-# example: charts (vega-lite) {bg=lightblue .ltr rx=-1 ry=0}
+# charts (vega-lite) {.ltr rx=0 ry=-1}
 
 ```{.json style="width: 50%; font-size: 30%;"}
 {
@@ -313,88 +406,7 @@ digraph G {
 ```
 
 
-# example: asciiart (a2s) {.ltr}
-
-```{.nohighlight style="width: 40%;"}
-#-------------------.
-|[0]                |
-| .---# .---# #---. |
-| |[1]| |[1]| |[1]| |
-| #---' #---' '---# |
-|   ^     ^     ^   |
-#---+-----+-----+---#
-|   |     |     |   |
-|   a     2  sketch |
-'-------------------#
-github.com/arnehilmann/a2sketch
-
-[0]: {"fill": "#933"}
-[1]: {"fill": "#bbb"}
-```
-►
-```render_a2s
-#-------------------.
-|[0]                |
-| .---# .---# #---. |
-| |[1]| |[1]| |[1]| |
-| #---' #---' '---# |
-|   ^     ^     ^   |
-#---+-----+-----+---#
-|   |     |     |   |
-|   a     2  sketch |
-'-------------------#
-github.com/arnehilmann/a2sketch
-
-[0]: {"fill": "#933","a2s:delref":true}
-[1]: {"fill": "#bbb","a2s:delref":true,"a2s:type":"storage"}
-```
-
-
-# example: asciiart (sketchy) {.ltr}
-
-```{.nohighlight style="width: 45%;"}
-#=----------------------------#
-| Node                        |
-|                             |
-|                             |
-| #----------#   #----------# |
-| |          |   |[s]       | |
-| | Frontend |   | Foo      | |
-| |          |   |          | |
-| |  ^       |   |          | |
-| |  |       |   |          | |
-| #--|-------#   #----------# |
-|    |                ^       |
-|    |                |       |
-|    '---- service ---'       |
-|                             |
-#-----------------------------#
-
-```
-►
-```render_a2sketch
-
-
-#-----------------------------#
-| Node                        |
-|                             |
-|                             |
-| #----------#   #----------# |
-| |          |   |          | |
-| | Frontend |   | Foo      | |
-| |          |   |          | |
-| |  ^       |   |          | |
-| |  |       |   |          | |
-| #--|-------#   #----------# |
-|    |                ^       |
-|    |                |       |
-|    '---- service ---'       |
-|                             |
-#-----------------------------#
-```
-
-
-# example: math equations
+# math equations
 
 ```{.nohighlight style="width: 100%; font-size: 70%;"}
 $a^2 + b^2 = c^2$
@@ -413,7 +425,7 @@ $$e = \mathop
     \left( {1 + \frac{1}{n}} \right)^n$$
 
 
-# example: terminal session (asciinema) {rx=0 ry=-1 rz=0 bg=#121314}
+# terminal session (asciinema) {rx=0 ry=-1 rz=0 bg=#121314}
 
 <asciinema-player src="./assets/test.json"
     poster="npt:0:21"
@@ -439,6 +451,8 @@ $$e = \mathop
 •
 [graphviz](http://www.graphviz.org)
 •
+[svgbob](https://ivanceras.github.io/svgbob-editor/)
+•
 [asciinema](https://github.com/asciinema/asciinema-player)
 </br>
 
@@ -454,12 +468,17 @@ $$e = \mathop
 🙃
 
 
-# {bg=White;themes/example/img/wordcloud.svg .flush-right}
+# {bg=White;themes/example/img/wordcloud.svg .flush-right rx=1 ry=0}
 
 [`https://github.com/arnehilmann/markdeck`{.render_qr}](https://github.com/arnehilmann/markdeck)
 
 
-# markdeck {.skip skipon="reveal" scale=5 x=0 ry=-.6}
+# markdeck {.skip skipon="reveal" scale=5 x=1.8}
+
+
+# {.skip skipon="reveal" scale=1 .flush-right rx=0 ry=.25}
+
+impress.js-variant
 
 
 # markdeck {x=3 y=-2.5 z=3000 rotate-y=60 scale=2 skipon="reveal"}
