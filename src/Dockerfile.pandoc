@@ -1,4 +1,10 @@
-FROM gradle:6.1 as build-ditaa
+FROM alpine:3.11.6 AS ALPINE_BASE
+FROM node:alpine AS NODE_BASE
+FROM gradle:6.1 AS GRADLE_BASE
+FROM rust:1.43-alpine3.11 AS RUST_BASE
+
+
+FROM GRADLE_BASE AS build-ditaa
 
 WORKDIR /
 RUN curl -OL https://github.com/pepijnve/ditaa/archive/mini-0.12.tar.gz
@@ -10,7 +16,7 @@ RUN cp build/libs/ditaa*.jar /ditaa.jar
 
 
 
-FROM node:lts-alpine as build-vega
+FROM NODE_BASE AS build-vega
 
 RUN apk add g++ make pkgconf pixman-dev cairo-dev pango-dev libjpeg-turbo-dev giflib-dev
 RUN npm -g config set user root
@@ -20,31 +26,33 @@ RUN tar zcvf vega.tgz /usr/local/bin/vl2* /usr/local/bin/vg2* /usr/local/lib/nod
 
 
 
-FROM node:lts-alpine as build-mermaid
-
-ARG mermaid_version
+FROM NODE_BASE AS build-mermaid
+ARG MERMAID_VERSION
 WORKDIR /tmp
-RUN yarn add mermaid
+RUN yarn add mermaid@${MERMAID_VERSION}
 RUN cp /tmp/node_modules/mermaid/dist/mermaid.min* /
 RUN ls -al /
 
 
 
-# FROM rust:1.41-alpine3.10 as build-svgbob
-#
-# WORKDIR /tmp
-# RUN rustup toolchain install nightly
-# RUN rustup override set nightly
-# RUN apk add git
+FROM RUST_BASE AS build-svgbob
+ARG SVGBOB_VERSION
+WORKDIR /tmp
+RUN rustup toolchain install nightly
+RUN rustup override set nightly
+RUN apk add curl musl-dev
+RUN curl -L -o svgbob.tgz https://github.com/ivanceras/svgbob/archive/${SVGBOB_VERSION}.tar.gz
+RUN tar zxf svgbob.tgz
+RUN mv svgbob-* svgbob
 # RUN git clone https://github.com/ivanceras/svgbob.git
-# WORKDIR svgbob
-# RUN cargo build
-# RUN cargo test
-# RUN cp target/debug/svgbob /
+WORKDIR svgbob
+RUN cargo build
+RUN cargo test
+RUN cp target/debug/svgbob /
 
 
 
-FROM alpine:3.11.2 as build-githubstyle
+FROM ALPINE_BASE AS build-githubstyle
 
 WORKDIR /tmp
 RUN apk add git
@@ -53,12 +61,73 @@ RUN cp pandoc-goodies/templates/html5/github/GitHub.html5 /
 
 
 
+FROM ALPINE_BASE AS build-pandoc
+ARG PANDOC_VERSION
+WORKDIR /tmp
+RUN apk add curl
+RUN curl -L "https://github.com/jgm/pandoc/releases/download/${PANDOC_VERSION}/pandoc-${PANDOC_VERSION}-linux-amd64.tar.gz" | tar --strip-components=1 -zxvf - "pandoc-${PANDOC_VERSION}/bin/pandoc"
+RUN mv bin/pandoc /
 
-FROM node:lts-alpine
+
+
+FROM ALPINE_BASE AS build-jquery
+ARG JQUERY_VERSION
+WORKDIR /tmp
+RUN apk add curl
+RUN curl -L -o /jquery.js https://code.jquery.com/jquery-${JQUERY_VERSION}.js
+
+
+
+FROM ALPINE_BASE AS build-jqueryemojis
+WORKDIR /tmp
+RUN apk add curl
+RUN curl -L -o emojis.zip https://github.com/rodrigopolo/jqueryemoji/archive/master.zip
+RUN unzip emojis.zip
+RUN mkdir /emojis
+RUN mv jqueryemoji-master/img/apple72/* /emojis
+
+
+
+FROM ALPINE_BASE AS build-revealjs
+ARG REVEALJS_VERSION
+WORKDIR /tmp
+RUN apk add curl
+RUN mkdir /reveal.js
+RUN curl -L "https://github.com/hakimel/reveal.js/archive/${REVEALJS_VERSION}.tar.gz" | tar -C /reveal.js --strip-components=1 --exclude test --exclude font -zxvf -
+
+
+
+FROM ALPINE_BASE AS build-impressjs
+ARG IMPRESSJS_VERSION
+WORKDIR /tmp
+RUN apk add curl
+RUN mkdir /impress.js
+RUN curl -L "https://github.com/impress/impress.js/archive/${IMPRESSJS_VERSION}.tar.gz" | tar -C /impress.js --strip-components=1 --exclude examples --exclude test -zxvf -
+
+
+
+FROM ALPINE_BASE AS build-plantuml
+WORKDIR /tmp
+RUN apk add curl
+# RUN curl -L -o /plantuml.jar "https://sourceforge.net/projects/plantuml/files/plantuml.jar/download?use_mirror=10gbps-io"
+RUN curl -L -o /plantuml.jar "https://sourceforge.net/projects/plantuml/files/plantuml.jar/download"
+
+
+
+FROM ALPINE_BASE AS build-asciinemaplayer
+ARG ASCIINEMAPLAYER_VERSION
+WORKDIR /tmp
+RUN apk add curl
+RUN curl -L -o /asciinema-player.js "https://github.com/asciinema/asciinema-player/releases/download/${ASCIINEMAPLAYER_VERSION}/asciinema-player.js"
+RUN touch /asciinema-player.js.map
+RUN curl -L -o /asciinema-player.css "https://github.com/asciinema/asciinema-player/releases/download/${ASCIINEMAPLAYER_VERSION}/asciinema-player.css"
+
+
+
+FROM NODE_BASE AS production
 
 LABEL maintainer="arne@hilmann.de"
 
-ARG pandoc_version
 ARG version
 ARG motto
 
@@ -76,23 +145,33 @@ RUN npm install -g mathjax-pandoc-filter \
 
 COPY --from=build-vega /vega.tgz /
 WORKDIR /
-RUN tar zxvf vega.tgz
+RUN tar zxf vega.tgz
 
 RUN mkdir -p /usr/local/share/lua/5.3
 RUN curl -o /usr/local/share/lua/5.3/inspect.lua -L https://raw.githubusercontent.com/kikito/inspect.lua/master/inspect.lua
 
 RUN pip3 install MarkdownPP
 
-COPY downloaded/ /usr
 RUN mkdir -p /markdeck/
 COPY markdeck/ /markdeck/
+COPY --from=build-pandoc /pandoc /usr/bin/
+COPY --from=build-revealjs /reveal.js /markdeck/assets/framework/reveal.js/
+COPY --from=build-impressjs /impress.js /markdeck/assets/framework/impress.js/
+COPY --from=build-jquery /jquery.js /markdeck/assets/3rdparty/
+COPY --from=build-jqueryemojis /emojis /markdeck/lib/
 COPY --from=build-ditaa /ditaa.jar /markdeck/lib/
-RUN ls -al /markdeck/assets/3rdparty
 COPY --from=build-mermaid /mermaid.min.js /mermaid.min.js.map /markdeck/assets/3rdparty/
+COPY --from=build-asciinemaplayer /asciinema-player.* markdeck/assets/3rdparty/
+# markdeck/assets/3rdparty/asciinema-player.js:
+# markdeck/assets/3rdparty/asciinema-player.js.map:
+COPY --from=build-plantuml /plantuml.jar /markdeck/lib/
 RUN ls -al /markdeck/assets/3rdparty
-# COPY --from=build-svgbob /svgbob /usr/local/bin/
+COPY --from=build-svgbob /svgbob /usr/local/bin/
 COPY --from=build-githubstyle /GitHub.html5 /markdeck/template-github.html
 
+WORKDIR /markdeck/assets/framework/reveal.js
+RUN sassc css/theme/source/simple.scss > css/theme/simple.css
+RUN sassc css/reveal.scss > css/reveal.css
 
 WORKDIR /markdeck
 RUN ln -sf /target/assets/css/fonts /.fonts
@@ -110,4 +189,12 @@ RUN adduser -D -H -G markdeck markdeck
 USER markdeck
 
 ENTRYPOINT ["/markdeck/loop"]
-# ENTRYPOINT sleep 1d
+
+
+FROM production AS development
+
+
+USER root
+
+
+FROM production
