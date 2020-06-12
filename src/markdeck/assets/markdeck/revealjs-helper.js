@@ -1,5 +1,5 @@
 function calc_offset_left() {
-    return offset_left = $(".slides").offset().left / Reveal.getScale();
+    return offset_left = $(".slides").offset().left / window.deck.getScale();
 }
 
 function flushleft(selector) {

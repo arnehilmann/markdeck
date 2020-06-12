@@ -7,7 +7,7 @@
 
     <meta name="description" content="$title$" />
     $for(author)$
-        <meta name="author" content="$author$" />
+    <meta name="author" content="$author$" />
     $endfor$
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -20,11 +20,11 @@
     <link rel="stylesheet" href="assets/markdeck/styles/$highlight_style$.css" />
 
     $if(asciinema)$
-        <link rel="stylesheet" type="text/css" href="assets/3rdparty/asciinema-player.css" />
+    <link rel="stylesheet" type="text/css" href="assets/3rdparty/asciinema-player.css" />
     $endif$
 
     $for(themes)$
-        <link rel="stylesheet" href="themes/$themes$/css/slides.css" />
+    <link rel="stylesheet" href="themes/$themes$/css/slides.css" />
     $endfor$
 
     <link rel="stylesheet" href="assets/markdeck/css/markdeck.revealjs.css" />
@@ -68,12 +68,10 @@ $body$
 
     <script src="assets/3rdparty/jquery.js"></script>
 
-    <script src="assets/framework/reveal.js/js/reveal.js"></script>
-
-    <script>
-        // Full list of configuration options available here:
-        // https://github.com/hakimel/reveal.js#configuration
-        Reveal.initialize({
+    <script type="module">
+        import Reveal from "./assets/framework/reveal.js/js/index.js";
+        let deck = new Reveal();
+        deck.initialize({
             width: $width$,
             height: $height$,
             margin: $margin$,
@@ -123,30 +121,75 @@ $body$
             dependencies: [
                 { src: 'assets/framework/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
                 { src: 'assets/markdeck/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-                { src: 'assets/framework/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
                 { src: 'assets/framework/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
             ]
         });
+
+        function calc_offset_left() {
+            return jQuery(".slides").offset().left / deck.getScale();
+        }
+
+        function flushleft(selector) {
+            function deoffset() {
+                // console.log("flushleft");
+                var rel_offset_left = calc_offset_left();
+                jQuery(selector).each(function(i, e){
+                    jQuery(this).css({"margin-left": "-" + rel_offset_left + "px"});
+                });
+            }
+            deoffset();
+            if (window.pdf_render) {
+                setTimeout(deoffset, 50);
+            } else {
+                jQuery(window).on("resize", deoffset);
+            }
+        }
+
+        function centerleft(selector) {
+            function deoffset() {
+                // console.log("centerleft");
+                var rel_offset_left = calc_offset_left() / 2;
+                jQuery(selector).each(function(i, e){
+                    jQuery(this).css({"margin-left": "-" + rel_offset_left + "px"});
+                });
+            }
+            deoffset();
+            if (window.pdf_render) {
+                setTimeout(deoffset, 50);
+            } else {
+                jQuery(window).on("resize", deoffset);
+            }
+        }
+
+        flushleft(".slides .flushleft");
     </script>
 
     $if(asciinema)$
-        <script src="assets/3rdparty/asciinema-player.js"></script>
+    <script src="assets/3rdparty/asciinema-player.js"></script>
     $endif$
 
+    <script>
+        jQuery("pre.render_mermaid").each(function(i, old) {
+            var p = jQuery('<p>' + jQuery(old).children("code").text() + '</p>');
+            var attributes = jQuery(old).prop("attributes");
+            jQuery.each(attributes, function() {
+                p.attr(this.name, this.value);
+            });
+            p.addClass("mermaid");
+            old.replaceWith(p[0]);
+        });
+    </script>
     <script src="assets/3rdparty/mermaid.min.js"></script>
     <script>mermaid.initialize({startOnLoad:true, theme:'forest'});</script>
 
-    <script src="assets/markdeck/revealjs-helper.js"></script>
     <script>
-        flushleft(".slides .flushleft");
-
         // add notes class to make sure controls are always displayed on the
         // speaker notes
         if (window.self !== window.top) {
             document.body.className += " notes";
         }
 
-        document.body.className += " $md_themes$";
+        document.body.className += " $themes$";
     </script>
 
 $for(include-after)$
