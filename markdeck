@@ -3,7 +3,7 @@
 set -ue
 
 BUILD=deck
-VERSION=0.50
+VERSION=0.51
 PORT=${MARKDECK_PORT:-8080}
 FRIENDS_PORT=$((${PORT} + 1))
 
@@ -60,7 +60,7 @@ createComposeFile () {
 version: "3.2"
 services:
   markdeck:
-    image: arne/markdeck-pandoc:0.50
+    image: arne/markdeck-pandoc:0.51
     user: "\$MARKDECK_USER"
     volumes:
     - type: bind
@@ -299,7 +299,7 @@ startMarkdeck () {
     fi
     createFolder "${BUILD}"
     testOwnership "${BUILD}"
-    MARKDECK_USER=$(calcUserIdAndGroupId "${BUILD}") dockerCompose up
+    MARKDECK_USER=$(calcUserIdAndGroupId "${BUILD}") dockerCompose up --abort-on-container-exit --remove-orphans
 }
 
 if [ $# -ge 1 ]; then
@@ -324,6 +324,9 @@ if [ $# -ge 1 ]; then
             ;;
         'start' )
             startMarkdeck
+            ;;
+        'dev' )
+            dockerCompose up
             ;;
         * )
             printHelp

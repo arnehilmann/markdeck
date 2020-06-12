@@ -299,7 +299,7 @@ startMarkdeck () {
     fi
     createFolder "${BUILD}"
     testOwnership "${BUILD}"
-    MARKDECK_USER=$(calcUserIdAndGroupId "${BUILD}") dockerCompose up
+    MARKDECK_USER=$(calcUserIdAndGroupId "${BUILD}") dockerCompose up --abort-on-container-exit --remove-orphans
 }
 
 if [ $# -ge 1 ]; then
@@ -324,6 +324,9 @@ if [ $# -ge 1 ]; then
             ;;
         'start' )
             startMarkdeck
+            ;;
+        'dev' )
+            dockerCompose up
             ;;
         * )
             printHelp
