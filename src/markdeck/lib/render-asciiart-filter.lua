@@ -204,10 +204,11 @@ end
 
 function ModifyCode(elem, attr)
     if elem.classes[1] == "render_mermaid" then
-        io.stderr:write("mermaid found\n")
-        new_elem = pandoc.Div({pandoc.Plain({pandoc.Str(elem.text)})})
-        table.insert(new_elem.classes, "mermaid")
-        return new_elem
+        io.stderr:write("mermaid found:\n")
+        io.stderr:write(elem.text)
+        io.stderr:write("\n")
+        table.insert(elem.classes, "nohighlight")
+        return elem
     end
     return nil
 end
