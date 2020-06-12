@@ -1,7 +1,7 @@
 @import "common";
 
 body.impress-enabled {
-    background: #f8f8f8;
+    background: #fff;
 
     #impress {
         section > * {
@@ -47,6 +47,7 @@ body.impress-enabled {
 
         code {
             font-family: "Inconsolata";
+            line-height: 80%;
         }
 
         .has-dark-background {
@@ -139,6 +140,11 @@ body.impress-enabled {
 
         .step.ltr pre, .step.ltr p {
             display: inline-block;
+        }
+
+        img.emoji {
+            width: 2rem;
+            height: auto;
         }
     }
 }
