@@ -4,6 +4,7 @@ title: slides by markdeck
 
 variant: reveal
 html: index.html
+table_of_contents: false
 
 pdf:
 pdf_size: 1189x841  # 1024x768  # 1280x720
