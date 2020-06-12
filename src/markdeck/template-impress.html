@@ -133,6 +133,19 @@ $body$
         <script src="assets/3rdparty/asciinema-player.js"></script>
     $endif$
 
+    <script src="assets/3rdparty/jquery.js"></script>
+
+    <script>
+        jQuery("pre.render_mermaid").each(function(i, old) {
+            var p = jQuery('<p>' + jQuery(old).children("code").text() + '</p>');
+            var attributes = jQuery(old).prop("attributes");
+            jQuery.each(attributes, function() {
+                p.attr(this.name, this.value);
+            });
+            p.addClass("mermaid");
+            old.replaceWith(p[0]);
+        });
+    </script>
     <script src="assets/3rdparty/mermaid.min.js"></script>
     <script>mermaid.initialize({startOnLoad:true, theme:'forest'});</script>
 
