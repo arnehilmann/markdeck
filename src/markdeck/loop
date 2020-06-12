@@ -66,7 +66,7 @@ while true; do
 
     echo "-------- config --------"
     shopt -s nullglob
-    SOURCE_MD=$(echo /source/slide*.md)
+    SOURCE_MD=$(echo /source/*.md)
     shopt -u nullglob
     METADATA="$(pandoc --template=/markdeck/metadata.template /markdeck/defaults.yaml ${SOURCE_MD:-/markdeck/note.md})"
     mkdir -p /target/.meta/
@@ -75,6 +75,7 @@ while true; do
     jq -S . <<< "$METADATA"
     variant=$(jq -r '.variant' <<< "$METADATA")
     themes=$(jq -r '.themes' <<< "$METADATA")
+    table_of_contents=$(jq -r '.table_of_contents' <<< "$METADATA")
     echo "ASCIIART_CONFIG=$ASCIIART_CONFIG"
     echo "-------- /config --------"
     echo
@@ -113,7 +114,7 @@ while true; do
     done
     SCSS=/source/assets/css/slides.$variant.scss
     [[ -e $SCSS ]] && sassc $SCSS $(calc_css_path $SCSS)
-    sassc \
+    [[ -e /markdeck/assets/markdeck/css/markdeck.${variant}js.scss ]] && sassc \
         /markdeck/assets/markdeck/css/markdeck.${variant}js.scss \
         /target/assets/markdeck/css/markdeck.${variant}js.css || :
     echo "-------- /sass output --------"
@@ -137,20 +138,27 @@ while true; do
         cp /markdeck/note.md /target/slides.combined.md.txt
     fi
 
+    template=""
+    for t in /source/${variant} /markdeck/template-${variant}.html; do
+        [[ -r $t ]] && template=$t && break
+    done
+    echo "template file: $template"
+    echo "table_of_contents: $table_of_contents"
+    # TODO handle slide-level
 
-    template=/markdeck/template-${variant}.html
-        # --slide-level=2 \
-
+    SHORTCUT_FILTER=/markdeck/lib/${variant}-shortcut-filter.lua
+    set -x
     if pandoc \
         -f markdown+yaml_metadata_block \
         -t html \
+        ${table_of_contents:+ --toc} \
         --no-highlight \
         --wrap=preserve \
         --standalone \
-        --template=$template \
+        ${template:+ --template=$template} \
         --section-divs \
         --lua-filter /markdeck/lib/skip-slide-filter.lua \
-        --lua-filter /markdeck/lib/${variant}-shortcut-filter.lua \
+        $([[ -e $SHORTCUT_FILTER ]] && echo --lua-filter $SHORTCUT_FILTER) \
         --filter mathjax-pandoc-filter \
         --lua-filter /markdeck/lib/render-asciiart-filter.lua \
         --lua-filter /markdeck/lib/render-emojis-filter.lua \
@@ -161,6 +169,7 @@ while true; do
         -o /target/index.html.tmp \
         /markdeck/defaults.yaml /target/slides.combined.md.txt 2>&1 | tee /tmp/pandoc.output;
     then
+        set +x
         if [[ -e /target/index.html.tmp ]]; then
             echo "" > /target/assets/css/rerendering.css
             mv /target/index.html.tmp /target/index.html
@@ -168,6 +177,7 @@ while true; do
             show_errors
         fi
     else
+        set +x
         show_errors
     fi
     echo "-------- /pandoc output --------"
