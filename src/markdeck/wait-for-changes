@@ -1,30 +1,26 @@
 #!/bin/bash
-set -e -E -u
+set -eEu
 
-SOURCES="/source/slide*.md \
-    $(find /source/assets -type d) \
+SOURCES="/source/*.md \
+    $([[ -d /source/assets ]] && find /source/assets -type d || :) \
     /source/include-before-body \
     /source/include-after-body \
-    $(find /source/themes -type d)"
-# echo $SOURCES
+    $([[ -d /source/themes ]] && find /source/themes -type d || :)"
 
 TARGET=/target/index.html
 
 last_sources=$(echo $SOURCES)
-no_change=true
-while $no_change; do
+while true; do
     if [[ $(echo $SOURCES) != $last_sources ]]; then
         echo "sources changed!"
-        no_change=false
-        last_sources=$(echo $SOURCES)
+        exit 0
     fi
     for F in $SOURCES; do
         [[ -e $F ]] || continue
         if [[ $F -nt $TARGET ]]; then
             echo $F
-            no_change=false
+            exit 0
         fi
     done
-    $no_change && sleep 2
+    sleep 2
 done
-exit 0
