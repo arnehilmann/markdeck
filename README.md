@@ -26,14 +26,14 @@ https://img.shields.io/twitter/url/https/github.com/arnehilmann/markdeck.svg?sty
 * self-documenting [documentation slides](DOCUMENTATION.md#self-documenting-documentation-slides):</br>
     see the slide source and the result, side-by-side
 
-You can also visit the shiny [landing page](https://arnehilmann.github.io/markdeck/)
-or the [showcase](https://arnehilmann.github.io/markdeck/showcase/).
+You can also visit the shiny [landing page](https://arnehilmann.github.io/markdeck/), the
+[revealjs showcase](https://arnehilmann.github.io/markdeck/showcase/), or the
+[impressjs showcase](https://arnehilmann.github.io/markdeck/showcase.impress/).
 
 
 ## install markdeck, tl;dr
 
-You need `bash`, `curl`, and `docker-compose`, then run the following
-commands that will download the docker images:
+You need `bash`, `curl`, and `docker-compose`, then run the following commands:
 ```
 curl -LO https://raw.githubusercontent.com/arnehilmann/markdeck/master/markdeck
 chmod a+x markdeck
