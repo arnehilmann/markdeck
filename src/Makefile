@@ -1,12 +1,14 @@
-PANDOC_VERSION=2.9.1.1
-REVEALJS_VERSION=3.9.2
+PANDOC_VERSION=2.9.2.1
+REVEALJS_VERSION=4.0.2
 ASCIINEMAPLAYER_VERSION=v2.6.1
-JQUERY_VERSION=3.4.1.slim.min
-IMPRESSJS_VERSION=1.0.0
-MERMAID_VERSION=8.4.6
+JQUERY_VERSION=3.5.1.slim.min
+IMPRESSJS_VERSION=1.1.0
+MERMAID_VERSION=8.5.1
+SVGBOB_VERSION=0.5.0-alpha.3
+
 
 VERSION=0.51
-MOTTO="'the show still must go on' version"
+MOTTO='the show still must go on' version
 WEB_VERSION=0.2
 PDF_VERSION=0.8
 STANDALONE_VERSION=0.4
@@ -14,8 +16,19 @@ FRIENDS_VERSION=0.5
 A2SKETCH_VERSION=0.11
 
 
-all:	prepare docker-compose.yaml develop.yaml ../markdeck
-	docker-compose build --build-arg mermaid_version=$(MERMAID_VERSION)
+all:	docker-compose.yaml develop.yaml ../markdeck images.built
+
+
+images.built: Makefile Dockerfile.* $(shell find markdeck/)
+	docker-compose build \
+		--build-arg MERMAID_VERSION=$(MERMAID_VERSION) \
+		--build-arg PANDOC_VERSION=$(PANDOC_VERSION) \
+		--build-arg JQUERY_VERSION=$(JQUERY_VERSION) \
+		--build-arg REVEALJS_VERSION=$(REVEALJS_VERSION) \
+		--build-arg IMPRESSJS_VERSION=$(IMPRESSJS_VERSION) \
+		--build-arg ASCIINEMAPLAYER_VERSION=$(ASCIINEMAPLAYER_VERSION) \
+		--build-arg SVGBOB_VERSION=$(SVGBOB_VERSION)
+	touch images.built
 
 
 tag:	all
@@ -64,73 +77,12 @@ develop.yaml:	develop.yaml.source Makefile
 	yq w -i dc.tmp services.friends.image "arne/markdown-friends:$(FRIENDS_VERSION)"
 	yq d -i dc.tmp services.friends.build
 	yq w -i dc.tmp services.a2sketch.image "arne/a2sketch:$(A2SKETCH_VERSION)"
-	sed -i.bak 's/______/"\\$$MARKDECK_USER"/' dc.tmp
+	sed -i.bak 's/______/\\$$MARKDECK_USER/' dc.tmp
 	sed -i.bak -e '/ EODCF/r dc.tmp' -e '/ EODCF/,/EODCF/{/EODCF/p;d;}' ../markdeck
 	rm -f dc.tmp* ../markdeck.bak
 	sed -i.bak '/VERSION=/{s/=.*/=$(VERSION)/;}' ../markdeck
 	rm -f ../markdeck.bak
 
-
-prepare:	downloaded/bin/pandoc \
-	markdeck/lib/plantuml.jar \
-	markdeck/assets/3rdparty/asciinema-player.js \
-	markdeck/assets/3rdparty/asciinema-player.css \
-	markdeck/assets/framework/reveal.js \
-	markdeck/assets/framework/impress.js \
-	jqueryemoji
-
-
-downloaded/bin/pandoc:
-	mkdir -p downloaded/bin
-	curl -L "https://github.com/jgm/pandoc/releases/download/$(PANDOC_VERSION)/pandoc-$(PANDOC_VERSION)-linux-amd64.tar.gz" | gtar --strip-components=1 --wildcards -C downloaded -zxvf - "pandoc-*/bin/pandoc"
-
-
-jqueryemoji:	jquery.js markdeck/lib/emojis
-
-
-markdeck/lib/emojis:
-	mkdir -p $@
-	curl -L -o $@.zip https://github.com/rodrigopolo/jqueryemoji/archive/master.zip
-	unzip $@.zip
-	mv jqueryemoji-master/img/apple72/* $@
-	rm -rf jqueryemoji-master $@.zip
-
-
-jquery.js:	markdeck/assets/3rdparty/jquery.js
-
-
-markdeck/assets/3rdparty/jquery.js:
-	mkdir -p $(shell dirname $@)
-	curl -L -o $@ https://code.jquery.com/jquery-$(JQUERY_VERSION).js
-
-
-markdeck/lib/plantuml.jar:
-	mkdir -p $(shell dirname $@)
-	curl -L -o $@ "https://sourceforge.net/projects/plantuml/files/plantuml.jar/download?use_mirror=10gbps-io"
-
-
-markdeck/assets/3rdparty/asciinema-player.js:
-	mkdir -p $(shell dirname $@)
-	curl -L -o $@ "https://github.com/asciinema/asciinema-player/releases/download/$(ASCIINEMAPLAYER_VERSION)/asciinema-player.js"
-	touch $@.map
-
-
-markdeck/assets/3rdparty/asciinema-player.css:
-	mkdir -p $(shell dirname $@)
-	curl -L -o $@ "https://github.com/asciinema/asciinema-player/releases/download/$(ASCIINEMAPLAYER_VERSION)/asciinema-player.css"
-
-
-markdeck/assets/framework/reveal.js:
-	mkdir -p $@
-	curl -L "https://github.com/hakimel/reveal.js/archive/$(REVEALJS_VERSION).tar.gz" | gtar -C $@ --strip-components=1 --exclude test --exclude font -zxvf -
-
-
-markdeck/assets/framework/impress.js:
-	mkdir -p $@
-	curl -L "https://github.com/impress/impress.js/archive/$(IMPRESSJS_VERSION).tar.gz" | gtar -C $@ --strip-components=1 --exclude examples --exclude test -zxvf -
-
-
-# https://raw.githubusercontent.com/neverpanic/google-font-download/master/google-font-download
 
 clean:
 	rm -f downloaded/bin/*
@@ -144,4 +96,4 @@ tabularasa:
 	docker system prune -f
 	docker images "arne/markdeck*"
 
-.PHONY: all prepare jquery.js jqueryemoji push tag clean tabularasa
+.PHONY: all tag push clean tabularasa
