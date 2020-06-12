@@ -11,3 +11,4 @@ src/docker-compose.yaml
 src/develop.yaml
 deck/
 .uuid
+src/images.built
