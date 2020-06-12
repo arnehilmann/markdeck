@@ -18,6 +18,9 @@
 
 * serve /apple-touch-icon-precomposed.png /apple-touch-icon.png /favicon.ico
 
+* improve fragment handling
+* support rough-notes
+
 # DONE
 
 * ~document/build/provide miniditaa jar~
