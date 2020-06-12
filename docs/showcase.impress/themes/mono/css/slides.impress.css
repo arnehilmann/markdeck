@@ -1,0 +1,114 @@
+@font-face {
+  font-family: "Fredericka the Great";
+  font-style: normal;
+  font-weight: 700;
+  src: url("fonts/FrederickatheGreat-Regular.ttf") format("truetype"); }
+
+@font-face {
+  font-family: 'JetBrainsMono-Regular';
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/JetBrainsMono-Regular.ttf") format("truetype"); }
+
+body.impress-enabled {
+  background: #fff; }
+  body.impress-enabled #impress section > * {
+    font-size: 100%; }
+  body.impress-enabled #impress section h1 {
+    font-size: 160%;
+    margin-block-start: 0;
+    margin-block-end: 1ex; }
+  body.impress-enabled #impress section img {
+    max-width: 100%; }
+  body.impress-enabled #impress section svg {
+    font-size: 80%; }
+  body.impress-enabled #impress a {
+    background: none;
+    text-shadow: inherit;
+    text-decoration: inherit;
+    font-size: 80%; }
+  body.impress-enabled #impress small {
+    font-size: 60%; }
+  body.impress-enabled #impress .flush-right {
+    text-align: right; }
+  body.impress-enabled #impress asciinema-player * {
+    font-family: "Inconsolata", monospace;
+    font-size: 80%; }
+  body.impress-enabled #impress .asciinema-player .line {
+    height: 1em;
+    line-height: 1em; }
+  body.impress-enabled #impress code {
+    font-family: "Inconsolata"; }
+  body.impress-enabled #impress .has-dark-background {
+    color: #fff; }
+  body.impress-enabled #impress .step {
+    font-family: "JetBrainsMono-Regular", sans-serif;
+    text-align: center; }
+    body.impress-enabled #impress .step .line-block {
+      font-family: "JetBrainsMono-Regular", sans-serif; }
+    body.impress-enabled #impress .step h1, body.impress-enabled #impress .step h2, body.impress-enabled #impress .step h3, body.impress-enabled #impress .step h4, body.impress-enabled #impress .step h5, body.impress-enabled #impress .step h6 {
+      font-family: "Fredericka the Great", serif; }
+    body.impress-enabled #impress .step .hljs {
+      text-align: left; }
+    body.impress-enabled #impress .step pre.markdown .hljs, body.impress-enabled #impress .step pre.nohighlight {
+      font-size: 80%;
+      line-height: 1rem; }
+  body.impress-enabled #impress .step.onlywhenactive {
+    opacity: 0; }
+  body.impress-enabled #impress .step.onlywhenactive.active {
+    opacity: 1; }
+  body.impress-enabled #impress .step.radialbg {
+    background: #00d4ff;
+    background: radial-gradient(circle, #00d4ff 0%, #090979 90%, #020024 100%); }
+  body.impress-enabled #impress .step.right, body.impress-enabled #impress .step.left, body.impress-enabled #impress .step.bottom, body.impress-enabled #impress .step.top {
+    padding: 1ex;
+    margin: 0; }
+  body.impress-enabled #impress .step.right {
+    text-align: right; }
+  body.impress-enabled #impress .step.left {
+    text-align: left; }
+  body.impress-enabled #impress .step.bottom {
+    vertical-align: bottom; }
+  body.impress-enabled #impress .step.top {
+    vertical-align: top; }
+  body.impress-enabled #impress .step.xkcd {
+    font-family: "xkcd Script"; }
+  body.impress-enabled #impress .step pre {
+    display: block;
+    position: relative;
+    width: 90%;
+    margin: 20px auto;
+    text-align: left;
+    font-size: 0.55em;
+    line-height: 1em;
+    word-wrap: break-word;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3); }
+  body.impress-enabled #impress .step code {
+    text-transform: none; }
+  body.impress-enabled #impress .step pre code {
+    display: block;
+    padding: 5px;
+    overflow: auto;
+    max-height: 400px;
+    word-wrap: normal; }
+  body.impress-enabled #impress .step.ltr pre, body.impress-enabled #impress .step.ltr p {
+    display: inline-block; }
+  body.impress-enabled #impress .slide {
+    background-color: inherit;
+    border: none;
+    box-shadow: none; }
+
+body.impress-on-overview #impress section.step {
+  opacity: 1; }
+
+.sea-gradient {
+  background: linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
+  -webkit-clip-path: polygon(0% 15%, 0% 85%, 100% 85%, 100% 15%);
+  clip-path: polygon(0% 15%, 0% 85%, 100% 85%, 100% 15%); }
+
+.sky-gradient-13 {
+  background: linear-gradient(to bottom, #57c1eb 0%, #246fa8 100%); }
+
+body.impress-enabled #impress .step.inline pre {
+  display: inline-block;
+  vertical-align: middle; }

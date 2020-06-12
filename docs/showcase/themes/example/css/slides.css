@@ -1,0 +1,40 @@
+@font-face {
+  font-family: "EB Garamond Bold";
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/EBGaramond-Bold.ttf") format("truetype"); }
+
+@font-face {
+  font-family: "xkcd Script";
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/xkcd-script.ttf") format("truetype"); }
+
+@font-face {
+  font-family: "Raleway Regular";
+  font-style: normal;
+  font-weight: 400;
+  src: url("fonts/Raleway-Regular.ttf") format("truetype"); }
+
+.reveal h1, .reveal h2, .reveal h3, .reveal h4, .reveal h5, .reveal h6 {
+  font-family: "EB Garamond Bold", serif; }
+
+.reveal div {
+  font-family: "Raleway", sans-serif; }
+
+.reveal section.font-xkcd-script svg text {
+  font-family: "xkcd Script"; }
+
+.colorful .reveal {
+  background: linear-gradient(45deg, #087bd9 0%, rgba(8, 123, 217, 0) 70%), linear-gradient(135deg, #06d4f9 10%, rgba(6, 212, 249, 0) 80%); }
+  .colorful .reveal section > * {
+    color: #fff;
+    text-shadow: 0px 0px 1px #000; }
+
+.sea-gradient .reveal {
+  background: linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
+  -webkit-clip-path: polygon(0% 15%, 0% 85%, 100% 85%, 100% 15%);
+  clip-path: polygon(0% 15%, 0% 85%, 100% 85%, 100% 15%); }
+
+.sky-gradient-13 .reveal {
+  background: linear-gradient(to bottom, #57c1eb 0%, #246fa8 100%); }

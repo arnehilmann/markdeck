@@ -1,0 +1,22 @@
+@font-face {
+    font-family: "Fredericka the Great";
+    font-style: normal;
+    font-weight: 700;
+    src: url("fonts/FrederickatheGreat-Regular.ttf") format('truetype');
+}
+@font-face {
+    font-family: 'JetBrainsMono-Regular';
+    font-style: normal;
+    font-weight: 400;
+    src: url("fonts/JetBrainsMono-Regular.ttf") format('truetype');
+}
+@mixin sea-gradient {
+    background: linear-gradient(to left, #4CA1AFEE, #2C3E50EE);
+    -webkit-clip-path: polygon(0% 15%, 0% 85%, 100% 85%, 100% 15%);
+    clip-path: polygon(0% 15%, 0% 85%, 100% 85%, 100% 15%);
+}
+@mixin sky-gradient-01 { background: linear-gradient(to bottom, #020111 85%,#191621 100%); }
+@mixin sky-gradient-02 { background: linear-gradient(to bottom, #020111 60%,#20202c 100%); }
+@mixin sky-gradient-03 { background: linear-gradient(to bottom, #020111 10%,#3a3a52 100%); }
+@mixin sky-gradient-04 { background: linear-gradient(to bottom, #20202c 0%,#515175 100%); }
+@mixin sky-gradient-13 { background: linear-gradient(to bottom, #57c1eb 0%,#246fa8 100%); }

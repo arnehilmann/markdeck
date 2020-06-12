@@ -1,0 +1,22 @@
+@import "common";
+
+h1, h2, h3, h4, h5, h6, div {
+    font-family: sans-serif;
+}
+
+h1 {
+    font-size: 1.4em;
+}
+
+h2 {
+    font-size: 0.8em;
+}
+
+section {
+    font-size: 0.6em;
+}
+
+.slide-background {
+    background-size: cover !important;
+    background-repeat: no-repeat;
+}

@@ -1,0 +1,25 @@
+@import "common";
+
+.reveal {
+     h1, h2, h3, h4, h5, h6 {
+        font-family: "EB Garamond Bold", serif;
+    }
+    div {
+        font-family: "Raleway", sans-serif;
+    }
+    section.font-xkcd-script svg text {
+        font-family: "xkcd Script";
+    }
+}
+.colorful .reveal {
+    background:
+        linear-gradient(45deg, hsla(207, 93%, 44%, 1) 0%, hsla(207, 93%, 44%, 0) 70%),
+        linear-gradient(135deg, hsla(189, 95%, 50%, 1) 10%, hsla(189, 95%, 50%, 0) 80%);
+
+    section > * {
+        color: #fff;
+        text-shadow: 0px 0px 1px #000;
+    }
+}
+.sea-gradient .reveal { @include sea-gradient; }
+.sky-gradient-13 .reveal { @include sky-gradient-13; }

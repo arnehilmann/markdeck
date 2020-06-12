@@ -1,10 +1,15 @@
 ---
-title: markdeck
+title: markdeck example
+# variant: reveal
 # variant: impress
 # pdf: markdeck-example.pdf
 # standalone: markdeck-example.html
 # highlight_style: grayscale
 highlight_style: github-gist
+asciinema: true
+themes: example
+# themes: mono
+
 # slideNumber: true
 # autoSlide: 5000
 # controls: true
@@ -12,11 +17,9 @@ highlight_style: github-gist
 # controlsLayout: edges
 # pdf_size: 1189x841
 # pdf_size: 1024x768
-asciinema: true
 ---
 
-
-# markdeck {bgcss=sea-gradient x=0 y=0 .light-on-dark}
+# markdeck {bgcss=sea-gradient x=0 y=0 rz=-.1 .light-on-dark}
 
 collaborative slide editing made easy
 
@@ -26,21 +29,21 @@ collaborative slide editing made easy
 ![](fab fa-css3)
 ![](fab fa-js-square)
 
-<small> arne@hilmann.de • 2018-12</small>
+<small> arne@hilmann.de • 2020</small>
 
 [![](fab fa-github)](https://github.com/arnehilmann/markdeck)
 [![](fab fa-docker)](https://hub.docker.com/r/arne/markdeck-pandoc/)
 [![](fas fa-envelope)](email:arne@hilmann.de)
 
 
-# features {rx=1 bg=#123456}
+# features {rx=1 bgcss=sea-gradient .light-on-dark}
 
 converts markdown to complex</br> HTML5 slides
 
-should run on all *nix platforms,</br> windows and MacOS
+should run on all *nix platforms,</br> windows<small>?</small> and MacOS
 
 
-# features, contd.
+# features, contd. {rx=0 ry=1}
 
 cool
 • graphical
@@ -50,7 +53,7 @@ cool
 • adaptable
 
 
-# cool looking
+# cool looking {bg=white;assets/img/paperclip.gif .light-on-dark rx=-1 ry=0}
 
 leverages battle-proven</br>HTML5 presentation frameworks:
 
@@ -60,28 +63,38 @@ revealjs • impressjs
 # graphical
 
 content as markdown</br>
-<small>incl unicode, emojis, font-awesome: ♥ 😎  ![](fas fa-desktop)</small>
+<small>
+incl unicode ♥
+emojis 😎
+font-awesome
+![](fas fa-desktop)
+</small>
 
 images as asciiart</br>
 <small>charts, diagrams, graphs, math, …</small>
 
 
-# easy
+# easy {rx=0 ry=-1}
 
 completely text-based</br>
 <small>use your preferred editor/IDE</small>
 
-auto-reload 
+auto-reload
 ►
 fast feedback
 
 
 # robust
 
-modify and present your slides _without_ internet uplink
+modify and present your slides<br/> _without_ <br/>internet uplink
+
+<span class="fa-stack fa-1x">
+  ![](fas fa-wifi fa-stack-1x)
+  ![](fas fa-slash fa-stack-1x)
+</span>
 
 
-# collaborative
+# collaborative {rx=1 ry=0}
 
 presentation-as-code
 
@@ -93,7 +106,7 @@ use your normal version control system
 you can always fall back to</br>plain HTML/CSS
 
 
-# example: code, highlighted
+# code, highlighted
 
 ```java
 public class Example {
@@ -105,7 +118,7 @@ public class Example {
 ```
 
 
-# example: asciiart (ditaa) {bg=SteeBlue rx=0 ry=-1 .ltr}
+# asciiart (ditaa) {.ltr rx=0 ry=1}
 
 ```{.nohighlight style="width: 40%; height: 100%; font-size: 40%;"}
 +-----------------------------+
@@ -170,9 +183,134 @@ public class Example {
 ```
 
 
-# example: asciiart (plantuml) {bg=lightblue .ltr}
+# asciiart (a2s) {.ltr}
 
-```{.nohighlight style="width: 40%; font-size: 40%;"}
+```{.nohighlight style="width: 40%;"}
+#--------------------.
+|[0]                 |
+| .---# .---# #---.  |
+| |[1]| |[1]| |[1]|  |
+| #---' #---' '---#  |
+|   ^     ^     ^    |
+#---+-----+-----+----#
+|   |     |     |    |
+|   a     2 sketch   |
+'--------------------#
+
+[0]: {"fill": "#933"}
+[1]: {"fill": "#bbb","a2s:delref":true,"a2s:type":"storage"}
+```
+►
+```render_a2s
+#--------------------.
+|[0]                 |
+| .---# .---# #---.  |
+| |[1]| |[1]| |[1]|  |
+| #---' #---' '---#  |
+|   ^     ^     ^    |
+#---+-----+-----+----#
+|   |     |     |    |
+|   a     2 sketch   |
+'--------------------#
+
+[0]: {"fill": "#933","a2s:delref":true}
+[1]: {"fill": "#bbb","a2s:delref":true,"a2s:type":"storage"}
+```
+
+
+# asciiart (sketchy) {.ltr .font-xkcd-script}
+
+```{.nohighlight style="width: 45%;"}
+#=----------------------------#
+|[0]                          |
+| Node                        |
+|                             |
+| #----------#   #----------# |
+| |          |   |[1]       | |
+| | front    |   | foo      | |
+| |          |   |          | |
+| |  ^       |   |          | |
+| |  |       |   |          | |
+| #--|-------#   #----------# |
+|    |                ^       |
+|    |                |       |
+|    '-- service    --'       |
+|                             |
+#-----------------------------#
+[0]: {"fill":"#fff","fillStyle":"solid","a2s:delref":true}
+[1]: {"fill":"#eee","fillStyle":"solid","a2s:delref":true}
+```
+►
+```render_a2sketch
+
+
+#-----------------------------#
+|[0]                          |
+| Node                        |
+|                             |
+| #----------#   #----------# |
+| |          |   |[1]       | |
+| |front     |   | foo      | |
+| |          |   |          | |
+| |  ^       |   |          | |
+| |  |       |   |          | |
+| #--|-------#   #----------# |
+|    |                ^       |
+|    |                |       |
+|    '-- service    --'       |
+|                             |
+#-----------------------------#
+[0]: {"fill":"#fff","fillStyle":"solid","a2s:delref":true}
+[1]: {"fill":"#eee","fillStyle":"solid","a2s:delref":true}
+```
+
+
+# asciiart (svgbob) {.ltr rx=-1 ry=0}
+
+```{.nohighlight style="width: 40%; height: 100%;"}
+        P *
+           \
+            \
+       v0    \       v3
+         *----\-----*
+        /      v X   \
+       /        o     \
+      /                \
+  v1 *------------------* v2
+```
+►
+```{.render_svgbob args="--scale 10 --font-family Raleway --font-size 24"}
+
+        P *
+           \
+            \
+       v0    \       v3
+         *----\-----*
+        /      v X   \
+       /        o     \
+      /                \
+  v1 *------------------* v2
+```
+
+
+
+# asciiart (mermaid) {.ltr}
+
+```{.nohighlight style="width: 40%; height: 100%; font-size: 40%;"}
+graph LR
+   a --> b & c--> d
+```
+►
+```{.render_mermaid args="-w 400" style="font-size: 100%;"}
+graph LR
+   a --> b & c--> d
+```
+
+
+
+# asciiart (plantuml) {.ltr}
+
+```{.nohighlight style="width: 40%; font-size: 60%;"}
 @startuml
 Bob->Alice : hello
 Alice->Bob : oh, you again...
@@ -189,9 +327,9 @@ Bob->Alice : ??
 ```
 
 
-# example: asciiart (graphviz) {bg=lightblue rx=1 ry=0 .ltr}
+# asciiart (graphviz) {.ltr}
 
-```{.nohighlight style="width: 50%; font-size: 40%;"}
+```{.nohighlight style="width: 50%; font-size: 60%;"}
 digraph G {
     bgcolor=transparent;
     node [style=filled,color=white];
@@ -213,7 +351,7 @@ digraph G {
 }
 ```
 
-# example: charts (vega-lite) {bg=GhostWhite .ltr}
+# charts (vega-lite) {.ltr rx=0 ry=-1}
 
 ```{.json style="width: 50%; font-size: 30%;"}
 {
@@ -268,97 +406,16 @@ digraph G {
 ```
 
 
-# example: asciiart (a2s) {bg=White bgcss=sky-gradient-13 .ltr}
+# math equations
 
-```{.nohighlight style="width: 40%;"}
-#-------------------.
-|[0]                |
-| .---# .---# #---. |
-| |[1]| |[1]| |[1]| |
-| #---' #---' '---# |
-|   ^     ^     ^   |
-#---+-----+-----+---#
-|   |     |     |   |
-|   a     2  sketch |
-'-------------------#
-github.com/arnehilmann/a2sketch
-
-[0]: {"fill": "#933"}
-[1]: {"fill": "#bbb"}
-```
-►
-```render_a2s
-#-------------------.
-|[0]                |
-| .---# .---# #---. |
-| |[1]| |[1]| |[1]| |
-| #---' #---' '---# |
-|   ^     ^     ^   |
-#---+-----+-----+---#
-|   |     |     |   |
-|   a     2  sketch |
-'-------------------#
-github.com/arnehilmann/a2sketch
-
-[0]: {"fill": "#933","a2s:delref":true}
-[1]: {"fill": "#bbb","a2s:delref":true,"a2s:type":"storage"}
-```
-
-
-# example: asciiart (sketchy) {bg=White rx=0 ry=1 .ltr}
-
-```{.nohighlight style="width: 45%;"}
-#=----------------------------#
-| Node                        |
-|                             |
-|                             |
-| #----------#   #----------# |
-| |          |   |[s]       | |
-| | Frontend |   | Foo      | |
-| |          |   |          | |
-| |  ^       |   |          | |
-| |  |       |   |          | |
-| #--|-------#   #----------# |
-|    |                ^       |
-|    |                |       |
-|    '---- service ---'       |
-|                             |
-#-----------------------------#
-
-```
-►
-```render_a2sketch
-
-
-#-----------------------------#
-| Node                        |
-|                             |
-|                             |
-| #----------#   #----------# |
-| |          |   |          | |
-| | Frontend |   | Foo      | |
-| |          |   |          | |
-| |  ^       |   |          | |
-| |  |       |   |          | |
-| #--|-------#   #----------# |
-|    |                ^       |
-|    |                |       |
-|    '---- service ---'       |
-|                             |
-#-----------------------------#
-```
-
-
-# example: math equations {bg=Teal}
-
-```{.nohighlight style="width: 50%; font-size: 50%;"}
+```{.nohighlight style="width: 100%; font-size: 70%;"}
 $a^2 + b^2 = c^2$
 ```
 $a^2 + b^2 = c^2$
 
 &nbsp;
 
-```{.nohighlight style="width: 50%; font-size: 50%;"}
+```{.nohighlight style="width: 100%; font-size: 70%;"}
 $$e = \mathop
     {\lim }\limits_{n \to \infty }
     \left( {1 + \frac{1}{n}} \right)^n$$
@@ -368,9 +425,9 @@ $$e = \mathop
     \left( {1 + \frac{1}{n}} \right)^n$$
 
 
-# example: terminal session (asciinema) {bg=#121314}
+# terminal session (asciinema) {rx=0 ry=-1 rz=0 bg=#121314}
 
-<asciinema-player src="./assets/img/test.json"
+<asciinema-player src="./assets/test.json"
     poster="npt:0:21"
     idle-time-limit=1
     speed=2
@@ -379,7 +436,7 @@ $$e = \mathop
 ></asciinema-player>
 
 
-# Thank You! {bg=AliceBlue rx=-1 ry=0}
+# Thank You!
 
 [pandoc](http://pandoc.org)
 •
@@ -393,6 +450,8 @@ $$e = \mathop
 [ditaamini](https://github.com/pepijnve/ditaa.git)
 •
 [graphviz](http://www.graphviz.org)
+•
+[svgbob](https://ivanceras.github.io/svgbob-editor/)
 •
 [asciinema](https://github.com/asciinema/asciinema-player)
 </br>
@@ -409,22 +468,20 @@ $$e = \mathop
 🙃
 
 
-# {bg=White;assets/img/wordcloud.svg .flush-right}
+# {bg=White;themes/example/img/wordcloud.svg .flush-right rx=1 ry=0}
 
 [`https://github.com/arnehilmann/markdeck`{.render_qr}](https://github.com/arnehilmann/markdeck)
 
 
-# {.skip skipon="reveal"}
-
-This page intentionally left blank.
+# markdeck {.skip skipon="reveal" scale=5 x=1.8}
 
 
+# {.skip skipon="reveal" scale=1 .flush-right rx=0 ry=.25}
 
-# {x=.5 y=.5 z=0 scale=4 skipon="reveal" id=overview}
+impress.js-variant
 
 
-# markdeck {x=3 y=-1.5 rotate-y=60 scale=3 bgcss=sea-gradient .light-on-dark}
-
+# markdeck {x=3 y=-2.5 z=3000 rotate-y=60 scale=2 skipon="reveal"}
 
 collaborative slide editing made easy
 
@@ -435,4 +492,19 @@ collaborative slide editing made easy
 ![](fab fa-js-square)
 
 ![](assets/img/buddy-egyptian.svg)
+
+
+# {x=0 y=0 scale=2 skipon="reveal" id=overview}
+
+
+# markdeck {skipon="impress" bgcss=sea-gradient .light-on-dark}
+
+collaborative slide editing made easy
+
+![](fab fa-markdown)
+![](fab fa-docker)
+![](fab fa-html5)
+![](fab fa-css3)
+![](fab fa-js-square)
+<img src="assets/img/buddy-egyptian.svg" style="height:120px; vertical-align:middle; box-shadow:none;"/>
 
