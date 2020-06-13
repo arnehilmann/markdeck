@@ -94,6 +94,8 @@ WORKDIR /tmp
 RUN apk add curl
 RUN mkdir /reveal.js
 RUN curl -L "https://github.com/hakimel/reveal.js/archive/${REVEALJS_VERSION}.tar.gz" | tar -C /reveal.js --strip-components=1 --exclude test --exclude font -zxvf -
+WORKDIR /reveal.js
+RUN rm -rf *.md demo.html examples/ gulpfile.js package*.json test/
 
 
 
@@ -103,6 +105,8 @@ WORKDIR /tmp
 RUN apk add curl
 RUN mkdir /impress.js
 RUN curl -L "https://github.com/impress/impress.js/archive/${IMPRESSJS_VERSION}.tar.gz" | tar -C /impress.js --strip-components=1 --exclude examples --exclude test -zxvf -
+WORKDIR /impress.js
+RUN rm -rf *.md *.png build.js examples/ karma.conf.js package*.json qunit* test/
 
 
 

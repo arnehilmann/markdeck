@@ -2,16 +2,9 @@
 set -e -E -u
 
 PORT=8080
-PORT_HELPER=8081
-ONCE=false
+ONCE=${ONCE:-false}
 
-PARAM=${1:-loop}
-case $PARAM in
-    shell)  bash -i; exit;;
-    --once) ONCE=true;;
-    loop)   ;;
-    *)      echo "unknown parameter '$PARAM' given, aborting here..." && exit 1;;
-esac
+env
 
 shopt -s nullglob
 esc=$(printf '\033')

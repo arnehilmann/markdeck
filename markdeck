@@ -62,6 +62,8 @@ services:
   markdeck:
     image: arne/markdeck-pandoc:0.51
     user: "\$MARKDECK_USER"
+    environment:
+    - ONCE
     volumes:
     - type: bind
       source: ${PWD}/
@@ -327,6 +329,14 @@ if [ $# -ge 1 ]; then
             ;;
         'dev' )
             dockerCompose up
+            ;;
+        'once' )
+            MARKDECK_USER=$(calcUserIdAndGroupId "${BUILD}") ONCE=true \
+                dockerCompose up \
+                --abort-on-container-exit \
+                --exit-code-from markdeck \
+                -t 1 \
+                markdeck a2sketch
             ;;
         * )
             printHelp
