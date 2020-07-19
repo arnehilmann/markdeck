@@ -1,4 +1,4 @@
-version: "3.2"
+version: "3.4"
 services:
   markdeck:
     build:
@@ -7,8 +7,8 @@ services:
       args:
         version: 0.36
         motto: the next version
+      target: development
     image: arne/markdeck-pandoc:0.36
-    user: nobody
     volumes:
     - type: bind
       source: ./
