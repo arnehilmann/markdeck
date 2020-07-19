@@ -5,35 +5,41 @@ WEBSERVER=web
 PORT=8080
 
 while true; do
+    sleep 4
+    [ /slides/index.html -ot /slides/.meta/pdf_rendered ] && continue
+
     CONFIG=$(cat $CONFIG_FILE)
     pdf=$(echo "$CONFIG" | jq -r '.pdf // empty')
 
     if [ -n "$pdf" ]; then
-        touch /slides/.meta/pdf_rendered
         echo "starting pdf rendering"
-        # stat -c "%y %n" /target/index.html
-        # stat -c "%y %n" /target/.meta/pdf_rendered
+        stat -c "%y %n" /target/index.html
+        stat -c "%y %n" /target/.meta/pdf_rendered
         pdf_size=$(echo "$CONFIG" | jq -r '.pdf_size')
         pdf_delay=$(echo "$CONFIG" | jq -r '.pdf_delay')
-        variant=$(echo "$CONFIG" | jq -r '.variant')
+        # variant=$(echo "$CONFIG" | jq -r '.variant')
+        variant="automatic"
 
         DECKTAPE_OPTS=
 
-        node /decktape/decktape.js \
+        python3 -m http.server 8080 &
+        PID=$!
+
+        touch /slides/.meta/pdf_rendered
+        time node /decktape/decktape.js \
             --chrome-arg=--no-sandbox \
+            --chrome-arg=--log-level=0 \
             --chrome-path chromium-browser \
             -s $pdf_size \
             -p $pdf_delay \
             $variant \
             $DECKTAPE_OPTS \
-            http://$WEBSERVER:$PORT/index.html?render=pdf \
+            http://localhost:8080/index.html \
             /slides/$pdf
 
+        kill $PID
         [ /slides/index.html -nt /slides/.meta/pdf_rendered ] && continue
 
         echo "pdf rendering finished"
     fi
-    sleep 1
-    [ /slides/index.html -nt /slides/.meta/pdf_rendered ] && continue
-    inotifywait -qq /slides/index.html
 done
