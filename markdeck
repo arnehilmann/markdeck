@@ -3,9 +3,10 @@
 set -ue
 
 BUILD=deck
-VERSION=0.51
+VERSION=0.52
 PORT=${MARKDECK_PORT:-8080}
 FRIENDS_PORT=$((${PORT} + 1))
+export COMPOSE_PROJECT_NAME=$(basename $PWD)
 
 calcUser() {
     local dir="$1"
@@ -57,68 +58,69 @@ createFolder () {
 createComposeFile () {
     tmpfile=$(mktemp)
     cat > "${tmpfile}" << EODCF
-version: "3.2"
+version: "3.4"
 services:
   markdeck:
-    image: arne/markdeck-pandoc:0.51
+    image: arne/markdeck-pandoc:0.52
     user: "\$MARKDECK_USER"
     environment:
-    - ONCE
+      - ONCE
     volumes:
-    - type: bind
-      source: ${PWD}/
-      target: /source
-      read_only: true
-    - type: bind
-      source: ${PWD}/${BUILD}
-      target: /target
+      - type: bind
+        source: ${PWD}/
+        target: /source
+        read_only: true
+      - type: bind
+        source: ${PWD}/deck
+        target: /target
   web:
     image: arne/markdeck-liveserver:0.2
     ports:
-    - ${PORT}:8080
+      - ${PORT}:8080
     volumes:
-    - type: bind
-      source: ${PWD}/${BUILD}
-      target: /target
+      - type: bind
+        source: ${PWD}/deck
+        target: /target
+        read_only: true
     depends_on:
-    - markdeck
-  pdf:
-    image: arne/markdeck-decktape:0.8
-    volumes:
-    - type: bind
-      source: ${PWD}/${BUILD}
-      target: /slides
-    shm_size: 1G
-    depends_on:
-    - markdeck
-    - web
-  standalone:
-    image: arne/markdeck-standalone:0.4
-    volumes:
-    - type: bind
-      source: ${PWD}/${BUILD}
-      target: /target
-    depends_on:
-    - web
-  friends:
-    image: arne/markdown-friends:0.5
-    ports:
-    - ${FRIENDS_PORT}:8081
+      - markdeck
   a2sketch:
     image: arne/a2sketch:0.11
     volumes:
-    - type: bind
-      source: ${PWD}
-      target: /custom-types
-      read_only: true
+      - type: bind
+        source: ${PWD}
+        target: /asciitosvg/objects
+        read_only: true
+  pdf:
+    image: arne/markdeck-decktape:0.9
+    volumes:
+      - type: bind
+        source: ${PWD}/deck
+        target: /slides
+    shm_size: 1G
+    depends_on:
+      - markdeck
+      - web
+  standalone:
+    image: arne/markdeck-standalone:0.5
+    volumes:
+      - type: bind
+        source: ${PWD}/deck
+        target: /slides
+    depends_on:
+      - web
+  friends:
+    image: arne/markdown-friends:0.5
+    ports:
+      - ${FRIENDS_PORT}:8081
 EODCF
 
-    echo "${tmpfile}"
+     echo "${tmpfile}"
 }
 
 dockerCompose () {
     composefile="$(createComposeFile)"
-    trap "rm -f '${composefile}'; exit" EXIT SIGHUP SIGTERM SIGINT SIGKILL SIGQUIT
+    # trap "rm -f '${composefile}'; exit" EXIT SIGHUP SIGTERM SIGINT SIGKILL SIGQUIT
     docker-compose -f "${composefile}" "${@}"
 }
 
@@ -337,6 +339,14 @@ if [ $# -ge 1 ]; then
                 --exit-code-from markdeck \
                 -t 1 \
                 markdeck a2sketch
+            ;;
+        'persist' )
+            rm -rf "$BUILD"
+            docker rm -f dummy || :
+            docker container create --name dummy -v ${COMPOSE_PROJECT_NAME}_deck:/deck:ro dummy
+            docker cp dummy:/deck "$BUILD"
+            docker rm dummy
+            du "$BUILD"
             ;;
         * )
             printHelp
