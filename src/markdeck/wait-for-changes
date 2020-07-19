@@ -1,7 +1,8 @@
 #!/bin/bash
 set -eEu
 
-SOURCES="/source/*.md \
+# SOURCES="/source/*.md \
+SOURCES="$(find /source -name "*.md") \
     $([[ -d /source/assets ]] && find /source/assets -type d || :) \
     /source/include-before-body \
     /source/include-after-body \
