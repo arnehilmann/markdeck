@@ -3,15 +3,15 @@ REVEALJS_VERSION=4.0.2
 ASCIINEMAPLAYER_VERSION=v2.6.1
 JQUERY_VERSION=3.5.1.slim.min
 IMPRESSJS_VERSION=1.1.0
-MERMAID_VERSION=8.5.1
+MERMAID_VERSION=8.5.2
 SVGBOB_VERSION=0.5.0-alpha.3
 
 
-VERSION=0.51
-MOTTO='the show still must go on' version
+VERSION=0.52
+MOTTO='the themes' version
 WEB_VERSION=0.2
-PDF_VERSION=0.8
-STANDALONE_VERSION=0.4
+PDF_VERSION=0.9
+STANDALONE_VERSION=0.5
 FRIENDS_VERSION=0.5
 A2SKETCH_VERSION=0.11
 
@@ -84,6 +84,37 @@ develop.yaml:	develop.yaml.source Makefile
 	rm -f ../markdeck.bak
 
 
+check-versions:
+	@echo "PANDOC_VERSION"
+	@echo "$(PANDOC_VERSION)"
+	@curl -s https://github.com/jgm/pandoc/releases/latest  | sed 's_.*/releases/tag/__;s/">.*//'
+	@echo
+	@echo "REVEALJS_VERSION"
+	@echo "$(REVEALJS_VERSION)"
+	@curl -s https://github.com/hakimel/reveal.js/releases/latest  | sed 's_.*/releases/tag/__;s/">.*//'
+	@echo
+	@echo "ASCIINEMAPLAYER_VERSION"
+	@echo "$(ASCIINEMAPLAYER_VERSION)"
+	@curl -s https://github.com/asciinema/asciinema-player/releases/latest | sed 's_.*/releases/tag/__;s/">.*//'
+	@echo
+	@echo "JQUERY_VERSION"
+	@echo "$(JQUERY_VERSION)"
+	@echo ?
+	@echo
+	@echo "IMPRESSJS_VERSION"
+	@echo "$(IMPRESSJS_VERSION)"
+	@curl -s https://github.com/impress/impress.js/releases/latest | sed 's_.*/releases/tag/__;s/">.*//'
+	@echo
+	@echo "MERMAID_VERSION"
+	@echo "$(MERMAID_VERSION)"
+	@curl -s https://github.com/mermaid-js/mermaid/releases/latest | sed 's_.*/releases/tag/__;s/">.*//'
+	@echo
+	@echo "SVGBOB_VERSION"
+	@echo "$(SVGBOB_VERSION)"
+	@echo ?
+	@echo
+
+
 clean:
 	rm -f downloaded/bin/*
 	rm -rf markdeck/assets/3rdparty markdeck/assets/framework
@@ -96,4 +127,4 @@ tabularasa:
 	docker system prune -f
 	docker images "arne/markdeck*"
 
-.PHONY: all tag push clean tabularasa
+.PHONY: all tag push check-versions clean tabularasa
