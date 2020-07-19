@@ -183,14 +183,15 @@ RUN ln -sf /markdeck/assets/markdeck/css/fonts/ /usr/share/fonts
 
 ENV VERSION $version
 ENV MOTTO $motto
-VOLUME ["/source", "/target"]
 
-RUN chown :1999 /target
-RUN chmod 755 /target
-RUN chmod g+s /target
 RUN addgroup -g 1999 markdeck
 RUN adduser -D -H -G markdeck markdeck
+RUN mkdir -p /target
+RUN chown 501:1999 /target
+RUN chmod 755 /target
+# RUN chmod g+s /target
 USER markdeck
+VOLUME ["/source", "/target"]
 
 ENTRYPOINT ["/markdeck/loop"]
 
