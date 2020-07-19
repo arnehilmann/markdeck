@@ -39,6 +39,10 @@ function calc_css_path() {
 
 if ! $ONCE; then
     print_usage
+    env
+    id
+    ls -al /
+    ls -al /target
     touch /target/index.html
 fi
 
@@ -49,7 +53,7 @@ export ASCIIART_CONFIG
 export ASCIIART_LIBDIR=/markdeck/lib
 
 while true; do
-    cd /target
+    cd /source
 
     echo "-------- rerendering ---------"
     mkdir -p /target/assets/css/
@@ -117,9 +121,11 @@ while true; do
     PANDOC_ARGS=
     [[ -e /source/include-before-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-before-body /source/include-before-body"
     [[ -e /source/include-after-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-after-body /source/include-after-body"
-#    for theme in $themes; do
-#        [[ -e /source/themes/$theme/include-in-header.html ]] && PANDOC_ARGS="$PANDOC_ARGS --include-in-header /source/themes/$theme/include-in-header.html"
-#    done
+    for theme in $themes; do
+        [[ -e /source/themes/$theme/include-in-header.html ]] && PANDOC_ARGS="$PANDOC_ARGS --include-in-header /source/themes/$theme/include-in-header.html"
+        [[ -e /source/themes/$theme/include-before-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-before-body /source/themes/$theme/include-before-body"
+        [[ -e /source/themes/$theme/include-after-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-after-body /source/themes/$theme/include-after-body"
+    done
     rm -f /target/slides.combined.md.txt
     # cat ${SOURCE_MD:-/markdeck/note.md} > /target/slides.combined.md.txt
     if [[ -n ${SOURCE_MD:-} ]]; then
@@ -139,6 +145,7 @@ while true; do
     echo "table_of_contents: $table_of_contents"
     # TODO handle slide-level
 
+    cd /target
     SHORTCUT_FILTER=/markdeck/lib/${variant}-shortcut-filter.lua
     set -x
     if pandoc \
