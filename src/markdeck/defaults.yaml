@@ -44,7 +44,7 @@ shuffle: false
 fragments: true
 embedded: "false"
 help: true
-showNotes: "false"
+showNotes: ""
 autoPlayMedia: ""
 autoSlide: 0
 autoSlideStoppable: true
