@@ -3,6 +3,11 @@
 CONFIG_FILE=/target/.meta/config.json
 
 while true; do
+    if [ ! -e "$CONFIG_FILE" ]; then
+        sleep 4;
+        continue
+    fi
+
     standalone=$(cat "$CONFIG_FILE" | jq -r '.standalone // empty')
 
     if [ -n "$standalone" ]; then
