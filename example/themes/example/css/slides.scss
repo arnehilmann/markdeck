@@ -21,5 +21,45 @@
         text-shadow: 0px 0px 1px #000;
     }
 }
+
+.reveal .slides section .fragment.fade-in-otherwise-semi-out {
+    opacity: 0.4;
+    visibility: inherit;
+
+    &.current-visible {
+        opacity: 0.4;
+        visibility: inherit;
+    }
+    &.current-fragment {
+        opacity: 1;
+        visibility: inherit;
+    }
+}
+
+/* for block of numbers */
+.hljs-ln-numbers {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    text-align: center;
+    color: #ccc;
+    border-right: 1px solid #CCC;
+    vertical-align: top;
+    padding-right: 5px;
+
+    /* your custom style here */
+}
+
+/* for block of code */
+.hljs-ln-code {
+    padding-left: 10px;
+}
+
+
+
 .sea-gradient .reveal { @include sea-gradient; }
 .sky-gradient-13 .reveal { @include sky-gradient-13; }
