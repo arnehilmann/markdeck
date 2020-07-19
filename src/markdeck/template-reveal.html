@@ -13,7 +13,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <link rel="stylesheet" href="assets/framework/reveal.js/css/reveal.css" />
+    <link rel="stylesheet" href="assets/framework/reveal.js/dist/reveal.css" />
     <link rel="stylesheet" href="assets/framework/reveal.js/css/theme/$reveal_theme$.css" />
     <link rel="shortcut icon" href="assets/css/theme/favicon.ico" />
 
@@ -24,7 +24,9 @@
     $endif$
 
     $for(themes)$
+    $if(themes)$
     <link rel="stylesheet" href="themes/$themes$/css/slides.css" />
+    $endif$
     $endfor$
 
     <link rel="stylesheet" href="assets/markdeck/css/markdeck.revealjs.css" />
@@ -69,8 +71,12 @@ $body$
     <script src="assets/3rdparty/jquery.js"></script>
 
     <script type="module">
-        import Reveal from "./assets/framework/reveal.js/js/index.js";
+        import Reveal from "./assets/framework/reveal.js/dist/reveal.esm.js";
+        import Markdown from "./assets/framework/reveal.js/plugin/markdown/markdown.esm.js";
+        import Notes from "./assets/framework/reveal.js/plugin/notes/notes.esm.js";
+
         let deck = new Reveal();
+
         deck.initialize({
             width: $width$,
             height: $height$,
@@ -117,12 +123,7 @@ $body$
 
             theme: '$theme$',
 
-            // Optional libraries used to extend on reveal.js
-            dependencies: [
-                { src: 'assets/framework/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-                { src: 'assets/markdeck/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-                { src: 'assets/framework/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-            ]
+            plugins: [ Markdown, Notes ]
         });
 
         function calc_offset_left() {
@@ -161,7 +162,16 @@ $body$
             }
         }
 
-        flushleft(".slides .flushleft");
+        jQuery(".flushleft").children(".flushleft").removeClass("flushleft");
+        flushleft(".slides section.flushleft");
+    </script>
+
+    <script src='assets/markdeck/highlight.js'></script>
+    <script src='assets/markdeck/highlightjs-line-numbers.min.js'></script>
+    <script>
+        window.hljs = hljs;
+        hljs.initHighlightingOnLoad();
+        hljs.initLineNumbersOnLoad();
     </script>
 
     $if(asciinema)$
