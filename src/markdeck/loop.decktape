@@ -3,6 +3,13 @@
 CONFIG_FILE=/slides/.meta/config.json
 WEBSERVER=web
 PORT=8080
+TMP_FOLDER=/tmp/snapshot
+
+mkdir $TMP_FOLDER
+(
+    cd $TMP_FOLDER
+    python3 -m http.server 8080 &
+)
 
 while true; do
     sleep 4
@@ -13,6 +20,9 @@ while true; do
 
     if [ -n "$pdf" ]; then
         echo "starting pdf rendering"
+        rm -rf $TMP_FOLDER/*
+        rsync -a /slides/ $TMP_FOLDER
+
         stat -c "%y %n" /target/index.html
         stat -c "%y %n" /target/.meta/pdf_rendered
         pdf_size=$(echo "$CONFIG" | jq -r '.pdf_size')
@@ -21,9 +31,6 @@ while true; do
         variant="automatic"
 
         DECKTAPE_OPTS=
-
-        python3 -m http.server 8080 &
-        PID=$!
 
         touch /slides/.meta/pdf_rendered
         time node /decktape/decktape.js \
@@ -37,7 +44,6 @@ while true; do
             http://localhost:8080/index.html \
             /slides/$pdf
 
-        kill $PID
         [ /slides/index.html -nt /slides/.meta/pdf_rendered ] && continue
 
         echo "pdf rendering finished"

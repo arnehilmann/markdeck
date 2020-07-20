@@ -3,7 +3,7 @@ FROM astefanutti/decktape:3.0.0
 LABEL maintainer="arne@hilmann.de"
 
 USER root
-RUN apk add --update inotify-tools jq curl imagemagick python3 && rm -rf /var/cache/apk/*
+RUN apk add --update inotify-tools jq curl imagemagick python3 rsync && rm -rf /var/cache/apk/*
 COPY markdeck/loop.decktape /usr/local/bin/loop.decktape
 RUN ln -sf /slides /target
 USER node
