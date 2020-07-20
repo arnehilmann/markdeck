@@ -14,6 +14,7 @@ mkdir $TMP_FOLDER
 while true; do
     sleep 4
     [ /slides/index.html -ot /slides/.meta/pdf_rendered ] && continue
+    [ -e /slides/assets/css/rerendering.css ] && continue
 
     CONFIG=$(cat $CONFIG_FILE)
     pdf=$(echo "$CONFIG" | jq -r '.pdf // empty')
