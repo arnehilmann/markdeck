@@ -7,7 +7,7 @@ MERMAID_VERSION=8.5.2
 SVGBOB_VERSION=0.5.0-alpha.3
 
 
-VERSION=0.52
+VERSION=0.52.0
 MOTTO='the themes' version
 WEB_VERSION=0.2
 PDF_VERSION=0.9
@@ -19,7 +19,7 @@ A2SKETCH_VERSION=0.11
 all:	docker-compose.yaml develop.yaml ../markdeck images.built
 
 
-images.built: Makefile Dockerfile.* $(shell find markdeck/)
+images.built: Makefile Dockerfile.* $(shell find markdeck/) markdeck/versions
 	docker-compose build \
 		--build-arg MERMAID_VERSION=$(MERMAID_VERSION) \
 		--build-arg PANDOC_VERSION=$(PANDOC_VERSION) \
@@ -113,6 +113,17 @@ check-versions:
 	@echo "$(SVGBOB_VERSION)"
 	@echo ?
 	@echo
+
+
+markdeck/versions:	Makefile
+	rm -f $@
+	echo "PANDOC_VERSION=$(PANDOC_VERSION)" >> $@
+	echo "REVEALJS_VERSION=$(REVEALJS_VERSION)" >> $@
+	echo "ASCIINEMAPLAYER_VERSION=$(ASCIINEMAPLAYER_VERSION)" >> $@
+	echo "JQUERY_VERSION=$(JQUERY_VERSION)" >> $@
+	echo "IMPRESSJS_VERSION=$(IMPRESSJS_VERSION)" >> $@
+	echo "MERMAID_VERSION=$(MERMAID_VERSION)" >> $@
+	echo "SVGBOB_VERSION=$(SVGBOB_VERSION)" >> $@
 
 
 clean:

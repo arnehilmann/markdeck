@@ -39,10 +39,6 @@ function calc_css_path() {
 
 if ! $ONCE; then
     print_usage
-    env
-    id
-    ls -al /
-    ls -al /target
     touch /target/index.html
 fi
 
@@ -60,6 +56,10 @@ while true; do
     cp -v /markdeck/assets/markdeck/css/when-rerendering.css /target/assets/css/rerendering.css
 
     [[ -d /target/rendered ]] || mkdir -p /target/rendered
+
+    echo "-------- versions --------"
+    cat /markdeck/versions
+    echo "-------- /versions --------"
 
     echo "-------- config --------"
     shopt -s nullglob
