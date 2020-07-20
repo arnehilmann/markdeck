@@ -71,7 +71,7 @@ services:
         target: /source
         read_only: true
       - type: bind
-        source: ${PWD}/deck
+        source: ${PWD}/${BUILD}
         target: /target
   web:
     image: arne/markdeck-liveserver:0.2
@@ -79,7 +79,7 @@ services:
       - ${PORT}:8080
     volumes:
       - type: bind
-        source: ${PWD}/deck
+        source: ${PWD}/${BUILD}
         target: /target
         read_only: true
     depends_on:
@@ -95,7 +95,7 @@ services:
     image: arne/markdeck-decktape:0.9
     volumes:
       - type: bind
-        source: ${PWD}/deck
+        source: ${PWD}/${BUILD}
         target: /slides
     shm_size: 1G
     depends_on:
@@ -105,7 +105,7 @@ services:
     image: arne/markdeck-standalone:0.5
     volumes:
       - type: bind
-        source: ${PWD}/deck
+        source: ${PWD}/${BUILD}
         target: /slides
     depends_on:
       - web
@@ -339,14 +339,6 @@ if [ $# -ge 1 ]; then
                 --exit-code-from markdeck \
                 -t 1 \
                 markdeck a2sketch
-            ;;
-        'persist' )
-            rm -rf "$BUILD"
-            docker rm -f dummy || :
-            docker container create --name dummy -v ${COMPOSE_PROJECT_NAME}_deck:/deck:ro dummy
-            docker cp dummy:/deck "$BUILD"
-            docker rm dummy
-            du "$BUILD"
             ;;
         * )
             printHelp
