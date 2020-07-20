@@ -22,9 +22,10 @@ while true; do
         echo "starting pdf rendering"
         rm -rf $TMP_FOLDER/*
         rsync -a /slides/ $TMP_FOLDER
+        rm -fv /slides/assets/css/rerendering.css
 
-        stat -c "%y %n" /target/index.html
-        stat -c "%y %n" /target/.meta/pdf_rendered
+        stat -c "%y %n" /slides/index.html
+        stat -c "%y %n" /slides/.meta/pdf_rendered
         pdf_size=$(echo "$CONFIG" | jq -r '.pdf_size')
         pdf_delay=$(echo "$CONFIG" | jq -r '.pdf_delay')
         # variant=$(echo "$CONFIG" | jq -r '.variant')
@@ -43,8 +44,6 @@ while true; do
             $DECKTAPE_OPTS \
             http://localhost:8080/index.html \
             /slides/$pdf
-
-        [ /slides/index.html -nt /slides/.meta/pdf_rendered ] && continue
 
         echo "pdf rendering finished"
     fi
