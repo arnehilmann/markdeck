@@ -14,7 +14,7 @@ mkdir $TMP_FOLDER
 while true; do
     sleep 4
     [ /slides/index.html -ot /slides/.meta/pdf_rendered ] && continue
-    [ -e /slides/assets/css/rerendering.css ] && continue
+    [ $(stat -c %s /slides/assets/css/rerendering.css) -gt 1 ] && continue
 
     CONFIG=$(cat $CONFIG_FILE)
     pdf=$(echo "$CONFIG" | jq -r '.pdf // empty')
@@ -23,7 +23,7 @@ while true; do
         echo "starting pdf rendering"
         rm -rf $TMP_FOLDER/*
         rsync -a /slides/ $TMP_FOLDER
-        rm -fv /slides/assets/css/rerendering.css
+        rm -fv /$TMP_FOLDER/assets/css/rerendering.css
 
         stat -c "%y %n" /slides/index.html
         stat -c "%y %n" /slides/.meta/pdf_rendered
