@@ -76,6 +76,7 @@ $body$
         import Notes from "./assets/framework/reveal.js/plugin/notes/notes.esm.js";
 
         let deck = new Reveal();
+        window.Reveal = deck;
 
         deck.initialize({
             width: $width$,
