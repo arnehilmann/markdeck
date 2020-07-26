@@ -184,7 +184,8 @@ end
 function RenderCodeBlock(elem, attr)
     local fname = Render(elem, attr)
     if fname ~= nil then
-        return pandoc.Para{ pandoc.Image({pandoc.Str("")}, fname) }
+        local p = pandoc.Para{ pandoc.Image({pandoc.Str("")}, fname) }
+        return pandoc.Div(p, {class='rendered ' .. elem.classes[1]})
     else
         return nil
     end
