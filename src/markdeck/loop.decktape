@@ -23,16 +23,18 @@ while true; do
         echo "starting pdf rendering"
         rm -rf $TMP_FOLDER/*
         rsync -a /slides/ $TMP_FOLDER
-        rm -fv /$TMP_FOLDER/assets/css/rerendering.css
+        echo "" > /$TMP_FOLDER/assets/css/rerendering.css
 
         stat -c "%y %n" /slides/index.html
         stat -c "%y %n" /slides/.meta/pdf_rendered
         pdf_size=$(echo "$CONFIG" | jq -r '.pdf_size')
         pdf_delay=$(echo "$CONFIG" | jq -r '.pdf_delay')
         # variant=$(echo "$CONFIG" | jq -r '.variant')
+        # variant="generic"
         variant="automatic"
 
         DECKTAPE_OPTS=
+        # DECKTAPE_OPTS=--key='n'
 
         touch /slides/.meta/pdf_rendered
         time node /decktape/decktape.js \
