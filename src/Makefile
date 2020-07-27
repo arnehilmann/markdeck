@@ -7,13 +7,13 @@ MERMAID_VERSION=8.5.2
 SVGBOB_VERSION=0.5.0-alpha.3
 
 
-VERSION=0.52.1
+VERSION=0.52.4
 MOTTO='the themes' version
 WEB_VERSION=0.2
 PDF_VERSION=0.10
 STANDALONE_VERSION=0.5
 FRIENDS_VERSION=0.5
-A2SKETCH_VERSION=0.11
+A2SKETCH_VERSION=0.13
 
 
 all:	docker-compose.yaml develop.yaml ../markdeck images.built

@@ -3,7 +3,7 @@
 set -ue
 
 BUILD=deck
-VERSION=0.52.1
+VERSION=0.52.4
 PORT=${MARKDECK_PORT:-8080}
 FRIENDS_PORT=$((${PORT} + 1))
 export COMPOSE_PROJECT_NAME=$(basename $PWD)
@@ -61,7 +61,7 @@ createComposeFile () {
 version: "3.4"
 services:
   markdeck:
-    image: arne/markdeck-pandoc:0.52.1
+    image: arne/markdeck-pandoc:0.52.4
     user: "\$MARKDECK_USER"
     environment:
       - ONCE
@@ -85,7 +85,7 @@ services:
     depends_on:
       - markdeck
   a2sketch:
-    image: arne/a2sketch:0.11
+    image: arne/a2sketch:0.13
     volumes:
       - type: bind
         source: ${PWD}/a2s-custom-types
