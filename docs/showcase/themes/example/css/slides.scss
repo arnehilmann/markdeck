@@ -7,9 +7,6 @@
     div {
         font-family: "Raleway", sans-serif;
     }
-    section.font-xkcd-script svg text {
-        font-family: "xkcd Script";
-    }
 }
 .colorful .reveal {
     background:
@@ -21,5 +18,20 @@
         text-shadow: 0px 0px 1px #000;
     }
 }
+
+.reveal .slides section .fragment.fade-in-otherwise-semi-out {
+    opacity: 0.4;
+    visibility: inherit;
+
+    &.current-visible {
+        opacity: 0.4;
+        visibility: inherit;
+    }
+    &.current-fragment {
+        opacity: 1;
+        visibility: inherit;
+    }
+}
+
 .sea-gradient .reveal { @include sea-gradient; }
 .sky-gradient-13 .reveal { @include sky-gradient-13; }

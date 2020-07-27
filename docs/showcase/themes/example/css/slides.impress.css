@@ -100,6 +100,40 @@ body.impress-enabled {
   body.impress-enabled #impress img.emoji {
     width: 2rem;
     height: auto; }
+  body.impress-enabled #impress .substep {
+    opacity: 0;
+    visibility: hidden;
+    transition: all .2s ease;
+    will-change: opacity; }
+    body.impress-enabled #impress .substep.substep-visible {
+      opacity: 1;
+      visibility: inherit; }
+    body.impress-enabled #impress .substep.disabled {
+      transition: none; }
+  body.impress-enabled #impress .substep.grow {
+    opacity: 1;
+    visibility: inherit; }
+    body.impress-enabled #impress .substep.grow.substep-visible {
+      transform: scale(1.3); }
+  body.impress-enabled #impress .substep.shrink {
+    opacity: 1;
+    visibility: inherit; }
+    body.impress-enabled #impress .substep.shrink.substep-visible {
+      transform: scale(0.7); }
+  body.impress-enabled #impress .substep.highlight-red,
+  body.impress-enabled #impress .substep.highlight-current-red,
+  body.impress-enabled #impress .substep.highlight-green,
+  body.impress-enabled #impress .substep.highlight-current-green,
+  body.impress-enabled #impress .substep.highlight-blue,
+  body.impress-enabled #impress .substep.highlight-current-blue {
+    opacity: 1;
+    visibility: inherit; }
+  body.impress-enabled #impress .substep.highlight-red.substep-visible {
+    color: #ff2c2d; }
+  body.impress-enabled #impress .substep.highlight-green.substep-visible {
+    color: #17ff2e; }
+  body.impress-enabled #impress .substep.highlight-blue.substep-visible {
+    color: #1b91ff; }
 
 body.impress-on-overview #impress section.step {
   opacity: 1; }

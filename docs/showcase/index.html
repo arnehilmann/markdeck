@@ -10,7 +10,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
-    <link rel="stylesheet" href="assets/framework/reveal.js/css/reveal.css" />
+    <link rel="stylesheet" href="assets/framework/reveal.js/dist/reveal.css" />
     <link rel="stylesheet" href="assets/framework/reveal.js/css/theme/simple.css" />
     <link rel="shortcut icon" href="assets/css/theme/favicon.ico" />
 
@@ -18,8 +18,8 @@
 
         <link rel="stylesheet" type="text/css" href="assets/3rdparty/asciinema-player.css" />
     
-        <link rel="stylesheet" href="themes/example/css/slides.css" />
-    
+            <link rel="stylesheet" href="themes/example/css/slides.css" />
+        
     <link rel="stylesheet" href="assets/markdeck/css/markdeck.revealjs.css" />
     <link rel="stylesheet" href="assets/css/slides.css" />
 
@@ -32,6 +32,7 @@
 
     <link href="assets/css/rerendering.css" rel="stylesheet"></link>
 
+<link rel="stylesheet" href="themes/example/css/slides.css" />
 
 </head>
 <body>
@@ -154,7 +155,9 @@ fast feedback</p>
 | +----------+   +----------+ |
 +-----------------------------+</code></pre>
 <p>►</p>
+<div class="rendered render_ditaa">
 <p><img src="rendered/render_ditaa-18168188d43b932eec681389aff4b9c228d4203d.png" alt="" /></p>
+</div>
 </section>
 <section id="asciiart-a2s" class="level1 ltr">
 <h1 class="ltr">asciiart (a2s)</h1>
@@ -172,8 +175,15 @@ fast feedback</p>
 [0]: {&quot;fill&quot;: &quot;#933&quot;}
 [1]: {&quot;fill&quot;: &quot;#bbb&quot;,&quot;a2s:delref&quot;:true,&quot;a2s:type&quot;:&quot;storage&quot;}</code></pre>
 <p>►</p>
+<div class="rendered render_a2s">
 <p><svg xmlns="http://www.w3.org/2000/svg" width="208" height="192" version="1.1">
     <defs>
+        <marker id="iPointer" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
+            <path d="M 10 0 L 10 10 L 0 5 z"/>
+        </marker>
+        <marker id="Pointer" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
+            <path d="M 0 0 L 10 5 L 0 10 z"/>
+        </marker>
         <filter id="dsFilterNoBlur" width="150%" height="150%">
             <feOffset dx="3" dy="3" in="SourceGraphic" result="offOut"/>
             <feColorMatrix in="offOut" result="matrixOut" type="matrix" values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0"/>
@@ -185,31 +195,25 @@ fast feedback</p>
             <feGaussianBlur in="matrixOut" result="blurOut" stdDeviation="3"/>
             <feBlend in="SourceGraphic" in2="blurOut" mode="normal"/>
         </filter>
-        <marker id="iPointer" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
-            <path d="M10 0v10L0 5z"/>
-        </marker>
-        <marker id="Pointer" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
-            <path d="M0 0l10 5-10 5z"/>
-        </marker>
     </defs>
     <g id="boxes" fill="none" stroke="#000" stroke-width="2">
         <g id="group0">
-            <path id="path0" fill="#933" d="M4.5 8h179q10 0 10 10v86H4.5z" filter="url(#dsFilter)"/>
+            <path id="path0" fill="#933" d="M 4.5 8 L 183.5 8 Q 193.5 8 193.5 18 L 193.5 104 L 4.5 104 Z" filter="url(#dsFilter)"/>
         </g>
         <g id="group1">
-            <path id="path1" fill="#bbb" d="M22.5 46.4V72a18 4.8 0 0 0 36 0V46.4a18 4.8 0 0 0-36 0z" filter="url(#dsFilter)"/>
-            <path id="path1" d="M22.5 46.4a18 4.8 0 0 0 36 0"/>
+            <path id="path1" fill="#bbb" d="M 22.5 46.4 L 22.5 72 A 18 4.8 0 0 0 58.5 72 V 46.4 A 18 4.8 0 0 0 22.5 46.4 Z" filter="url(#dsFilter)"/>
+            <path id="path1" d="M 22.5 46.4 A 18 4.8 0 0 0 58.5 46.4"/>
         </g>
         <g id="group1">
-            <path id="path1" fill="#bbb" d="M76.5 46.4V72a18 4.8 0 0 0 36 0V46.4a18 4.8 0 0 0-36 0z" filter="url(#dsFilter)"/>
-            <path id="path1" d="M76.5 46.4a18 4.8 0 0 0 36 0"/>
+            <path id="path1" fill="#bbb" d="M 76.5 46.4 L 76.5 72 A 18 4.8 0 0 0 112.5 72 V 46.4 A 18 4.8 0 0 0 76.5 46.4 Z" filter="url(#dsFilter)"/>
+            <path id="path1" d="M 76.5 46.4 A 18 4.8 0 0 0 112.5 46.4"/>
         </g>
         <g id="group1">
-            <path id="path1" fill="#bbb" d="M130.5 46.4V72a18 4.8 0 0 0 36 0V46.4a18 4.8 0 0 0-36 0z" filter="url(#dsFilter)"/>
-            <path id="path1" d="M130.5 46.4a18 4.8 0 0 0 36 0"/>
+            <path id="path1" fill="#bbb" d="M 130.5 46.4 L 130.5 72 A 18 4.8 0 0 0 166.5 72 V 46.4 A 18 4.8 0 0 0 130.5 46.4 Z" filter="url(#dsFilter)"/>
+            <path id="path1" d="M 130.5 46.4 A 18 4.8 0 0 0 166.5 46.4"/>
         </g>
         <g id="group14">
-            <path id="path14" fill="#fff" d="M4.5 104h189v48h-179q-10 0-10-10z" filter="url(#dsFilter)"/>
+            <path id="path14" fill="#fff" d="M 4.5 104 L 193.5 104 L 193.5 152 L 14.5 152 Q 4.5 152 4.5 142 Z" filter="url(#dsFilter)"/>
             <text id="text0" x="35.1" y="140.8" fill="#000" stroke="none" font-family="Consolas,Monaco,Anonymous Pro,Anonymous,Bitstream Sans Mono,monospace" font-size="15.2">
                 a
             </text>
@@ -223,20 +227,21 @@ fast feedback</p>
     </g>
     <g id="lines" fill="none" stroke="#000" stroke-width="2">
         <g id="group74">
-            <path id="path74" marker-start="url(#iPointer)" d="M40.5 88v32"/>
+            <path id="path74" marker-start="url(#iPointer)" d="M 40.5 88 L 40.5 104 L 40.5 120"/>
         </g>
         <g id="group146">
-            <path id="path146" marker-start="url(#iPointer)" d="M94.5 88v32"/>
+            <path id="path146" marker-start="url(#iPointer)" d="M 94.5 88 L 94.5 104 L 94.5 120"/>
         </g>
         <g id="group218">
-            <path id="path218" marker-start="url(#iPointer)" d="M148.5 88v32"/>
+            <path id="path218" marker-start="url(#iPointer)" d="M 148.5 88 L 148.5 104 L 148.5 120"/>
         </g>
     </g>
 </svg>
 </p>
+</div>
 </section>
-<section id="asciiart-sketchy" class="level1 ltr font-xkcd-script">
-<h1 class="ltr font-xkcd-script">asciiart (sketchy)</h1>
+<section id="asciiart-sketchy" class="level1 ltr">
+<h1 class="ltr">asciiart (sketchy)</h1>
 <pre class="nohighlight" style="width: 45%;"><code>#=----------------------------#
 |[0]                          |
 | Node                        |
@@ -256,17 +261,19 @@ fast feedback</p>
 [0]: {&quot;fill&quot;:&quot;#fff&quot;,&quot;fillStyle&quot;:&quot;solid&quot;,&quot;a2s:delref&quot;:true}
 [1]: {&quot;fill&quot;:&quot;#eee&quot;,&quot;fillStyle&quot;:&quot;solid&quot;,&quot;a2s:delref&quot;:true}</code></pre>
 <p>►</p>
-<p><svg xmlns="http://www.w3.org/2000/svg" width="288" height="304" version="1.1" viewBox="0 0 216 228">
-    <g id="surface225">
-        <path fill="#fff" fill-opacity="1" fill-rule="nonzero" stroke="none" d="M4.5 40h270v240H4.5zm0 0" transform="scale(.75)"/>
-        <path fill="none" stroke="#000" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-opacity="1" stroke-width="1.5" d="M5.926 29.464c73.513 5.343 147.675 2.247 199.208-.36M4.014 30.787c45.185.044 90.53.117 203.218-.079m-1.319-2.027c1.904 37.71 4.415 79.608.173 182.69m.847-181.86c.425 37.962-.027 72.98-.12 181.742m2.173-1.752c-68.232-1.151-137.387.32-204.334.161m202.8.727c-71.6.34-140.307-.882-203.465-.061m.72-1.56c-2.065-61.373-.579-127.71.725-177.562m-2.35 179.005C2.175 144.15 1.315 78.736 4.758 30.346"/>
-        <path fill="#eee" fill-opacity="1" fill-rule="nonzero" stroke="none" d="M157.5 104h99v96h-99zm0 0" transform="scale(.75)"/>
-        <path fill="none" stroke="#000" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-opacity="1" stroke-width="1.5" d="M118.462 78.794c15.38 2.004 29.707 3.653 70.333-1.776m-73.304 1.363c18.267.964 33.589 1.823 75.762 1.52m.835.888c1.075 15.24-.712 34.251.064 71.66m-1.921-72.782c-.08 11.475.457 27.492.397 70.274m.315 2.775c-29.215-1.09-59.38-1.946-75.795-.612m75.642-1.199c-18.073-.416-36.222 1.005-74.889-.27m-.68 2.297c2.292-27.33-.755-49.578 3.056-74.337m-1.102 71.895c-.242-24.593-.404-46.398-.289-71.075"/>
-        <path fill="none" stroke="#000" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-opacity="1" stroke-width="1.5" d="M33.384 147.876c-4.441-1.79-8.047-.756-15.313.07m13.924-.114c-6.272 1.066-11.332.788-12.949.533m-2.529.396c-.327-16.117 2.778-36.662.795-73.401m.055 72.844c1.761-23.98 2.215-46.843.624-71.754m1.462.571c20.411-2.914 37.624-2.83 72.023-2.979m-73.819 1.424c29.016.595 59.238-.653 74.432.407m-.867.938c1.002 25.962.17 52.737-.355 70.86m1.998-71.121c-1.385 15.905.223 35.715.533 71.621m.103.844c-16.205-1.147-28.362-1.37-49.62.736m49.342-2.708c-15.398 1.12-31.975.704-47.77 1.803"/>
-        <path fill="none" stroke="#000" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-opacity="1" stroke-width="1.5" d="M34.412 126.017c1.506 12.797 1.462 24.396 2.4 52.922m-.083-54.477c-.088 14.63-.949 29.455.393 53.458m-1.275-1.169c1.032 4.814 3.442 7.423 7.231 7.837m-6.873-7.667c.225 4.441 2.379 6.943 6.46 7.503m.809-.396c1.008.589 1.74.083 4.55-.29m-5.72.416c2.916.721 4.885.753 6.352.091"/>
-        <path fill="none" stroke="#000" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-opacity="1" stroke-width="1.5" d="M138.556 184.254c1.116-1.855 4.38-1.94 5.822-.542m-6.21.744c1.514-1.688 3.251-1.316 5.68.1m.38.682c5.813-.12 8.722-2.537 8.73-7.254m-9.711 7.155c5.344-.905 7.972-3.205 7.89-6.897m1.652-1.543c-.393-3.05-1.544-8.66.017-14.968m-1.672 15.723c.486-6.861.146-12.674-.72-15.357"/>
-    </g>
+<div class="rendered render_a2sketch">
+<p><svg xmlns="http://www.w3.org/2000/svg" width="289" height="304" version="1.1">
+    <path fill="#fff" d="M6.093316724512261 40.5957914116676 L276.54067137126765 40.739645026053765 L277.08538850002003 281.80859741358 L3.1891141920204973 279.1456999379625 L6.7454656627651275 37.350968775735964"/>
+    <path fill="none" stroke="#000" stroke-width="2" d="M2.614603014671593 37.42002298401785 M4.121894284765126 38.83723666938664 C68.95790477141188 38.14757008570489, 133.83997739343522 39.14282435784961, 276.50057386544034 40.33839885284206 M3.725269009971671 39.39620153690539 C91.30931609334101 36.6968224370332, 179.03958846617675 38.00669805628412, 274.6930632908497 39.485628046014895 M274.22942422778215 39.69746813613298 C269.7123550999938 121.94950788100432, 273.46121329962756 203.51168894108568, 272.624545985143 279.4248227651212 M273.38187517807035 41.06455045571883 C274.8416088605568 131.07803875153166, 274.2274593328861 220.58000120764893, 274.1781367511703 280.70904317791303 M272.33494347232795 280.7945463497682 C203.44583856729645 278.5263160366407, 133.32079500972648 281.5912081081947, 2.632926062519814 281.2801229610722 M275.1046652694909 280.6957584046528 C195.64935066202187 281.5057590627748, 118.87686104871527 282.0598703268249, 3.4562875062102103 280.4492852469055 M2.4794463076699014 279.34969736366344 C2.1832353447820583 200.53213799153508, 1.1446555512250238 116.95873773088962, 3.218406431986212 40.41530501078522 M3.570159497218051 280.53235233163304 C7.661530197594537 211.37692572238117, 6.6111844833576825 141.12003672563674, 4.293623307595067 39.42225724143501"/>
+    <path fill="#eee" d="M159.20585921732726 101.39954811286516 L253.9850979214185 101.91622342507654 L258.67403923522943 201.23017913681105 L154.82259258637458 198.59887990280987 L158.8697112336631 102.0461710784759"/>
+    <path fill="none" stroke="#000" stroke-width="2" d="M160.0883788552397 104.70839969398367C193.7881686660793 107.32401967662719 228.4755314667631 103.58119860402749 256.10018132248223 104.94735699922748M157.96260711801733 102.70940565423307C193.15082324360756 106.24385739197065 228.93615780320653 104.53116507686183 255.97985778427065 104.36711928833537M257.63027371846255 104.7443925964537C255.52654849088094 134.16381504433883 255.36219829925093 159.88159137418515 255.16655184411246 199.24162288010922M257.33255346524675 104.23331070033274C257.32824841315653 126.64498057890232 257.68627730146164 148.3771659708133 257.1767851381075 200.97674726151962M259.1340205184686 200.50980187245295C230.69827177720725 203.08137268152478 210.9103364494309 197.66920416169796 156.05884003815373 199.04701672166266M256.18213283106235 199.6846655379124C219.30475932200522 199.84950999401934 180.56838340950756 199.1671318342467 157.56205771722526 201.3016769160291M154.70487570061013 198.08025837548922C158.08196284494625 168.4079779021543 159.45647242228952 135.20121362059 158.15538847886054 101.20173729255184M157.5308653975866 201.39149536636796C157.2726862733725 171.8612564607778 158.65797918485038 142.67026867787573 156.7451621023625 105.34820749416176M42.47768613084787 198.7620655108725C31.417338922641648 200.86817502868837 24.814217998805105 202.1246744803289 24.855117495523483 198.0792757313131M39.9591114930752 200.9363239473667C34.887013398209454 200.41909996503722 31.778104680707184 199.34130034207575 23.732590407972694 199.7704519252788M21.371937201189574 197.6480331214516C23.575744739390327 173.90618172199174 23.97767985480762 143.88167330330035 20.809732262090392 103.16435296654M21.910061277256773 199.766080729261C23.0714207280072 174.70797904680802 22.67489575383892 151.08454091608382 22.691664659771412 102.83129045948917M24.10927678122898 104.84841394989526C47.98583907457528 104.34306478892394 75.56682469626094 103.64337539773987 119.4201343034787 105.414216061568M22.1008940717506 102.8802140609235C45.75596492268068 105.48903451569727 66.89156756020056 103.6130062372185 122.83734301143431 104.9438893273411M120.26482108962372 103.13428896535079C123.34453385355746 143.6633261793453 120.51683645992068 180.57155361778132 122.7392911019223 199.91559669798806M121.79762200776887 104.87531935820516C123.8126726107837 125.97491871851089 123.61364255106031 150.060344056159 120.66574429279561 199.2657910250695M120.2770507963869 198.73867279298867C101.85195657400727 197.57136780024047 77.03665208488455 200.95077905671022 57.39129090586012 200.9785598103641M122.40374894221623 199.56497904399052C105.91758168779415 200.27813186202798 89.35287302947411 199.33485773640345 58.30546745444808 199.80078736746447M47.76707468241839 166.24048267823963C48.78321145299571 195.6951246390234 47.49855911793722 219.03805588339236 48.60009337932352 236.2892659848716M48.78751920156428 167.12109179369654C48.82014095874092 188.11041808279106 48.89599234011566 206.06336795158913 50.41868810389788 237.2685841570088M49.5 238C47.21053768217971 247.3215780336303 51.55389973212963 249.2590879480784 59.64539493191478 245.86432918067038M47.09769493746353 236.19211740899482C47.873949850841804 246.02663907979638 52.76840537844336 246.619275831383 60.934587844742275 249.10004098724679M60.53803953774972 247.17123623448452C62.26258882933471 247.831562450125 63.46641246216197 247.34989685968534 68.47521917310573 247.27305435352523M59.01373376378237 247.54858991240792C61.911757963562486 248.19878407856706 64.5109254049859 248.118719459588 67.84473599614044 248.55168987418634M185.43989073046424 248.99865017364647C187.47314968114864 247.35459745236656 189.6987319303371 247.5664799639843 193.25486397442612 247.73451767211895M183.98691206500794 248.44063915904727C186.2641061218655 248.36824592025783 189.34662601583878 248.06172937141534 192.7015894755017 248.44485571147098M192.5 248C196.56688959930784 245.59166348075814 202.4888464658972 242.56414980817485 202.4829541230327 238.81465541788876M193.21248374608257 246.93143007527834C196.94844059108826 249.08594695388982 204.6668374226192 245.50070141323974 202.27622510065464 235.59393059260475M200.12427663192594 239.64160846991143C202.47284673345922 235.14691612305432 201.93193769060372 225.48977026815336 203.780549468167 216.672218413667M203.62963024642795 236.81107686695321C203.7869261878623 231.40364976116052 202.05097482718853 223.8848584662046 201.5888880003782 214.62318704137428"/>
     <defs xmlns="http://www.w3.org/2000/svg">
+        <marker id="iPointer-900g8pms3wl" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
+            <path d="M 10 0 L 10 10 L 0 5 z"/>
+        </marker>
+        <marker id="Pointer-900g8pms3wl" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
+            <path d="M 0 0 L 10 5 L 0 10 z"/>
+        </marker>
         <filter id="dsFilterNoBlur" width="150%" height="150%">
             <feOffset dx="3" dy="3" in="SourceGraphic" result="offOut"/>
             <feColorMatrix in="offOut" result="matrixOut" type="matrix" values="0.2 0 0 0 0 0 0.2 0 0 0 0 0 0.2 0 0 0 0 0 1 0"/>
@@ -278,43 +285,33 @@ fast feedback</p>
             <feGaussianBlur in="matrixOut" result="blurOut" stdDeviation="3"/>
             <feBlend in="SourceGraphic" in2="blurOut" mode="normal"/>
         </filter>
-        <marker id="iPointer" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
-            <path d="M10 0v10L0 5z"/>
-        </marker>
-        <marker id="Pointer" fill="#000" markerHeight="7" markerUnits="strokeWidth" markerWidth="8" orient="auto" refX="5" refY="5" viewBox="0 0 10 10">
-            <path d="M0 0l10 5-10 5z"/>
-        </marker>
     </defs>
-    <defs>
-        <style type="text/css">
-            @font-face{font-family:&quot;xkcd Script&quot;;src:url(./xkcd-script.ttf)}
-        </style>
-    </defs>
-    <g xmlns="http://www.w3.org/2000/svg" id="lines" fill="none" stroke="#000" stroke-width="2" transform="scale(.75)">
+    <g xmlns="http://www.w3.org/2000/svg" id="lines-900g8pms3wl" fill="none" stroke="#000" stroke-width="2">
         <g id="group102">
-            <path id="path102" d="M40.5 200h-18v-96h99v96h-63"/>
+            <path id="path102" d="M 40.5 200 L 22.5 200 L 22.5 104 L 121.5 104 L 121.5 200 L 58.5 200"/>
         </g>
         <g id="group119">
-            <path id="path119" marker-start="url(#iPointer)" d="M49.5 168v70q0 10 10 10h8"/>
+            <path id="path119" marker-start="url(#iPointer-900g8pms3wl)" d="M 49.5 168 L 49.5 238 Q 49.5 248 59.5 248 L 67.5 248"/>
         </g>
         <g id="group409">
-            <path id="path409" marker-end="url(#Pointer)" d="M184.5 248h8q10 0 10-10v-22"/>
+            <path id="path409" marker-end="url(#Pointer-900g8pms3wl)" d="M 184.5 248 L 192.5 248 Q 202.5 248 202.5 238 L 202.5 216"/>
         </g>
     </g>
-    <text id="text0" x="12.825" y="57.6" fill="#000" stroke="none" font-family="xkcd Script" font-size="15">
+    <text id="text0" x="17.1" y="76.8" fill="#000" stroke="none" font-family="xkcd Script" font-size="120%">
         Node
     </text>
-    <text id="text1" x="19.575" y="105.6" fill="#000" stroke="none" font-family="xkcd Script" font-size="15">
+    <text id="text1" x="26.1" y="140.8" fill="#000" stroke="none" font-family="xkcd Script" font-size="120%">
         front
     </text>
-    <text id="text3" x="60.075" y="189.6" fill="#000" stroke="none" font-family="xkcd Script" font-size="15">
+    <text id="text3" x="80.1" y="252.8" fill="#000" stroke="none" font-family="xkcd Script" font-size="120%">
         service
     </text>
-    <text id="text2" x="127.575" y="105.6" fill="#000" stroke="none" font-family="xkcd Script" font-size="15">
+    <text id="text2" x="170.1" y="140.8" fill="#000" stroke="none" font-family="xkcd Script" font-size="120%">
         foo
     </text>
 </svg>
 </p>
+</div>
 </section>
 <section id="asciiart-svgbob" class="level1 ltr" data-rx="-1" data-ry="0">
 <h1 class="ltr" data-rx="-1" data-ry="0">asciiart (svgbob)</h1>
@@ -328,6 +325,7 @@ fast feedback</p>
       /                \
   v1 *------------------* v2</code></pre>
 <p>►</p>
+<div class="rendered render_svgbob">
 <p><svg height="220" width="290" xmlns="http://www.w3.org/2000/svg">
     <style>line, path, circle,rect,polygon {
                           stroke: black;
@@ -447,6 +445,7 @@ fast feedback</p>
     </g>
 </svg>
 </p>
+</div>
 </section>
 <section id="asciiart-mermaid" class="level1 ltr">
 <h1 class="ltr">asciiart (mermaid)</h1>
@@ -464,7 +463,8 @@ Alice-&gt;Bob : oh, you again...
 Bob-&gt;Alice : ??
 @enduml</code></pre>
 <p>►</p>
-<p><?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="248px" preserveAspectRatio="none" style="width:268px;height:248px;" version="1.1" viewBox="0 0 268 248" width="268px" zoomAndPan="magnify"><defs><filter height="300%" id="f1c4i96sgv920m" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="39" x2="39" y1="50.1759" y2="196.7037"/><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="224" x2="224" y1="50.1759" y2="196.7037"/><rect fill="#FEFECE" filter="url(#f1c4i96sgv920m)" height="42.1759" style="stroke: #A80036; stroke-width: 1.5;" width="59" x="8" y="3"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="45" x="15" y="32.5599">Bob</text><rect fill="#FEFECE" filter="url(#f1c4i96sgv920m)" height="42.1759" style="stroke: #A80036; stroke-width: 1.5;" width="59" x="8" y="195.7037"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="45" x="15" y="225.2636">Bob</text><rect fill="#FEFECE" filter="url(#f1c4i96sgv920m)" height="42.1759" style="stroke: #A80036; stroke-width: 1.5;" width="69" x="188" y="3"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="55" x="195" y="32.5599">Alice</text><rect fill="#FEFECE" filter="url(#f1c4i96sgv920m)" height="42.1759" style="stroke: #A80036; stroke-width: 1.5;" width="69" x="188" y="195.7037"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="55" x="195" y="225.2636">Alice</text><polygon fill="#A80036" points="212.5,90.3518,222.5,94.3518,212.5,98.3518,216.5,94.3518" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.0;" x1="39.5" x2="218.5" y1="94.3518" y2="94.3518"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="56" x="46.5" y="86.7358">hello</text><polygon fill="#A80036" points="50.5,132.5278,40.5,136.5278,50.5,140.5278,46.5,136.5278" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.0;" x1="44.5" x2="223.5" y1="136.5278" y2="136.5278"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="161" x="56.5" y="128.9118">oh, you again...</text><polygon fill="#A80036" points="212.5,174.7037,222.5,178.7037,212.5,182.7037,216.5,178.7037" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.0;" x1="39.5" x2="218.5" y1="178.7037" y2="178.7037"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="22" x="46.5" y="171.0877">??</text><!--MD5=[77d401f053e2dde93a72cf165367ed21]
+<div class="rendered render_plantuml">
+<p><?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="256px" preserveAspectRatio="none" style="width:276px;height:256px;background:#00000000;" version="1.1" viewBox="0 0 276 256" width="276px" zoomAndPan="magnify"><defs><filter height="300%" id="f1c4i96sgv920m" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="39" x2="39" y1="50.1759" y2="196.7037"/><line style="stroke: #A80036; stroke-width: 1.0; stroke-dasharray: 5.0,5.0;" x1="224" x2="224" y1="50.1759" y2="196.7037"/><rect fill="#FEFECE" filter="url(#f1c4i96sgv920m)" height="42.1759" style="stroke: #A80036; stroke-width: 1.5;" width="59" x="8" y="3"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="45" x="15" y="32.5599">Bob</text><rect fill="#FEFECE" filter="url(#f1c4i96sgv920m)" height="42.1759" style="stroke: #A80036; stroke-width: 1.5;" width="59" x="8" y="195.7037"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="45" x="15" y="225.2636">Bob</text><rect fill="#FEFECE" filter="url(#f1c4i96sgv920m)" height="42.1759" style="stroke: #A80036; stroke-width: 1.5;" width="69" x="188" y="3"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="55" x="195" y="32.5599">Alice</text><rect fill="#FEFECE" filter="url(#f1c4i96sgv920m)" height="42.1759" style="stroke: #A80036; stroke-width: 1.5;" width="69" x="188" y="195.7037"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="55" x="195" y="225.2636">Alice</text><polygon fill="#A80036" points="212.5,90.3518,222.5,94.3518,212.5,98.3518,216.5,94.3518" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.0;" x1="39.5" x2="218.5" y1="94.3518" y2="94.3518"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="56" x="46.5" y="86.7358">hello</text><polygon fill="#A80036" points="50.5,132.5278,40.5,136.5278,50.5,140.5278,46.5,136.5278" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.0;" x1="44.5" x2="223.5" y1="136.5278" y2="136.5278"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="161" x="56.5" y="128.9118">oh, you again...</text><polygon fill="#A80036" points="212.5,174.7037,222.5,178.7037,212.5,182.7037,216.5,178.7037" style="stroke: #A80036; stroke-width: 1.0;"/><line style="stroke: #A80036; stroke-width: 1.0;" x1="39.5" x2="218.5" y1="178.7037" y2="178.7037"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacingAndGlyphs" textLength="22" x="46.5" y="171.0877">??</text><!--MD5=[19c4001fae7abaaa65d901b587aacf11]
 @startuml
 skinparamlocked backgroundcolor transparent
 skinparamlocked backgroundcolor transparent
@@ -475,16 +475,15 @@ Alice->Bob : oh, you again...
 Bob->Alice : ??
 @enduml
 
-PlantUML version 1.2020.00(Sat Jan 11 12:30:53 GMT 2020)
+PlantUML version 1.2020.15(Sun Jun 28 11:39:45 GMT 2020)
 (GPL source distribution)
 Java Runtime: OpenJDK Runtime Environment
 JVM: OpenJDK 64-Bit Server VM
-Java Version: 1.8.0_242-b08
-Operating System: Linux
 Default Encoding: UTF-8
 Language: en
 Country: US
 --></g></svg></p>
+</div>
 </section>
 <section id="asciiart-graphviz" class="level1 ltr">
 <h1 class="ltr">asciiart (graphviz)</h1>
@@ -497,6 +496,7 @@ Country: US
     b -&gt; d;
 }</code></pre>
 <p>►</p>
+<div class="rendered render_dot">
 <p><?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
@@ -558,6 +558,7 @@ Country: US
 </g>
 </svg>
 </p>
+</div>
 </section>
 <section id="charts-vega-lite" class="level1 ltr" data-rx="0" data-ry="-1">
 <h1 class="ltr" data-rx="0" data-ry="-1">charts (vega-lite)</h1>
@@ -579,7 +580,9 @@ Country: US
     }
 }</code></pre>
 <p>►</p>
-<p><svg class="marks" width="333" height="372" viewBox="0 0 333 372" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><rect width="333" height="372" style="fill: white;"></rect><g transform="translate(78,14)"><g class="mark-group role-frame root"><g transform="translate(0,0)"><path class="background" d="M0.5,0.5h250v300h-250Z" style="fill: none; stroke: #ddd;"></path><g><g class="mark-group role-axis"><g transform="translate(0.5,0.5)"><path class="background" d="M0,0h0v0h0Z" style="pointer-events: none; fill: none;"></path><g><g class="mark-rule role-axis-grid" style="pointer-events: none;"><line transform="translate(0,300)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,270)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,240)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,210)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,180)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,150)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,120)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,90)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,60)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,30)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,0)" x2="250" y2="0" style="fill: none; stroke: #ddd; stroke-width: 1; opacity: 1;"></line></g></g><path class="foreground" d="" style="pointer-events: none; display: none; fill: none;"></path></g></g><g class="mark-group role-axis"><g transform="translate(0.5,300.5)"><path class="background" d="M0,0h0v0h0Z" style="pointer-events: none; fill: none;"></path><g><g class="mark-rule role-axis-tick" style="pointer-events: none;"><line transform="translate(14,0)" x2="0" y2="5" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(42,0)" x2="0" y2="5" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(69,0)" x2="0" y2="5" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(97,0)" x2="0" y2="5" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(125,0)" x2="0" y2="5" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(153,0)" x2="0" y2="5" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(181,0)" x2="0" y2="5" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(208,0)" x2="0" y2="5" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(236,0)" x2="0" y2="5" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line></g><g class="mark-text role-axis-label" style="pointer-events: none;"><text text-anchor="middle" transform="translate(13.888888888888886,21)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">A</text><text text-anchor="middle" transform="translate(41.666666666666664,21)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">B</text><text text-anchor="middle" transform="translate(69.44444444444444,21)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">C</text><text text-anchor="middle" transform="translate(97.22222222222223,21)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">D</text><text text-anchor="middle" transform="translate(125,21)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">E</text><text text-anchor="middle" transform="translate(152.77777777777777,21)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">F</text><text text-anchor="middle" transform="translate(180.55555555555557,21)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">G</text><text text-anchor="middle" transform="translate(208.33333333333334,21)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">H</text><text text-anchor="middle" transform="translate(236.11111111111111,21)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">I</text></g><g class="mark-rule role-axis-domain" style="pointer-events: none;"><line transform="translate(0,0)" x2="250" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line></g><g class="mark-text role-axis-title" style="pointer-events: none;"><text text-anchor="middle" transform="translate(125,48)" style="font-family: Raleway; font-size: 24px; font-weight: bold; fill: #000; opacity: 1;">a</text></g></g><path class="foreground" d="" style="pointer-events: none; display: none; fill: none;"></path></g></g><g class="mark-group role-axis"><g transform="translate(0.5,0.5)"><path class="background" d="M0,0h0v0h0Z" style="pointer-events: none; fill: none;"></path><g><g class="mark-rule role-axis-tick" style="pointer-events: none;"><line transform="translate(0,300)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,270)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,240)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,210)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,180)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,150)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,120)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,90)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,60)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,30)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line><line transform="translate(0,0)" x2="-5" y2="0" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line></g><g class="mark-text role-axis-label" style="pointer-events: none;"><text text-anchor="end" transform="translate(-7,305)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">0</text><text text-anchor="end" transform="translate(-7,275)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">10</text><text text-anchor="end" transform="translate(-7,245)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">20</text><text text-anchor="end" transform="translate(-7,215)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">30</text><text text-anchor="end" transform="translate(-7,185)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">40</text><text text-anchor="end" transform="translate(-7,155)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">50</text><text text-anchor="end" transform="translate(-7,125)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">60</text><text text-anchor="end" transform="translate(-7,95.00000000000001)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">70</text><text text-anchor="end" transform="translate(-7,64.99999999999999)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">80</text><text text-anchor="end" transform="translate(-7,34.99999999999999)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">90</text><text text-anchor="end" transform="translate(-7,5)" style="font-family: Raleway; font-size: 18px; fill: #000; opacity: 1;">100</text></g><g class="mark-rule role-axis-domain" style="pointer-events: none;"><line transform="translate(0,300)" x2="0" y2="-300" style="fill: none; stroke: #888; stroke-width: 1; opacity: 1;"></line></g><g class="mark-text role-axis-title" style="pointer-events: none;"><text text-anchor="middle" transform="translate(-54,145)" style="font-family: Raleway; font-size: 24px; font-weight: bold; fill: #000; opacity: 1;">b</text></g></g><path class="foreground" d="" style="pointer-events: none; display: none; fill: none;"></path></g></g><g class="mark-area role-mark marks"><path d="M13.888888888888886,216L41.666666666666664,135L69.44444444444444,171.00000000000003L97.22222222222223,26.99999999999999L125,56.999999999999986L152.77777777777777,141L180.55555555555557,243.00000000000003L208.33333333333334,39L236.11111111111111,144L236.11111111111111,300L208.33333333333334,300L180.55555555555557,300L152.77777777777777,300L125,300L97.22222222222223,300L69.44444444444444,300L41.666666666666664,300L13.888888888888886,300Z" style="fill: #4c78a8;"></path></g></g><path class="foreground" d="" style="display: none; fill: none;"></path></g></g></g></svg></p>
+<div class="rendered render_vegalite">
+<p><svg class="marks" width="324" height="372" viewBox="0 0 324 372" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><rect width="324" height="372" fill="white"></rect><g fill="none" stroke-miterlimit="10" transform="translate(69,14)"><g class="mark-group role-frame root" role="graphics-object" aria-roledescription="group mark container"><g transform="translate(0,0)"><path class="background" aria-hidden="true" d="M0.5,0.5h250v300h-250Z" stroke="#ddd"></path><g><g class="mark-group role-axis" aria-hidden="true"><g transform="translate(0.5,0.5)"><path class="background" aria-hidden="true" d="M0,0h0v0h0Z" pointer-events="none"></path><g><g class="mark-rule role-axis-grid" pointer-events="none"><line transform="translate(0,300)" x2="250" y2="0" stroke="#ddd" stroke-width="1" opacity="1"></line><line transform="translate(0,270)" x2="250" y2="0" stroke="#ddd" stroke-width="1" opacity="1"></line><line transform="translate(0,240)" x2="250" y2="0" stroke="#ddd" stroke-width="1" opacity="1"></line><line transform="translate(0,210)" x2="250" y2="0" stroke="#ddd" stroke-width="1" opacity="1"></line><line transform="translate(0,180)" x2="250" y2="0" stroke="#ddd" stroke-width="1" opacity="1"></line><line transform="translate(0,150)" x2="250" y2="0" stroke="#ddd" stroke-width="1" opacity="1"></line><line transform="translate(0,120)" x2="250" y2="0" stroke="#ddd" stroke-width="1" opacity="1"></line><line transform="translate(0,90)" x2="250" y2="0" stroke="#ddd" stroke-width="1" opacity="1"></line><line transform="translate(0,60)" x2="250" y2="0" stroke="#ddd" stroke-width="1" opacity="1"></line><line transform="translate(0,30)" x2="250" y2="0" stroke="#ddd" stroke-width="1" opacity="1"></line><line transform="translate(0,0)" x2="250" y2="0" stroke="#ddd" stroke-width="1" opacity="1"></line></g></g><path class="foreground" aria-hidden="true" d="" pointer-events="none" display="none"></path></g></g><g class="mark-group role-axis" role="graphics-symbol" aria-roledescription="axis" aria-label="X-axis titled 'a' for a discrete scale with 9 values: A, B, C, D, E, ending with I"><g transform="translate(0.5,300.5)"><path class="background" aria-hidden="true" d="M0,0h0v0h0Z" pointer-events="none"></path><g><g class="mark-rule role-axis-tick" pointer-events="none"><line transform="translate(14,0)" x2="0" y2="5" stroke="#888" stroke-width="1" opacity="1"></line><line transform="translate(42,0)" x2="0" y2="5" stroke="#888" stroke-width="1" opacity="1"></line><line transform="translate(69,0)" x2="0" y2="5" stroke="#888" stroke-width="1" opacity="1"></line><line transform="translate(97,0)" x2="0" y2="5" stroke="#888" stroke-width="1" opacity="1"></line><line transform="translate(125,0)" x2="0" y2="5" stroke="#888" stroke-width="1" opacity="1"></line><line transform="translate(153,0)" x2="0" y2="5" stroke="#888" stroke-width="1" opacity="1"></line><line transform="translate(181,0)" x2="0" y2="5" stroke="#888" stroke-width="1" opacity="1"></line><line transform="translate(208,0)" x2="0" y2="5" stroke="#888" stroke-width="1" opacity="1"></line><line transform="translate(236,0)" x2="0" y2="5" stroke="#888" stroke-width="1" opacity="1"></line></g><g class="mark-text role-axis-label" pointer-events="none"><text text-anchor="middle" transform="translate(13.888888888888886,21)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">A</text><text text-anchor="middle" transform="translate(41.666666666666664,21)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">B</text><text text-anchor="middle" transform="translate(69.44444444444444,21)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">C</text><text text-anchor="middle" transform="translate(97.22222222222223,21)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">D</text><text text-anchor="middle" transform="translate(125,21)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">E</text><text text-anchor="middle" transform="translate(152.77777777777777,21)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">F</text><text text-anchor="middle" transform="translate(180.55555555555557,21)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">G</text><text text-anchor="middle" transform="translate(208.33333333333334,21)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">H</text><text text-anchor="middle" transform="translate(236.11111111111111,21)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">I</text></g><g class="mark-rule role-axis-domain" pointer-events="none"><line transform="translate(0,0)" x2="250" y2="0" stroke="#888" stroke-width="1" opacity="1"></line></g><g class="mark-text role-axis-title" pointer-events="none"><text text-anchor="middle" transform="translate(125,48)" font-family="Raleway" font-size="24px" font-weight="bold" fill="#000" opacity="1">a</text></g></g><path class="foreground" aria-hidden="true" d="" pointer-events="none" display="none"></path></g></g><g class="mark-group role-axis" role="graphics-symbol" aria-roledescription="axis" aria-label="Y-axis titled 'b' for a linear scale with values from 0 to 100"><g transform="translate(0.5,0.5)"><path class="background" aria-hidden="true" d="M0,0h0v0h0Z" pointer-events="none"></path><g><g class="mark-rule role-axis-tick" pointer-events="none"><line transform="translate(0,300)" x2="-5" y2="0" stroke="#888" stroke-width="1" opacity="1"></line><line transform="translate(0,270)" x2="-5" y2="0" stroke="#888" stroke-width="1" opacity="1"></line><line transform="translate(0,240)" x2="-5" y2="0" stroke="#888" stroke-width="1" opacity="1"></line><line transform="translate(0,210)" x2="-5" y2="0" stroke="#888" stroke-width="1" opacity="1"></line><line transform="translate(0,180)" x2="-5" y2="0" stroke="#888" stroke-width="1" opacity="1"></line><line transform="translate(0,150)" x2="-5" y2="0" stroke="#888" stroke-width="1" opacity="1"></line><line transform="translate(0,120)" x2="-5" y2="0" stroke="#888" stroke-width="1" opacity="1"></line><line transform="translate(0,90)" x2="-5" y2="0" stroke="#888" stroke-width="1" opacity="1"></line><line transform="translate(0,60)" x2="-5" y2="0" stroke="#888" stroke-width="1" opacity="1"></line><line transform="translate(0,30)" x2="-5" y2="0" stroke="#888" stroke-width="1" opacity="1"></line><line transform="translate(0,0)" x2="-5" y2="0" stroke="#888" stroke-width="1" opacity="1"></line></g><g class="mark-text role-axis-label" pointer-events="none"><text text-anchor="end" transform="translate(-7,305)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">0</text><text text-anchor="end" transform="translate(-7,275)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">10</text><text text-anchor="end" transform="translate(-7,245)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">20</text><text text-anchor="end" transform="translate(-7,215)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">30</text><text text-anchor="end" transform="translate(-7,185)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">40</text><text text-anchor="end" transform="translate(-7,155)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">50</text><text text-anchor="end" transform="translate(-7,125)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">60</text><text text-anchor="end" transform="translate(-7,95.00000000000001)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">70</text><text text-anchor="end" transform="translate(-7,64.99999999999999)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">80</text><text text-anchor="end" transform="translate(-7,34.99999999999999)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">90</text><text text-anchor="end" transform="translate(-7,5)" font-family="Raleway" font-size="18px" fill="#000" opacity="1">100</text></g><g class="mark-rule role-axis-domain" pointer-events="none"><line transform="translate(0,300)" x2="0" y2="-300" stroke="#888" stroke-width="1" opacity="1"></line></g><g class="mark-text role-axis-title" pointer-events="none"><text text-anchor="middle" transform="translate(-54,145)" font-family="Raleway" font-size="24px" font-weight="bold" fill="#000" opacity="1">b</text></g></g><path class="foreground" aria-hidden="true" d="" pointer-events="none" display="none"></path></g></g><g class="mark-area role-mark marks" role="graphics-object" aria-roledescription="area mark container"><path aria-label="a: A; b: 28" role="graphics-symbol" aria-roledescription="area mark" d="M13.888888888888886,216L41.666666666666664,135L69.44444444444444,171.00000000000003L97.22222222222223,26.99999999999999L125,56.999999999999986L152.77777777777777,141L180.55555555555557,243.00000000000003L208.33333333333334,39L236.11111111111111,144L236.11111111111111,300L208.33333333333334,300L180.55555555555557,300L152.77777777777777,300L125,300L97.22222222222223,300L69.44444444444444,300L41.666666666666664,300L13.888888888888886,300Z" fill="#4c78a8"></path></g></g><path class="foreground" aria-hidden="true" d="" display="none"></path></g></g></g></svg></p>
+</div>
 </section>
 <section id="math-equations" class="level1">
 <h1>math equations</h1>
@@ -722,8 +725,13 @@ Country: US
     <script src="assets/3rdparty/jquery.js"></script>
 
     <script type="module">
-        import Reveal from "./assets/framework/reveal.js/js/index.js";
+        import Reveal from "./assets/framework/reveal.js/dist/reveal.esm.js";
+        import Markdown from "./assets/framework/reveal.js/plugin/markdown/markdown.esm.js";
+        import Notes from "./assets/framework/reveal.js/plugin/notes/notes.esm.js";
+
         let deck = new Reveal();
+        window.Reveal = deck;
+
         deck.initialize({
             width: 960,
             height: 740,
@@ -748,7 +756,7 @@ Country: US
             fragments: 'true',
             embedded: 'false',
             help: 'true',
-            showNotes: 'false',
+            showNotes: '',
             autoPlayMedia: '',
 
             autoSlide: (window.pdf_render) ? 0 : Number(0),
@@ -770,12 +778,7 @@ Country: US
 
             theme: '',
 
-            // Optional libraries used to extend on reveal.js
-            dependencies: [
-                { src: 'assets/framework/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-                { src: 'assets/markdeck/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-                { src: 'assets/framework/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-            ]
+            plugins: [ Markdown, Notes ]
         });
 
         function calc_offset_left() {
@@ -814,7 +817,16 @@ Country: US
             }
         }
 
-        flushleft(".slides .flushleft");
+        jQuery(".flushleft").children(".flushleft").removeClass("flushleft");
+        flushleft(".slides section.flushleft");
+    </script>
+
+    <script src='assets/markdeck/highlight.js'></script>
+    <script src='assets/markdeck/highlightjs-line-numbers.min.js'></script>
+    <script>
+        window.hljs = hljs;
+        hljs.initHighlightingOnLoad();
+        hljs.initLineNumbersOnLoad();
     </script>
 
         <script src="assets/3rdparty/asciinema-player.js"></script>

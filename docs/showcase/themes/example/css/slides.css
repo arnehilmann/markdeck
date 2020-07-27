@@ -22,14 +22,21 @@
 .reveal div {
   font-family: "Raleway", sans-serif; }
 
-.reveal section.font-xkcd-script svg text {
-  font-family: "xkcd Script"; }
-
 .colorful .reveal {
   background: linear-gradient(45deg, #087bd9 0%, rgba(8, 123, 217, 0) 70%), linear-gradient(135deg, #06d4f9 10%, rgba(6, 212, 249, 0) 80%); }
   .colorful .reveal section > * {
     color: #fff;
     text-shadow: 0px 0px 1px #000; }
+
+.reveal .slides section .fragment.fade-in-otherwise-semi-out {
+  opacity: 0.4;
+  visibility: inherit; }
+  .reveal .slides section .fragment.fade-in-otherwise-semi-out.current-visible {
+    opacity: 0.4;
+    visibility: inherit; }
+  .reveal .slides section .fragment.fade-in-otherwise-semi-out.current-fragment {
+    opacity: 1;
+    visibility: inherit; }
 
 .sea-gradient .reveal {
   background: linear-gradient(to left, #4CA1AFEE, #2C3E50EE);

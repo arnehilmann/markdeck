@@ -146,6 +146,58 @@ body.impress-enabled {
             width: 2rem;
             height: auto;
         }
+
+        .substep {
+            opacity: 0;
+            visibility: hidden;
+            transition: all .2s ease;
+            will-change: opacity;
+
+            &.substep-visible {
+                opacity: 1;
+                visibility: inherit;
+            }
+
+            &.disabled {
+                transition: none;
+            }
+        }
+
+        .substep.grow {
+            opacity: 1;
+            visibility: inherit;
+
+            &.substep-visible {
+                transform: scale( 1.3 );
+            }
+        }
+
+        .substep.shrink {
+            opacity: 1;
+            visibility: inherit;
+
+            &.substep-visible {
+                transform: scale( 0.7 );
+            }
+        }
+        .substep.highlight-red,
+        .substep.highlight-current-red,
+        .substep.highlight-green,
+        .substep.highlight-current-green,
+        .substep.highlight-blue,
+        .substep.highlight-current-blue {
+            opacity: 1;
+            visibility: inherit;
+        }
+        .substep.highlight-red.substep-visible {
+            color: #ff2c2d
+        }
+        .substep.highlight-green.substep-visible {
+            color: #17ff2e;
+        }
+        .substep.highlight-blue.substep-visible {
+            color: #1b91ff;
+        }
     }
 }
 

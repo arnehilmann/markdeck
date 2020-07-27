@@ -218,7 +218,7 @@ public class Example {
 ```
 
 
-# asciiart (sketchy) {.ltr .font-xkcd-script}
+# asciiart (sketchy) {.ltr}
 
 ```{.nohighlight style="width: 45%;"}
 #=----------------------------#
