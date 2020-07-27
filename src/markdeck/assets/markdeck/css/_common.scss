@@ -55,3 +55,38 @@ pre {
     vertical-align: middle;
     line-height: 1.1em;
 }
+
+/* for block of numbers */
+.hljs-ln-numbers {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    text-align: center;
+    color: #ccc;
+    border-right: 1px solid #CCC;
+    vertical-align: top;
+    padding-right: 5px;
+
+    /* your custom style here */
+}
+
+/* for block of code */
+.hljs-ln-code {
+    padding-left: 10px;
+}
+
+.ltr {
+    div {
+        display: inline-block;
+    }
+}
+
+div.render_a2sketch svg text {
+    font-family: "xkcd Script";
+    font-size: 24pt;
+}
+

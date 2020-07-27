@@ -7,9 +7,6 @@
     div {
         font-family: "Raleway", sans-serif;
     }
-    section.font-xkcd-script svg text {
-        font-family: "xkcd Script";
-    }
 }
 .colorful .reveal {
     background:
@@ -35,31 +32,6 @@
         visibility: inherit;
     }
 }
-
-/* for block of numbers */
-.hljs-ln-numbers {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-
-    text-align: center;
-    color: #ccc;
-    border-right: 1px solid #CCC;
-    vertical-align: top;
-    padding-right: 5px;
-
-    /* your custom style here */
-}
-
-/* for block of code */
-.hljs-ln-code {
-    padding-left: 10px;
-}
-
-
 
 .sea-gradient .reveal { @include sea-gradient; }
 .sky-gradient-13 .reveal { @include sky-gradient-13; }
