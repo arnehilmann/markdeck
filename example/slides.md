@@ -88,10 +88,10 @@ fast feedback
 
 modify and present your slides<br/> _without_ <br/>internet uplink
 
-<span class="fa-stack fa-1x">
+[
   ![](fas fa-wifi fa-stack-1x)
   ![](fas fa-slash fa-stack-1x)
-</span>
+]{.fa-stack .fa-1x}
 
 
 # collaborative {rx=1 ry=0}
