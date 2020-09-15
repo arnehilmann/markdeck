@@ -144,7 +144,7 @@ RUN apk add \
     && rm -rf /var/cache/apk/*
 
 RUN npm -g config set user root
-RUN npm install -g mathjax-pandoc-filter \
+RUN npm install -g mathjax-pandoc-filter doctoc \
     && npm cache clean --force
 
 COPY --from=build-vega /vega.tgz /
