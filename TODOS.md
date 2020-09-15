@@ -3,12 +3,14 @@
 * documentation: metadata
 * documentation: themes
 * documentation: impress.js variant
-* update decktape component
+* documentation: fragments
+
 * try to run without docker
 * test on windows10
 * make svg inlining optional, or copy attributes
 * provide resource helper: download remote stuff (ala https://webpack.js.org/loaders/html-loader/ or so)
 * try papercss
+* try feathericons
 * impressjs: define new coordinate system on-the-fly
 
 * provide font helper (download fonts, change css definitions)
@@ -21,8 +23,15 @@
 * improve fragment handling
 * support rough-notes
 
+* start pdf/standalone/... only when needed, restart if necessary
+* jupyter notebook -> ipynb --trigger--> md -> slides deck (incl image references)
+* pdf handout for jupyter notebook
+* .markdeckignore (incl README.md e.g.)
+
+
 # DONE
 
+* ~update decktape component~
 * ~document/build/provide miniditaa jar~
 * ~try excalidraw~
 * ~update font-awesome, add some cheatsheets~
