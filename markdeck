@@ -113,6 +113,33 @@ services:
     image: arne/markdown-friends:0.5
     ports:
       - ${FRIENDS_PORT}:8081
+  jupyter:
+    image: arne/markdeck-jupyter:0.1
+    volumes:
+      - type: bind
+        source: ${PWD}
+        target: /source
+        read_only: true
+      - type: bind
+        source: ${PWD}/nbs_generated
+        target: /target
+      - type: bind
+        source: ${PWD}/deck
+        target: /deck
+    depends_on:
+      - markdeck
+  jupyterlab:
+    image: arne/markdeck-jupyter:0.1
+    volumes:
+      - type: bind
+        source: ${PWD}/nbs_generated
+        target: /nbs
+        read_only: true
+    ports:
+      - 8888:8888
+    working_dir: /nbs
+    command: jupyter lab
+
 EODCF
 
      echo "${tmpfile}"
@@ -290,7 +317,7 @@ EOF
 isPresentationFolder () {
     shopt -s nullglob
     res=1
-    [ -n "$(echo ${1:-.}/slide*.md)" ] && res=0
+    [ -n "$(echo ${1:-.}/*.md)" ] && res=0
     shopt -u nullglob
     return $res
 }
@@ -303,49 +330,51 @@ startMarkdeck () {
     fi
     createFolder "${BUILD}"
     testOwnership "${BUILD}"
-    MARKDECK_USER=$(calcUserIdAndGroupId "${BUILD}") dockerCompose up --abort-on-container-exit --remove-orphans
+    createFolder "a2s-custom-types"	# TODO
+    createFolder "nbs_generated"	# TODO
+    MARKDECK_USER=$(calcUserIdAndGroupId "${BUILD}") dockerCompose up \
+        --abort-on-container-exit --remove-orphans \
+        markdeck web a2sketch friends $@
 }
 
-if [ $# -ge 1 ]; then
-    case "${1}" in
-        'scaffold' )
-            scaffold
-            ;;
-        'pull' )
-            dockerCompose pull
-            ;;
-        'stop' )
-            dockerCompose down
-            ;;
-        'update' )
-            update
-            ;;
-        '-h' | '--help' )
-            printHelp
-            ;;
-        '-v' | '--version' )
-            printVersion
-            ;;
-        'start' )
-            startMarkdeck
-            ;;
-        'dev' )
-            dockerCompose up
-            ;;
-        'once' )
-            MARKDECK_USER=$(calcUserIdAndGroupId "${BUILD}") ONCE=true \
-                dockerCompose up \
-                --abort-on-container-exit \
-                --exit-code-from markdeck \
-                -t 1 \
-                markdeck a2sketch
-            ;;
-        * )
-            printHelp
-            exit 1
-            ;;
-    esac
-else
-    startMarkdeck
-fi
+CMD=${1:-startMarkdeck}
+shift || :
+case $CMD in
+    'scaffold' )
+        scaffold
+        ;;
+    'pull' )
+        dockerCompose pull
+        ;;
+    'stop' )
+        dockerCompose down
+        ;;
+    'update' )
+        update
+        ;;
+    '-h' | '--help' )
+        printHelp
+        ;;
+    '-v' | '--version' )
+        printVersion
+        ;;
+    'start' )
+        startMarkdeck $@
+        ;;
+    'dev' )
+        dockerCompose up
+        ;;
+    'once' )
+        MARKDECK_USER=$(calcUserIdAndGroupId "${BUILD}") ONCE=true \
+            dockerCompose up \
+            --abort-on-container-exit \
+            --exit-code-from markdeck \
+            -t 1 \
+            markdeck a2sketch
+        ;;
+    * )
+        printHelp
+        exit 1
+        ;;
+esac
 exit $?
