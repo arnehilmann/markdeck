@@ -1,7 +1,7 @@
 FROM alpine:3.11.6 AS ALPINE_BASE
 FROM node:alpine AS NODE_BASE
 FROM gradle:6.1 AS GRADLE_BASE
-FROM rust:1.43-alpine3.11 AS RUST_BASE
+FROM rust:1.46-alpine3.12 AS RUST_BASE
 
 
 FROM GRADLE_BASE AS build-ditaa
@@ -38,13 +38,10 @@ RUN ls -al /
 FROM RUST_BASE AS build-svgbob
 ARG SVGBOB_VERSION
 WORKDIR /tmp
-RUN rustup toolchain install nightly
-RUN rustup override set nightly
 RUN apk add curl musl-dev
 RUN curl -L -o svgbob.tgz https://github.com/ivanceras/svgbob/archive/${SVGBOB_VERSION}.tar.gz
 RUN tar zxf svgbob.tgz
 RUN mv svgbob-* svgbob
-# RUN git clone https://github.com/ivanceras/svgbob.git
 WORKDIR svgbob
 RUN cargo build
 RUN cargo test
@@ -132,9 +129,6 @@ FROM NODE_BASE AS production
 
 LABEL maintainer="arne@hilmann.de"
 
-ARG version
-ARG motto
-
 RUN apk add \
     make bash curl \
     graphviz inotify-tools rsync \
@@ -181,7 +175,10 @@ WORKDIR /markdeck
 RUN ln -sf /target/assets/css/fonts /.fonts
 RUN ln -sf /markdeck/assets/markdeck/css/fonts/ /usr/share/fonts
 
+ARG version
 ENV VERSION $version
+
+ARG motto
 ENV MOTTO $motto
 
 RUN addgroup -g 1999 markdeck
