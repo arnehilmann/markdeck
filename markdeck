@@ -3,7 +3,7 @@
 set -ue
 
 BUILD=deck
-VERSION=0.52.5
+VERSION=0.53.2
 PORT=${MARKDECK_PORT:-8080}
 FRIENDS_PORT=$((${PORT} + 1))
 export COMPOSE_PROJECT_NAME=$(basename $PWD)
@@ -61,11 +61,15 @@ createComposeFile () {
 version: "3.4"
 services:
   markdeck:
-    image: arne/markdeck-pandoc:0.52.5
+    image: arne/markdeck-pandoc:0.53.2
     user: "\$MARKDECK_USER"
     environment:
       - ONCE
     volumes:
+      - type: bind
+        source: $THEMES_FOLDER
+        target: /source/themes/
+        read_only: true
       - type: bind
         source: ${PWD}/
         target: /source
@@ -114,7 +118,7 @@ services:
     ports:
       - ${FRIENDS_PORT}:8081
   jupyter:
-    image: arne/markdeck-jupyter:0.1
+    image: arne/markdeck-jupyter:0.2
     volumes:
       - type: bind
         source: ${PWD}
@@ -129,7 +133,7 @@ services:
     depends_on:
       - markdeck
   jupyterlab:
-    image: arne/markdeck-jupyter:0.1
+    image: arne/markdeck-jupyter:0.2
     volumes:
       - type: bind
         source: ${PWD}/nbs_generated
@@ -139,7 +143,6 @@ services:
       - 8888:8888
     working_dir: /nbs
     command: jupyter lab
-
 EODCF
 
      echo "${tmpfile}"
@@ -332,12 +335,27 @@ startMarkdeck () {
     testOwnership "${BUILD}"
     createFolder "a2s-custom-types"	# TODO
     createFolder "nbs_generated"	# TODO
+    testOwnership "nbs_generated"   # TODO
+
     MARKDECK_USER=$(calcUserIdAndGroupId "${BUILD}") dockerCompose up \
         --abort-on-container-exit --remove-orphans \
         markdeck web a2sketch friends $@
 }
 
-CMD=${1:-startMarkdeck}
+declare -a THEMES_PLACES=($PWD/themes $HOME/.config/markdeck/themes)
+THEMES_FOLDER=
+for F in ${THEMES_PLACES[@]}; do
+    if [ -d $F ]; then
+        THEMES_FOLDER="$F"
+        break
+    fi
+done
+if [ -z $THEMES_FOLDER ]; then
+    THEMES_FOLDER=$BUILD/.empty
+    mkdir -p $THEMES_FOLDER
+fi
+    
+CMD=${1:-start}
 shift || :
 case $CMD in
     'scaffold' )
@@ -365,12 +383,13 @@ case $CMD in
         dockerCompose up
         ;;
     'once' )
-        MARKDECK_USER=$(calcUserIdAndGroupId "${BUILD}") ONCE=true \
-            dockerCompose up \
-            --abort-on-container-exit \
-            --exit-code-from markdeck \
-            -t 1 \
-            markdeck a2sketch
+        ONCE=true startMarkdeck $@
+        # MARKDECK_USER=$(calcUserIdAndGroupId "${BUILD}") ONCE=true \
+        #     dockerCompose up \
+        #     --abort-on-container-exit \
+        #     --exit-code-from markdeck \
+        #     -t 1 \
+        #     markdeck a2sketch
         ;;
     * )
         printHelp
