@@ -63,7 +63,7 @@ while true; do
 
     echo "-------- config --------"
     shopt -s nullglob
-    SOURCE_MD=$(echo /source/*.md)
+    SOURCE_MD=$(echo /source/*[a-z]*.md)
     shopt -u nullglob
     METADATA="$(pandoc --template=/markdeck/metadata.template /markdeck/defaults.yaml ${SOURCE_MD:-/markdeck/note.md})"
     mkdir -p /target/.meta/
@@ -86,6 +86,7 @@ while true; do
     [[ -d /source/assets ]] && rsync -av /source/assets /target/ || :
     [[ -d /source/themes ]] && rsync -av /source/themes /target/ || :
     rsync -a /markdeck/explain.html /target/ || :
+    [[ -d /source/nbs_generated/assets ]] && rsync -av /source/nbs_generated/assets /target/ || :
     fc-list
     echo "-------- /rsync output --------"
     echo
