@@ -32,9 +32,10 @@ function show_errors() {
 }
 
 function calc_css_path() {
-    local p=${1/source/target}
+    local p=$1
+    p=${p/source/}
     p=${p/.scss/.css}
-    echo $p
+    echo /target/$p
 }
 
 if ! $ONCE; then
@@ -84,8 +85,8 @@ while true; do
     rsync -ram --delete --include=$variant.js --exclude '*.js/' /markdeck/assets/framework /target/assets
     touch /target/assets/css/slides.css /target/assets/css/render-pdf.css
     [[ -d /source/assets ]] && rsync -av /source/assets /target/ || :
-    [[ -d /source/themes ]] && rsync -av /source/themes /target/ || :
-    rsync -a /markdeck/explain.html /target/ || :
+    [[ -d /themes ]] && rsync -av /themes /target/ || :
+    rsync -a /markdeck/explain* /target/ || :
     [[ -d /source/nbs_generated/assets ]] && rsync -av /source/nbs_generated/assets /target/ || :
     fc-list
     echo "-------- /rsync output --------"
@@ -100,14 +101,14 @@ while true; do
     for theme in $themes; do
         echo "theme '$theme' found"
 
-        SCSS=/source/themes/$theme/css/slides.scss
+        SCSS=/themes/$theme/css/slides.scss
         [[ -e $SCSS ]] && sassc $SCSS $(calc_css_path $SCSS)
-        SCSS=/source/themes/$theme/css/slides.impress.scss
+        SCSS=/themes/$theme/css/slides.impress.scss
         [[ -e $SCSS ]] && sassc $SCSS $(calc_css_path $SCSS)
 
-        CSS=/source/themes/$theme/css/slides.css
+        CSS=/themes/$theme/css/slides.css
         [[ -e $CSS ]] && cp $CSS $(calc_css_path $CSS)
-        CSS=/source/themes/$theme/css/slides.impress.css
+        CSS=/themes/$theme/css/slides.impress.css
         [[ -e $CSS ]] && cp $CSS $(calc_css_path $CSS)
     done
     SCSS=/source/assets/css/slides.$variant.scss
@@ -123,9 +124,9 @@ while true; do
     [[ -e /source/include-before-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-before-body /source/include-before-body"
     [[ -e /source/include-after-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-after-body /source/include-after-body"
     for theme in $themes; do
-        [[ -e /source/themes/$theme/include-in-header.html ]] && PANDOC_ARGS="$PANDOC_ARGS --include-in-header /source/themes/$theme/include-in-header.html"
-        [[ -e /source/themes/$theme/include-before-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-before-body /source/themes/$theme/include-before-body"
-        [[ -e /source/themes/$theme/include-after-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-after-body /source/themes/$theme/include-after-body"
+        [[ -e /themes/$theme/include-in-header.html ]] && PANDOC_ARGS="$PANDOC_ARGS --include-in-header /themes/$theme/include-in-header.html"
+        [[ -e /themes/$theme/include-before-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-before-body /themes/$theme/include-before-body"
+        [[ -e /themes/$theme/include-after-body ]] && PANDOC_ARGS="$PANDOC_ARGS --include-after-body /themes/$theme/include-after-body"
     done
     rm -f /target/slides.combined.md.txt
     # cat ${SOURCE_MD:-/markdeck/note.md} > /target/slides.combined.md.txt
