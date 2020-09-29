@@ -93,6 +93,7 @@ RUN mkdir /reveal.js
 RUN curl -L "https://github.com/hakimel/reveal.js/archive/${REVEALJS_VERSION}.tar.gz" | tar -C /reveal.js --strip-components=1 --exclude test --exclude font -zxvf -
 WORKDIR /reveal.js
 RUN rm -rf *.md demo.html examples/ gulpfile.js package*.json test/
+RUN touch dist/reveal.esm.js.map
 
 
 
