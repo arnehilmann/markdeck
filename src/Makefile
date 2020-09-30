@@ -1,3 +1,12 @@
+SHELL := bash
+.ONESHELL:
+.SHELLFLAGS := -eu -o pipefail -c
+.DELETE_ON_ERROR:
+MAKEFLAGS += --warn-undefined-variables
+MAKEFLAGS += --no-builtin-rules
+
+.PHONY: all tag push check-versions clean tabularasa
+
 PANDOC_VERSION=2.9.2.1
 REVEALJS_VERSION=4.0.2
 ASCIINEMAPLAYER_VERSION=v2.6.1
@@ -5,7 +14,6 @@ JQUERY_VERSION=3.5.1.slim.min
 IMPRESSJS_VERSION=1.1.0
 MERMAID_VERSION=8.8.0
 SVGBOB_VERSION=0.5.0-alpha.6
-
 
 VERSION=0.53.4
 MOTTO='support jupyterlab'
@@ -39,6 +47,10 @@ tag:	all
 
 push:	all
 	docker-compose push
+	for I in $(shell yq r docker-compose.yaml 'services.*.image'); do
+		docker tag $$I quay.io/$$I
+		docker push quay.io/$$I
+	done
 
 
 docker-compose.yaml:	docker-compose.yaml.source Makefile
@@ -137,5 +149,3 @@ tabularasa:
 	docker images -q "arne/markdeck*" | xargs docker rmi -f
 	docker system prune -f
 	docker images "arne/markdeck*"
-
-.PHONY: all tag push check-versions clean tabularasa
