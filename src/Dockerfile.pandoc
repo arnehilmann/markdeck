@@ -152,7 +152,6 @@ RUN curl -o /usr/local/share/lua/5.3/inspect.lua -L https://raw.githubuserconten
 RUN pip3 install MarkdownPP
 
 RUN mkdir -p /markdeck/
-COPY markdeck/ /markdeck/
 COPY --from=build-pandoc /pandoc /usr/bin/
 COPY --from=build-revealjs /reveal.js /markdeck/assets/framework/reveal.js/
 COPY --from=build-impressjs /impress.js /markdeck/assets/framework/impress.js/
@@ -167,6 +166,8 @@ COPY --from=build-plantuml /plantuml.jar /markdeck/lib/
 RUN ls -al /markdeck/assets/3rdparty
 COPY --from=build-svgbob /svgbob /usr/local/bin/
 COPY --from=build-githubstyle /GitHub.html5 /markdeck/template-github.html
+
+COPY markdeck/ /markdeck/
 
 WORKDIR /markdeck/assets/framework/reveal.js
 RUN sassc css/theme/source/simple.scss > css/theme/simple.css
