@@ -30,7 +30,7 @@
     <div class="box source">
         <iframe
             id="source"
-            src="slides.combined.md.txt"
+            src="all-slides.md"
             frameborder="0"
             height="100%" width="100%" align="left" ></iframe>
     </div>
@@ -40,7 +40,6 @@
         var source = document.getElementById('source');
 
         var split_source = function(doc) {
-            // console.log(doc);
             var myText = doc.getElementsByTagName("pre")[0];
             // console.log(myText);
             var lines = myText.innerHTML.split("\n");
@@ -53,7 +52,6 @@
 
             for (i = 0; i < numLines; i++) {
                 var line = lines[i];
-                // console.log("line: " + line);
                 if (line.indexOf('---') == 0) {
                     header = !header;
                     continue;
@@ -61,22 +59,21 @@
                 if (header) {
                     continue;
                 }
-                if (line.indexOf('# ') == 0) {
-                    if (currentSection) {
-                        window.sections.push(currentSection.join("\n"));
-                    }
-                    // console.log("slide header found: " + line);
-                    currentSection = Array();
-                    currentSection.push('<pre>');
-                    currentSection.push(line);
-                } else {
-                    if (currentSection) {
-                        currentSection.push(line);
-                    }
+                var section = line.match(/-- section (\d+) --/);
+                if (section) {
+                    currentSection = section[1];
+                    window.sections[currentSection] = Array();
+                    continue;
+                } 
+                var subsection = line.match(/-- subsection (\d+) \/ (\d+) --/);
+                if (subsection) {
+                    currentSection = subsection[1] + " " + subsection[2];
+                    window.sections[currentSection] = Array();
+                    continue;
                 }
+                
+                window.sections[currentSection].push(line);
             }
-            window.sections.push(currentSection.join("\n"));
-            console.log(window.sections);
         }
 
         document.getElementById('deck').onload = function(event) {
@@ -84,9 +81,13 @@
             split_source(sourceDoc.documentElement);
             var deckWindow = deck.contentWindow;
             var update_source = function() {
-                // console.log("updating source view");
-                var slideNr = deckWindow.Reveal.getIndices().h;
-                source.contentDocument.documentElement.innerHTML = '<div style="padding-left: 1em; position: relative; top: 50%; transform: translateY(-50%);"><em>slide source</em></br></br>' + window.sections[slideNr] + "</div>";
+                var section = deckWindow.Reveal.getIndices().h;
+                var subsection = deckWindow.Reveal.getIndices().v;
+                var index = section;
+                if (subsection > 0) {
+                    index = index + " " + subsection;
+                }
+                source.contentDocument.documentElement.innerHTML = '<div style="padding-left: 1em; position: relative; top: 50%; transform: translateY(-50%);"><em>slide source</em></br></br><pre>' + window.sections[index].join("\n") + "</pre></div>";
             };
             update_source();
             deckWindow.Reveal.addEventListener('slidechanged', update_source);

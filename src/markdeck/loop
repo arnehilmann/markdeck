@@ -151,6 +151,15 @@ while true; do
     cd /target
     SHORTCUT_FILTER=/markdeck/lib/${variant}-shortcut-filter.lua
     set -x
+    pandoc \
+        -f markdown+yaml_metadata_block \
+        -t markdown+yaml_metadata_block \
+        --wrap=preserve \
+        --atx-headers \
+        --lua-filter /markdeck/lib/skip-slide-filter.lua \
+        --lua-filter /markdeck/lib/add-section.comments.lua \
+        -o /target/all-slides.md \
+        /markdeck/defaults.yaml /target/slides.combined.md.txt || :
     if pandoc \
         -f markdown+yaml_metadata_block \
         -t html \
