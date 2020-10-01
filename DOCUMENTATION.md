@@ -10,6 +10,7 @@ That means that you can see the rendered slide and its source side-by-side.
 * TODO: metadata
 * TODO: themes
 * TODO: impress.js variant
+* TODO: jupyter notebooks
 * [asciiart](https://arnehilmann.github.io/markdeck/docs/asciiart/explain.html)
 
 _You can find the old documentation [here](DOCUMENTATION-OLD.md)._

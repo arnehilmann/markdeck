@@ -2,6 +2,55 @@
 
 Starting with v0.52, all major changes will be documented here.
 
+## v0.53.4
+
+### Features
+
+* When using markdeck `themes`: you can store your themes in a central folder 
+  `$HOME/.config/markdeck/themes` now,  allowing a consistent look-n-feel 
+  across multiple decks. Just keep in mind that your deck sources are not
+  self-contained any longer (meaning: other people cannot build the same deck
+  without that themes folder).
+
+### Bugfixes
+
+* `THEME_FOLDER` may be empty now.
+
+* `explain.html` works again for reveal decks with subslides.
+
+
+
+## v0.53.0
+
+### Features
+
+* only minimal set of services get started with `markdeck`: pandoc, web,
+  a2sketch, friends. All other services are optional now: pdf, standalone,
+  jupyter, jupyterlab.
+
+  If you want to render pdf, standalone html, or jupyter
+  notebooks, state them explicitely during start:
+  `./markdeck start pdf standalone jupyter jupyterlab`
+
+  _Note:_ This is a breaking change! Previous versions of `markdeck` started
+  all  known services, now you have to specify them explicitely.
+
+  _Note:_ That also means, that the images of those services are not fetched
+  automatically any more! Keep that in mind if you want to use these optional
+  services when going offline.
+
+  _Advice:_ Just to be sure, run 
+  `./markdeck start pdf standalone jupyter jupyterlab`
+  once to download all needed images (just in case).
+
+* files with suffix `.ipynb+md` get convert to jupyter notebooks, stored under
+  `nbs_generated`. You have to start the optional service `jupyter` with
+  `markdeck start jupyter`.
+
+* jupyter notebooks can be served from `nbs_generated` with the optional
+  services `jupyterlab`: `markdeck start jupyterlab`.
+
+
 
 ## v0.52.4
 
