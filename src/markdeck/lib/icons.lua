@@ -34,4 +34,15 @@ function Image(elem, attr)
         end
         return pandoc.RawInline("html", "<i class='" .. fi_classes .. "'>" .. content .. "</i>")
     end
+    if prefix == "gg" then
+        local gg_classes = url_decode(elem.src)
+        io.stderr:write("cssgg found: " .. gg_classes .. "\n");
+        local content = ""
+        for k, v in pairs(elem.caption) do
+            if v.text ~= nil then
+                content = content .. " " .. v.text
+            end
+        end
+        return pandoc.RawInline("html", "<i class='" .. gg_classes .. "'>" .. content .. "</i>")
+    end
 end
