@@ -23,4 +23,15 @@ function Image(elem, attr)
         end
         return pandoc.RawInline("html", "<i class='" .. fa_classes .. "'>" .. content .. "</i>")
     end
+    if prefix == "fi" then
+        local fi_classes = url_decode(elem.src)
+        io.stderr:write("foundation-icon found: " .. fi_classes .. "\n");
+        local content = ""
+        for k, v in pairs(elem.caption) do
+            if v.text ~= nil then
+                content = content .. " " .. v.text
+            end
+        end
+        return pandoc.RawInline("html", "<i class='" .. fi_classes .. "'>" .. content .. "</i>")
+    end
 end
