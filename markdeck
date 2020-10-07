@@ -3,7 +3,7 @@
 set -ue
 
 BUILD=deck
-VERSION=0.53.4
+VERSION=0.53.5
 PORT=${MARKDECK_PORT:-8080}
 FRIENDS_PORT=$((${PORT} + 1))
 export COMPOSE_PROJECT_NAME=$(basename $PWD)
@@ -61,7 +61,7 @@ createComposeFile () {
 version: "3.4"
 services:
   markdeck:
-    image: arne/markdeck-pandoc:0.53.4
+    image: arne/markdeck-pandoc:0.53.5
     user: "\$MARKDECK_USER"
     environment:
       - ONCE
@@ -118,7 +118,7 @@ services:
     ports:
       - ${FRIENDS_PORT}:8081
   jupyter:
-    image: arne/markdeck-jupyter:0.2
+    image: arne/markdeck-jupyter:0.4
     volumes:
       - type: bind
         source: ${PWD}
@@ -133,7 +133,7 @@ services:
     depends_on:
       - markdeck
   jupyterlab:
-    image: arne/markdeck-jupyter:0.2
+    image: arne/markdeck-jupyter:0.4
     volumes:
       - type: bind
         source: ${PWD}/nbs_generated
@@ -347,7 +347,6 @@ THEMES_FOLDER=$PWD/$BUILD/.empty
 for F in ${THEMES_PLACES[@]}; do
     if [ -d $F ]; then
         THEMES_FOLDER="$F"
-        echo "themes folder: $THEMES_FOLDER"
         break
     fi
 done
