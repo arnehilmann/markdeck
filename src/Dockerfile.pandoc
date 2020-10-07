@@ -43,9 +43,11 @@ RUN curl -L -o svgbob.tgz https://github.com/ivanceras/svgbob/archive/${SVGBOB_V
 RUN tar zxf svgbob.tgz
 RUN mv svgbob-* svgbob
 WORKDIR svgbob
-RUN cargo build
-RUN cargo test
-RUN cp target/debug/svgbob /
+RUN cargo build --release
+RUN cargo test --release
+RUN cp target/release/svgbob /svgbob.orig
+RUN echo "svgbob.orig \$@ | sed -n '/^<svg/,\$p'" > /svgbob
+RUN chmod a+rx /svgbob
 
 
 
@@ -126,6 +128,21 @@ RUN curl -L -o /asciinema-player.css "https://github.com/asciinema/asciinema-pla
 
 
 
+FROM ALPINE_BASE AS build-foundationicons
+WORKDIR /tmp
+RUN apk add curl
+RUN curl -L -O https://zurb.com/playground/uploads/upload/upload/288/foundation-icons.zip
+RUN unzip foundation-icons.zip
+RUN mv foundation-icons /
+
+
+
+FROM ALPINE_BASE AS build-cssgg
+RUN apk add curl
+RUN curl -L -o /all-gg.css https://css.gg/css
+
+
+
 FROM NODE_BASE AS production
 
 LABEL maintainer="arne@hilmann.de"
@@ -164,8 +181,10 @@ COPY --from=build-asciinemaplayer /asciinema-player.* markdeck/assets/3rdparty/
 # markdeck/assets/3rdparty/asciinema-player.js.map:
 COPY --from=build-plantuml /plantuml.jar /markdeck/lib/
 RUN ls -al /markdeck/assets/3rdparty
-COPY --from=build-svgbob /svgbob /usr/local/bin/
+COPY --from=build-svgbob /svgbob* /usr/local/bin/
 COPY --from=build-githubstyle /GitHub.html5 /markdeck/template-github.html
+COPY --from=build-foundationicons /foundation-icons /markdeck/assets/markdeck/css
+COPY --from=build-cssgg /all-gg.css /markdeck/assets/markdeck/css
 
 COPY markdeck/ /markdeck/
 
