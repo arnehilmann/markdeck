@@ -47,8 +47,9 @@ tag:	all
 
 
 push:	all
-	docker-compose push
-	for I in $(shell yq r docker-compose.yaml 'services.*.image'); do
+	for I in $(shell yq r docker-compose.yaml 'services.*.image' | uniq); do
+		echo pushing $$I
+		docker push $$I
 		docker tag $$I quay.io/$$I
 		docker push quay.io/$$I
 	done
