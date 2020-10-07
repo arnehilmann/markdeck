@@ -15,13 +15,14 @@ IMPRESSJS_VERSION=1.1.0
 MERMAID_VERSION=8.8.0
 SVGBOB_VERSION=0.5.0-alpha.6
 
-VERSION=0.53.4
+VERSION=0.53.5
 MOTTO='support jupyterlab'
 WEB_VERSION=0.2
 PDF_VERSION=0.10
 STANDALONE_VERSION=0.5
 FRIENDS_VERSION=0.5
 A2SKETCH_VERSION=0.13
+JUPYTER_VERSION=0.4
 
 
 all:	docker-compose.yaml develop.yaml ../markdeck images.built
@@ -63,6 +64,8 @@ docker-compose.yaml:	docker-compose.yaml.source Makefile
 	yq w -i docker-compose.yaml services.standalone.image "arne/markdeck-standalone:$(STANDALONE_VERSION)"
 	yq w -i docker-compose.yaml services.friends.image "arne/markdown-friends:$(FRIENDS_VERSION)"
 	yq w -i docker-compose.yaml services.a2sketch.image "arne/a2sketch:$(A2SKETCH_VERSION)"
+	yq w -i docker-compose.yaml services.jupyter.image "arne/markdeck-jupyter:$(JUPYTER_VERSION)"
+	yq w -i docker-compose.yaml services.jupyterlab.image "arne/markdeck-jupyter:$(JUPYTER_VERSION)"
 
 
 develop.yaml:	develop.yaml.source Makefile
@@ -73,6 +76,8 @@ develop.yaml:	develop.yaml.source Makefile
 	yq w -i develop.yaml services.standalone.image "arne/markdeck-standalone:$(STANDALONE_VERSION)"
 	yq w -i develop.yaml services.friends.image "arne/markdown-friends:$(FRIENDS_VERSION)"
 	yq w -i develop.yaml services.a2sketch.image "arne/a2sketch:$(A2SKETCH_VERSION)"
+	yq w -i develop.yaml services.jupyter.image "arne/markdeck-jupyter:$(JUPYTER_VERSION)"
+	yq w -i develop.yaml services.jupyterlab.image "arne/markdeck-jupyter:$(JUPYTER_VERSION)"
 
 
 ../markdeck:	docker-compose.yaml Makefile
@@ -89,6 +94,10 @@ develop.yaml:	develop.yaml.source Makefile
 	yq w -i dc.tmp services.friends.image "arne/markdown-friends:$(FRIENDS_VERSION)"
 	yq d -i dc.tmp services.friends.build
 	yq w -i dc.tmp services.a2sketch.image "arne/a2sketch:$(A2SKETCH_VERSION)"
+	yq d -i dc.tmp services.jupyter.build
+	yq w -i dc.tmp services.jupyter.image "arne/markdeck-jupyter:$(JUPYTER_VERSION)"
+	yq d -i dc.tmp services.jupyterlab.build
+	yq w -i dc.tmp services.jupyterlab.image "arne/markdeck-jupyter:$(JUPYTER_VERSION)"
 	sed -i.bak 's/______/\\$$MARKDECK_USER/' dc.tmp
 	sed -i.bak -e '/ EODCF/r dc.tmp' -e '/ EODCF/,/EODCF/{/EODCF/p;d;}' ../markdeck
 	rm -f dc.tmp* ../markdeck.bak
