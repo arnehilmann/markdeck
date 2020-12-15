@@ -1,7 +1,7 @@
-FROM alpine:3.11.6 AS ALPINE_BASE
-FROM node:alpine AS NODE_BASE
-FROM gradle:6.1 AS GRADLE_BASE
-FROM rust:1.46-alpine3.12 AS RUST_BASE
+FROM alpine:3.12.2 AS ALPINE_BASE
+FROM node:15.4.0-alpine3.12 AS NODE_BASE
+FROM gradle:6.7.1-jdk8-openj9 AS GRADLE_BASE
+FROM rust:1.48.0-alpine3.12 AS RUST_BASE
 
 
 FROM GRADLE_BASE AS build-ditaa
@@ -151,7 +151,7 @@ RUN apk add \
     make bash curl \
     graphviz inotify-tools rsync \
     libqrencode jq sassc zip openjdk8-jre \
-    python3 fontconfig lua5.3 \
+    python3 py3-pip fontconfig lua5.3 \
     pixman cairo pango libjpeg-turbo giflib \
     && rm -rf /var/cache/apk/*
 
