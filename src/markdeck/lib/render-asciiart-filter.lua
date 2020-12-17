@@ -162,8 +162,15 @@ function Render(elem, attr)
         if elem.classes[1] == format then
             local cmd, filetype = render_cmd(elem.text, elem.attributes or {})
             local mimetype = "image/" .. filetype
-            local fname = "rendered/" .. format .. "-" .. pandoc.sha1(cmd[1] .. table.concat(cmd[2], " ") .. cmd[3]) .. "." .. filetype
             local data = nil
+            local fname
+            local f
+            local i = 0
+            repeat
+                fname = "rendered/" .. format .. "-" .. pandoc.sha1(cmd[1] .. table.concat(cmd[2], " ") .. cmd[3] .. i) .. "." .. filetype
+                i = i + 1
+                -- io.stderr:write(i .. " fname " .. fname .. "\n")
+            until not images[fname]
 
             local f=io.open(fname,"rb")
             if f~=nil then
