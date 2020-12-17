@@ -3,9 +3,10 @@
 set -ue
 
 BUILD=deck
-VERSION=0.54.2
+VERSION=0.54.3
 PORT=${MARKDECK_PORT:-8080}
 FRIENDS_PORT=$((${PORT} + 1))
+USER=${USER:-$USERNAME}
 export COMPOSE_PROJECT_NAME=$(basename $PWD)
 
 calcUser() {
@@ -61,7 +62,7 @@ createComposeFile () {
 version: "3.4"
 services:
   markdeck:
-    image: arne/markdeck-pandoc:0.54.2
+    image: arne/markdeck-pandoc:0.54.3
     user: "\$MARKDECK_USER"
     environment:
       - ONCE
