@@ -28,6 +28,7 @@
 * pdf handout for jupyter notebook
 * .markdeckignore (incl README.md e.g.)
 
+* reduce pdf size, for example with ps2pdf -dPDFSETTINGS=/ebook
 
 # DONE
 
