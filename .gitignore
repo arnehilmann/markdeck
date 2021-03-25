@@ -12,3 +12,7 @@ src/develop.yaml
 deck/
 .uuid
 src/images.built
+tmp/target
+src/ve
+src/tmp
+target
