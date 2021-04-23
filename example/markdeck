@@ -5,6 +5,7 @@ set -ue
 BUILD=deck
 VERSION=0.52.4
 PORT=${MARKDECK_PORT:-8080}
+echo $PORT
 FRIENDS_PORT=$((${PORT} + 1))
 export COMPOSE_PROJECT_NAME=$(basename $PWD)
 

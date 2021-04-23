@@ -7,9 +7,8 @@ title: markdeck example
 # highlight_style: grayscale
 highlight_style: github-gist
 asciinema: true
-themes: example
-# themes: mono
-
+# themes: example
+themes: mono
 # slideNumber: true
 # autoSlide: 5000
 # controls: true
@@ -29,19 +28,17 @@ collaborative slide editing made easy
 ![](fab fa-css3)
 ![](fab fa-js-square)
 
-<small> arne@hilmann.de • 2020</small>
+<small> arne@hilmann.de • 2021</small>
 
 [![](fab fa-github)](https://github.com/arnehilmann/markdeck)
 [![](fab fa-docker)](https://hub.docker.com/r/arne/markdeck-pandoc/)
 [![](fas fa-envelope)](email:arne@hilmann.de)
 
-
 # features {rx=1 bgcss=sea-gradient .light-on-dark}
 
 converts markdown to complex</br> HTML5 slides
 
-should run on all *nix platforms,</br> windows<small>?</small> and MacOS
-
+should run on all \*nix platforms,</br> windows<small>?</small> and MacOS
 
 # features, contd. {rx=0 ry=1}
 
@@ -52,13 +49,11 @@ cool
 • collaborative
 • adaptable
 
-
 # cool looking {bg=white;assets/img/paperclip.gif .light-on-dark rx=-1 ry=0}
 
 leverages battle-proven</br>HTML5 presentation frameworks:
 
 revealjs • impressjs
-
 
 # graphical
 
@@ -73,7 +68,6 @@ font-awesome
 images as asciiart</br>
 <small>charts, diagrams, graphs, math, …</small>
 
-
 # easy {rx=0 ry=-1}
 
 completely text-based</br>
@@ -83,16 +77,14 @@ auto-reload
 ►
 fast feedback
 
-
 # robust
 
 modify and present your slides<br/> _without_ <br/>internet uplink
 
 [
-  ![](fas fa-wifi fa-stack-1x)
-  ![](fas fa-slash fa-stack-1x)
+![](fas fa-wifi fa-stack-1x)
+![](fas fa-slash fa-stack-1x)
 ]{.fa-stack .fa-1x}
-
 
 # collaborative {rx=1 ry=0}
 
@@ -100,11 +92,9 @@ presentation-as-code
 
 use your normal version control system
 
-
 # adaptable
 
 you can always fall back to</br>plain HTML/CSS
-
 
 # code, highlighted
 
@@ -116,7 +106,6 @@ public class Example {
     }
 }
 ```
-
 
 # asciiart (ditaa) {.ltr rx=0 ry=1}
 
@@ -149,7 +138,9 @@ public class Example {
 | +----------+   +----------+ |
 +-----------------------------+
 ```
+
 ►
+
 ```{.render_ditaa args="--transparent --scale 1 --font 'Raleway'"}
 
 +-----------------------------+
@@ -182,7 +173,6 @@ public class Example {
 
 ```
 
-
 # asciiart (a2s) {.ltr}
 
 ```{.nohighlight style="width: 40%;"}
@@ -200,7 +190,9 @@ public class Example {
 [0]: {"fill": "#933"}
 [1]: {"fill": "#bbb","a2s:delref":true,"a2s:type":"storage"}
 ```
+
 ►
+
 ```render_a2s
 #--------------------.
 |[0]                 |
@@ -216,7 +208,6 @@ public class Example {
 [0]: {"fill": "#933","a2s:delref":true}
 [1]: {"fill": "#bbb","a2s:delref":true,"a2s:type":"storage"}
 ```
-
 
 # asciiart (sketchy) {.ltr}
 
@@ -240,7 +231,9 @@ public class Example {
 [0]: {"fill":"#fff","fillStyle":"solid","a2s:delref":true}
 [1]: {"fill":"#eee","fillStyle":"solid","a2s:delref":true}
 ```
+
 ►
+
 ```render_a2sketch
 
 
@@ -264,7 +257,6 @@ public class Example {
 [1]: {"fill":"#eee","fillStyle":"solid","a2s:delref":true}
 ```
 
-
 # asciiart (svgbob) {.ltr rx=-1 ry=0}
 
 ```{.nohighlight style="width: 40%; height: 100%;"}
@@ -278,7 +270,9 @@ public class Example {
       /                \
   v1 *------------------* v2
 ```
+
 ►
+
 ```{.render_svgbob args="--scale 10 --font-family Raleway --font-size 24"}
 
         P *
@@ -292,21 +286,19 @@ public class Example {
   v1 *------------------* v2
 ```
 
-
-
 # asciiart (mermaid) {.ltr}
 
 ```{.nohighlight style="width: 40%; height: 100%; font-size: 40%;"}
 graph LR
    a --> b & c--> d
 ```
+
 ►
+
 ```{.render_mermaid args="-w 400" style="font-size: 100%;"}
 graph LR
    a --> b & c--> d
 ```
-
-
 
 # asciiart (plantuml) {.ltr}
 
@@ -317,7 +309,9 @@ Alice->Bob : oh, you again...
 Bob->Alice : ??
 @enduml
 ```
+
 ►
+
 ```{.render_plantuml args="-Sbackgroundcolor=transparent -SdefaultFontSize=24 -SdefaultFontName=Raleway"}
 @startuml
 Bob->Alice : hello
@@ -325,7 +319,6 @@ Alice->Bob : oh, you again...
 Bob->Alice : ??
 @enduml
 ```
-
 
 # asciiart (graphviz) {.ltr}
 
@@ -339,7 +332,9 @@ digraph G {
     b -> d;
 }
 ```
+
 ►
+
 ```{.render_dot args="-Nfontname=Raleway"}
 digraph G {
     bgcolor=transparent;
@@ -372,7 +367,9 @@ digraph G {
     }
 }
 ```
+
 ►
+
 ```render_vegalite
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v2.0.json",
@@ -405,12 +402,12 @@ digraph G {
 }
 ```
 
-
 # math equations
 
 ```{.nohighlight style="width: 100%; font-size: 70%;"}
 $a^2 + b^2 = c^2$
 ```
+
 $a^2 + b^2 = c^2$
 
 &nbsp;
@@ -420,21 +417,23 @@ $$e = \mathop
     {\lim }\limits_{n \to \infty }
     \left( {1 + \frac{1}{n}} \right)^n$$
 ```
-$$e = \mathop
-    {\lim }\limits_{n \to \infty }
-    \left( {1 + \frac{1}{n}} \right)^n$$
 
+$$
+e = \mathop
+    {\lim }\limits_{n \to \infty }
+    \left( {1 + \frac{1}{n}} \right)^n
+$$
 
 # terminal session (asciinema) {rx=0 ry=-1 rz=0 bg=#121314}
 
 <asciinema-player src="./assets/test.json"
-    poster="npt:0:21"
-    idle-time-limit=1
-    speed=2
-    rows=18
-    font-size="medium"
-></asciinema-player>
+poster="npt:0:21"
+idle-time-limit=1
+speed=2
+rows=18
+font-size="medium"
 
+> </asciinema-player>
 
 # Thank You!
 
@@ -467,19 +466,25 @@ $$e = \mathop
 
 🙃
 
-
 # {bg=White;themes/example/img/wordcloud.svg .flush-right rx=1 ry=0}
 
 [`https://github.com/arnehilmann/markdeck`{.render_qr}](https://github.com/arnehilmann/markdeck)
 
+#
+
+!INCLUDECODE "markdeck" ({.bash .fragment .hl-code ln-start-from=15}), 1:5
+
+!INCLUDECODE "markdeck" ({.bash .fragment .hl-code ln-start-from=25}), 1
+
+!INCLUDECODE "markdeck" ({.bash .fragment .hl-code ln-start-from=35}), 1:
+
+!INCLUDECODE "markdeck" ({.bash .fragment .hl-code ln-start-from=35}), :4
 
 # markdeck {.skip skipon="reveal" scale=5 x=1.8}
-
 
 # {.skip skipon="reveal" scale=1 .flush-right rx=0 ry=.25}
 
 impress.js-variant
-
 
 # markdeck {x=3 y=-2.5 z=3000 rotate-y=60 scale=2 skipon="reveal"}
 
@@ -493,9 +498,7 @@ collaborative slide editing made easy
 
 ![](assets/img/buddy-egyptian.svg)
 
-
 # {x=0 y=0 scale=2 skipon="reveal" id=overview}
-
 
 # markdeck {skipon="impress" bgcss=sea-gradient .light-on-dark}
 
