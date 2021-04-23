@@ -7,18 +7,17 @@ MAKEFLAGS += --no-builtin-rules
 
 .PHONY: all tag push check-versions clean tabularasa
 
-PANDOC_VERSION=2.9.2.1
+PANDOC_VERSION=2.13
 REVEALJS_VERSION=4.1.0
 ASCIINEMAPLAYER_VERSION=v2.6.1
-JQUERY_VERSION=3.5.1.slim.min
+JQUERY_VERSION=3.6.0.slim.min
 IMPRESSJS_VERSION=1.1.0
-MERMAID_VERSION=v8.8.4
+MERMAID_VERSION=v8.9.2
 SVGBOB_VERSION=0.5.0-alpha.6
 
-VERSION=0.54.3
-MOTTO=simple version update
-WEB_VERSION=0.2
-PDF_VERSION=0.10
+VERSION=0.60.0
+MOTTO=rusty version
+PDF_VERSION=0.11
 STANDALONE_VERSION=0.5
 FRIENDS_VERSION=0.5
 A2SKETCH_VERSION=0.15
@@ -29,7 +28,8 @@ all:	docker-compose.yaml develop.yaml ../markdeck images.built
 
 
 images.built: Makefile Dockerfile.* $(shell find markdeck/) markdeck/versions
-	docker-compose build \
+	docker compose build \
+		--no-rm --progress plain \
 		--build-arg MERMAID_VERSION=$(MERMAID_VERSION) \
 		--build-arg PANDOC_VERSION=$(PANDOC_VERSION) \
 		--build-arg JQUERY_VERSION=$(JQUERY_VERSION) \
@@ -57,48 +57,45 @@ push:	all
 
 docker-compose.yaml:	docker-compose.yaml.source Makefile
 	cp docker-compose.yaml.source docker-compose.yaml
-	yq w -i docker-compose.yaml services.markdeck.image "arne/markdeck-pandoc:$(VERSION)"
-	yq w -i docker-compose.yaml services.markdeck.build.args.version "$(VERSION)"
-	yq w -i docker-compose.yaml services.markdeck.build.args.motto "$(MOTTO)"
-	yq w -i docker-compose.yaml services.web.image "arne/markdeck-liveserver:$(WEB_VERSION)"
-	yq w -i docker-compose.yaml services.pdf.image "arne/markdeck-decktape:$(PDF_VERSION)"
-	yq w -i docker-compose.yaml services.standalone.image "arne/markdeck-standalone:$(STANDALONE_VERSION)"
-	yq w -i docker-compose.yaml services.friends.image "arne/markdown-friends:$(FRIENDS_VERSION)"
-	yq w -i docker-compose.yaml services.a2sketch.image "arne/a2sketch:$(A2SKETCH_VERSION)"
-	yq w -i docker-compose.yaml services.jupyter.image "arne/markdeck-jupyter:$(JUPYTER_VERSION)"
-	yq w -i docker-compose.yaml services.jupyterlab.image "arne/markdeck-jupyter:$(JUPYTER_VERSION)"
+	yq eval '.services.markdeck.image = "arne/markdeck-pandoc:$(VERSION)"' -i docker-compose.yaml
+	yq eval '.services.markdeck.build.args.version = "$(VERSION)"' -i docker-compose.yaml
+	yq eval '.services.markdeck.build.args.motto = "$(MOTTO)"' -i docker-compose.yaml
+	yq eval '.services.pdf.image = "arne/markdeck-decktape:$(PDF_VERSION)"' -i docker-compose.yaml
+	yq eval '.services.standalone.image = "arne/markdeck-standalone:$(STANDALONE_VERSION)"' -i docker-compose.yaml
+	yq eval '.services.friends.image = "arne/markdown-friends:$(FRIENDS_VERSION)"' -i docker-compose.yaml
+	yq eval '.services.a2sketch.image = "arne/a2sketch:$(A2SKETCH_VERSION)"' -i docker-compose.yaml
+	yq eval '.services.jupyter.image = "arne/markdeck-jupyter:$(JUPYTER_VERSION)"' -i docker-compose.yaml
+	yq eval '.services.jupyterlab.image = "arne/markdeck-jupyter:$(JUPYTER_VERSION)"' -i docker-compose.yaml
 
 
 develop.yaml:	develop.yaml.source Makefile
 	cp develop.yaml.source develop.yaml
-	yq w -i develop.yaml services.markdeck.image "arne/markdeck-pandoc:$(VERSION)"
-	yq w -i develop.yaml services.web.image "arne/markdeck-liveserver:$(WEB_VERSION)"
-	yq w -i develop.yaml services.pdf.image "arne/markdeck-decktape:$(PDF_VERSION)"
-	yq w -i develop.yaml services.standalone.image "arne/markdeck-standalone:$(STANDALONE_VERSION)"
-	yq w -i develop.yaml services.friends.image "arne/markdown-friends:$(FRIENDS_VERSION)"
-	yq w -i develop.yaml services.a2sketch.image "arne/a2sketch:$(A2SKETCH_VERSION)"
-	yq w -i develop.yaml services.jupyter.image "arne/markdeck-jupyter:$(JUPYTER_VERSION)"
-	yq w -i develop.yaml services.jupyterlab.image "arne/markdeck-jupyter:$(JUPYTER_VERSION)"
+	yq eval '.services.markdeck.image = "arne/markdeck-pandoc:$(VERSION)"' -i docker-compose.yaml
+	yq eval '.services.pdf.image = "arne/markdeck-decktape:$(PDF_VERSION)"' -i docker-compose.yaml
+	yq eval '.services.standalone.image = "arne/markdeck-standalone:$(STANDALONE_VERSION)"' -i docker-compose.yaml
+	yq eval '.services.friends.image = "arne/markdown-friends:$(FRIENDS_VERSION)"' -i docker-compose.yaml
+	yq eval '.services.a2sketch.image = "arne/a2sketch:$(A2SKETCH_VERSION)"' -i docker-compose.yaml
+	yq eval '.services.jupyter.image = "arne/markdeck-jupyter:$(JUPYTER_VERSION)"' -i docker-compose.yaml
+	yq eval '.services.jupyterlab.image = "arne/markdeck-jupyter:$(JUPYTER_VERSION)"' -i docker-compose.yaml
 
 
 ../markdeck:	docker-compose.yaml Makefile
 	sed -n '/EODCF/,/EODCF/{/EODCF/d;s/..MARKDECK_USER/______/;p;}' ../markdeck > dc.tmp
-	yq w -i dc.tmp services.markdeck.image "arne/markdeck-pandoc:$(VERSION)"
-	yq w -i dc.tmp services.markdeck.build.args.version "$(VERSION)"
-	yq d -i dc.tmp services.markdeck.build
-	yq w -i dc.tmp services.web.image "arne/markdeck-liveserver:$(WEB_VERSION)"
-	yq d -i dc.tmp services.web.build
-	yq w -i dc.tmp services.pdf.image "arne/markdeck-decktape:$(PDF_VERSION)"
-	yq d -i dc.tmp services.pdf.build
-	yq w -i dc.tmp services.standalone.image "arne/markdeck-standalone:$(STANDALONE_VERSION)"
-	yq d -i dc.tmp services.standalone.build
-	yq w -i dc.tmp services.friends.image "arne/markdown-friends:$(FRIENDS_VERSION)"
-	yq d -i dc.tmp services.friends.build
-	yq w -i dc.tmp services.a2sketch.image "arne/a2sketch:$(A2SKETCH_VERSION)"
-	yq d -i dc.tmp services.jupyter.build
-	yq w -i dc.tmp services.jupyter.image "arne/markdeck-jupyter:$(JUPYTER_VERSION)"
-	yq d -i dc.tmp services.jupyterlab.build
-	yq w -i dc.tmp services.jupyterlab.image "arne/markdeck-jupyter:$(JUPYTER_VERSION)"
+	yq eval '.services.markdeck.image = "arne/markdeck-pandoc:$(VERSION)"' -i dc.tmp
+	yq eval '.services.markdeck.build.args.version = "$(VERSION)"' -i dc.tmp
+	yq eval 'del(.services.markdeck.build)' -i dc.tmp
+	yq eval 'del(.services.web.build)' -i dc.tmp
+	yq eval '.services.pdf.image = "arne/markdeck-decktape:$(PDF_VERSION)"' -i dc.tmp
+	yq eval 'del(.services.pdf.build)' -i dc.tmp
+	yq eval '.services.standalone.image = "arne/markdeck-standalone:$(STANDALONE_VERSION)"' -i dc.tmp
+	yq eval 'del(.services.standalone.build)' -i dc.tmp
+	yq eval '.services.friends.image = "arne/markdown-friends:$(FRIENDS_VERSION)"' -i dc.tmp
+	yq eval 'del(.services.friends.build)' -i dc.tmp
+	yq eval '.services.a2sketch.image = "arne/a2sketch:$(A2SKETCH_VERSION)"' -i dc.tmp
+	yq eval 'del(.services.jupyter.build)' -i dc.tmp
+	yq eval '.services.jupyter.image = "arne/markdeck-jupyter:$(JUPYTER_VERSION)"' -i dc.tmp
+	yq eval 'del(.services.jupyterlab.build)' -i dc.tmp
+	yq eval '.services.jupyterlab.image = "arne/markdeck-jupyter:$(JUPYTER_VERSION)"' -i dc.tmp
 	sed -i.bak 's/______/\\$$MARKDECK_USER/' dc.tmp
 	sed -i.bak -e '/ EODCF/r dc.tmp' -e '/ EODCF/,/EODCF/{/EODCF/p;d;}' ../markdeck
 	rm -f dc.tmp* ../markdeck.bak

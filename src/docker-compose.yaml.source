@@ -2,13 +2,15 @@ version: "3.4"
 services:
   markdeck:
     build:
-      context: .
+      context: ..
       dockerfile: Dockerfile.pandoc
       args:
         version: 0.36
         motto: the next version
       target: development
     image: arne/markdeck-pandoc:0.36
+    ports:
+    - 8080:8080
     volumes:
     - type: bind
       source: ./
@@ -17,19 +19,6 @@ services:
     - type: bind
       source: ./deck
       target: /target
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile.liveserver
-    image: arne/markdeck-liveserver:0.2
-    ports:
-    - 8080:8080
-    volumes:
-    - type: bind
-      source: ./deck
-      target: /target
-    depends_on:
-    - markdeck
   pdf:
     build:
       context: .
@@ -42,7 +31,6 @@ services:
     shm_size: 1G
     depends_on:
     - markdeck
-    - web
   standalone:
     build:
       context: .
@@ -53,7 +41,7 @@ services:
       source: ./deck
       target: /target
     depends_on:
-    - web
+    - markdeck
   friends:
     image: arne/markdown-friends:0.4
     ports:

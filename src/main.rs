@@ -1,45 +1,123 @@
+#[macro_use]
+extern crate clap;
+
 use std::fs::{self, OpenOptions};
 use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::process::Command;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::mpsc::channel;
 use std::sync::mpsc::Sender;
+use std::sync::Arc;
+use std::time::{Duration, Instant};
+use std::env;
 
+use log::{debug, info, warn};
 use glob::glob;
 use rust_embed::RustEmbed;
 use rusync::{sync, Syncer};
 use serde_json::{from_str, Map, Value};
-
 use anyhow::Error;
 use notify::{RecommendedWatcher, RecursiveMode, Watcher};
-use std::sync::mpsc::channel;
-use std::time::Duration;
 
 use live_server::Trigger;
-use std::sync::atomic::{AtomicBool, Ordering};
-use std::sync::Arc;
 
 // TODO sanity check
 // TODO check for following tools:
 // TODO brew install pandoc
 // TODO brew install qrencode
 // TODO brew install java
-// TODO brew install gradle
-// TODO brew install curl
+// TODO ... mathjax-pandoc-filter (incl npm)
+// TODO ... svgbob
 // TODO ... graphviz
 // TODO ... vegalite
 // TODO docker run -d -p 22753:22753 arne/a2sketch:0.15
 
 mod live_server;
+mod sass;
+mod markdown_pp;
 
 #[derive(RustEmbed)]
-#[folder = "src/markdeck"]
+#[folder = "src/docroot/main"]
 struct Assets;
 
+fn print_versions() {
+    let result = Command::new("pandoc")
+        .arg("--version")
+        .output()
+        .expect("failed to run command");
+    match result.status.code() {
+        Some(code) => {
+            if code != 0 {
+                warn!("exited with status code: {}", code)
+            }
+        }
+        None => warn!("Process terminated by signal"),
+    }
+    if let Some(version) = String::from_utf8_lossy(&result.stdout).lines().next() {
+        info!("pandoc: {}", version);
+    } else {
+        warn!("pandoc: cannot retrieve version! Is it installed?")
+    }
+}
+
+arg_enum! {
+    #[derive(Debug)]
+    enum WatcherType {
+        Recommended,
+        CompareReference,
+    }
+}
+
 fn main() -> Result<(), Error> {
-    let source_path = Path::new(".");
-    let target_path: &'static Path = Path::new("argh");
+    let matches = clap_app!(markdeck =>
+        (version: "0.60.0")
+        (author: "Arne Hilmann <arne.hilmann@gmail.com>")
+        (about: "Does awesome things")
+        (@arg port: --port +takes_value default_value("8080") "port of web server")
+        (@arg source: --source +takes_value default_value(".") "path of source folder")
+        (@arg target: --target +takes_value default_value("deck") "path of target folder")
+        (@arg watcher: --watcher +takes_value +case_insensitive possible_values(&WatcherType::variants()) "watcher, detects source file changes")
+        (@arg watch_delay: --watch_delay +takes_value default_value("500") "delay between watch calls, in millis")
+        (@subcommand start =>
+            (about: "starts specific components")
+        )
+        (@subcommand dev =>
+            (about: "develop some features")
+            
+        )
+    )
+    .get_matches();
+
+    match env::var("RUST_LOG") {
+        Ok(_) => {},
+        Err(_) => env::set_var(
+            "RUST_LOG",
+            "actix_server=info,actix_web=warn,live_server=debug,markdeck=debug",
+        )
+    }
+    env_logger::init();
+
+    print_versions();
+
+    // let source_path = Path::new(".");
+    let source_path = matches.value_of("source").unwrap(); // TODO unwrap
+    let source_path = PathBuf::from(source_path);
+    let target_path = matches.value_of("target").unwrap(); // TODO unwrap
+    let target_path = PathBuf::from(target_path);
+    let port: u32 = matches.value_of("port").unwrap().parse::<u32>().unwrap(); // TODO unwrap
+    let watcher_type =
+        value_t!(matches.value_of("watcher"), WatcherType).unwrap_or(WatcherType::Recommended);
+    let watch_delay = value_t_or_exit!(matches.value_of("watch_delay"), u64);
 
     let sources = fetch_sources(&source_path);
+
+    if let Some(_matches) = matches.subcommand_matches("dev") {
+        markdown_pp::preprocess_file(PathBuf::from("slides.md"))?;
+        std::process::exit(0);
+    }
+
+    // render(&source_path, &sources, &target_path)?;
 
     let running = Arc::new(AtomicBool::new(true));
     let running_watcher = running.clone();
@@ -47,36 +125,108 @@ fn main() -> Result<(), Error> {
     let (tx, rx) = channel();
     let tx2 = tx.clone();
 
-    let live_server = std::thread::spawn(move || live_server::start_live_server(&target_path, rx));
-    let watcher = std::thread::spawn(move || {
-        watch(&source_path, &sources, &target_path, running_watcher, tx)
+    let target_path_for_live_server = target_path.clone();
+    let live_server = std::thread::spawn(move || {
+        live_server::start_live_server(target_path_for_live_server, port, rx)
+    });
+    let watcher = std::thread::spawn(move || match watcher_type {
+        WatcherType::CompareReference => compare_watch(
+            &source_path,
+            &sources,
+            &target_path,
+            "index.html",
+            watch_delay,
+            running_watcher,
+            tx,
+        ),
+        _ => watch(
+            &source_path,
+            &sources,
+            &target_path,
+            watch_delay,
+            running_watcher,
+            tx,
+        ),
     });
 
     ctrlc::set_handler(move || {
-        println!("\nctrl-c received");
+        info!("\nctrl-c received");
         running.store(false, Ordering::Relaxed);
-        tx2.send(Trigger::Shutdown).unwrap();
-        println!("all stopped");
+        tx2.send(Trigger::Shutdown).unwrap(); // TODO unwrap
+        info!("stopping all threads");
     })
     .expect("Error setting Ctrl-C handler");
 
-    live_server.join().unwrap()?;
-    watcher.join().unwrap()?;
+    live_server.join().unwrap()?; // TODO unwrap
+    watcher.join().unwrap()?; // TODO unwrap
 
     Ok(())
 }
 
-fn watch(
-    source_path: &Path,
+fn compare_watch(
+    source_path: &PathBuf,
     sources: &[PathBuf],
     target_path: &Path,
+    target_file: &str,
+    watch_delay: u64,
     running: Arc<AtomicBool>,
     sender: Sender<Trigger>,
 ) -> Result<(), Error> {
-    render(&source_path, &sources, &target_path)?;
+    info!("starting watcher");
+
+    let mut reference = PathBuf::from(target_path);
+    reference.push(target_file);
+
+    let mut files_count;
+    let mut last_files_count = 0;
+    let mut rerender;
+
+    while running.load(Ordering::Relaxed) {
+        let r_m = reference.metadata()?.modified()?;
+        rerender = false;
+        files_count = 0;
+
+        for s in interesting_files(&source_path) {
+            files_count += 1;
+            let s_m = s.metadata()?.modified()?;
+            if s_m > r_m {
+                info!("change detected in {}, rerendering!", s.display());
+                rerender = true;
+                break;
+            }
+        }
+        if files_count != last_files_count {
+            info!("number of source files changed, rerendering!");
+            rerender = true;
+        }
+        if rerender {
+            sender.send(Trigger::StartRerendering)?;
+            match render(&source_path, &sources, &target_path) {
+                Ok(_) => sender.send(Trigger::Reload)?,
+                Err(e) => warn!("{:?}", e),
+            }
+        }
+
+        last_files_count = files_count;
+        std::thread::sleep(Duration::from_millis(watch_delay));
+    }
+
+    info!("shutting down watcher");
+    Ok(())
+}
+
+fn watch(
+    source_path: &PathBuf,
+    sources: &[PathBuf],
+    target_path: &Path,
+    watch_delay: u64,
+    running: Arc<AtomicBool>,
+    sender: Sender<Trigger>,
+) -> Result<(), Error> {
+    info!("starting watcher");
     let (tx, rx) = channel();
-    let mut watcher: RecommendedWatcher = Watcher::new(tx, Duration::from_secs(1))?;
-    watcher.watch("assets/", RecursiveMode::Recursive)?;
+    let mut watcher: RecommendedWatcher = Watcher::new(tx, Duration::from_millis(watch_delay))?;
+    watcher.watch("assets/", RecursiveMode::Recursive)?;    // TODO regard source_path
     // TODO handle changing sources
     for s in sources {
         watcher.watch(s, RecursiveMode::NonRecursive)?;
@@ -84,19 +234,9 @@ fn watch(
     while running.load(Ordering::Relaxed) {
         match rx.recv_timeout(Duration::from_millis(500)) {
             Ok(notify::DebouncedEvent::Write(_)) => {
-                let content = Assets::get("assets/markdeck/css/when-rerendering.css")
-                    .expect("cannot convert data to utf8");
-                fs::write(
-                    format!("{}/assets/css/rerendering.css", target_path.display()),
-                    content.as_ref(),
-                )?;
-                sender.send(Trigger::RefreshCss)?;
+                sender.send(Trigger::StartRerendering)?;
                 match render(&source_path, &sources, &target_path) {
                     Ok(_) => {
-                        fs::write(
-                            format!("{}/assets/css/rerendering.css", target_path.display()),
-                            "",
-                        )?;
                         sender.send(Trigger::Reload)?;
                     }
                     Err(e) => println!("{:?}", e),
@@ -106,14 +246,15 @@ fn watch(
             Err(_) => {}
         }
     }
-    println!("shutting down watcher");
+    info!("shutting down watcher");
 
     Ok(())
 }
 
-fn render(source_path: &Path, sources: &[PathBuf], target_path: &Path) -> Result<(), Error> {
+fn render(source_path: &PathBuf, sources: &[PathBuf], target_path: &Path) -> Result<(), Error> {
+    let start = Instant::now();
     for source in sources.iter() {
-        println!("sources: {}", source.display());
+        info!("sources: {}", source.display());
     }
 
     sync(&source_path, "assets", &target_path)?;
@@ -124,40 +265,44 @@ fn render(source_path: &Path, sources: &[PathBuf], target_path: &Path) -> Result
     sync_static("explain.html", &target_path)?;
     sync_static("template-", &target_path)?;
 
-    let metadata = fetch_metadata(&target_path)?;
-    println!(
-        "variant: {}",
-        metadata["variant"]
-            .as_str()
-            .expect("cannot access variant as str")
-    );
+    render_deck(&source_path, &sources, &target_path)?;
 
-    render_deck(&source_path, &sources, &target_path, &metadata)?;
-
-    // devserver_lib::run(&"localhost", 8080, "", /*Auto-reload:*/ true ); // Runs forever serving the current folder on http://localhost:8080
+    let duration = start.elapsed();
+    info!("rendering took {} msecs", duration.as_millis());
 
     Ok(())
 }
 
+fn interesting_files(source_path: &PathBuf) -> Vec<PathBuf> {
+    glob(&format!("{}/*[a-z]*.md", source_path.display()))
+        .expect("Failed to read md glob pattern")
+        .chain(
+            glob(&format!("{}/assets/**/*", source_path.display()))
+                .expect("Failed to read assets glob pattern"),
+        )
+        .filter_map(|f| f.ok())
+        .collect()
+}
+
 fn fetch_sources(source_path: &Path) -> Vec<PathBuf> {
     glob(&format!("{}/*[a-z]*.md", source_path.display()))
-        .expect("Failed to read glob pattern")
-        .map(|x| x.expect("mmh"))
-        .collect::<Vec<PathBuf>>()
+        .expect("Failed to read md glob pattern")
+        .filter_map(|f| f.ok())
+        .collect()
 }
 
 /*
 if pandoc \
           -f markdown+yaml_metadata_block \
           -t html \
-    ${table_of_contents:+ --toc} \
+        ${table_of_contents:+ --toc} \
           --no-highlight \
           --wrap=preserve \
           --standalone \
           ${template:+ --template=$template} \
           --section-divs \
     --filter mathjax-pandoc-filter \
-    $([[ -e $SHORTCUT_FILTER ]] && echo --lua-filter $SHORTCUT_FILTER) \
+        $([[ -e $SHORTCUT_FILTER ]] && echo --lua-filter $SHORTCUT_FILTER) \
           --lua-filter /markdeck/lib/skip-slide-filter.lua \
           --lua-filter /markdeck/lib/render-asciiart-filter.lua \
           --lua-filter /markdeck/lib/render-emojis-filter.lua \
@@ -169,56 +314,75 @@ if pandoc \
           /markdeck/defaults.yaml /target/slides.combined.md.txt 2>&1 | tee /tmp/pandoc.output;
     */
 
-fn sassc(source_path: &Path, scss_file: &str, target_path: &Path) -> anyhow::Result<()> {
-    let sass = grass::from_path(
-        format!("{}/{}", source_path.display(), scss_file).as_ref(),
-        &grass::Options::default(),
-    );
-    // TODO calc suffix: scss -> css
-    if let Ok(sass) = sass {
-        fs::write(format!("{}/{}", target_path.display(), scss_file), sass)?;
-    }
-    Ok(())
-}
-
 fn render_deck(
     source_path: &Path,
     source_files: &[PathBuf],
     target_path: &Path,
-    metadata: &Map<String, Value>,
 ) -> Result<(), Error> {
+    info!("render_deck");
     let mut slides_combined = PathBuf::from(target_path);
     slides_combined.push("slides.combined.md.txt");
     if slides_combined.exists() {
         fs::remove_file(&slides_combined)?;
     }
+    info!("combining source files");
     let mut slides_combined = OpenOptions::new()
         .append(true)
         .create(true)
         .open(slides_combined)?;
 
     for source_file in source_files.iter() {
+        info!("source file: {}", source_file.display());
         let contents = fs::read(&source_file)?;
+        let contents = markdown_pp::preprocess(contents)?;
         slides_combined.write_all(&contents)?;
         slides_combined.write_all(b"\n\n")?;
     }
-    let theme = metadata["themes"].as_str().unwrap();
-    let sass = grass::from_path(
-        format!("{}/themes/{}/css/slides.scss", source_path.display(), theme).as_ref(),
-        &grass::Options::default(),
+
+    let metadata = fetch_metadata(&target_path)?;
+    info!(
+        "variant: {}",
+        metadata["variant"]
+            .as_str()
+            .expect("cannot access variant as str")
     );
-    if let Ok(sass) = sass {
-        fs::write(
-            format!("{}/themes/{}/css/slides.css", target_path.display(), theme),
-            sass,
+
+    let variant = metadata["variant"].as_str().unwrap_or("");
+    let toc = metadata["table_of_contents"].as_bool().unwrap_or(false);
+    let themes = metadata["themes"].as_str().unwrap_or("");
+
+    info!("compiling scss -> css");
+    sass::sassc(source_path, "assets/css/slides.scss", target_path)?;
+    sass::sassc(
+        source_path,
+        &format!("assets/css/slides.{}.scss", variant),
+        target_path,
+    )?;
+    for theme in themes.split(&[' ', ','][..]) {
+        sass::sassc(
+            source_path,
+            &format!("themes/{}/css/slides.scss", theme),
+            target_path,
+        )?;
+        sass::sassc(
+            source_path,
+            &format!("themes/{}/css/slides.{}.scss", theme, variant),
+            target_path,
         )?;
     }
+
+    info!("rendering slides now");
+
+    let mut template_path = std::env::current_dir()?;
+    template_path.push(target_path);
+    template_path.push(".markdeck");
+    template_path.push(format!("template-{}.html", variant));
 
     let mut render_cmd = Command::new("pandoc");
     render_cmd
         .current_dir(&target_path)
         .arg("-f")
-        .arg("markdown+yaml_metadata_block")
+        .arg("markdown+yaml_metadata_block+tex_math_dollars")
         .arg("-t")
         .arg("html")
         .arg("--standalone")
@@ -239,48 +403,63 @@ fn render_deck(
         .arg(".markdeck/inline-svg.lua")
         .arg("--lua-filter")
         .arg(".markdeck/icons.lua")
-        .arg(format!(
-            "--template={}/{}/template-{}.html",
-            std::env::current_dir()?.display(),
-            target_path.display(),
-            metadata["variant"]
-                .as_str()
-                .expect("cannot access variant in metadata")
-        ))
+        .arg("--mathjax")
+        .arg(format!("--template={}", template_path.display()));
+
+    let shortcut_filter = format!(".markdeck/{}-shortcut-filter.lua", variant);
+    if Path::new(&shortcut_filter).exists() {
+        render_cmd.arg("--lua-filter").arg(shortcut_filter);
+    }
+
+    if toc {
+        render_cmd.arg("--toc");
+    }
+
+    render_cmd
         .arg(".markdeck/defaults.yaml")
         .arg("slides.combined.md.txt");
-    println!("{:#?}", render_cmd);
+    debug!("render cmd: {:#?}", render_cmd);
     let output = render_cmd.output().expect("failed to run pandoc");
-    println!("{}", output.status);
-
-    // std::io::stdout().write_all(&output.stdout).unwrap();
-    // std::io::stderr().write_all(&output.stderr).unwrap();
+    if output.status.success() {
+        for line in String::from_utf8(output.stdout)?.lines() {
+            debug!("{}", line);
+        }
+        for line in String::from_utf8(output.stderr)?.lines() {
+            debug!("{}", line);
+        }
+        info!("slides rendered successfully");
+    } else {
+        for line in String::from_utf8(output.stdout)?.lines() {
+            info!("{}", line);
+        }
+        for line in String::from_utf8(output.stderr)?.lines() {
+            warn!("{}", line);
+        }
+        warn!("an error occured! {:?}", output.status.code());
+    }
 
     Ok(())
 }
 
 fn fetch_metadata(target_path: &Path) -> Result<Map<String, Value>, Error> {
-    // TODO sourcepath, sources
+    info!("fetch_metadata");
+
     let mut metadata_cmd = Command::new("pandoc");
-    metadata_cmd.arg(format!(
-        "--template={}/{}/.markdeck/metadata.template",
-        std::env::current_dir()?.display(),
-        &target_path.display()
-    ));
-    metadata_cmd.arg(format!(
-        "{}/.markdeck/defaults.yaml",
-        &target_path.display()
-    ));
-    metadata_cmd.arg("slides.md");
+    metadata_cmd
+        .current_dir(&target_path)
+        .arg("--template=.markdeck/metadata.template")
+        .arg(".markdeck/defaults.yaml")
+        .arg("slides.combined.md.txt");
+    debug!("metadata cmd: {:#?}", metadata_cmd);
     let metadata = metadata_cmd.output().expect("failed to run pandoc");
-    println!("raw: {:#?}", metadata);
     let metadata: Value = from_str(std::str::from_utf8(&metadata.stdout)?)?;
-    println!("json: {:#?}", metadata);
     let metadata: Map<String, Value> = metadata
         .as_object()
         .expect("cannot convert metadata")
         .to_owned();
-    println!("map: {:#?}", metadata);
+    for pair in metadata.iter() {
+        debug!("metadata: {} -> {}", pair.0, pair.1);
+    }
     Ok(metadata)
 }
 
@@ -307,7 +486,11 @@ fn sync_static(source_path: &str, target_root: &Path) -> Result<(), Error> {
     Ok(())
 }
 
-fn sync(source_root: &Path, source_path: &str, target_root: &Path) -> Result<sync::Stats, Error> {
+fn sync(
+    source_root: &PathBuf,
+    source_path: &str,
+    target_root: &Path,
+) -> Result<sync::Stats, Error> {
     let console_info = rusync::ConsoleProgressInfo::new();
     let options = rusync::SyncOptions::default();
 

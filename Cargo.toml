@@ -1,33 +1,40 @@
 [package]
 name = "markdeck"
-version = "0.1.0"
+version = "0.60.0"
 authors = ["Arne Hilmann <arne@hilmann.de>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [build-dependencies]
-grass = "0.10.4"
+grass = "0"
+anyhow = "1"
 
 [dependencies]
-rust-embed = { version = "5.8.0", features = ["compression"] }
-grass = "0.10.4"
-rusync = "0.7.0"
-serde = { version = "1.0.124", features = ["derive"] }
-serde_json = "1.0.64"
-glob = "0.3.0"
+rust-embed = { version = "5", features = ["compression"] }
+grass = "0"
+rusync = "0"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+glob = "0"
 
 actix = "0.10"
-actix-codec = "0.3"
+actix-codec = "0"
 actix-web = "3"
 actix-web-actors = "3"
-actix-files = "0.3"
+actix-files = "0"
 awc = "2"
-env_logger = "0.8"
-futures = "0.3.1"
-bytes = "0.5.3"
+env_logger = "0"
+futures = "0"
+bytes = "0"
+actix-service = "1"
 
-notify = "4.0.15"
-anyhow = "1.0"
-ctrlc = { version = "3.1.8", features = ["termination"] }
-uuid = { version = "0.8.2", features = ["serde", "v4"] }
+notify = "4"
+anyhow = "1"
+ctrlc = { version = "3", features = ["termination"] }
+uuid = { version = "0", features = ["serde", "v4"] }
+log = "0"
+walkdir = "2"
+regex = "1"
+
+clap = "2"

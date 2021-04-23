@@ -1,10 +1,12 @@
-FROM alpine:3.12.2 AS ALPINE_BASE
-FROM node:15.4.0-alpine3.12 AS NODE_BASE
-FROM gradle:6.7.1-jdk8-openj9 AS GRADLE_BASE
-FROM rust:1.48.0-alpine3.12 AS RUST_BASE
+FROM alpine:3.13.4 AS alpine_base
+FROM node:15.14.0-alpine3.13 AS node_base
+FROM gradle:6.8.3-jdk8-openj9 AS gradle_base
+# FROM rust:1.51.0-slim-buster AS rust_base
+FROM rust:1.51.0-alpine3.13 AS rust_base
 
 
-FROM GRADLE_BASE AS build-ditaa
+
+FROM gradle_base AS build-ditaa
 
 WORKDIR /
 RUN curl -OL https://github.com/pepijnve/ditaa/archive/mini-0.12.tar.gz
@@ -16,17 +18,20 @@ RUN cp build/libs/ditaa*.jar /ditaa.jar
 
 
 
-FROM NODE_BASE AS build-vega
+FROM node_base AS build-vega
 
 RUN apk add g++ make pkgconf pixman-dev cairo-dev pango-dev libjpeg-turbo-dev giflib-dev
 RUN npm -g config set user root
 RUN npm install -g vega vega-cli vega-lite \
     && npm cache clean --force
-RUN tar zcvf vega.tgz /usr/local/bin/vl2* /usr/local/bin/vg2* /usr/local/lib/node_modules/vega*
+RUN tar zcvf /vega.tgz /usr/local/bin/vl2* /usr/local/bin/vg2* /usr/local/lib/node_modules/vega*
+RUN mkdir /vega
+WORKDIR /vega
+RUN tar zxvf /vega.tgz
 
 
 
-FROM NODE_BASE AS build-mermaid
+FROM node_base AS build-mermaid
 ARG MERMAID_VERSION
 WORKDIR /tmp
 RUN yarn add mermaid@${MERMAID_VERSION}
@@ -35,7 +40,7 @@ RUN ls -al /
 
 
 
-FROM RUST_BASE AS build-svgbob
+FROM rust_base AS build-svgbob
 ARG SVGBOB_VERSION
 WORKDIR /tmp
 RUN apk add curl musl-dev
@@ -51,7 +56,7 @@ RUN chmod a+rx /svgbob
 
 
 
-FROM ALPINE_BASE AS build-githubstyle
+FROM alpine_base AS build-githubstyle
 
 WORKDIR /tmp
 RUN apk add git
@@ -60,7 +65,7 @@ RUN cp pandoc-goodies/templates/html5/github/GitHub.html5 /
 
 
 
-FROM ALPINE_BASE AS build-pandoc
+FROM alpine_base AS build-pandoc
 ARG PANDOC_VERSION
 WORKDIR /tmp
 RUN apk add curl
@@ -69,7 +74,7 @@ RUN mv bin/pandoc /
 
 
 
-FROM ALPINE_BASE AS build-jquery
+FROM alpine_base AS build-jquery
 ARG JQUERY_VERSION
 WORKDIR /tmp
 RUN apk add curl
@@ -77,7 +82,7 @@ RUN curl -L -o /jquery.js https://code.jquery.com/jquery-${JQUERY_VERSION}.js
 
 
 
-FROM ALPINE_BASE AS build-jqueryemojis
+FROM alpine_base AS build-jqueryemojis
 WORKDIR /tmp
 RUN apk add curl
 RUN curl -L -o emojis.zip https://github.com/rodrigopolo/jqueryemoji/archive/master.zip
@@ -87,7 +92,7 @@ RUN mv jqueryemoji-master/img/apple72/* /emojis
 
 
 
-FROM ALPINE_BASE AS build-revealjs
+FROM alpine_base AS build-revealjs
 ARG REVEALJS_VERSION
 WORKDIR /tmp
 RUN apk add curl
@@ -99,7 +104,7 @@ RUN touch dist/reveal.esm.js.map
 
 
 
-FROM ALPINE_BASE AS build-impressjs
+FROM alpine_base AS build-impressjs
 ARG IMPRESSJS_VERSION
 WORKDIR /tmp
 RUN apk add curl
@@ -110,7 +115,7 @@ RUN rm -rf *.md *.png build.js examples/ karma.conf.js package*.json qunit* test
 
 
 
-FROM ALPINE_BASE AS build-plantuml
+FROM alpine_base AS build-plantuml
 WORKDIR /tmp
 RUN apk add curl
 # RUN curl -L -o /plantuml.jar "https://sourceforge.net/projects/plantuml/files/plantuml.jar/download?use_mirror=10gbps-io"
@@ -118,7 +123,7 @@ RUN curl -L -o /plantuml.jar "https://sourceforge.net/projects/plantuml/files/pl
 
 
 
-FROM ALPINE_BASE AS build-asciinemaplayer
+FROM alpine_base AS build-asciinemaplayer
 ARG ASCIINEMAPLAYER_VERSION
 WORKDIR /tmp
 RUN apk add curl
@@ -128,7 +133,7 @@ RUN curl -L -o /asciinema-player.css "https://github.com/asciinema/asciinema-pla
 
 
 
-FROM ALPINE_BASE AS build-foundationicons
+FROM alpine_base AS build-foundationicons
 WORKDIR /tmp
 RUN apk add curl
 RUN curl -L -O https://zurb.com/playground/uploads/upload/upload/288/foundation-icons.zip
@@ -137,64 +142,95 @@ RUN mv foundation-icons /
 
 
 
-FROM ALPINE_BASE AS build-cssgg
+FROM alpine_base AS build-cssgg
 RUN apk add curl
 RUN curl -L -o /all-gg.css https://css.gg/css
 
 
 
-FROM NODE_BASE AS production
+FROM alpine_base as build-mathjaxjs
+RUN apk add git
+RUN git clone https://github.com/mathjax/MathJax.git mj-tmp
+RUN mv mj-tmp/es5 /mathjax
 
-LABEL maintainer="arne@hilmann.de"
 
-RUN apk add \
-    make bash curl \
-    graphviz inotify-tools rsync \
-    libqrencode jq sassc zip openjdk8-jre \
-    python3 py3-pip fontconfig lua5.3 \
-    pixman cairo pango libjpeg-turbo giflib \
-    && rm -rf /var/cache/apk/*
 
-RUN npm -g config set user root
-RUN npm install -g mathjax-pandoc-filter doctoc \
-    && npm cache clean --force
 
-COPY --from=build-vega /vega.tgz /
-WORKDIR /
-RUN tar zxf vega.tgz
+FROM rust_base as build-markdeck
 
-RUN mkdir -p /usr/local/share/lua/5.3
-RUN curl -o /usr/local/share/lua/5.3/inspect.lua -L https://raw.githubusercontent.com/kikito/inspect.lua/master/inspect.lua
-
-RUN pip3 install MarkdownPP
+RUN apk add musl-dev
 
 RUN mkdir -p /markdeck/
-COPY --from=build-pandoc /pandoc /usr/bin/
+# TODO dont use docroot/main here, but copy from src/markdeck:
+# COPY markdeck/ /markdeck/
 COPY --from=build-revealjs /reveal.js /markdeck/assets/framework/reveal.js/
 COPY --from=build-impressjs /impress.js /markdeck/assets/framework/impress.js/
 COPY --from=build-jquery /jquery.js /markdeck/assets/3rdparty/
 COPY --from=build-jqueryemojis /emojis /markdeck/lib/
 COPY --from=build-ditaa /ditaa.jar /markdeck/lib/
-COPY --from=build-mermaid /mermaid.min.js /mermaid.min.js.map /markdeck/assets/3rdparty/
-COPY --from=build-asciinemaplayer /asciinema-player.* markdeck/assets/3rdparty/
-# markdeck/assets/3rdparty/asciinema-player.js:
-# markdeck/assets/3rdparty/asciinema-player.js.map:
+COPY --from=build-asciinemaplayer /asciinema-player.js /asciinema-player.js.map /asciinema-player.css /markdeck/assets/3rdparty/
 COPY --from=build-plantuml /plantuml.jar /markdeck/lib/
-RUN ls -al /markdeck/assets/3rdparty
-COPY --from=build-svgbob /svgbob* /usr/local/bin/
 COPY --from=build-githubstyle /GitHub.html5 /markdeck/template-github.html
 COPY --from=build-foundationicons /foundation-icons /markdeck/assets/markdeck/css
 COPY --from=build-cssgg /all-gg.css /markdeck/assets/markdeck/css
+COPY --from=build-mathjaxjs /mathjax /markdeck/assets/3rdparty/mathjax/
+COPY src/markdeck/template* /markdeck/.markdeck/
+COPY src/markdeck/explain.html /markdeck/
+COPY src/markdeck/metadata.template /markdeck/.markdeck/
+COPY src/markdeck/defaults.yaml /markdeck/.markdeck/
+COPY src/markdeck/lib/*.lua /markdeck/.markdeck/
+COPY src/markdeck/lib/*.config /markdeck/.markdeck/
+COPY src/markdeck/lib/*.jar /markdeck/.markdeck/
+COPY src/markdeck/assets/markdeck /markdeck/assets/
 
-COPY markdeck/ /markdeck/
+# TODO RUN rustup target add x86_64-unknown-linux-musl
+# TODO RUN cargo install --target x86_64-unknown-linux-musl --path .
 
-WORKDIR /markdeck/assets/framework/reveal.js
-RUN sassc css/theme/source/simple.scss > css/theme/simple.css
-RUN sassc css/reveal.scss > css/reveal.css
+WORKDIR /sources
+COPY Cargo.* build.rs ./
+RUN mkdir src
+RUN echo 'fn main() {}' > src/main.rs
+RUN cargo build --release
+
+COPY src ./src
+RUN rm -rf src/docroot/main/
+RUN ln -sf /markdeck src/docroot/main
+RUN cargo build --release --frozen
+
+
+
+FROM alpine_base AS production
+
+LABEL maintainer="arne@hilmann.de"
+
+RUN apk add \
+    bash curl \
+    graphviz \
+    libqrencode zip openjdk8-jre \
+    fontconfig lua5.3 \
+    pixman cairo pango libjpeg-turbo giflib \
+    npm \
+    && rm -rf /var/cache/apk/*
+
+WORKDIR /
+
+RUN mkdir -p /usr/local/share/lua/5.3
+RUN curl -o /usr/local/share/lua/5.3/inspect.lua -L https://raw.githubusercontent.com/kikito/inspect.lua/master/inspect.lua
+
+COPY --from=build-vega /vega /
+COPY --from=build-pandoc /pandoc /usr/bin/
+COPY --from=build-svgbob /svgbob* /usr/local/bin/
+COPY --from=build-markdeck /sources/target/release/markdeck /usr/bin/
+
+# WORKDIR /markdeck/assets/framework/reveal.js
+# RUN sassc css/theme/source/simple.scss > css/theme/simple.css
+# RUN sassc css/reveal.scss > css/reveal.css
 
 WORKDIR /markdeck
 RUN ln -sf /target/assets/css/fonts /.fonts
 RUN ln -sf /markdeck/assets/markdeck/css/fonts/ /usr/share/fonts
+
+WORKDIR /source
 
 ARG version
 ENV VERSION $version
@@ -211,7 +247,7 @@ RUN chmod 755 /target
 USER markdeck
 VOLUME ["/source", "/target"]
 
-ENTRYPOINT ["/markdeck/loop"]
+ENTRYPOINT ["/usr/bin/markdeck", "--port", "8080", "--source", "/source", "--target", "/target", "--watcher", "CompareReference"]
 
 
 FROM production AS development
