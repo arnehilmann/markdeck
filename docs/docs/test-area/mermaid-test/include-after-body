@@ -1,5 +1,0 @@
-<script src="assets/js/mermaid.min.js"></script>
-<script>mermaid.initialize({
-    startOnLoad: true,
-    theme: 'forest'
-});</script>
