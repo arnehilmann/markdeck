@@ -286,19 +286,6 @@ public class Example {
   v1 *------------------* v2
 ```
 
-# asciiart (mermaid) {.ltr}
-
-```{.nohighlight style="width: 40%; height: 100%; font-size: 40%;"}
-graph LR
-   a --> b & c--> d
-```
-
-►
-
-```{.render_mermaid args="-w 400" style="font-size: 100%;"}
-graph LR
-   a --> b & c--> d
-```
 
 # asciiart (plantuml) {.ltr}
 

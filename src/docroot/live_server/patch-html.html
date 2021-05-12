@@ -1,0 +1,51 @@
+<!-- Code injected by live-server -->
+<script type="text/javascript">
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function() {
+            function startRerendering() {
+                console.log("starting rerendering...");
+                var body = document.getElementsByTagName("body")[0];
+                body.classList.add("rerendering");
+            }
+            var socket = null;
+            var reconnecting = false;
+            function startWS() {
+                console.log("trying to open websocket...");
+                var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+                var address = protocol + window.location.host + '/ws';
+                socket = new WebSocket(address);
+                socket.onopen = (e) => {
+                    console.log(e);
+                    if (reconnecting) {
+                        window.location.reload();
+                    } else {
+                        var body = document.getElementsByTagName("body")[0];
+                        body.classList.remove("connection-lost");
+                        console.log('live reload enabled.');
+                    }
+                }
+                socket.onclose = (e) => {
+                    console.log(e);
+                    socket = null;
+                    var body = document.getElementsByTagName("body")[0];
+                    body.classList.add("connection-lost");
+                    setTimeout(startWS, 2000);
+                    reconnecting = true;
+                }
+                socket.onerror = (e) => {
+                    console.log(e);
+                }
+                socket.onmessage = (msg) => {
+                    if (msg.data == 'reload') {
+                        window.location.reload();
+                    } else if (msg.data == 'start_rerendering') {
+                        startRerendering();
+                    }
+                }
+            }
+            startWS();
+		})();
+	}
+	// ]]>
+</script>
