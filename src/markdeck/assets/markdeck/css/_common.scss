@@ -1,11 +1,14 @@
 @import "fonts";
 
-.light-on-dark, section.light-on-dark h1 {
+.light-on-dark,
+section.light-on-dark h1 {
     color: #fff;
     text-shadow: 0px 1px #000;
 }
-.ltr, .inline {
-    p, pre {
+.ltr,
+.inline {
+    p,
+    pre {
         display: inline-block;
         vertical-align: middle;
     }
@@ -29,6 +32,45 @@ pre.nohighlight {
     font-size: 200%;
     text-shadow: 2px 2px #000000;
 }
+@keyframes blur {
+    from {
+        filter: blur(0px);
+    }
+    to {
+        filter: blur(10px);
+    }
+}
+body.rerendering div.rerendering-message {
+    display: block;
+}
+body.rerendering div:not(.rerendering-message) {
+    animation-name: blur;
+    animation-duration: 4s;
+    filter: blur(10px);
+}
+
+.connection-lost-message {
+    display: none;
+    position: absolute;
+    text-align: center;
+    top: 20%;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1000;
+    color: white;
+    font-size: 200%;
+    text-shadow: 2px 2px #000000;
+}
+body.connection-lost div.connection-lost-message {
+    display: block;
+}
+body.connection-lost div:not(.connection-lost-message) {
+    animation-name: blur;
+    animation-duration: 4s;
+    filter: blur(10px);
+}
+
 .markdeck-logo {
     position: absolute;
     left: 0;
@@ -67,7 +109,7 @@ pre {
 
     text-align: center;
     color: #ccc;
-    border-right: 1px solid #CCC;
+    border-right: 1px solid #ccc;
     vertical-align: top;
     padding-right: 5px;
 
@@ -89,4 +131,3 @@ div.render_a2sketch svg text {
     font-family: "xkcd Script";
     font-size: 24pt;
 }
-

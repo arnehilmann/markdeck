@@ -12,7 +12,7 @@ use std::sync::Arc;
 use std::time::{Duration, Instant};
 use std::env;
 
-use log::{debug, info, warn};
+use log::{debug, info, warn, error};
 use glob::glob;
 use rust_embed::RustEmbed;
 use rusync::{sync, Syncer};
@@ -24,14 +24,29 @@ use live_server::Trigger;
 
 // TODO sanity check
 // TODO check for following tools:
-// TODO brew install pandoc
-// TODO brew install qrencode
-// TODO brew install java
-// TODO ... mathjax-pandoc-filter (incl npm)
-// TODO ... svgbob
-// TODO ... graphviz
-// TODO ... vegalite
-// TODO docker run -d -p 22753:22753 arne/a2sketch:0.15
+// TODO brew install pandoc # mandatory
+
+// TODO npm install decktape; cd node_modules/decktape/node_modules/puppeteer; npm install; cd -;  # for pdf rendering
+// TODO $(npm bin)/decktape -s 1024x768 reveal "http://localhost:8080/index.html" aha.pdf
+
+// TODO brew install java   # for render_ditaa render_plantuml
+// TODO brew install graphviz   # for render_dot
+// TODO brew install qrencode   # for render_qr
+
+// TODO brew install npm
+// TODO npm install -g vega vega-cli vega-lite  # for render_vegalite
+// TODO docker run -d -p 22753:22753 arne/a2sketch:0.15 # for render_a2s render_a2sketchc:walkdir
+
+// TODO install rust via https://rustup.rs/
+// TODO cargo install svgbob_cli    # for render_svgbob
+
+// diskutil erasevolume HFS+ 'markdeck' `hdiutil attach -nomount ram://10000000`
+// cd /Volume/markdeck
+// rsync -Pav ~/dev/markdeck/src ~/dev/markdeck/Cargo.* ~/dev/markdeck/build.rs . && cargo build --release
+
+// TODO fix svgbob rendering: at random id to svg element, prepend that id to every style decl
+
+// TODO fix explain.html
 
 mod live_server;
 mod sass;
@@ -69,11 +84,34 @@ arg_enum! {
     }
 }
 
+#[derive(Debug)]
+struct PdfParams {
+    filename: String,
+    size: String,
+    pause: String
+}
+
+#[cfg(debug_assertions)]
+fn default_log_settings() {
+    env::set_var(
+        "RUST_LOG",
+        "actix_server=info,actix_web=warn,live_server=debug,markdeck=debug",
+    )
+}
+
+#[cfg(not(debug_assertions))]
+fn default_log_settings() {
+    env::set_var(
+        "RUST_LOG",
+        "actix_server=info,actix_web=warn,live_server=info,markdeck=info",
+    )
+}
+
 fn main() -> Result<(), Error> {
     let matches = clap_app!(markdeck =>
         (version: "0.60.0")
         (author: "Arne Hilmann <arne.hilmann@gmail.com>")
-        (about: "Does awesome things")
+        (about: "markdeck - collaborative slide editing made easy")
         (@arg port: --port +takes_value default_value("8080") "port of web server")
         (@arg source: --source +takes_value default_value(".") "path of source folder")
         (@arg target: --target +takes_value default_value("deck") "path of target folder")
@@ -91,10 +129,7 @@ fn main() -> Result<(), Error> {
 
     match env::var("RUST_LOG") {
         Ok(_) => {},
-        Err(_) => env::set_var(
-            "RUST_LOG",
-            "actix_server=info,actix_web=warn,live_server=debug,markdeck=debug",
-        )
+        Err(_) => default_log_settings()
     }
     env_logger::init();
 
@@ -107,7 +142,7 @@ fn main() -> Result<(), Error> {
     let target_path = PathBuf::from(target_path);
     let port: u32 = matches.value_of("port").unwrap().parse::<u32>().unwrap(); // TODO unwrap
     let watcher_type =
-        value_t!(matches.value_of("watcher"), WatcherType).unwrap_or(WatcherType::Recommended);
+        value_t!(matches.value_of("watcher"), WatcherType).unwrap_or(WatcherType::CompareReference);
     let watch_delay = value_t_or_exit!(matches.value_of("watch_delay"), u64);
 
     let sources = fetch_sources(&source_path);
@@ -139,7 +174,7 @@ fn main() -> Result<(), Error> {
             running_watcher,
             tx,
         ),
-        _ => watch(
+        WatcherType::Recommended => watch(
             &source_path,
             &sources,
             &target_path,
@@ -182,7 +217,11 @@ fn compare_watch(
     let mut rerender;
 
     while running.load(Ordering::Relaxed) {
-        let r_m = reference.metadata()?.modified()?;
+        let mut r_m = std::time::SystemTime::UNIX_EPOCH;
+        match reference.metadata() {
+            Ok(metadata) => r_m = metadata.modified()?,
+            _ => {}
+        }
         rerender = false;
         files_count = 0;
 
@@ -192,18 +231,49 @@ fn compare_watch(
             if s_m > r_m {
                 info!("change detected in {}, rerendering!", s.display());
                 rerender = true;
-                break;
             }
         }
         if files_count != last_files_count {
-            info!("number of source files changed, rerendering!");
+            info!("number of source files changed (from {} to {}), rerendering!", last_files_count, files_count);
             rerender = true;
         }
         if rerender {
             sender.send(Trigger::StartRerendering)?;
             match render(&source_path, &sources, &target_path) {
-                Ok(_) => sender.send(Trigger::Reload)?,
-                Err(e) => warn!("{:?}", e),
+                Ok(Some(pdf_options)) => {
+                    sender.send(Trigger::Reload)?;
+                    info!("rendering pdf now!");
+                    let start = Instant::now();
+                    let mut target_pdf = PathBuf::from(target_path);
+                    target_pdf.push(pdf_options.filename);
+                    let mut render_cmd = Command::new("node_modules/.bin/decktape");    // TODO make decktape binary configurable
+                    render_cmd
+                        .arg("-s")
+                        .arg(pdf_options.size)
+                        .arg("-p")
+                        .arg(pdf_options.pause)
+                        .arg("reveal")
+                        .arg("http://localhost:8080/index.html?render=pdf")
+                        .arg(&target_pdf);
+                    let mut child = render_cmd.spawn().unwrap();
+                    match child.wait() {
+                        Ok(status) => {
+                            if status.success() {
+                                info!("pdf rendered succesfully");
+                            } else {
+                                warn!("an error occured during pdf rendering!");
+                            }
+                        },
+                        Err(e) => error!("an error occured during pdf rendering: {}", e),
+                    }
+                    let duration = start.elapsed();
+                    info!("pdf rendering took {} msecs", duration.as_millis());
+                },
+                Ok(None) => sender.send(Trigger::Reload)?,
+                Err(e) => {
+                    warn!("{:?}", e);
+                    std::fs::OpenOptions::new().create(true).append(true).open(&reference)?;
+                },
             }
         }
 
@@ -239,10 +309,10 @@ fn watch(
                     Ok(_) => {
                         sender.send(Trigger::Reload)?;
                     }
-                    Err(e) => println!("{:?}", e),
+                    Err(e) => warn!("{:?}", e),
                 }
             }
-            Ok(event) => println!("{:?}", event),
+            Ok(event) => info!("{:?}", event),
             Err(_) => {}
         }
     }
@@ -251,7 +321,7 @@ fn watch(
     Ok(())
 }
 
-fn render(source_path: &PathBuf, sources: &[PathBuf], target_path: &Path) -> Result<(), Error> {
+fn render(source_path: &PathBuf, sources: &[PathBuf], target_path: &Path) -> Result<Option<PdfParams>, Error> {
     let start = Instant::now();
     for source in sources.iter() {
         info!("sources: {}", source.display());
@@ -263,14 +333,14 @@ fn render(source_path: &PathBuf, sources: &[PathBuf], target_path: &Path) -> Res
     sync_static("assets", &target_path)?;
     sync_static(".markdeck", &target_path)?;
     sync_static("explain.html", &target_path)?;
-    sync_static("template-", &target_path)?;
+    // sync_static("template-", &target_path)?;
 
-    render_deck(&source_path, &sources, &target_path)?;
+    let pdf_params = render_deck(&source_path, &sources, &target_path)?;
 
     let duration = start.elapsed();
     info!("rendering took {} msecs", duration.as_millis());
 
-    Ok(())
+    Ok(pdf_params)
 }
 
 fn interesting_files(source_path: &PathBuf) -> Vec<PathBuf> {
@@ -318,7 +388,7 @@ fn render_deck(
     source_path: &Path,
     source_files: &[PathBuf],
     target_path: &Path,
-) -> Result<(), Error> {
+) -> Result<Option<PdfParams>, Error> {
     info!("render_deck");
     let mut slides_combined = PathBuf::from(target_path);
     slides_combined.push("slides.combined.md.txt");
@@ -346,7 +416,7 @@ fn render_deck(
             .as_str()
             .expect("cannot access variant as str")
     );
-
+    info!("pdf: {:#?}", metadata["pdf"]);
     let variant = metadata["variant"].as_str().unwrap_or("");
     let toc = metadata["table_of_contents"].as_bool().unwrap_or(false);
     let themes = metadata["themes"].as_str().unwrap_or("");
@@ -428,6 +498,17 @@ fn render_deck(
             debug!("{}", line);
         }
         info!("slides rendered successfully");
+
+        let pdf = metadata["pdf"].as_str().unwrap_or("");
+        // if metadata.get("pdf").is_some() {
+        // if metadata["pdf"] != Value::Null {
+        if pdf != "" {
+            info!("pdf should be rendered to {}", pdf);
+            return Ok(Some(PdfParams{filename: pdf.to_string(),
+                                     size: metadata["pdf_size"].as_str().unwrap_or("1024x768").to_string(),
+                                     pause: metadata.get("pdf_pause").map_or("100", |v| v.as_str().unwrap_or("100")).to_string()}));
+        }
+        return Ok(None)
     } else {
         for line in String::from_utf8(output.stdout)?.lines() {
             info!("{}", line);
@@ -436,9 +517,8 @@ fn render_deck(
             warn!("{}", line);
         }
         warn!("an error occured! {:?}", output.status.code());
+        return Ok(None)
     }
-
-    Ok(())
 }
 
 fn fetch_metadata(target_path: &Path) -> Result<Map<String, Value>, Error> {

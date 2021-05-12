@@ -16,3 +16,7 @@ tmp/target
 src/ve
 src/tmp
 target
+src/attic
+src/docroot/main/assets/3rdparty/
+example/node_modules/
+src/docroot/main/

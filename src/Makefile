@@ -40,6 +40,25 @@ images.built: Makefile Dockerfile.* $(shell find markdeck/) markdeck/versions
 	touch images.built
 
 
+docroot:	../Dockerfile.pandoc markdeck/assets markdeck/lib
+	docker build -t arne/markdeck-docroot:latest -f ../Dockerfile.pandoc \
+		--build-arg MERMAID_VERSION=$(MERMAID_VERSION) \
+		--build-arg PANDOC_VERSION=$(PANDOC_VERSION) \
+		--build-arg JQUERY_VERSION=$(JQUERY_VERSION) \
+		--build-arg REVEALJS_VERSION=$(REVEALJS_VERSION) \
+		--build-arg IMPRESSJS_VERSION=$(IMPRESSJS_VERSION) \
+		--build-arg ASCIINEMAPLAYER_VERSION=$(ASCIINEMAPLAYER_VERSION) \
+		--build-arg SVGBOB_VERSION=$(SVGBOB_VERSION) \
+		--target build-docroot \
+		..
+	rm -rf docroot/main
+	mkdir -p docroot/main
+	docker rm -f docroot
+	docker create --name=docroot arne/markdeck-docroot:latest foo
+	docker export docroot | tar -C docroot/main --strip-components 1 -x markdeck/
+	docker rm docroot
+
+
 tag:	all
 	@echo $(VERSION)
 	git tag -a v$(VERSION) -m v$(VERSION)

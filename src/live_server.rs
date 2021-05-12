@@ -70,12 +70,24 @@ pub async fn start_live_server(
                     .finish()
             })))
             .service(web::resource("/index.html").route(web::get().to(patch_response)))
+            .service(web::resource("/helper/*").route(web::get().to(helper)))
             .service(fs::Files::new("/", docroot.clone()))
     })
     // .bind(format!("127.0.0.1:{}", port))?
     .bind(format!("0.0.0.0:{}", port))?
     .run()
     .await
+}
+
+async fn helper(r: HttpRequest, _stream: web::Payload) -> Result<HttpResponse, Error> {
+    info!("requesting {}", r.path());
+    let mut path = r.path().trim_start_matches("/").to_string();
+    if path.ends_with("/") {
+        path.push_str("index.html");
+    }
+    let body = Assets::get(&path).expect("an error occured!");
+    let res = actix_web::HttpResponse::Ok().body(body.into_owned());
+    Ok(res)
 }
 
 async fn ws_index(r: HttpRequest, stream: web::Payload) -> Result<HttpResponse, Error> {
@@ -182,7 +194,7 @@ impl Concierge {
 }
 
 #[derive(RustEmbed)]
-#[folder = "src/markdeck/.live_server"]
+#[folder = "src/docroot/live_server"]
 struct Assets;
 
 async fn patch_response(r: HttpRequest, _stream: web::Payload) -> Result<HttpResponse, Error> {

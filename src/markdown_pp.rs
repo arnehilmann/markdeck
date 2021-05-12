@@ -38,6 +38,7 @@ pub fn preprocess(input: Vec<u8>) -> Result<Vec<u8>> {
                 let filename = caps.get(1).unwrap().as_str();
                 // TODO include selected lines only
                 // TODO add optional highlight lines and/or fragmentsc
+                // TODO handle open ranges better, like :10 or 2:
                 let line_range = caps.get(3).map_or("", |m| m.as_str());
                 debug!("line range: {:#?}", line_range);
                 let mut start = "1";
@@ -60,7 +61,7 @@ pub fn preprocess(input: Vec<u8>) -> Result<Vec<u8>> {
 
                 let included_content = fs::read(filename)?;
                 for (nr, line) in std::str::from_utf8(&included_content)
-                    .expect("not utf8")
+                    .unwrap_or("__INVALID CHARACTER__")
                     .lines()
                     .enumerate()
                 {

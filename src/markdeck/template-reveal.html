@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 
     <link rel="stylesheet" href="assets/framework/reveal.js/dist/reveal.css" />
-    <link rel="stylesheet" href="assets/framework/reveal.js/css/theme/$reveal_theme$.css" />
+    <link rel="stylesheet" href="assets/framework/reveal.js/dist/theme/$reveal_theme$.css" />
     <link rel="shortcut icon" href="assets/css/theme/favicon.ico" />
 
     <link rel="stylesheet" href="assets/markdeck/styles/$highlight_style$.css" />
@@ -34,12 +34,7 @@
 
     <script>
         window.pdf_render = window.location.search.match(/render=pdf/gi) != null;
-        if (window.pdf_render) {
-            document.write('<link rel="stylesheet" href="assets/css/render-pdf.css" type="text/css">');
-        }
     </script>
-
-    <link href="assets/css/rerendering.css" rel="stylesheet"></link>
 
 $for(header-includes)$
 $header-includes$
@@ -53,6 +48,8 @@ $include-before$
 $endfor$
 
     <div class="rerendering-message"><h1>R E R E N D E R I N G</h1></div>
+    <div class="connection-lost-message"><h1>R E C O N N E C T I N G</h1></div>
+
     $if(markdeckFooter)$
     <div class="markdeck-logo"><a href="https://github.com/arnehilmann/markdeck">powered by markdeck</a></div>
     $endif$
@@ -69,6 +66,13 @@ $body$
     </div>
 
     <script src="assets/3rdparty/jquery.js"></script>
+
+    <script>
+        if (window.pdf_render) {
+            document.body.classList.add("render-pdf");
+            console.log("render-pdf active!");
+        }
+    </script>
 
     <script type="module">
         import Reveal from "./assets/framework/reveal.js/dist/reveal.esm.js";
@@ -167,6 +171,18 @@ $body$
         flushleft(".slides section.flushleft");
     </script>
 
+    <script>
+        // TODO implement this as pandoc filter
+        jQuery("pre").each((i, d) => {
+            var attributes = jQuery(d).prop("attributes");
+            jQuery.each(attributes, function() {
+                if (this.name === "data-ln-start-from") {
+                    jQuery(d).children("code").attr(this.name, this.value);
+                }
+            });
+        });
+    </script>
+
     <script src='assets/markdeck/highlight.js'></script>
     <script src='assets/markdeck/highlightjs-line-numbers.min.js'></script>
     <script>
@@ -180,18 +196,16 @@ $body$
     $endif$
 
     <script>
-        jQuery("pre.render_mermaid").each(function(i, old) {
-            var p = jQuery('<p>' + jQuery(old).children("code").text() + '</p>');
-            var attributes = jQuery(old).prop("attributes");
-            jQuery.each(attributes, function() {
-                p.attr(this.name, this.value);
-            });
-            p.addClass("mermaid");
-            old.replaceWith(p[0]);
-        });
+        MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
     </script>
-    <script src="assets/3rdparty/mermaid.min.js"></script>
-    <script>mermaid.initialize({startOnLoad:true, theme:'forest'});</script>
+    <script id="MathJax-script" async src="assets/3rdparty/mathjax/tex-chtml.js"></script>
 
     <script>
         // add notes class to make sure controls are always displayed on the
