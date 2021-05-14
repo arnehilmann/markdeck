@@ -1,6 +1,6 @@
 ---
 title: markdeck example
-# variant: reveal
+variant: revealjs
 # variant: impress
 # pdf: markdeck-example.pdf
 # standalone: markdeck-example.html
@@ -16,6 +16,7 @@ themes: mono
 # controlsLayout: edges
 # pdf_size: 1189x841
 # pdf_size: 1024x768
+# pdf_pause: 1
 ---
 
 # markdeck {bgcss=sea-gradient x=0 y=0 rz=-.1 .light-on-dark}
@@ -459,13 +460,13 @@ font-size="medium"
 
 #
 
-!INCLUDECODE "markdeck" ({.bash .fragment .hl-code ln-start-from=15}), 1:5
+!INCLUDECODE "assets/test.json" ({.bash .fragment .hl-code ln-start-from=15}), 1:5
 
-!INCLUDECODE "markdeck" ({.bash .fragment .hl-code ln-start-from=25}), 1
+!INCLUDECODE "assets/test.json" ({.bash .fragment .hl-code ln-start-from=25}), 1
 
-!INCLUDECODE "markdeck" ({.bash .fragment .hl-code ln-start-from=35}), 1:
+!INCLUDECODE "assets/test.json" ({.bash .fragment .hl-code ln-start-from=35}), 1:
 
-!INCLUDECODE "markdeck" ({.bash .fragment .hl-code ln-start-from=35}), :4
+!INCLUDECODE "assets/test.json" ({.bash .fragment .hl-code ln-start-from=35}), :4
 
 # markdeck {.skip skipon="reveal" scale=5 x=1.8}
 
@@ -497,3 +498,5 @@ collaborative slide editing made easy
 ![](fab fa-css3)
 ![](fab fa-js-square)
 <img src="assets/img/buddy-egyptian.svg" style="height:120px; vertical-align:middle; box-shadow:none;"/>
+
+
