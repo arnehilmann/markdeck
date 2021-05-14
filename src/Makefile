@@ -40,7 +40,7 @@ images.built: Makefile Dockerfile.* $(shell find markdeck/) markdeck/versions
 	touch images.built
 
 
-docroot:	../Dockerfile.pandoc markdeck/assets markdeck/lib
+docroot:	../Dockerfile.pandoc markdeck/assets/* markdeck/lib/*
 	docker build -t arne/markdeck-docroot:latest -f ../Dockerfile.pandoc \
 		--build-arg MERMAID_VERSION=$(MERMAID_VERSION) \
 		--build-arg PANDOC_VERSION=$(PANDOC_VERSION) \
@@ -53,10 +53,16 @@ docroot:	../Dockerfile.pandoc markdeck/assets markdeck/lib
 		..
 	rm -rf docroot/main
 	mkdir -p docroot/main
-	docker rm -f docroot
-	docker create --name=docroot arne/markdeck-docroot:latest foo
-	docker export docroot | tar -C docroot/main --strip-components 1 -x markdeck/
-	docker rm docroot
+	docker rm -f docroot-main
+	docker create --name=docroot-main arne/markdeck-docroot:latest foo
+	docker export docroot-main | tar -C docroot/main --strip-components 1 -x markdeck/
+	docker rm docroot-main
+
+	rm -rf docroot/live_server/helper
+	mkdir -p docroot/live_server/helper
+	docker rm -f docroot-helper
+	docker create --name=docroot-helper arne/markdown-friends:0.6 foo
+	docker export docroot-helper | tar -C docroot/live_server/helper
 
 
 tag:	all
