@@ -167,10 +167,10 @@ COPY --from=build-revealjs /reveal.js /markdeck/assets/framework/reveal.js/
 COPY --from=build-impressjs /impress.js /markdeck/assets/framework/impress.js/
 COPY --from=build-jquery /jquery.js /markdeck/assets/3rdparty/
 COPY --from=build-jqueryemojis /emojis /markdeck/lib/
-COPY --from=build-ditaa /ditaa.jar /markdeck/lib/
+COPY --from=build-ditaa /ditaa.jar /markdeck/.markdeck/lib/
 COPY --from=build-asciinemaplayer /asciinema-player.js /asciinema-player.js.map /asciinema-player.css /markdeck/assets/3rdparty/
-COPY --from=build-plantuml /plantuml.jar /markdeck/lib/
-COPY --from=build-githubstyle /GitHub.html5 /markdeck/template-github.html
+COPY --from=build-plantuml /plantuml.jar /markdeck/.markdeck/lib/
+COPY --from=build-githubstyle /GitHub.html5 /markdeck/.markdeck/template-github.html
 COPY --from=build-foundationicons /foundation-icons /markdeck/assets/markdeck/css
 COPY --from=build-cssgg /all-gg.css /markdeck/assets/markdeck/css
 COPY --from=build-mathjaxjs /mathjax /markdeck/assets/3rdparty/mathjax/
@@ -179,14 +179,14 @@ COPY --from=build-mathjaxjs /mathjax /markdeck/assets/3rdparty/mathjax/
 
 FROM scratch as build-docroot-markdeck
 
-COPY src/markdeck/template* /markdeck/.markdeck/
 COPY src/markdeck/explain.html /markdeck/
 COPY src/markdeck/metadata.template /markdeck/.markdeck/
 COPY src/markdeck/defaults.yaml /markdeck/.markdeck/
 COPY src/markdeck/lib/*.lua /markdeck/.markdeck/
 COPY src/markdeck/lib/*.config /markdeck/.markdeck/
 COPY src/markdeck/lib/*.jar /markdeck/.markdeck/
-COPY src/markdeck/assets/markdeck /markdeck/assets/
+COPY src/markdeck/assets/markdeck /markdeck/assets/markdeck/
+COPY src/markdeck/template* /markdeck/.markdeck/
 
 
 
