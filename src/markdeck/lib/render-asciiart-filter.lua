@@ -32,7 +32,7 @@ end
 -- end
 --
 --
-CONFIGFILE=os.getenv("ASCIIART_CONFIG") or "render-asciiart-filter.config"
+CONFIGFILE=os.getenv("ASCIIART_CONFIG") or ".markdeck/render-asciiart-filter.config"
 local config = {}
 local configfile,err = loadfile(CONFIGFILE, "t", config)
 if configfile then
@@ -48,7 +48,8 @@ else
     os.execute("mkdir rendered")
 end
 
-LIBDIR=os.getenv("ASCIIART_LIBDIR") or "lib"
+LIBDIR=os.getenv("ASCIIART_LIBDIR") or ".markdeck/lib"
+A2S_HOST=os.getenv("ASCIIART_A2S_HOST") or "http://localhost:22753"
 
 local renderer = {
     render_ditaa = function(text, attrs)
@@ -107,7 +108,7 @@ local renderer = {
     render_a2s = function(text, attrs)
         return {
                     "curl",
-                    {"-s", "-S", "--data-binary",  "@-", "http://a2sketch:22753/a2svg"},
+                    {"-s", "-S", "--data-binary",  "@-", A2S_HOST .. "/a2svg"},
                     text
                 },
                "svg"
@@ -116,7 +117,7 @@ local renderer = {
         io.stderr:write("a2sketch: source text:\n" .. text .. "\n\n")
         return {
                     "curl",
-                    {"-s", "-S", "--data-binary",  "@-", "http://a2sketch:22753/a2sketch"},
+                    {"-s", "-S", "--data-binary",  "@-", A2S_HOST .. "/a2sketch"},
                     text
                 },
                "svg"
