@@ -253,7 +253,7 @@ fn compare_watch(
                         .arg("-p")
                         .arg(pdf_options.pause)
                         .arg("reveal")
-                        .arg("http://localhost:8080/index.html?render=pdf")
+                        .arg("http://localhost:8080/index.html?render=pdf") // TODO port hardwired here
                         .arg(&target_pdf);
                     let mut child = render_cmd.spawn().unwrap();
                     match child.wait() {
@@ -422,6 +422,11 @@ fn render_deck(
     let themes = metadata["themes"].as_str().unwrap_or("");
 
     info!("compiling scss -> css");
+    sass::sassc(
+        target_path,
+        &format!("assets/markdeck/css/markdeck.{}.scss", variant),  // TODO should be called on build time
+        target_path,
+    )?;
     sass::sassc(source_path, "assets/css/slides.scss", target_path)?;
     sass::sassc(
         source_path,
