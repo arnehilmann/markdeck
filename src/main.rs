@@ -519,24 +519,6 @@ fn render_deck(
             return Ok(Some(params))
         }
         return Ok(None)
-        /*
-        match PdfParams::try_from(metadata) {
-            Ok(params) => return Ok(Some(params)),
-            Err(_) => return Ok(None),
-        }
-        */
-        /*
-        let pdf = metadata["pdf"].as_str().unwrap_or("");
-        // if metadata.get("pdf").is_some() {
-        // if metadata["pdf"] != Value::Null {
-        if pdf != "" {
-            info!("pdf should be rendered to {}", pdf);
-            return Ok(Some(PdfParams{filename: pdf.to_string(),
-                                     size: metadata["pdf_size"].as_str().unwrap_or("1024x768").to_string(),
-                                     pause: metadata.get("pdf_pause").map_or("100", |v| v.as_str().unwrap_or("100")).to_string()}));
-        }
-        return Ok(None)
-        */
     } else {
         for line in String::from_utf8(output.stdout)?.lines() {
             info!("{}", line);
