@@ -1,6 +1,6 @@
 ---
 title: markdeck example
-variant: revealjs
+variant: reveal
 # variant: impress
 # pdf: markdeck-example.pdf
 # standalone: markdeck-example.html
@@ -15,7 +15,7 @@ themes: mono
 # controlsTutorial: true
 # controlsLayout: edges
 # pdf_size: 1189x841
-# pdf_size: 1024x768
+pdf_size: 1024x768
 # pdf_pause: 1
 ---
 
