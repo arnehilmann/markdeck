@@ -1,0 +1,11 @@
+#!/bin/bash
+set -eEu
+
+TARGET=${1:-showcase}
+
+mkdir -p $TARGET
+cd $TARGET
+rm -rf *
+cp -r ../../example/deck/* .
+git add -u .
+git add .
