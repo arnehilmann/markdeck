@@ -5,7 +5,7 @@ SHELL := bash
 MAKEFLAGS += --warn-undefined-variables
 MAKEFLAGS += --no-builtin-rules
 
-.PHONY: all tag push check-versions clean tabularasa
+.PHONY: all tag push check-versions clean tabularasa docroot
 
 PANDOC_VERSION=2.13
 REVEALJS_VERSION=4.1.0
@@ -40,7 +40,7 @@ images.built: Makefile Dockerfile.* $(shell find markdeck/) markdeck/versions
 	touch images.built
 
 
-docroot:	../Dockerfile.pandoc markdeck/assets/* markdeck/lib/*
+docroot:
 	docker build -t arne/markdeck-docroot:latest -f ../Dockerfile.pandoc \
 		--build-arg MERMAID_VERSION=$(MERMAID_VERSION) \
 		--build-arg PANDOC_VERSION=$(PANDOC_VERSION) \
