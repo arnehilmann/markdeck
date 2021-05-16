@@ -11,6 +11,7 @@ use std::sync::mpsc::Sender;
 use std::sync::Arc;
 use std::time::{Duration, Instant};
 use std::env;
+use std::convert::TryFrom;
 
 use log::{debug, info, warn, error};
 use glob::glob;
@@ -90,6 +91,22 @@ struct PdfParams {
     size: String,
     pause: String
 }
+
+impl TryFrom<Map<String, Value>> for PdfParams {
+    type Error = ();
+    fn try_from(metadata: Map<String, Value>) -> Result<Self, Self::Error> {
+        let pdf = metadata["pdf"].as_str().unwrap_or("");
+        if pdf != "" {
+            info!("pdf should be rendered to {}", pdf);
+            return Ok(PdfParams{filename: pdf.to_string(),
+                                size: metadata["pdf_size"].as_str().unwrap_or("1024x768").to_string(),
+                                pause: metadata.get("pdf_pause").map_or("100", |v| v.as_str().unwrap_or("100")).to_string()});
+        } else {
+            return Err(())
+        }
+    }
+}
+
 
 #[cfg(debug_assertions)]
 fn default_log_settings() {
@@ -410,14 +427,8 @@ fn render_deck(
     }
 
     let metadata = fetch_metadata(&target_path)?;
-    info!(
-        "variant: {}",
-        metadata["variant"]
-            .as_str()
-            .expect("cannot access variant as str")
-    );
-    info!("pdf: {:#?}", metadata["pdf"]);
     let variant = metadata["variant"].as_str().unwrap_or("");
+    info!("variant: {}", variant);
     let toc = metadata["table_of_contents"].as_bool().unwrap_or(false);
     let themes = metadata["themes"].as_str().unwrap_or("");
 
@@ -504,6 +515,17 @@ fn render_deck(
         }
         info!("slides rendered successfully");
 
+        if let Ok(params) = PdfParams::try_from(metadata) {
+            return Ok(Some(params))
+        }
+        return Ok(None)
+        /*
+        match PdfParams::try_from(metadata) {
+            Ok(params) => return Ok(Some(params)),
+            Err(_) => return Ok(None),
+        }
+        */
+        /*
         let pdf = metadata["pdf"].as_str().unwrap_or("");
         // if metadata.get("pdf").is_some() {
         // if metadata["pdf"] != Value::Null {
@@ -514,6 +536,7 @@ fn render_deck(
                                      pause: metadata.get("pdf_pause").map_or("100", |v| v.as_str().unwrap_or("100")).to_string()}));
         }
         return Ok(None)
+        */
     } else {
         for line in String::from_utf8(output.stdout)?.lines() {
             info!("{}", line);
