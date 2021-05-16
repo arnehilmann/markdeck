@@ -2,7 +2,7 @@
 ---
 title: slides by markdeck
 
-variant: revealjs
+variant: reveal
 html: index.html
 table_of_contents: false
 
