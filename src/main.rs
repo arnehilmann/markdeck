@@ -13,13 +13,13 @@ use std::time::{Duration, Instant};
 use std::env;
 use std::convert::TryFrom;
 
+use clap::clap_app;
 use log::{debug, info, warn, error};
 use glob::glob;
 use rust_embed::RustEmbed;
 use rusync::{sync, Syncer};
 use serde_json::{from_str, Map, Value};
 use anyhow::Error;
-use notify::{RecommendedWatcher, RecursiveMode, Watcher};
 
 use live_server::Trigger;
 
@@ -124,6 +124,49 @@ fn default_log_settings() {
     )
 }
 
+fn sanity_check(pandoc_cmd: &String, decktape_cmd: &String) {
+    fn check(cmd: &str, arg: &str) -> bool {
+        let mut call = Command::new(cmd);
+        call.arg(arg);
+        let output = call.output();
+        if output.is_err() {
+            return false;
+        }
+        let output = output.expect("");
+        for line in String::from_utf8(output.stdout).unwrap_or("__string conversion failed__".to_string()).lines() { // TODO
+            debug!("{}", line);
+        }
+        for line in String::from_utf8(output.stderr).unwrap_or("__string conversion failed__".to_string()).lines() { // TODO
+            warn!("{}", line);
+        }
+        return output.status.success()
+    }
+    let pandoc_available = check(pandoc_cmd, "--version");
+    info!("pandoc available? {}", pandoc_available);
+
+    let decktape_available = check(decktape_cmd, "version");
+    info!("decktape available? {}", decktape_available);
+
+    if ! pandoc_available {
+        error!("pandoc not available, bailing out now...");
+        std::process::exit(1);
+    }
+
+    if ! decktape_available {
+        warn!("decktape not available, pdf rendering not possible!");
+    }
+}
+
+struct Context {
+    source_path: String,
+    target_path: String,
+    port: u32,
+    watcher_type: WatcherType,
+    watch_delay: u64,
+    pandoc_cmd: String,
+    decktape_cmd: Option<String>,
+}
+
 fn main() -> Result<(), Error> {
     let matches = clap_app!(markdeck =>
         (version: "0.60.0")
@@ -134,12 +177,13 @@ fn main() -> Result<(), Error> {
         (@arg target: --target +takes_value default_value("deck") "path of target folder")
         (@arg watcher: --watcher +takes_value +case_insensitive possible_values(&WatcherType::variants()) "watcher, detects source file changes")
         (@arg watch_delay: --watch_delay +takes_value default_value("500") "delay between watch calls, in millis")
+        (@arg pandoc_cmd: --pandoc_cmd +takes_value default_value("pandoc") "pandoc command")
+        (@arg decktape_cmd: --decktape_cmd +takes_value default_value("decktape") "decktape command")
         (@subcommand start =>
             (about: "starts specific components")
         )
         (@subcommand dev =>
             (about: "develop some features")
-            
         )
     )
     .get_matches();
@@ -161,6 +205,10 @@ fn main() -> Result<(), Error> {
     let watcher_type =
         value_t!(matches.value_of("watcher"), WatcherType).unwrap_or(WatcherType::CompareReference);
     let watch_delay = value_t_or_exit!(matches.value_of("watch_delay"), u64);
+    let pandoc_cmd = matches.value_of("pandoc_cmd").unwrap().to_string();
+    let decktape_cmd = matches.value_of("decktape_cmd").unwrap().to_string();
+
+    sanity_check(&pandoc_cmd, &decktape_cmd);
 
     let sources = fetch_sources(&source_path);
 
@@ -188,17 +236,13 @@ fn main() -> Result<(), Error> {
             &target_path,
             "index.html",
             watch_delay,
+            pandoc_cmd,
+            decktape_cmd,
+            port,
             running_watcher,
             tx,
         ),
-        WatcherType::Recommended => watch(
-            &source_path,
-            &sources,
-            &target_path,
-            watch_delay,
-            running_watcher,
-            tx,
-        ),
+        WatcherType::Recommended => todo!("RecommendedWatcher not supported yet!"),
     });
 
     ctrlc::set_handler(move || {
@@ -221,6 +265,9 @@ fn compare_watch(
     target_path: &Path,
     target_file: &str,
     watch_delay: u64,
+    pandoc_cmd: String,
+    decktape_cmd: String,
+    port: u32,
     running: Arc<AtomicBool>,
     sender: Sender<Trigger>,
 ) -> Result<(), Error> {
@@ -256,21 +303,21 @@ fn compare_watch(
         }
         if rerender {
             sender.send(Trigger::StartRerendering)?;
-            match render(&source_path, &sources, &target_path) {
+            match render(&source_path, &sources, &target_path, &pandoc_cmd) {
                 Ok(Some(pdf_options)) => {
                     sender.send(Trigger::Reload)?;
                     info!("rendering pdf now!");
                     let start = Instant::now();
                     let mut target_pdf = PathBuf::from(target_path);
                     target_pdf.push(pdf_options.filename);
-                    let mut render_cmd = Command::new("node_modules/.bin/decktape");    // TODO make decktape binary configurable
+                    let mut render_cmd = Command::new(&decktape_cmd);
                     render_cmd
                         .arg("-s")
                         .arg(pdf_options.size)
                         .arg("-p")
                         .arg(pdf_options.pause)
                         .arg("reveal")
-                        .arg("http://localhost:8080/index.html?render=pdf") // TODO port hardwired here
+                        .arg(format!("http://localhost:{}/index.html?render=pdf", port))
                         .arg(&target_pdf);
                     let mut child = render_cmd.spawn().unwrap();
                     match child.wait() {
@@ -302,43 +349,7 @@ fn compare_watch(
     Ok(())
 }
 
-fn watch(
-    source_path: &PathBuf,
-    sources: &[PathBuf],
-    target_path: &Path,
-    watch_delay: u64,
-    running: Arc<AtomicBool>,
-    sender: Sender<Trigger>,
-) -> Result<(), Error> {
-    info!("starting watcher");
-    let (tx, rx) = channel();
-    let mut watcher: RecommendedWatcher = Watcher::new(tx, Duration::from_millis(watch_delay))?;
-    watcher.watch("assets/", RecursiveMode::Recursive)?;    // TODO regard source_path
-    // TODO handle changing sources
-    for s in sources {
-        watcher.watch(s, RecursiveMode::NonRecursive)?;
-    }
-    while running.load(Ordering::Relaxed) {
-        match rx.recv_timeout(Duration::from_millis(500)) {
-            Ok(notify::DebouncedEvent::Write(_)) => {
-                sender.send(Trigger::StartRerendering)?;
-                match render(&source_path, &sources, &target_path) {
-                    Ok(_) => {
-                        sender.send(Trigger::Reload)?;
-                    }
-                    Err(e) => warn!("{:?}", e),
-                }
-            }
-            Ok(event) => info!("{:?}", event),
-            Err(_) => {}
-        }
-    }
-    info!("shutting down watcher");
-
-    Ok(())
-}
-
-fn render(source_path: &PathBuf, sources: &[PathBuf], target_path: &Path) -> Result<Option<PdfParams>, Error> {
+fn render(source_path: &PathBuf, sources: &[PathBuf], target_path: &Path, pandoc_cmd: &String) -> Result<Option<PdfParams>, Error> {
     let start = Instant::now();
     for source in sources.iter() {
         info!("sources: {}", source.display());
@@ -352,7 +363,7 @@ fn render(source_path: &PathBuf, sources: &[PathBuf], target_path: &Path) -> Res
     sync_static("explain.html", &target_path)?;
     // sync_static("template-", &target_path)?;
 
-    let pdf_params = render_deck(&source_path, &sources, &target_path)?;
+    let pdf_params = render_deck(&source_path, &sources, &target_path, pandoc_cmd)?;
 
     let duration = start.elapsed();
     info!("rendering took {} msecs", duration.as_millis());
@@ -405,6 +416,7 @@ fn render_deck(
     source_path: &Path,
     source_files: &[PathBuf],
     target_path: &Path,
+    pandoc_cmd: &String,
 ) -> Result<Option<PdfParams>, Error> {
     info!("render_deck");
     let mut slides_combined = PathBuf::from(target_path);
@@ -426,7 +438,7 @@ fn render_deck(
         slides_combined.write_all(b"\n\n")?;
     }
 
-    let metadata = fetch_metadata(&target_path)?;
+    let metadata = fetch_metadata(&target_path, &pandoc_cmd)?;
     let variant = metadata["variant"].as_str().unwrap_or("");
     info!("variant: {}", variant);
     let toc = metadata["table_of_contents"].as_bool().unwrap_or(false);
@@ -464,7 +476,7 @@ fn render_deck(
     template_path.push(".markdeck");
     template_path.push(format!("template-{}.html", variant));
 
-    let mut render_cmd = Command::new("pandoc");
+    let mut render_cmd = Command::new(pandoc_cmd);
     render_cmd
         .current_dir(&target_path)
         .arg("-f")
@@ -531,10 +543,10 @@ fn render_deck(
     }
 }
 
-fn fetch_metadata(target_path: &Path) -> Result<Map<String, Value>, Error> {
+fn fetch_metadata(target_path: &Path, pandoc_cmd: &String) -> Result<Map<String, Value>, Error> {
     info!("fetch_metadata");
 
-    let mut metadata_cmd = Command::new("pandoc");
+    let mut metadata_cmd = Command::new(pandoc_cmd);
     metadata_cmd
         .current_dir(&target_path)
         .arg("--template=.markdeck/metadata.template")
