@@ -13,7 +13,7 @@ use std::time::{Duration, Instant};
 use std::env;
 use std::convert::TryFrom;
 
-use clap::clap_app;
+use clap::{clap_app, ArgMatches};
 use log::{debug, info, warn, error};
 use glob::glob;
 use rust_embed::RustEmbed;
@@ -57,28 +57,8 @@ mod markdown_pp;
 #[folder = "src/docroot/main"]
 struct Assets;
 
-fn print_versions() {
-    let result = Command::new("pandoc")
-        .arg("--version")
-        .output()
-        .expect("failed to run command");
-    match result.status.code() {
-        Some(code) => {
-            if code != 0 {
-                warn!("exited with status code: {}", code)
-            }
-        }
-        None => warn!("Process terminated by signal"),
-    }
-    if let Some(version) = String::from_utf8_lossy(&result.stdout).lines().next() {
-        info!("pandoc: {}", version);
-    } else {
-        warn!("pandoc: cannot retrieve version! Is it installed?")
-    }
-}
-
 arg_enum! {
-    #[derive(Debug)]
+    #[derive(Debug,Clone)]
     enum WatcherType {
         Recommended,
         CompareReference,
@@ -97,7 +77,6 @@ impl TryFrom<Map<String, Value>> for PdfParams {
     fn try_from(metadata: Map<String, Value>) -> Result<Self, Self::Error> {
         let pdf = metadata["pdf"].as_str().unwrap_or("");
         if pdf != "" {
-            info!("pdf should be rendered to {}", pdf);
             return Ok(PdfParams{filename: pdf.to_string(),
                                 size: metadata["pdf_size"].as_str().unwrap_or("1024x768").to_string(),
                                 pause: metadata.get("pdf_pause").map_or("100", |v| v.as_str().unwrap_or("100")).to_string()});
@@ -124,47 +103,55 @@ fn default_log_settings() {
     )
 }
 
-fn sanity_check(pandoc_cmd: &String, decktape_cmd: &String) {
-    fn check(cmd: &str, arg: &str) -> bool {
-        let mut call = Command::new(cmd);
-        call.arg(arg);
-        let output = call.output();
-        if output.is_err() {
-            return false;
-        }
-        let output = output.expect("");
-        for line in String::from_utf8(output.stdout).unwrap_or("__string conversion failed__".to_string()).lines() { // TODO
-            debug!("{}", line);
-        }
-        for line in String::from_utf8(output.stderr).unwrap_or("__string conversion failed__".to_string()).lines() { // TODO
-            warn!("{}", line);
-        }
-        return output.status.success()
-    }
-    let pandoc_available = check(pandoc_cmd, "--version");
-    info!("pandoc available? {}", pandoc_available);
 
-    let decktape_available = check(decktape_cmd, "version");
-    info!("decktape available? {}", decktape_available);
-
-    if ! pandoc_available {
-        error!("pandoc not available, bailing out now...");
-        std::process::exit(1);
-    }
-
-    if ! decktape_available {
-        warn!("decktape not available, pdf rendering not possible!");
-    }
-}
-
+#[derive(Debug, Clone)]
 struct Context {
-    source_path: String,
-    target_path: String,
+    source_path: PathBuf,
+    target_path: PathBuf,
+    target_file: String,
     port: u32,
     watcher_type: WatcherType,
     watch_delay: u64,
     pandoc_cmd: String,
-    decktape_cmd: Option<String>,
+    pandoc_available: bool,
+    decktape_cmd: String,
+    decktape_available: bool,
+}
+
+impl From<ArgMatches<'_>> for Context {
+    fn from(matches: ArgMatches) -> Self {
+        fn check(cmd: &str, arg: &str) -> bool {
+            let mut call = Command::new(cmd);
+            call.arg(arg);
+            let output = call.output();
+            if output.is_err() {
+                return false;
+            }
+            let output = output.expect("");
+            for line in String::from_utf8(output.stdout).unwrap_or("__string conversion failed__".to_string()).lines() { // TODO
+                debug!("{}", line);
+            }
+            for line in String::from_utf8(output.stderr).unwrap_or("__string conversion failed__".to_string()).lines() { // TODO
+                warn!("{}", line);
+            }
+            return output.status.success()
+        }
+        let pandoc_cmd = matches.value_of("pandoc_cmd").unwrap_or("").to_string();
+        let decktape_cmd = matches.value_of("decktape_cmd").unwrap_or("").to_string();
+        Context {
+            source_path: PathBuf::from(matches.value_of("source").unwrap()),
+            target_path: PathBuf::from(matches.value_of("target").unwrap()),
+            target_file: String::from("index.html"),
+            port: matches.value_of("port").unwrap().parse::<u32>().unwrap(), // TODO unwrap
+            watcher_type:
+                value_t!(matches.value_of("watcher"), WatcherType).unwrap_or(WatcherType::CompareReference),
+            watch_delay: value_t_or_exit!(matches.value_of("watch_delay"), u64),
+            pandoc_available: check(&pandoc_cmd, "--version"),
+            pandoc_cmd: pandoc_cmd,
+            decktape_available: check(&decktape_cmd, "version"),
+            decktape_cmd: decktape_cmd,
+        }
+    }
 }
 
 fn main() -> Result<(), Error> {
@@ -194,30 +181,8 @@ fn main() -> Result<(), Error> {
     }
     env_logger::init();
 
-    print_versions();
-
-    // let source_path = Path::new(".");
-    let source_path = matches.value_of("source").unwrap(); // TODO unwrap
-    let source_path = PathBuf::from(source_path);
-    let target_path = matches.value_of("target").unwrap(); // TODO unwrap
-    let target_path = PathBuf::from(target_path);
-    let port: u32 = matches.value_of("port").unwrap().parse::<u32>().unwrap(); // TODO unwrap
-    let watcher_type =
-        value_t!(matches.value_of("watcher"), WatcherType).unwrap_or(WatcherType::CompareReference);
-    let watch_delay = value_t_or_exit!(matches.value_of("watch_delay"), u64);
-    let pandoc_cmd = matches.value_of("pandoc_cmd").unwrap().to_string();
-    let decktape_cmd = matches.value_of("decktape_cmd").unwrap().to_string();
-
-    sanity_check(&pandoc_cmd, &decktape_cmd);
-
-    let sources = fetch_sources(&source_path);
-
-    if let Some(_matches) = matches.subcommand_matches("dev") {
-        markdown_pp::preprocess_file(PathBuf::from("slides.md"))?;
-        std::process::exit(0);
-    }
-
-    // render(&source_path, &sources, &target_path)?;
+    let context = Context::from(matches);
+    info!("{:#?}", context);
 
     let running = Arc::new(AtomicBool::new(true));
     let running_watcher = running.clone();
@@ -225,23 +190,14 @@ fn main() -> Result<(), Error> {
     let (tx, rx) = channel();
     let tx2 = tx.clone();
 
-    let target_path_for_live_server = target_path.clone();
+    // let target_path_for_live_server = target_path.clone();
+    let live_server_context = context.clone();
     let live_server = std::thread::spawn(move || {
-        live_server::start_live_server(target_path_for_live_server, port, rx)
+        // live_server::start_live_server(target_path_for_live_server, port, rx)
+        live_server::start_live_server(live_server_context.target_path, live_server_context.port, rx)
     });
-    let watcher = std::thread::spawn(move || match watcher_type {
-        WatcherType::CompareReference => compare_watch(
-            &source_path,
-            &sources,
-            &target_path,
-            "index.html",
-            watch_delay,
-            pandoc_cmd,
-            decktape_cmd,
-            port,
-            running_watcher,
-            tx,
-        ),
+    let watcher = std::thread::spawn(move || match context.watcher_type {
+        WatcherType::CompareReference => context.compare_watch(running_watcher, tx),
         WatcherType::Recommended => todo!("RecommendedWatcher not supported yet!"),
     });
 
@@ -259,116 +215,116 @@ fn main() -> Result<(), Error> {
     Ok(())
 }
 
-fn compare_watch(
-    source_path: &PathBuf,
-    sources: &[PathBuf],
-    target_path: &Path,
-    target_file: &str,
-    watch_delay: u64,
-    pandoc_cmd: String,
-    decktape_cmd: String,
-    port: u32,
-    running: Arc<AtomicBool>,
-    sender: Sender<Trigger>,
-) -> Result<(), Error> {
-    info!("starting watcher");
+impl Context {
+    fn compare_watch(
+        &self,
+        running: Arc<AtomicBool>,
+        sender: Sender<Trigger>,
+    ) -> Result<(), Error> {
+        info!("starting watcher");
 
-    let mut reference = PathBuf::from(target_path);
-    reference.push(target_file);
+        let mut reference = PathBuf::from(&self.target_path);
+        reference.push(&self.target_file);
 
-    let mut files_count;
-    let mut last_files_count = 0;
-    let mut rerender;
+        let mut files_count;
+        let mut last_files_count = 0;
+        let mut rerender;
 
-    while running.load(Ordering::Relaxed) {
-        let mut r_m = std::time::SystemTime::UNIX_EPOCH;
-        match reference.metadata() {
-            Ok(metadata) => r_m = metadata.modified()?,
-            _ => {}
-        }
-        rerender = false;
-        files_count = 0;
+        while running.load(Ordering::Relaxed) {
+            let sources = fetch_sources(&self.source_path);
+            let mut r_m = std::time::SystemTime::UNIX_EPOCH;
+            match reference.metadata() {
+                Ok(metadata) => r_m = metadata.modified()?,
+                _ => {}
+            }
+            rerender = false;
+            files_count = 0;
 
-        for s in interesting_files(&source_path) {
-            files_count += 1;
-            let s_m = s.metadata()?.modified()?;
-            if s_m > r_m {
-                info!("change detected in {}, rerendering!", s.display());
+            for s in interesting_files(&self.source_path) {
+                files_count += 1;
+                let s_m = s.metadata()?.modified()?;
+                if s_m > r_m {
+                    info!("change detected in {}, rerendering!", s.display());
+                    rerender = true;
+                }
+            }
+            if files_count != last_files_count {
+                info!("number of source files changed (from {} to {}), rerendering!", last_files_count, files_count);
                 rerender = true;
             }
-        }
-        if files_count != last_files_count {
-            info!("number of source files changed (from {} to {}), rerendering!", last_files_count, files_count);
-            rerender = true;
-        }
-        if rerender {
-            sender.send(Trigger::StartRerendering)?;
-            match render(&source_path, &sources, &target_path, &pandoc_cmd) {
-                Ok(Some(pdf_options)) => {
-                    sender.send(Trigger::Reload)?;
-                    info!("rendering pdf now!");
-                    let start = Instant::now();
-                    let mut target_pdf = PathBuf::from(target_path);
-                    target_pdf.push(pdf_options.filename);
-                    let mut render_cmd = Command::new(&decktape_cmd);
-                    render_cmd
-                        .arg("-s")
-                        .arg(pdf_options.size)
-                        .arg("-p")
-                        .arg(pdf_options.pause)
-                        .arg("reveal")
-                        .arg(format!("http://localhost:{}/index.html?render=pdf", port))
-                        .arg(&target_pdf);
-                    let mut child = render_cmd.spawn().unwrap();
-                    match child.wait() {
-                        Ok(status) => {
-                            if status.success() {
-                                info!("pdf rendered succesfully");
-                            } else {
-                                warn!("an error occured during pdf rendering!");
+            if rerender {
+                sender.send(Trigger::StartRerendering)?;
+                match self.render_html(&sources) {
+                    Ok(Some(pdf_options)) => {
+                        sender.send(Trigger::Reload)?;
+                        if self.decktape_available {
+                            let start = Instant::now();
+                            let mut target_pdf = PathBuf::from(&self.target_path);
+                            target_pdf.push(pdf_options.filename);
+                            info!("rendering pdf now: {}!", target_pdf.display());
+                            let mut render_cmd = Command::new(&self.decktape_cmd);
+                            render_cmd
+                                .arg("-s")
+                                .arg(pdf_options.size)
+                                .arg("-p")
+                                .arg(pdf_options.pause)
+                                .arg("reveal")
+                                .arg(format!("http://localhost:{}/index.html?render=pdf", self.port))
+                                .arg(&target_pdf);
+                            let mut child = render_cmd.spawn().unwrap();
+                            match child.wait() {
+                                Ok(status) => {
+                                    if status.success() {
+                                        info!("pdf rendered succesfully");
+                                    } else {
+                                        warn!("an error occured during pdf rendering!");
+                                    }
+                                },
+                                Err(e) => error!("an error occured during pdf rendering: {}", e),
                             }
-                        },
-                        Err(e) => error!("an error occured during pdf rendering: {}", e),
-                    }
-                    let duration = start.elapsed();
-                    info!("pdf rendering took {} msecs", duration.as_millis());
-                },
-                Ok(None) => sender.send(Trigger::Reload)?,
-                Err(e) => {
-                    warn!("{:?}", e);
-                    std::fs::OpenOptions::new().create(true).append(true).open(&reference)?;
-                },
+                            let duration = start.elapsed();
+                            info!("pdf rendering took {} msecs", duration.as_millis());
+                        } else {
+                            warn!("pdf rendering not possible: '{}' command does not work!", &self.decktape_cmd);
+                        }
+                    },
+                    Ok(None) => sender.send(Trigger::Reload)?,
+                    Err(e) => {
+                        warn!("{:?}", e);
+                        std::fs::OpenOptions::new().create(true).append(true).open(&reference)?;
+                    },
+                }
             }
+
+            last_files_count = files_count;
+            std::thread::sleep(Duration::from_millis(self.watch_delay));
         }
 
-        last_files_count = files_count;
-        std::thread::sleep(Duration::from_millis(watch_delay));
+        info!("shutting down watcher");
+        Ok(())
     }
 
-    info!("shutting down watcher");
-    Ok(())
-}
+    fn render_html(&self, sources: &[PathBuf]) -> Result<Option<PdfParams>, Error> {
+        let start = Instant::now();
+        for source in sources.iter() {
+            info!("sources: {}", source.display());
+        }
 
-fn render(source_path: &PathBuf, sources: &[PathBuf], target_path: &Path, pandoc_cmd: &String) -> Result<Option<PdfParams>, Error> {
-    let start = Instant::now();
-    for source in sources.iter() {
-        info!("sources: {}", source.display());
+        sync(&self.source_path, "assets", &self.target_path)?;
+        sync(&self.source_path, "themes", &self.target_path)?;
+
+        sync_static("assets", &self.target_path)?;
+        sync_static(".markdeck", &self.target_path)?;
+        sync_static("explain.html", &self.target_path)?;
+        // sync_static("template-", &target_path)?;
+
+        let pdf_params = self.render_deck(&sources)?;
+
+        let duration = start.elapsed();
+        info!("rendering took {} msecs", duration.as_millis());
+
+        Ok(pdf_params)
     }
-
-    sync(&source_path, "assets", &target_path)?;
-    sync(&source_path, "themes", &target_path)?;
-
-    sync_static("assets", &target_path)?;
-    sync_static(".markdeck", &target_path)?;
-    sync_static("explain.html", &target_path)?;
-    // sync_static("template-", &target_path)?;
-
-    let pdf_params = render_deck(&source_path, &sources, &target_path, pandoc_cmd)?;
-
-    let duration = start.elapsed();
-    info!("rendering took {} msecs", duration.as_millis());
-
-    Ok(pdf_params)
 }
 
 fn interesting_files(source_path: &PathBuf) -> Vec<PathBuf> {
@@ -412,157 +368,157 @@ if pandoc \
           /markdeck/defaults.yaml /target/slides.combined.md.txt 2>&1 | tee /tmp/pandoc.output;
     */
 
-fn render_deck(
-    source_path: &Path,
-    source_files: &[PathBuf],
-    target_path: &Path,
-    pandoc_cmd: &String,
-) -> Result<Option<PdfParams>, Error> {
-    info!("render_deck");
-    let mut slides_combined = PathBuf::from(target_path);
-    slides_combined.push("slides.combined.md.txt");
-    if slides_combined.exists() {
-        fs::remove_file(&slides_combined)?;
-    }
-    info!("combining source files");
-    let mut slides_combined = OpenOptions::new()
-        .append(true)
-        .create(true)
-        .open(slides_combined)?;
+impl Context {
+    fn render_deck(
+        &self,
+        source_files: &[PathBuf],
+    ) -> Result<Option<PdfParams>, Error> {
+        info!("render_deck");
+        let mut slides_combined = PathBuf::from(&self.target_path);
+        slides_combined.push("slides.combined.md.txt");
+        if slides_combined.exists() {
+            fs::remove_file(&slides_combined)?;
+        }
+        info!("combining source files");
+        let mut slides_combined = OpenOptions::new()
+            .append(true)
+            .create(true)
+            .open(slides_combined)?;
 
-    for source_file in source_files.iter() {
-        info!("source file: {}", source_file.display());
-        let contents = fs::read(&source_file)?;
-        let contents = markdown_pp::preprocess(contents)?;
-        slides_combined.write_all(&contents)?;
-        slides_combined.write_all(b"\n\n")?;
-    }
+        for source_file in source_files.iter() {
+            info!("source file: {}", source_file.display());
+            let contents = fs::read(&source_file)?;
+            let contents = markdown_pp::preprocess(contents)?;
+            slides_combined.write_all(&contents)?;
+            slides_combined.write_all(b"\n\n")?;
+        }
 
-    let metadata = fetch_metadata(&target_path, &pandoc_cmd)?;
-    let variant = metadata["variant"].as_str().unwrap_or("");
-    info!("variant: {}", variant);
-    let toc = metadata["table_of_contents"].as_bool().unwrap_or(false);
-    let themes = metadata["themes"].as_str().unwrap_or("");
+        let metadata = self.fetch_metadata()?;
+        let variant = metadata["variant"].as_str().unwrap_or("");
+        info!("variant: {}", variant);
+        let toc = metadata["table_of_contents"].as_bool().unwrap_or(false);
+        let themes = metadata["themes"].as_str().unwrap_or("");
 
-    info!("compiling scss -> css");
-    sass::sassc(
-        target_path,
-        &format!("assets/markdeck/css/markdeck.{}.scss", variant),  // TODO should be called on build time
-        target_path,
-    )?;
-    sass::sassc(source_path, "assets/css/slides.scss", target_path)?;
-    sass::sassc(
-        source_path,
-        &format!("assets/css/slides.{}.scss", variant),
-        target_path,
-    )?;
-    for theme in themes.split(&[' ', ','][..]) {
+        info!("compiling scss -> css");
         sass::sassc(
-            source_path,
-            &format!("themes/{}/css/slides.scss", theme),
-            target_path,
+            &self.target_path,
+            &format!("assets/markdeck/css/markdeck.{}.scss", variant),  // TODO should be called on build time
+            &self.target_path,
         )?;
+        sass::sassc(&self.source_path, "assets/css/slides.scss", &self.target_path)?;
         sass::sassc(
-            source_path,
-            &format!("themes/{}/css/slides.{}.scss", theme, variant),
-            target_path,
+            &self.source_path,
+            &format!("assets/css/slides.{}.scss", variant),
+            &self.target_path,
         )?;
+        for theme in themes.split(&[' ', ','][..]) {
+            sass::sassc(
+                &self.source_path,
+                &format!("themes/{}/css/slides.scss", theme),
+                &self.target_path,
+            )?;
+            sass::sassc(
+                &self.source_path,
+                &format!("themes/{}/css/slides.{}.scss", theme, variant),
+                &self.target_path,
+            )?;
+        }
+
+        info!("rendering slides now");
+
+        let mut template_path = std::env::current_dir()?;
+        template_path.push(&self.target_path);
+        template_path.push(".markdeck");
+        template_path.push(format!("template-{}.html", variant));
+
+        let mut render_cmd = Command::new(&self.pandoc_cmd);
+        render_cmd
+            .current_dir(&self.target_path)
+            .arg("-f")
+            .arg("markdown+yaml_metadata_block+tex_math_dollars")
+            .arg("-t")
+            .arg("html")
+            .arg("--standalone")
+            .arg("--section-divs")
+            .arg("--no-highlight")
+            .arg("--wrap=preserve")
+            .arg("-o")
+            .arg("index.html")
+            .arg("--lua-filter")
+            .arg(".markdeck/skip-slide-filter.lua")
+            .arg("--lua-filter")
+            .arg(".markdeck/render-asciiart-filter.lua")
+            .arg("--lua-filter")
+            .arg(".markdeck/render-emojis-filter.lua")
+            .arg("--lua-filter")
+            .arg(".markdeck/bg-shortcut-filter.lua")
+            .arg("--lua-filter")
+            .arg(".markdeck/inline-svg.lua")
+            .arg("--lua-filter")
+            .arg(".markdeck/icons.lua")
+            .arg("--mathjax")
+            .arg(format!("--template={}", template_path.display()));
+
+        let shortcut_filter = format!(".markdeck/{}-shortcut-filter.lua", variant);
+        if Path::new(&shortcut_filter).exists() {
+            render_cmd.arg("--lua-filter").arg(shortcut_filter);
+        }
+
+        if toc {
+            render_cmd.arg("--toc");
+        }
+
+        render_cmd
+            .arg(".markdeck/defaults.yaml")
+            .arg("slides.combined.md.txt");
+        debug!("render cmd: {:#?}", render_cmd);
+        let output = render_cmd.output().expect("failed to run pandoc");
+        if output.status.success() {
+            for line in String::from_utf8(output.stdout)?.lines() {
+                debug!("{}", line);
+            }
+            for line in String::from_utf8(output.stderr)?.lines() {
+                debug!("{}", line);
+            }
+            info!("slides rendered successfully");
+
+            if let Ok(params) = PdfParams::try_from(metadata) {
+                return Ok(Some(params))
+            }
+            return Ok(None)
+        } else {
+            for line in String::from_utf8(output.stdout)?.lines() {
+                info!("{}", line);
+            }
+            for line in String::from_utf8(output.stderr)?.lines() {
+                warn!("{}", line);
+            }
+            warn!("an error occured! {:?}", output.status.code());
+            return Ok(None)
+        }
     }
 
-    info!("rendering slides now");
+    fn fetch_metadata(&self) -> Result<Map<String, Value>, Error> {
+        info!("fetch_metadata");
 
-    let mut template_path = std::env::current_dir()?;
-    template_path.push(target_path);
-    template_path.push(".markdeck");
-    template_path.push(format!("template-{}.html", variant));
-
-    let mut render_cmd = Command::new(pandoc_cmd);
-    render_cmd
-        .current_dir(&target_path)
-        .arg("-f")
-        .arg("markdown+yaml_metadata_block+tex_math_dollars")
-        .arg("-t")
-        .arg("html")
-        .arg("--standalone")
-        .arg("--section-divs")
-        .arg("--no-highlight")
-        .arg("--wrap=preserve")
-        .arg("-o")
-        .arg("index.html")
-        .arg("--lua-filter")
-        .arg(".markdeck/skip-slide-filter.lua")
-        .arg("--lua-filter")
-        .arg(".markdeck/render-asciiart-filter.lua")
-        .arg("--lua-filter")
-        .arg(".markdeck/render-emojis-filter.lua")
-        .arg("--lua-filter")
-        .arg(".markdeck/bg-shortcut-filter.lua")
-        .arg("--lua-filter")
-        .arg(".markdeck/inline-svg.lua")
-        .arg("--lua-filter")
-        .arg(".markdeck/icons.lua")
-        .arg("--mathjax")
-        .arg(format!("--template={}", template_path.display()));
-
-    let shortcut_filter = format!(".markdeck/{}-shortcut-filter.lua", variant);
-    if Path::new(&shortcut_filter).exists() {
-        render_cmd.arg("--lua-filter").arg(shortcut_filter);
+        let mut metadata_cmd = Command::new(&self.pandoc_cmd);
+        metadata_cmd
+            .current_dir(&self.target_path)
+            .arg("--template=.markdeck/metadata.template")
+            .arg(".markdeck/defaults.yaml")
+            .arg("slides.combined.md.txt");
+        debug!("metadata cmd: {:#?}", metadata_cmd);
+        let metadata = metadata_cmd.output().expect("failed to run pandoc");
+        let metadata: Value = from_str(std::str::from_utf8(&metadata.stdout)?)?;
+        let metadata: Map<String, Value> = metadata
+            .as_object()
+            .expect("cannot convert metadata")
+            .to_owned();
+        for pair in metadata.iter() {
+            debug!("metadata: {} -> {}", pair.0, pair.1);
+        }
+        Ok(metadata)
     }
-
-    if toc {
-        render_cmd.arg("--toc");
-    }
-
-    render_cmd
-        .arg(".markdeck/defaults.yaml")
-        .arg("slides.combined.md.txt");
-    debug!("render cmd: {:#?}", render_cmd);
-    let output = render_cmd.output().expect("failed to run pandoc");
-    if output.status.success() {
-        for line in String::from_utf8(output.stdout)?.lines() {
-            debug!("{}", line);
-        }
-        for line in String::from_utf8(output.stderr)?.lines() {
-            debug!("{}", line);
-        }
-        info!("slides rendered successfully");
-
-        if let Ok(params) = PdfParams::try_from(metadata) {
-            return Ok(Some(params))
-        }
-        return Ok(None)
-    } else {
-        for line in String::from_utf8(output.stdout)?.lines() {
-            info!("{}", line);
-        }
-        for line in String::from_utf8(output.stderr)?.lines() {
-            warn!("{}", line);
-        }
-        warn!("an error occured! {:?}", output.status.code());
-        return Ok(None)
-    }
-}
-
-fn fetch_metadata(target_path: &Path, pandoc_cmd: &String) -> Result<Map<String, Value>, Error> {
-    info!("fetch_metadata");
-
-    let mut metadata_cmd = Command::new(pandoc_cmd);
-    metadata_cmd
-        .current_dir(&target_path)
-        .arg("--template=.markdeck/metadata.template")
-        .arg(".markdeck/defaults.yaml")
-        .arg("slides.combined.md.txt");
-    debug!("metadata cmd: {:#?}", metadata_cmd);
-    let metadata = metadata_cmd.output().expect("failed to run pandoc");
-    let metadata: Value = from_str(std::str::from_utf8(&metadata.stdout)?)?;
-    let metadata: Map<String, Value> = metadata
-        .as_object()
-        .expect("cannot convert metadata")
-        .to_owned();
-    for pair in metadata.iter() {
-        debug!("metadata: {} -> {}", pair.0, pair.1);
-    }
-    Ok(metadata)
 }
 
 fn sync_static(source_path: &str, target_root: &Path) -> Result<(), Error> {
