@@ -5,7 +5,6 @@
 use regex::Regex;
 use std::fs;
 use std::io::Result;
-use std::path::PathBuf;
 
 use log::{debug, warn};
 
@@ -77,12 +76,5 @@ pub fn preprocess(input: Vec<u8>) -> Result<Vec<u8>> {
             content.push(b'\n');
         }
     }
-    // debug!("{}", std::str::from_utf8(&content).expect("TODO"));
     Ok(content)
-}
-
-pub fn preprocess_file(f: PathBuf) -> Result<Vec<u8>> {
-    debug!("preprocessing {}", f.display());
-    let content = fs::read(f)?;
-    preprocess(content)
 }
