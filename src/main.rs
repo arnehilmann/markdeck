@@ -155,6 +155,12 @@ impl From<ArgMatches<'_>> for Context {
 }
 
 fn main() -> Result<(), Error> {
+    match env::var("RUST_LOG") {
+        Ok(_) => {},
+        Err(_) => default_log_settings()
+    }
+    env_logger::init();
+
     let matches = clap_app!(markdeck =>
         (version: "0.60.0")
         (author: "Arne Hilmann <arne.hilmann@gmail.com>")
@@ -166,21 +172,17 @@ fn main() -> Result<(), Error> {
         (@arg watch_delay: --watch_delay +takes_value default_value("500") "delay between watch calls, in millis")
         (@arg pandoc_cmd: --pandoc_cmd +takes_value default_value("pandoc") "pandoc command")
         (@arg decktape_cmd: --decktape_cmd +takes_value default_value("decktape") "decktape command")
-        (@subcommand start =>
-            (about: "starts specific components")
+        (@subcommand check_update =>
+            (about: "WIP: checks for newer version of markdeck")
         )
-        (@subcommand dev =>
-            (about: "develop some features")
+        (@subcommand update =>
+            (about: "WIP: updates markdeck (maintains backup of current version)")
+        )
+        (@subcommand init =>
+            (about: "WIP: initializes current folder with minimal markdeck sources")
         )
     )
     .get_matches();
-
-    match env::var("RUST_LOG") {
-        Ok(_) => {},
-        Err(_) => default_log_settings()
-    }
-    env_logger::init();
-
     let context = Context::from(matches);
     info!("{:#?}", context);
 
@@ -190,10 +192,8 @@ fn main() -> Result<(), Error> {
     let (tx, rx) = channel();
     let tx2 = tx.clone();
 
-    // let target_path_for_live_server = target_path.clone();
     let live_server_context = context.clone();
     let live_server = std::thread::spawn(move || {
-        // live_server::start_live_server(target_path_for_live_server, port, rx)
         live_server::start_live_server(live_server_context.target_path, live_server_context.port, rx)
     });
     let watcher = std::thread::spawn(move || match context.watcher_type {
