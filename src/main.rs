@@ -69,7 +69,8 @@ arg_enum! {
 struct PdfParams {
     filename: String,
     size: String,
-    pause: String
+    pause: String,
+    variant: String,
 }
 
 impl TryFrom<Map<String, Value>> for PdfParams {
@@ -79,7 +80,8 @@ impl TryFrom<Map<String, Value>> for PdfParams {
         if pdf != "" {
             return Ok(PdfParams{filename: pdf.to_string(),
                                 size: metadata["pdf_size"].as_str().unwrap_or("1024x768").to_string(),
-                                pause: metadata.get("pdf_pause").map_or("100", |v| v.as_str().unwrap_or("100")).to_string()});
+                                pause: metadata.get("pdf_pause").map_or("100", |v| v.as_str().unwrap_or("100")).to_string(),
+                                variant: metadata["variant"].as_str().unwrap_or("automatic").to_string()});
         } else {
             return Err(())
         }
@@ -285,7 +287,7 @@ impl Context {
                                 .arg(pdf_options.size)
                                 .arg("-p")
                                 .arg(pdf_options.pause)
-                                .arg("reveal")
+                                .arg(pdf_options.variant)
                                 .arg(format!("http://localhost:{}/index.html?render=pdf", self.port))
                                 .arg(&target_pdf);
                             let mut child = render_cmd.spawn().unwrap();
@@ -476,7 +478,7 @@ impl Context {
             .arg(format!("--template={}", template_path.display()));
 
         let shortcut_filter = format!(".markdeck/{}-shortcut-filter.lua", variant);
-        if Path::new(&shortcut_filter).exists() {
+        if Path::new(&format!("{}/{}", &self.target_path.display(), &shortcut_filter)).exists() {
             render_cmd.arg("--lua-filter").arg(shortcut_filter);
         }
 
