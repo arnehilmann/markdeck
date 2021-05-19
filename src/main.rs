@@ -19,7 +19,7 @@ use glob::glob;
 use rust_embed::RustEmbed;
 use rusync::{sync, Syncer};
 use serde_json::{from_str, Map, Value};
-use anyhow::Error;
+use anyhow::{bail, Error};
 
 use live_server::Trigger;
 
@@ -180,9 +180,26 @@ fn main() -> Result<(), Error> {
         )
         (@subcommand init =>
             (about: "WIP: initializes current folder with minimal markdeck sources")
+            (@arg folder: +required +takes_value "name of new markdeck folder")
         )
     )
     .get_matches();
+    
+    if let Some(init_matches) = matches.subcommand_matches("init") {
+        let folder = init_matches.value_of("folder").unwrap();
+        info!("folder: {}", folder);
+        let mut path = env::current_dir()?;
+        path.push(folder);
+        if fs::metadata(&path).is_ok() {
+            error!("folder '{}' already exists, bailing out now...", path.display());
+            bail!("");
+        }
+        fs::create_dir_all(&path)?;
+        sync_static("scaffold/", &path, "")?;
+        info!("change to new folder '{}', then run 'markdeck'...", folder);
+        return Ok(())
+    }
+
     let context = Context::from(matches);
     info!("{:#?}", context);
 
@@ -290,7 +307,7 @@ impl Context {
                     },
                     Ok(None) => sender.send(Trigger::Reload)?,
                     Err(e) => {
-                        warn!("{:?}", e);
+                        warn!("an error occured during html rendering: {:?}", e);
                         std::fs::OpenOptions::new().create(true).append(true).open(&reference)?;
                     },
                 }
@@ -313,10 +330,9 @@ impl Context {
         sync(&self.source_path, "assets", &self.target_path)?;
         sync(&self.source_path, "themes", &self.target_path)?;
 
-        sync_static("assets", &self.target_path)?;
-        sync_static(".markdeck", &self.target_path)?;
-        sync_static("explain.html", &self.target_path)?;
-        // sync_static("template-", &target_path)?;
+        sync_static("assets", &self.target_path, "assets")?;
+        sync_static(".markdeck", &self.target_path, ".markdeck")?;
+        sync_static("toplevel", &self.target_path, "")?;
 
         let pdf_params = self.render_deck(&sources)?;
 
@@ -521,13 +537,17 @@ impl Context {
     }
 }
 
-fn sync_static(source_path: &str, target_root: &Path) -> Result<(), Error> {
+fn sync_static(source_path: &str, target_root: &Path, target_path: &str) -> Result<(), Error> {
     for file in Assets::iter() {
         if !file.starts_with(&source_path) {
             continue;
         }
         let mut target = target_root.to_path_buf();
-        target.push(&*file);
+        if target_path != "" {
+            target.push(target_path);
+        }
+        let short_file = file.strip_prefix(source_path).unwrap().trim_start_matches("/");
+        target.push(&*short_file);
 
         #[cfg(not(debug_assertions))]
         if target.exists() {
@@ -535,10 +555,8 @@ fn sync_static(source_path: &str, target_root: &Path) -> Result<(), Error> {
         }
 
         let content = Assets::get(&file).expect("cannot convert data to utf8");
-        // println!("syncing {} to {:#?}", file, &target);
         fs::create_dir_all(&target.parent().expect("cannot access parent folder"))?;
         fs::write(&target, content.as_ref())?;
-        // }
     }
 
     Ok(())
