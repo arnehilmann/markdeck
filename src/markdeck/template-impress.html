@@ -25,7 +25,7 @@
     $endif$
 
     <link href="assets/framework/impress.js/css/impress-demo.css" rel="stylesheet" />
-    <link href="assets/markdeck/css/markdeck.impressjs.css" rel="stylesheet" />
+    <link href="assets/markdeck/css/markdeck.impress.css" rel="stylesheet" />
     $for(themes)$
         <link href="themes/$themes$/css/slides.impress.css" rel="stylesheet" />
     $endfor$
@@ -36,8 +36,6 @@
             document.write('<link rel="stylesheet" href="assets/css/render-pdf.css" type="text/css">');
         }
     </script>
-
-    <link href="assets/css/rerendering.css" rel="stylesheet"></link>
 
 $for(header-includes)$
 $header-includes$
@@ -135,21 +133,6 @@ $body$
     $endif$
 
     <script src="assets/3rdparty/jquery.js"></script>
-
-    <script>
-        jQuery("pre.render_mermaid").each(function(i, old) {
-            var p = jQuery('<p>' + jQuery(old).children("code").text() + '</p>');
-            var attributes = jQuery(old).prop("attributes");
-            jQuery.each(attributes, function() {
-                p.attr(this.name, this.value);
-            });
-            p.addClass("mermaid");
-            old.replaceWith(p[0]);
-        });
-    </script>
-    <script src="assets/3rdparty/mermaid.min.js"></script>
-    <script>mermaid.initialize({startOnLoad:true, theme:'forest'});</script>
-
 
 $for(include-after)$
 $include-after$
