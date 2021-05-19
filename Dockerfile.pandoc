@@ -187,6 +187,7 @@ COPY src/markdeck/lib/*.config /markdeck/.markdeck/
 COPY src/markdeck/lib/*.jar /markdeck/.markdeck/
 COPY src/markdeck/assets/markdeck /markdeck/assets/markdeck/
 COPY src/markdeck/template* /markdeck/.markdeck/
+COPY src/scaffold/ /markdeck/scaffold/
 
 
 
