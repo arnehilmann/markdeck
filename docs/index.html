@@ -1,95 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-
-  <!-- Basic Page Needs
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <meta charset="utf-8">
-  <title>MarkDeck - presentations as code</title>
-  <meta name="description" content="MarkDeck - cool slide decks, text-only, offline ready, collaborative">
-  <meta name="author" content="arne.hilmann@gmail.com">
-
-  <!-- Mobile Specific Metas
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- CSS
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="stylesheet" href="css/all.css">
-  <link rel="stylesheet" href="css/mini-default.min.css">
-  <link rel="stylesheet" href="css/custom.css">
-
-  <!-- Favicon
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="icon" type="image/png" href="favicon.png">
-
-</head>
-<body>
-
-    <header class="sticky row">
-        <span class="logo col-sm-3 col-md">MarkDeck</span>
-        <a class="button col-sm col-md" href="https://github.com/arnehilmann/markdeck" target="_blank">
-            <i class="fab fa-github">&nbsp;</i><span class="nav-text">Repository</span>
-        </a>
-        <a class="button col-sm col-md" href="https://github.com/arnehilmann/markdeck/blob/master/README.md#install-markdeck-tldr" target="_blank">Install</a>
-    </header>
-
-    <div class="section container bggrey">
-        <div class="row">
-            <div class="col-sd-12 col-md-6">
-                <h1>MarkDeck</h1>
-                <p class="hero">presentations as code</p>
-                <p>author cool slide decks, text-only, offline-ready, collaborative</p>
-
-                <a class="large primary rounded button" href="https://github.com/arnehilmann/markdeck/blob/master/README.md#install-markdeck-tldr">
-                    Try Markdeck
-                </a>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>MarkDeck - presentations as code</title>
+        <meta name="description" content="MarkDeck - cool slide decks, text-only, offline ready, collaborative">
+        <meta name="author" content="arne.hilmann@gmail.com">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        <link rel="stylesheet" href="css/custom2.css">
+        <link rel="icon" type="image/png" href="favicon.png">
+    </head>
+    <body>
+        <section class="section block">
+            <div class="container">
+                <div class="content is-large">
+                    <div class="columns">
+                        <div class="column">
+                            <h1 class="title is-1">MarkDeck</h1>
+                            <p class="subtitle">presentations as code</p>
+                            <p>author cool slide decks, text-only, offline-ready, collaborative</p>
+                            <a class="button is-primary is-large" href="https://github.com/arnehilmann/markdeck/blob/master/README.md#install-markdeck-tldr">
+                                Try Markdeck
+                            </a>
+                        </div>
+                        <div class="column">
+                            <img class="screenshot" alt="" src="images/markdeck-install.gif">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div><img class="screenshot" alt="" src="images/markdeck-install.gif"></div>
-        </div>
-    </div>
+        </section>
 
-    <div class="section container">
-        <div class="row">
-            <h2>Features</h2>
-            <ul>
-                <li>converts markdown to a clean html5 slide deck</li>
-                <li>cool looking: based on battle-proven web frameworks, like reveal.js</li>
-                <li>no uplink required, neither when authoring, nor presenting:</br>
-                    no awkward moments during presentation (no "I am still waiting for the Internet, sorry!")</li>
-                <li>batteries included: live renderer, pdf output, asciiart-converter</li>
-                <li>text-only, easy syntax: just markdown</li>
-                <li>fast-n-easy to write: bring your own editor!</li>
-                <li>easy to collaborate-n-reuse: text-only, so bring your own VCS</li>
-                <li>eye-candy: supports unicode, emojis, fontawesome, asciiart, math, charts, code highlighting,
-                    recorded terminal sessions, ...</li>
-                <li>self-documenting <a href="https://github.com/arnehilmann/markdeck/blob/master/DOCUMENTATION.md#self-documenting-documentation-slides">documentation slides</a>:</br>
-                    see the slide source and the result, side-by-side</li>
-            </ul>
-        </div>
-    </div>
-
-    <div class="section container bggrey">
-        <div class="row">
-            <div class="col-sd-12">
-                <h2>Showcases</h2>
-                Have a look at the
-                <a href="showcase/index.html" target="_blank">example slides</a>
-                and the corresponding
-                <a href="showcase/markdeck-example.pdf">pdf file</a>.
-                </br>
-                And browse thru the self-documenting
-                <a href="docs/markdown-basics/explain.html">basics</a> and
-                <a href="docs/slide-layout/explain.html">layout</a> slides.
+        <section class="section block">
+            <div class="container">
+                <div class="content is-medium">
+                    <div class="columns">
+                        <div class="column is-one-quarter">
+                            <h1 class="title is-2">Features</h1>
+                        </div>
+                        <div class="column content is-medium">
+                            <ul>
+                                <li>converts markdown to a clean html5 slide deck</li>
+                                <li>cool looking: based on battle-proven web frameworks, like reveal.js</li>
+                                <li>no uplink required, neither when authoring, nor presenting:</br>
+                                    no awkward moments during presentation (no "I am still waiting for the Internet, sorry!")</li>
+                                <li>batteries included: live renderer, pdf output, asciiart-converter</li>
+                                <li>text-only, easy syntax: just markdown</li>
+                                <li>fast-n-easy to write: bring your own editor!</li>
+                                <li>easy to collaborate-n-reuse: text-only, so bring your own VCS</li>
+                                <li>eye-candy: supports unicode, emojis, fontawesome, asciiart, math, charts, code highlighting,
+                                    recorded terminal sessions, ...</li>
+                                <li>self-documenting <a href="https://github.com/arnehilmann/markdeck/blob/master/DOCUMENTATION.md#self-documenting-documentation-slides">documentation slides</a>:</br>
+                                    see the slide source and the result, side-by-side</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="row" style="border-top: 1pt solid grey; margin-top: 1rem;">
-            <h3>"Hello, World!"</h3>
-        </div>
-        <div class="row">
-            <div class="col-sd-12 col-md-6">
-                source:
-                <pre class="small" style="background: none;">
+        </section>
+
+        <section class="section block">
+            <div class="container">
+                <div class="content is-medium">
+                    <h2 class="title is-2">Showcase "Hello World"</h2>
+                    <div class="columns">
+                        <div class="column is-half">
+                            markdown source:
+                            <pre class="" style="background: none;">
 ---
 title: markdeck scaffold
 pdf: markdeck-scaffold.pdf
@@ -116,24 +93,25 @@ interesting links:
 &lt;/small>
 
 ⚪ ⚪ ⚪
-                </pre>
+                            </pre>
+                        </div>
+                        <div class="column is-half">
+                            resulting html deck:
+                            <img src="images/minimal.png" alt="" style="padding: calc(1.5 * var(--universal-padding));">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-sd col-md">
-                result:
-                <img src="images/minimal.png" alt="" style="padding: calc(1.5 * var(--universal-padding));">
-            </div>
-        </div>
-    </div>
+        </section>
 
-    <div class="section container">
-        <div class="row">
-            <h2>Example: Inline AsciiArt</h2>
-        </div>
-        <div class="row">
-            <div class="col-sd-12 col-md-6">
-                <center>
-                    MarkDeck converts inline ascii drawings ...
-                    <pre class="small">
+        <section class="section block">
+            <div class="container">
+                <div class="content is-medium">
+                    <h2 class="title is-2">Showcase "AsciiArt"</h2>
+                    <div class="columns">
+                        <div class="column is-half">
+                            markdown source:
+                            <pre class="" style="background: none;">
 +-----------------------------+
 | Node A                      |
 |                             |
@@ -161,51 +139,51 @@ interesting links:
 | |          |   | {s}      | |
 | +----------+   +----------+ |
 +-----------------------------+
-                    </pre>
-                </center>
+                            </pre>
+                        </div>
+                        <div class="column is-half">
+                            converted into images, auto-magically and on-the-fly!
+                            <img class="screenshot" alt="" src="images/asciiart.png">
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-sd col-md screenshot">
-                ... into images, auto-magically and on-the-fly!
-                <img class="screenshot" alt="" src="images/asciiart.png">
+        </section>
+    
+        <section class="section block">
+            <div class="container">
+                <div class="content is-large">
+                    <h2 class="title is-2">Based on</h2>
+                    markdown,
+                    pandoc,
+                    reveal.js,
+                    plantuml,
+                    ditaamini,
+                    graphviz,
+                    asciinema,
+                    decktape,
+                    vega-lite,
+                    math-jax,
+                    font-awesome, ...
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div class="section container bggrey">
-        <div class="row">
-            Based on
-            markdown,
-            pandoc,
-            reveal.js,
-            plantuml,
-            ditaamini,
-            graphviz,
-            asciinema,
-            decktape,
-            vega-lite,
-            math-jax,
-            font-awesome.
-        </div>
-    </div>
-
-    <footer class="section container bggrey">
-        <div class="row">
-            <div class="col-sd-12 col-md-6">
-                <a href="https://github.com/arnehilmann/markdeck/blob/master/README.md#install-markdeck-tldr">Try MarkDeck</a>
-                &nbsp;
-                <a href="https://github.com/arnehilmann/markdeck"><i class="fab fa-github">&nbsp;</i></a>
-                <a href="https://cloud.docker.com/u/arne/repository/docker/arne/markdeck-pandoc"><i class="fab fa-docker">&nbsp;</i></a>
-                <a href="https://twitter.com/ArneHilmann"><i class="fab fa-twitter">&nbsp;</i></a>
+        </section>
+    
+        <section class="section block">
+            <div class="container">
+                <div class="content is-large columns">
+                    <div class="column">
+                        <a class="button is-primary is-large" href="https://github.com/arnehilmann/markdeck/blob/master/README.md#install-markdeck-tldr">
+                            Try Markdeck
+                        </a>
+                    </div>
+                    <div class="column">
+                        <a href="https://arnehilmann.github.io/markdeck/">
+                            https://arnehilmann.github.io/markdeck/
+                        </a>
+                    </div>
+                </div>
             </div>
-            <div class="col-sd col-md">
-                <a href="https://arnehilmann.github.io/markdeck/">
-                    https://arnehilmann.github.io/markdeck/
-                </a>
-            </div>
-        </div>
-    </footer>
-
-<!-- End Document
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-</body>
+        </section>
+    </body>
 </html>
