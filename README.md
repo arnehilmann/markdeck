@@ -11,7 +11,33 @@ author cool slide decks, text-only, offline-ready, collaborative
 https://img.shields.io/twitter/url/https/github.com/arnehilmann/markdeck.svg?style=social
 -->
 
-## why?
+## markdeck reloaded
+
+In the past years maintaining markdeck, some questions (problems?) came up over and over again. 
+Following some keyphrases:
+
+* what about that pesky docker dependency? 
+* multi-user setup, how?
+* windows support?
+* what a poor performance...
+* native installation is cool.
+
+I myself found it more and more difficult to bundle all the needed software
+packages, to improve performance, to add new features and fix bugs...
+and then delivering a 1GB docker image collection, yikes
+
+So in the upcoming release (v0.60), markdeck gets reloaded (oh no, a rewrite,
+that cannot work!): the two main docker container (pandoc and liveserver) get
+merged and reimplemented in rust; and delivered as a binary, _not_ a docker
+image.
+
+It still is a bit rough around the edges (sanity check at startup: everything
+there where expected? ), and for `render_a2s` the docker container is still
+needed (no way to reimplemented that nodejs/php beauty). But it is working
+already quite well, so I keep you posted...
+
+
+## why markdeck?
 
 * converts markdown to a clean html5 slide deck
 * cool looking: based on battle-proven web frameworks, like reveal.js
