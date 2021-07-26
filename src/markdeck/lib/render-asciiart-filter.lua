@@ -127,16 +127,16 @@ local renderer = {
         if attrs[1] then
             attrs = attrs[1][2]
         end
-        params = {"-c", "svgbob"}
-        for _, w in pairs(shlex(attrs)) do
-            table.insert(params, w)
-        end
-        return {"bash", params, text}, "svg"
---        params = {}
+--        params = {"-c", "svgbob"}
 --        for _, w in pairs(shlex(attrs)) do
 --            table.insert(params, w)
 --        end
---        return {"svgbob", params, text}, "svg"
+--        return {"bash", params, text}, "svg"
+        params = {}
+        for _, w in pairs(shlex(attrs)) do
+            table.insert(params, w)
+        end
+        return {"svgbob", params, text}, "svg"
     end,
 }
 
