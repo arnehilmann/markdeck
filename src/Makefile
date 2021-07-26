@@ -7,8 +7,8 @@ MAKEFLAGS += --no-builtin-rules
 
 .PHONY: all tag push check-versions clean tabularasa docroot
 
-PANDOC_VERSION=2.13
-REVEALJS_VERSION=4.1.0
+PANDOC_VERSION=2.14.0.3
+REVEALJS_VERSION=4.1.2
 ASCIINEMAPLAYER_VERSION=v2.6.1
 JQUERY_VERSION=3.6.0.slim.min
 IMPRESSJS_VERSION=1.1.0
@@ -58,11 +58,15 @@ docroot:
 	docker export docroot-main | tar -C docroot/main --strip-components 1 -x markdeck/
 	docker rm docroot-main
 
+	docker build -t arne/markdown-friends-docroot:latest \
+		-f ../../markdown-friends/Dockerfile \
+		--target build-docroot \
+		../../markdown-friends
 	rm -rf docroot/live_server/helper
 	mkdir -p docroot/live_server/helper
 	docker rm -f docroot-helper
-	docker create --name=docroot-helper arne/markdown-friends:0.6 foo
-	docker export docroot-helper | tar -C docroot/live_server/helper
+	docker create --name=docroot-helper arne/markdown-friends-docroot:latest foo
+	docker export docroot-helper | tar -C docroot/live_server/helper --strip-components 1 -x docroot/
 
 
 tag:	all
