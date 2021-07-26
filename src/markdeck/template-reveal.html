@@ -135,12 +135,31 @@ $body$
             return jQuery(".slides").offset().left / deck.getScale();
         }
 
+        function calc_offset_right() {
+            return jQuery(".slides").offset().left / deck.getScale();
+        }
+
         function flushleft(selector) {
             function deoffset() {
                 // console.log("flushleft");
                 var rel_offset_left = calc_offset_left();
                 jQuery(selector).each(function(i, e){
                     jQuery(this).css({"margin-left": "-" + rel_offset_left + "px"});
+                });
+            }
+            deoffset();
+            if (window.pdf_render) {
+                setTimeout(deoffset, 50);
+            } else {
+                jQuery(window).on("resize", deoffset);
+            }
+        }
+
+        function flushright(selector) {
+            function deoffset() {
+                var rel_offset_right = calc_offset_right();
+                jQuery(selector).each(function(i, e){
+                    jQuery(this).css({"margin-right": "-" + rel_offset_right + "px"});
                 });
             }
             deoffset();
@@ -167,8 +186,14 @@ $body$
             }
         }
 
-        jQuery(".flushleft").children(".flushleft").removeClass("flushleft");
-        flushleft(".slides section.flushleft");
+        jQuery(".flush-left").children(".flush-left").removeClass("flush-left");
+        flushleft(".slides section.flush-left");
+
+        jQuery(".flush-title-left").children(".flush-title-left").removeClass("flush-title-left");
+        flushleft(".slides section.flush-title-left h1");
+
+        jQuery(".flush-right").children(".flush-right").removeClass("flush-right");
+        flushright(".slides section.flush-right");
     </script>
 
     <script>
