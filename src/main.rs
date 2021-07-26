@@ -70,6 +70,7 @@ struct PdfParams {
     filename: String,
     size: String,
     pause: String,
+    load_pause: String,
     variant: String,
 }
 
@@ -81,6 +82,7 @@ impl TryFrom<Map<String, Value>> for PdfParams {
             return Ok(PdfParams{filename: pdf.to_string(),
                                 size: metadata["pdf_size"].as_str().unwrap_or("1024x768").to_string(),
                                 pause: metadata.get("pdf_pause").map_or("100", |v| v.as_str().unwrap_or("100")).to_string(),
+                                load_pause: metadata.get("pdf_load_pause").map_or("100", |v| v.as_str().unwrap_or("100")).to_string(),
                                 variant: metadata["variant"].as_str().unwrap_or("automatic").to_string()});
         } else {
             return Err(())
@@ -118,6 +120,8 @@ struct Context {
     pandoc_available: bool,
     decktape_cmd: String,
     decktape_available: bool,
+    gs_cmd: String,
+    gs_available: bool,
 }
 
 impl From<ArgMatches<'_>> for Context {
@@ -140,6 +144,7 @@ impl From<ArgMatches<'_>> for Context {
         }
         let pandoc_cmd = matches.value_of("pandoc_cmd").unwrap_or("").to_string();
         let decktape_cmd = matches.value_of("decktape_cmd").unwrap_or("").to_string();
+        let gs_cmd = matches.value_of("gs_cmd").unwrap_or("").to_string();
         Context {
             source_path: PathBuf::from(matches.value_of("source").unwrap()),
             target_path: PathBuf::from(matches.value_of("target").unwrap()),
@@ -152,6 +157,8 @@ impl From<ArgMatches<'_>> for Context {
             pandoc_cmd: pandoc_cmd,
             decktape_available: check(&decktape_cmd, "version"),
             decktape_cmd: decktape_cmd,
+            gs_available: check(&gs_cmd, "--version"),
+            gs_cmd: gs_cmd,
         }
     }
 }
@@ -174,6 +181,7 @@ fn main() -> Result<(), Error> {
         (@arg watch_delay: --watch_delay +takes_value default_value("500") "delay between watch calls, in millis")
         (@arg pandoc_cmd: --pandoc_cmd +takes_value default_value("pandoc") "pandoc command")
         (@arg decktape_cmd: --decktape_cmd +takes_value default_value("decktape") "decktape command")
+        (@arg gs_cmd: --gs_cmd +takes_value default_value("gs") "ghostscript command")
         (@subcommand check_update =>
             (about: "WIP: checks for newer version of markdeck")
         )
@@ -181,7 +189,7 @@ fn main() -> Result<(), Error> {
             (about: "WIP: updates markdeck (maintains backup of current version)")
         )
         (@subcommand init =>
-            (about: "WIP: initializes current folder with minimal markdeck sources")
+            (about: "initializes current folder with minimal markdeck sources")
             (@arg folder: +required +takes_value "name of new markdeck folder")
         )
     )
@@ -287,6 +295,8 @@ impl Context {
                                 .arg(pdf_options.size)
                                 .arg("-p")
                                 .arg(pdf_options.pause)
+                                .arg("--load-pause")
+                                .arg(pdf_options.load_pause)
                                 .arg(pdf_options.variant)
                                 .arg(format!("http://localhost:{}/index.html?render=pdf", self.port))
                                 .arg(&target_pdf);
@@ -303,6 +313,56 @@ impl Context {
                             }
                             let duration = start.elapsed();
                             info!("pdf rendering took {} msecs", duration.as_millis());
+
+                            if self.gs_available {
+                                let start = Instant::now();
+                                info!("shrinking pdf");
+                                let mut tmp_file = PathBuf::from(&target_pdf);
+                                tmp_file.set_extension(".tmp");
+                                let mut gs_cmd = Command::new(&self.gs_cmd);
+                                gs_cmd
+                                    .arg("-q")
+                                    .arg("-dNOPAUSE")
+                                    .arg("-dBATCH")
+                                    .arg("-dSAFER")
+                                    .arg("-sDEVICE=pdfwrite")
+                                    .arg("-dCompatibilityLevel=1.4")
+                                    .arg("-dPDFSETTINGS=/screen")
+                                    .arg("-dEmbedAllFonts=true")
+                                    .arg("-dSubsetFonts=true")
+                                    .arg("-dColorImageDownsampleType=/Bicubic")
+                                    .arg("-dColorImageResolution=300")
+                                    .arg("-dGrayImageDownsampleType=/Bicubic")
+                                    .arg("-dGrayImageResolution=300")
+                                    .arg("-dMonoImageDownsampleType=/Bicubic")
+                                    .arg("-dMonoImageResolution=300")
+                                    .arg(format!("-sOutputFile={}", tmp_file.display()))
+                                    .arg(&target_pdf);
+                                let mut child = gs_cmd.spawn().unwrap();
+                                match child.wait() {
+                                    Ok(status) => {
+                                        if status.success() {
+                                            info!("pdf shrinking succesfully");
+                                            let orig_meta = target_pdf.metadata().unwrap(); // TODO
+                                            let shrinked_meta = tmp_file.metadata().unwrap();   // TODO
+                                            let orig_len = orig_meta.len();
+                                            let shrinked_len = shrinked_meta.len();
+                                            let percent = 100 * shrinked_len / orig_len;
+                                            if percent > 100 {
+                                                info!("shrinking didn't reduce the filesize, using original pdf");
+                                            } else {
+                                                info!("filesize shrinked to {}%", percent);
+                                                fs::rename(&tmp_file, &target_pdf)?;
+                                            }
+                                        } else {
+                                            warn!("an error occured during pdf shrinking!");
+                                        }
+                                    },
+                                    Err(e) => error!("an error occured during pdf shrinking: {}", e),
+                                }
+                                let duration = start.elapsed();
+                                info!("pdf shrinking took {} msecs", duration.as_millis());
+                            }
                         } else {
                             warn!("pdf rendering not possible: '{}' command does not work!", &self.decktape_cmd);
                         }

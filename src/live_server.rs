@@ -80,7 +80,7 @@ pub async fn start_live_server(
 }
 
 async fn helper(r: HttpRequest, _stream: web::Payload) -> Result<HttpResponse, Error> {
-    info!("requesting {}", r.path());
+    debug!("requesting {}", r.path());
     let mut path = r.path().trim_start_matches("/").to_string();
     if path.ends_with("/") {
         path.push_str("index.html");
