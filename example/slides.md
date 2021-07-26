@@ -2,7 +2,7 @@
 title: markdeck example
 variant: reveal
 # variant: impress
-# pdf: markdeck-example.pdf
+pdf: markdeck-example.pdf
 # standalone: markdeck-example.html
 # highlight_style: grayscale
 highlight_style: github-gist
@@ -15,8 +15,11 @@ themes: mono
 # controlsTutorial: true
 # controlsLayout: edges
 # pdf_size: 1189x841
-pdf_size: 1024x768
-# pdf_pause: 1
+# pdf_size: 1024x768
+pdf_size: 1400x875
+# pdf_pause: 1000
+
+
 ---
 
 # markdeck {bgcss=sea-gradient x=0 y=0 rz=-.1 .light-on-dark}
@@ -334,7 +337,7 @@ digraph G {
 }
 ```
 
-# charts (vega-lite) {.ltr rx=0 ry=-1}
+# charts (vega-lite) {.ltr}
 
 ```{.json style="width: 50%; font-size: 30%;"}
 {
@@ -390,7 +393,7 @@ digraph G {
 }
 ```
 
-# math equations
+# math equations {rx=0 ry=-1}
 
 ```{.nohighlight style="width: 100%; font-size: 70%;"}
 $a^2 + b^2 = c^2$
@@ -454,11 +457,11 @@ font-size="medium"
 
 🙃
 
-# {bg=White;themes/example/img/wordcloud.svg .flush-right rx=1 ry=0}
+# {bg=White;themes/example/img/wordcloud.svg .flush-right}
 
 [`https://github.com/arnehilmann/markdeck`{.render_qr}](https://github.com/arnehilmann/markdeck)
 
-#
+# {rx=1 ry=0}
 
 !INCLUDECODE "assets/test.json" ({.bash .fragment .hl-code ln-start-from=15}), 1:5
 
@@ -498,5 +501,6 @@ collaborative slide editing made easy
 ![](fab fa-css3)
 ![](fab fa-js-square)
 <img src="assets/img/buddy-egyptian.svg" style="height:120px; vertical-align:middle; box-shadow:none;"/>
+
 
 
