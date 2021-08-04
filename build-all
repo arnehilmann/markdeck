@@ -1,0 +1,14 @@
+#!/bin/bash
+set -eEu
+
+cargo build --release
+cargo build --release --target x86_64-pc-windows-gnu
+CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=x86_64-unknown-linux-gnu-gcc \
+    cargo build --release --target=x86_64-unknown-linux-gnu
+
+mkdir -p target/binaries
+cp target/release/markdeck target/binaries/markdeck.x86_64-apple-darwin
+cp target/x86_64-pc-windows-gnu/release/markdeck.exe target/binaries/markdeck.x86_64-pc-windows-gnu.exe
+cp target/x86_64-unknown-linux-gnu/release/markdeck target/binaries/markdeck.x86_64-unknown-linux-gnu
+
+du -m target/binaries/
