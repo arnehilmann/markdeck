@@ -1,6 +1,10 @@
 #[macro_use]
 extern crate clap;
+extern crate color_eyre;
+extern crate eyre;
 
+use std::convert::TryFrom;
+use std::env;
 use std::fs::{self, OpenOptions};
 use std::io::Write;
 use std::path::{Path, PathBuf};
@@ -10,18 +14,24 @@ use std::sync::mpsc::channel;
 use std::sync::mpsc::Sender;
 use std::sync::Arc;
 use std::time::{Duration, Instant};
-use std::env;
-use std::convert::TryFrom;
 
+use clap::crate_version;
 use clap::{clap_app, ArgMatches};
-use log::{debug, info, warn, error};
+use color_eyre::{
+    eyre::{eyre, ensure, Result},
+    Report,
+};
+// use log::{debug, info, warn, error};
 use glob::glob;
 use rust_embed::RustEmbed;
 use rusync::{sync, Syncer};
 use serde_json::{from_str, Map, Value};
-use anyhow::{bail, Error};
+// use anyhow::{bail, Error};
 
 use live_server::Trigger;
+
+use tracing::{debug, error, info, warn};
+use tracing_subscriber::EnvFilter;
 
 // TODO sanity check
 // TODO check for following tools:
@@ -50,8 +60,8 @@ use live_server::Trigger;
 // TODO fix explain.html
 
 mod live_server;
-mod sass;
 mod markdown_pp;
+mod sass;
 
 #[derive(RustEmbed)]
 #[folder = "src/docroot/main"]
@@ -79,17 +89,30 @@ impl TryFrom<Map<String, Value>> for PdfParams {
     fn try_from(metadata: Map<String, Value>) -> Result<Self, Self::Error> {
         let pdf = metadata["pdf"].as_str().unwrap_or("");
         if pdf != "" {
-            return Ok(PdfParams{filename: pdf.to_string(),
-                                size: metadata["pdf_size"].as_str().unwrap_or("1024x768").to_string(),
-                                pause: metadata.get("pdf_pause").map_or("100", |v| v.as_str().unwrap_or("100")).to_string(),
-                                load_pause: metadata.get("pdf_load_pause").map_or("100", |v| v.as_str().unwrap_or("100")).to_string(),
-                                variant: metadata["variant"].as_str().unwrap_or("automatic").to_string()});
+            return Ok(PdfParams {
+                filename: pdf.to_string(),
+                size: metadata["pdf_size"]
+                    .as_str()
+                    .unwrap_or("1024x768")
+                    .to_string(),
+                pause: metadata
+                    .get("pdf_pause")
+                    .map_or("100", |v| v.as_str().unwrap_or("100"))
+                    .to_string(),
+                load_pause: metadata
+                    .get("pdf_load_pause")
+                    .map_or("100", |v| v.as_str().unwrap_or("100"))
+                    .to_string(),
+                variant: metadata["variant"]
+                    .as_str()
+                    .unwrap_or("automatic")
+                    .to_string(),
+            });
         } else {
-            return Err(())
+            return Err(());
         }
     }
 }
-
 
 #[cfg(debug_assertions)]
 fn default_log_settings() {
@@ -106,7 +129,6 @@ fn default_log_settings() {
         "actix_server=info,actix_web=warn,live_server=info,markdeck=info",
     )
 }
-
 
 #[derive(Debug, Clone)]
 struct Context {
@@ -127,6 +149,9 @@ struct Context {
 impl From<ArgMatches<'_>> for Context {
     fn from(matches: ArgMatches) -> Self {
         fn check(cmd: &str, arg: &str) -> bool {
+            if cmd == "" {
+                return false;
+            }
             let mut call = Command::new(cmd);
             call.arg(arg);
             let output = call.output();
@@ -134,24 +159,59 @@ impl From<ArgMatches<'_>> for Context {
                 return false;
             }
             let output = output.expect("");
-            for line in String::from_utf8(output.stdout).unwrap_or("__string conversion failed__".to_string()).lines() { // TODO
-                debug!("{}", line);
+            /*
+            for line in String::from_utf8(output.stdout)
+                .unwrap_or("__string conversion failed__".to_string())
+                .lines()
+            {
+                // TODO
+                // debug!("{}", line);
             }
-            for line in String::from_utf8(output.stderr).unwrap_or("__string conversion failed__".to_string()).lines() { // TODO
+            */
+            for line in String::from_utf8(output.stderr)
+                .unwrap_or("__string conversion failed__".to_string())
+                .lines()
+            {
+                // TODO
                 warn!("{}", line);
             }
-            return output.status.success()
+            return output.status.success();
+        }
+        fn find_decktape_cmd(matches: &ArgMatches) -> String {
+            let cmd = matches.value_of("decktape_cmd").unwrap_or("").to_string();
+            if cmd != "" {
+                return cmd;
+            }
+            let mut call = Command::new("npm");
+            call.arg("bin");
+            let output = call.output();
+            if output.is_ok() {
+                let output = output.expect("");
+                let npm_bin = String::from_utf8(output.stdout)
+                    .unwrap_or("__string conversion failed__".to_string())
+                    .lines()
+                    .next()
+                    .expect("")
+                    .to_owned();
+                let decktape_bin = Path::new(&npm_bin);
+                let decktape_bin = decktape_bin.join("decktape");
+                let decktape_bin = decktape_bin.to_str().expect("");
+                if check(decktape_bin, "version") {
+                    return String::from(decktape_bin);
+                }
+            }
+            return String::from("decktape");
         }
         let pandoc_cmd = matches.value_of("pandoc_cmd").unwrap_or("").to_string();
-        let decktape_cmd = matches.value_of("decktape_cmd").unwrap_or("").to_string();
+        let decktape_cmd = find_decktape_cmd(&matches);
         let gs_cmd = matches.value_of("gs_cmd").unwrap_or("").to_string();
         Context {
             source_path: PathBuf::from(matches.value_of("source").unwrap()),
             target_path: PathBuf::from(matches.value_of("target").unwrap()),
             target_file: String::from("index.html"),
             port: matches.value_of("port").unwrap().parse::<u32>().unwrap(), // TODO unwrap
-            watcher_type:
-                value_t!(matches.value_of("watcher"), WatcherType).unwrap_or(WatcherType::CompareReference),
+            watcher_type: value_t!(matches.value_of("watcher"), WatcherType)
+                .unwrap_or(WatcherType::CompareReference),
             watch_delay: value_t_or_exit!(matches.value_of("watch_delay"), u64),
             pandoc_available: check(&pandoc_cmd, "--version"),
             pandoc_cmd: pandoc_cmd,
@@ -163,55 +223,83 @@ impl From<ArgMatches<'_>> for Context {
     }
 }
 
-fn main() -> Result<(), Error> {
-    match env::var("RUST_LOG") {
-        Ok(_) => {},
-        Err(_) => default_log_settings()
+fn setup() -> Result<(), Report> {
+    if std::env::var("RUST_LIB_BACKTRACE").is_err() {
+        std::env::set_var("RUST_LIB_BACKTRACE", "1")
     }
-    env_logger::init();
+    color_eyre::install()?;
+
+    if std::env::var("RUST_LOG").is_err() {
+        default_log_settings();
+    }
+    tracing_subscriber::fmt::fmt()
+        .with_env_filter(EnvFilter::from_default_env())
+        .init();
+
+    Ok(())
+}
+
+const ABOUT: &str = "markdeck - collaborative slide editing made easy";
+
+fn main() -> Result<(), Report> {
+    setup()?;
 
     let matches = clap_app!(markdeck =>
-        (version: "0.60.0")
+        (version: crate_version!())
         (author: "Arne Hilmann <arne.hilmann@gmail.com>")
-        (about: "markdeck - collaborative slide editing made easy")
+        (about: ABOUT)
         (@arg port: --port +takes_value default_value("8080") "port of web server")
         (@arg source: --source +takes_value default_value(".") "path of source folder")
         (@arg target: --target +takes_value default_value("deck") "path of target folder")
         (@arg watcher: --watcher +takes_value +case_insensitive possible_values(&WatcherType::variants()) "watcher, detects source file changes")
         (@arg watch_delay: --watch_delay +takes_value default_value("500") "delay between watch calls, in millis")
         (@arg pandoc_cmd: --pandoc_cmd +takes_value default_value("pandoc") "pandoc command")
-        (@arg decktape_cmd: --decktape_cmd +takes_value default_value("decktape") "decktape command")
+        (@arg decktape_cmd: --decktape_cmd +takes_value default_value("") "decktape command")
         (@arg gs_cmd: --gs_cmd +takes_value default_value("gs") "ghostscript command")
+        /*
         (@subcommand check_update =>
             (about: "WIP: checks for newer version of markdeck")
         )
         (@subcommand update =>
             (about: "WIP: updates markdeck (maintains backup of current version)")
         )
+        */
         (@subcommand init =>
             (about: "initializes current folder with minimal markdeck sources")
             (@arg folder: +required +takes_value "name of new markdeck folder")
         )
     )
     .get_matches();
-    
+
     if let Some(init_matches) = matches.subcommand_matches("init") {
         let folder = init_matches.value_of("folder").unwrap();
         info!("folder: {}", folder);
         let mut path = env::current_dir()?;
         path.push(folder);
         if fs::metadata(&path).is_ok() {
-            error!("folder '{}' already exists, bailing out now...", path.display());
-            bail!("");
+            return Err(eyre!(
+                "folder '{}' already exists, bailing out now...",
+                path.display()
+            ));
         }
         fs::create_dir_all(&path)?;
         sync_static("scaffold/", &path, "")?;
-        info!("change to new folder '{}', then run 'markdeck'...", folder);
-        return Ok(())
+        info!("change to new folder '{}', then run 'markdeck' again...", folder);
+        return Ok(());
     }
 
+    info!("{}", ABOUT);
+
     let context = Context::from(matches);
-    info!("{:#?}", context);
+    debug!("{:#?}", context);
+
+    ensure!(context.pandoc_available, "'{}' command not found, bailing out now...", context.pandoc_cmd);
+    if ! context.decktape_available {
+        info!("'{}' command not found, pdf rendering not available.", context.decktape_cmd);
+    }
+    if ! context.gs_available {
+        info!("'{}' command not found, pdf optimization not available", context.gs_cmd);
+    }
 
     let running = Arc::new(AtomicBool::new(true));
     let running_watcher = running.clone();
@@ -221,7 +309,11 @@ fn main() -> Result<(), Error> {
 
     let live_server_context = context.clone();
     let live_server = std::thread::spawn(move || {
-        live_server::start_live_server(live_server_context.target_path, live_server_context.port, rx)
+        live_server::start_live_server(
+            live_server_context.target_path,
+            live_server_context.port,
+            rx,
+        )
     });
     let watcher = std::thread::spawn(move || match context.watcher_type {
         WatcherType::CompareReference => context.compare_watch(running_watcher, tx),
@@ -247,7 +339,7 @@ impl Context {
         &self,
         running: Arc<AtomicBool>,
         sender: Sender<Trigger>,
-    ) -> Result<(), Error> {
+    ) -> Result<(), Report> {
         info!("starting watcher");
 
         let mut reference = PathBuf::from(&self.target_path);
@@ -276,7 +368,10 @@ impl Context {
                 }
             }
             if files_count != last_files_count {
-                info!("number of source files changed (from {} to {}), rerendering!", last_files_count, files_count);
+                info!(
+                    "number of source files changed (from {} to {}), rerendering!",
+                    last_files_count, files_count
+                );
                 rerender = true;
             }
             if rerender {
@@ -298,7 +393,10 @@ impl Context {
                                 .arg("--load-pause")
                                 .arg(pdf_options.load_pause)
                                 .arg(pdf_options.variant)
-                                .arg(format!("http://localhost:{}/index.html?render=pdf", self.port))
+                                .arg(format!(
+                                    "http://localhost:{}/index.html?render=pdf",
+                                    self.port
+                                ))
                                 .arg(&target_pdf);
                             let mut child = render_cmd.spawn().unwrap();
                             match child.wait() {
@@ -308,8 +406,8 @@ impl Context {
                                     } else {
                                         warn!("an error occured during pdf rendering!");
                                     }
-                                },
-                                Err(e) => error!("an error occured during pdf rendering: {}", e),
+                                }
+                                Err(e) => warn!("an error occured during pdf rendering: {}", e),
                             }
                             let duration = start.elapsed();
                             info!("pdf rendering took {} msecs", duration.as_millis());
@@ -318,7 +416,7 @@ impl Context {
                                 let start = Instant::now();
                                 info!("shrinking pdf");
                                 let mut tmp_file = PathBuf::from(&target_pdf);
-                                tmp_file.set_extension(".tmp");
+                                tmp_file.set_extension("pdf.tmp");
                                 let mut gs_cmd = Command::new(&self.gs_cmd);
                                 gs_cmd
                                     .arg("-q")
@@ -344,10 +442,14 @@ impl Context {
                                         if status.success() {
                                             info!("pdf shrinking succesfully");
                                             let orig_meta = target_pdf.metadata().unwrap(); // TODO
-                                            let shrinked_meta = tmp_file.metadata().unwrap();   // TODO
+                                            let shrinked_meta = tmp_file.metadata().unwrap(); // TODO
                                             let orig_len = orig_meta.len();
                                             let shrinked_len = shrinked_meta.len();
                                             let percent = 100 * shrinked_len / orig_len;
+                                            debug!(
+                                                "orig: {}, shrinked: {}, percent: {}",
+                                                orig_len, shrinked_len, percent
+                                            );
                                             if percent > 100 {
                                                 info!("shrinking didn't reduce the filesize, using original pdf");
                                             } else {
@@ -357,21 +459,29 @@ impl Context {
                                         } else {
                                             warn!("an error occured during pdf shrinking!");
                                         }
-                                    },
-                                    Err(e) => error!("an error occured during pdf shrinking: {}", e),
+                                    }
+                                    Err(e) => {
+                                        error!("an error occured during pdf shrinking: {}", e)
+                                    }
                                 }
                                 let duration = start.elapsed();
                                 info!("pdf shrinking took {} msecs", duration.as_millis());
                             }
                         } else {
-                            warn!("pdf rendering not possible: '{}' command does not work!", &self.decktape_cmd);
+                            warn!(
+                                "pdf rendering not possible: '{}' command does not work!",
+                                &self.decktape_cmd
+                            );
                         }
-                    },
+                    }
                     Ok(None) => sender.send(Trigger::Reload)?,
                     Err(e) => {
                         warn!("an error occured during html rendering: {:?}", e);
-                        std::fs::OpenOptions::new().create(true).append(true).open(&reference)?;
-                    },
+                        std::fs::OpenOptions::new()
+                            .create(true)
+                            .append(true)
+                            .open(&reference)?;
+                    }
                 }
             }
 
@@ -383,7 +493,7 @@ impl Context {
         Ok(())
     }
 
-    fn render_html(&self, sources: &[PathBuf]) -> Result<Option<PdfParams>, Error> {
+    fn render_html(&self, sources: &[PathBuf]) -> Result<Option<PdfParams>, Report> {
         let start = Instant::now();
         for source in sources.iter() {
             info!("sources: {}", source.display());
@@ -447,10 +557,7 @@ if pandoc \
     */
 
 impl Context {
-    fn render_deck(
-        &self,
-        source_files: &[PathBuf],
-    ) -> Result<Option<PdfParams>, Error> {
+    fn render_deck(&self, source_files: &[PathBuf]) -> Result<Option<PdfParams>, Report> {
         info!("render_deck");
         let mut slides_combined = PathBuf::from(&self.target_path);
         slides_combined.push("slides.combined.md.txt");
@@ -480,10 +587,14 @@ impl Context {
         info!("compiling scss -> css");
         sass::sassc(
             &self.target_path,
-            &format!("assets/markdeck/css/markdeck.{}.scss", variant),  // TODO should be called on build time
+            &format!("assets/markdeck/css/markdeck.{}.scss", variant), // TODO should be called on build time
             &self.target_path,
         )?;
-        sass::sassc(&self.source_path, "assets/css/slides.scss", &self.target_path)?;
+        sass::sassc(
+            &self.source_path,
+            "assets/css/slides.scss",
+            &self.target_path,
+        )?;
         sass::sassc(
             &self.source_path,
             &format!("assets/css/slides.{}.scss", variant),
@@ -538,7 +649,13 @@ impl Context {
             .arg(format!("--template={}", template_path.display()));
 
         let shortcut_filter = format!(".markdeck/{}-shortcut-filter.lua", variant);
-        if Path::new(&format!("{}/{}", &self.target_path.display(), &shortcut_filter)).exists() {
+        if Path::new(&format!(
+            "{}/{}",
+            &self.target_path.display(),
+            &shortcut_filter
+        ))
+        .exists()
+        {
             render_cmd.arg("--lua-filter").arg(shortcut_filter);
         }
 
@@ -561,9 +678,9 @@ impl Context {
             info!("slides rendered successfully");
 
             if let Ok(params) = PdfParams::try_from(metadata) {
-                return Ok(Some(params))
+                return Ok(Some(params));
             }
-            return Ok(None)
+            return Ok(None);
         } else {
             for line in String::from_utf8(output.stdout)?.lines() {
                 info!("{}", line);
@@ -572,11 +689,11 @@ impl Context {
                 warn!("{}", line);
             }
             warn!("an error occured! {:?}", output.status.code());
-            return Ok(None)
+            return Ok(None);
         }
     }
 
-    fn fetch_metadata(&self) -> Result<Map<String, Value>, Error> {
+    fn fetch_metadata(&self) -> Result<Map<String, Value>, Report> {
         info!("fetch_metadata");
 
         let mut metadata_cmd = Command::new(&self.pandoc_cmd);
@@ -599,7 +716,7 @@ impl Context {
     }
 }
 
-fn sync_static(source_path: &str, target_root: &Path, target_path: &str) -> Result<(), Error> {
+fn sync_static(source_path: &str, target_root: &Path, target_path: &str) -> Result<(), Report> {
     for file in Assets::iter() {
         if !file.starts_with(&source_path) {
             continue;
@@ -608,7 +725,10 @@ fn sync_static(source_path: &str, target_root: &Path, target_path: &str) -> Resu
         if target_path != "" {
             target.push(target_path);
         }
-        let short_file = file.strip_prefix(source_path).unwrap().trim_start_matches("/");
+        let short_file = file
+            .strip_prefix(source_path)
+            .unwrap()
+            .trim_start_matches("/");
         target.push(&*short_file);
 
         #[cfg(not(debug_assertions))]
@@ -624,11 +744,7 @@ fn sync_static(source_path: &str, target_root: &Path, target_path: &str) -> Resu
     Ok(())
 }
 
-fn sync(
-    source_root: &PathBuf,
-    source_path: &str,
-    target_root: &Path,
-) -> Result<sync::Stats, Error> {
+fn sync(source_root: &PathBuf, source_path: &str, target_root: &Path) -> Result<sync::Stats> {
     let console_info = rusync::ConsoleProgressInfo::new();
     let options = rusync::SyncOptions::default();
 
@@ -637,5 +753,5 @@ fn sync(
     let mut target = target_root.to_path_buf();
     target.push(source_path);
     let syncer = Syncer::new(&source, &target, options, Box::new(console_info));
-    Ok(syncer.sync()?)
+    Ok(syncer.sync().map_err(|err| -> Report { eyre!(err) })?)
 }
