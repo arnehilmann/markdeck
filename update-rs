@@ -1,0 +1,10 @@
+#!/bin/bash
+set -eEu
+
+rustup self update
+rustup update
+cargo clean
+cargo update
+
+brew tap SergioBenitez/osxct
+brew upgrade x86_64-unknown-linux-gnu || brew install x86_64-unknown-linux-gnu
