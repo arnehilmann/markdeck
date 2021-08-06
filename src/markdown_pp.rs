@@ -42,7 +42,7 @@ pub fn preprocess(input: Vec<u8>) -> Result<Vec<u8>> {
                 debug!("line range: {:#?}", line_range);
                 let mut start = "1";
                 let mut end = "9999";
-                if line_range != "" {
+                if !line_range.is_empty() {
                     match range_re.captures(line_range) {
                         Some(range_caps) => {
                             start = range_caps.get(1).map_or("1", |m| m.as_str());
