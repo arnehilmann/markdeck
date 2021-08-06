@@ -22,3 +22,4 @@ example/node_modules/
 src/docroot/main/
 node_modules/
 src/docroot/live_server
+.vscode
