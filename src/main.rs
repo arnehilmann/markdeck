@@ -18,7 +18,7 @@ use std::time::{Duration, Instant};
 use clap::crate_version;
 use clap::{clap_app, ArgMatches};
 use color_eyre::{
-    eyre::{eyre, ensure, Result},
+    eyre::{ensure, eyre, Result},
     Report,
 };
 // use log::{debug, info, warn, error};
@@ -88,7 +88,7 @@ impl TryFrom<Map<String, Value>> for PdfParams {
     type Error = ();
     fn try_from(metadata: Map<String, Value>) -> Result<Self, Self::Error> {
         let pdf = metadata["pdf"].as_str().unwrap_or("");
-        if pdf != "" {
+        if !pdf.is_empty() {
             return Ok(PdfParams {
                 filename: pdf.to_string(),
                 size: metadata["pdf_size"]
@@ -109,7 +109,7 @@ impl TryFrom<Map<String, Value>> for PdfParams {
                     .to_string(),
             });
         } else {
-            return Err(());
+            Err(())
         }
     }
 }
@@ -149,7 +149,7 @@ struct Context {
 impl From<ArgMatches<'_>> for Context {
     fn from(matches: ArgMatches) -> Self {
         fn check(cmd: &str, arg: &str) -> bool {
-            if cmd == "" {
+            if cmd.is_empty() {
                 return false;
             }
             let mut call = Command::new(cmd);
@@ -169,17 +169,17 @@ impl From<ArgMatches<'_>> for Context {
             }
             */
             for line in String::from_utf8(output.stderr)
-                .unwrap_or("__string conversion failed__".to_string())
+                .unwrap_or_else(|_| "__string conversion failed__".to_string())
                 .lines()
             {
                 // TODO
                 warn!("{}", line);
             }
-            return output.status.success();
+            output.status.success()
         }
         fn find_decktape_cmd(matches: &ArgMatches) -> String {
             let cmd = matches.value_of("decktape_cmd").unwrap_or("").to_string();
-            if cmd != "" {
+            if !cmd.is_empty() {
                 return cmd;
             }
             let mut call = Command::new("npm");
@@ -188,7 +188,7 @@ impl From<ArgMatches<'_>> for Context {
             if output.is_ok() {
                 let output = output.expect("");
                 let npm_bin = String::from_utf8(output.stdout)
-                    .unwrap_or("__string conversion failed__".to_string())
+                    .unwrap_or_else(|_| "__string conversion failed__".to_string())
                     .lines()
                     .next()
                     .expect("")
@@ -200,7 +200,7 @@ impl From<ArgMatches<'_>> for Context {
                     return String::from(decktape_bin);
                 }
             }
-            return String::from("decktape");
+            String::from("decktape")
         }
         let pandoc_cmd = matches.value_of("pandoc_cmd").unwrap_or("").to_string();
         let decktape_cmd = find_decktape_cmd(&matches);
@@ -214,11 +214,11 @@ impl From<ArgMatches<'_>> for Context {
                 .unwrap_or(WatcherType::CompareReference),
             watch_delay: value_t_or_exit!(matches.value_of("watch_delay"), u64),
             pandoc_available: check(&pandoc_cmd, "--version"),
-            pandoc_cmd: pandoc_cmd,
+            pandoc_cmd,
             decktape_available: check(&decktape_cmd, "version"),
-            decktape_cmd: decktape_cmd,
+            decktape_cmd,
             gs_available: check(&gs_cmd, "--version"),
-            gs_cmd: gs_cmd,
+            gs_cmd,
         }
     }
 }
@@ -284,7 +284,10 @@ fn main() -> Result<(), Report> {
         }
         fs::create_dir_all(&path)?;
         sync_static("scaffold/", &path, "")?;
-        info!("change to new folder '{}', then run 'markdeck' again...", folder);
+        info!(
+            "change to new folder '{}', then run 'markdeck' again...",
+            folder
+        );
         return Ok(());
     }
 
@@ -293,12 +296,22 @@ fn main() -> Result<(), Report> {
     let context = Context::from(matches);
     debug!("{:#?}", context);
 
-    ensure!(context.pandoc_available, "'{}' command not found, bailing out now...", context.pandoc_cmd);
-    if ! context.decktape_available {
-        info!("'{}' command not found, pdf rendering not available.", context.decktape_cmd);
+    ensure!(
+        context.pandoc_available,
+        "'{}' command not found, bailing out now...",
+        context.pandoc_cmd
+    );
+    if !context.decktape_available {
+        info!(
+            "'{}' command not found, pdf rendering not available.",
+            context.decktape_cmd
+        );
     }
-    if ! context.gs_available {
-        info!("'{}' command not found, pdf optimization not available", context.gs_cmd);
+    if !context.gs_available {
+        info!(
+            "'{}' command not found, pdf optimization not available",
+            context.gs_cmd
+        );
     }
 
     let running = Arc::new(AtomicBool::new(true));
@@ -352,9 +365,8 @@ impl Context {
         while running.load(Ordering::Relaxed) {
             let sources = fetch_sources(&self.source_path);
             let mut r_m = std::time::SystemTime::UNIX_EPOCH;
-            match reference.metadata() {
-                Ok(metadata) => r_m = metadata.modified()?,
-                _ => {}
+            if let Ok(metadata) = reference.metadata() {
+                r_m = metadata.modified()?
             }
             rerender = false;
             files_count = 0;
@@ -506,7 +518,7 @@ impl Context {
         sync_static(".markdeck", &self.target_path, ".markdeck")?;
         sync_static("toplevel", &self.target_path, "")?;
 
-        let pdf_params = self.render_deck(&sources)?;
+        let pdf_params = self.render_deck(sources)?;
 
         let duration = start.elapsed();
         info!("rendering took {} msecs", duration.as_millis());
@@ -515,7 +527,7 @@ impl Context {
     }
 }
 
-fn interesting_files(source_path: &PathBuf) -> Vec<PathBuf> {
+fn interesting_files(source_path: &Path) -> Vec<PathBuf> {
     glob(&format!("{}/*[a-z]*.md", source_path.display()))
         .expect("Failed to read md glob pattern")
         .chain(
@@ -680,7 +692,6 @@ impl Context {
             if let Ok(params) = PdfParams::try_from(metadata) {
                 return Ok(Some(params));
             }
-            return Ok(None);
         } else {
             for line in String::from_utf8(output.stdout)?.lines() {
                 info!("{}", line);
@@ -689,8 +700,8 @@ impl Context {
                 warn!("{}", line);
             }
             warn!("an error occured! {:?}", output.status.code());
-            return Ok(None);
         }
+        Ok(None)
     }
 
     fn fetch_metadata(&self) -> Result<Map<String, Value>, Report> {
@@ -722,13 +733,13 @@ fn sync_static(source_path: &str, target_root: &Path, target_path: &str) -> Resu
             continue;
         }
         let mut target = target_root.to_path_buf();
-        if target_path != "" {
+        if !target_path.is_empty() {
             target.push(target_path);
         }
         let short_file = file
             .strip_prefix(source_path)
             .unwrap()
-            .trim_start_matches("/");
+            .trim_start_matches('/');
         target.push(&*short_file);
 
         #[cfg(not(debug_assertions))]
@@ -738,13 +749,13 @@ fn sync_static(source_path: &str, target_root: &Path, target_path: &str) -> Resu
 
         let content = Assets::get(&file).expect("cannot convert data to utf8");
         fs::create_dir_all(&target.parent().expect("cannot access parent folder"))?;
-        fs::write(&target, content.as_ref())?;
+        fs::write(&target, content.data)?;
     }
 
     Ok(())
 }
 
-fn sync(source_root: &PathBuf, source_path: &str, target_root: &Path) -> Result<sync::Stats> {
+fn sync(source_root: &Path, source_path: &str, target_root: &Path) -> Result<sync::Stats> {
     let console_info = rusync::ConsoleProgressInfo::new();
     let options = rusync::SyncOptions::default();
 
@@ -753,5 +764,5 @@ fn sync(source_root: &PathBuf, source_path: &str, target_root: &Path) -> Result<
     let mut target = target_root.to_path_buf();
     target.push(source_path);
     let syncer = Syncer::new(&source, &target, options, Box::new(console_info));
-    Ok(syncer.sync().map_err(|err| -> Report { eyre!(err) })?)
+    syncer.sync().map_err(|err| -> Report { eyre!(err) })
 }
