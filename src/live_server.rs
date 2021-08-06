@@ -10,7 +10,7 @@ use actix::prelude::*;
 use actix_files as fs;
 use actix_web::web::Data;
 use actix_web::{middleware, web, App, Error, HttpRequest, HttpResponse, HttpServer};
-use actix_web_actors::ws;
+pub(crate) use actix_web_actors::ws;
 use log::{debug, info};
 use rust_embed::RustEmbed;
 
@@ -81,12 +81,12 @@ pub async fn start_live_server(
 
 async fn helper(r: HttpRequest, _stream: web::Payload) -> Result<HttpResponse, Error> {
     debug!("requesting {}", r.path());
-    let mut path = r.path().trim_start_matches("/").to_string();
-    if path.ends_with("/") {
+    let mut path = r.path().trim_start_matches('/').to_string();
+    if path.ends_with('/') {
         path.push_str("index.html");
     }
     let body = Assets::get(&path).expect("an error occured!");
-    let res = actix_web::HttpResponse::Ok().body(body.into_owned());
+    let res = actix_web::HttpResponse::Ok().body(body.data.into_owned());
     Ok(res)
 }
 
@@ -209,7 +209,7 @@ async fn patch_response(r: HttpRequest, _stream: web::Payload) -> Result<HttpRes
     let res = actix_web::HttpResponse::Ok().body(format!(
         "{}\n\n\n{}", // horray to the lazy html renderer
         String::from_utf8_lossy(&body),
-        std::str::from_utf8(&patch)?
+        std::str::from_utf8(&patch.data.to_owned())?
     ));
     Ok(res)
 }
