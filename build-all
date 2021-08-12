@@ -11,4 +11,4 @@ for TARGET in x86_64-apple-darwin x86_64-pc-windows-gnu x86_64-unknown-linux-gnu
     [[ -f target/$TARGET/release/markdeck.exe ]] && cp target/$TARGET/release/markdeck.exe target/binaries/markdeck.$TARGET.exe
 done
 
-du -m target/binaries/
+du -m target/binaries/*
