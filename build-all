@@ -1,10 +1,22 @@
 #!/bin/bash
 set -eEu
 
+TARGETS="x86_64-apple-darwin x86_64-pc-windows-gnu x86_64-unknown-linux-musl"
+# TARGETS="x86_64-unknown-linux-musl"
+
+export CC_x86_64_unknown_linux_gnu=x86_64-unknown-linux-gnu-gcc
+export CXX_x86_64_unknown_linux_gnu=x86_64-unknown-linux-gnu-g++
+export AR_x86_64_unknown_linux_gnu=x86_64-unknown-linux-gnu-ar
 export CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=x86_64-unknown-linux-gnu-gcc
+
+export CC_x86_64_unknown_linux_musl=x86_64-unknown-linux-musl-gcc
+export CXX_x86_64_unknown_linux_musl=x86_64-unknown-linux-musl-g++
+export AR_x86_64_unknown_linux_musl=x86_64-unknown-linux-musl-ar
+export CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER=x86_64-unknown-linux-musl-gcc
+
 mkdir -p target/binaries
 
-for TARGET in x86_64-apple-darwin x86_64-pc-windows-gnu x86_64-unknown-linux-gnu; do
+for TARGET in $TARGETS; do
     echo "building release for target $TARGET"
     cargo build --release --target $TARGET
     [[ -f target/$TARGET/release/markdeck ]] && cp target/$TARGET/release/markdeck target/binaries/markdeck.$TARGET
