@@ -42,7 +42,7 @@ center: true
 touch: true
 loop:
 rtl:
-shuffle: false
+shuffle: "false"
 fragments: true
 embedded: "false"
 help: true
@@ -60,7 +60,7 @@ backgroundTransition: fade  # none/fade/slide/convex/concave/zoom
 viewDistance: 3
 parallaxBackgroundImage: ''
 parallaxBackgroundSize: ''
-parallaxBackgroundHorizontal: null
-parallaxBackgroundVertical: null
+parallaxBackgroundHorizontal: false
+parallaxBackgroundVertical: false
 highlight_style: zenburn
 ---
