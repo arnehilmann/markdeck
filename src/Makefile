@@ -7,7 +7,7 @@ MAKEFLAGS += --no-builtin-rules
 
 .PHONY: all tag push check-versions clean tabularasa docroot
 
-PANDOC_VERSION=2.14.0.3
+PANDOC_VERSION=2.14.1
 REVEALJS_VERSION=4.1.2
 ASCIINEMAPLAYER_VERSION=v2.6.1
 JQUERY_VERSION=3.6.0.slim.min
@@ -41,7 +41,7 @@ images.built: Makefile Dockerfile.* $(shell find markdeck/) markdeck/versions
 
 
 docroot:
-	docker build -t arne/markdeck-docroot:latest -f ../Dockerfile.pandoc \
+	docker build -t arne/markdeck-docroot:latest -f Dockerfile.docroot \
 		--build-arg MERMAID_VERSION=$(MERMAID_VERSION) \
 		--build-arg PANDOC_VERSION=$(PANDOC_VERSION) \
 		--build-arg JQUERY_VERSION=$(JQUERY_VERSION) \
@@ -50,7 +50,7 @@ docroot:
 		--build-arg ASCIINEMAPLAYER_VERSION=$(ASCIINEMAPLAYER_VERSION) \
 		--build-arg SVGBOB_VERSION=$(SVGBOB_VERSION) \
 		--target build-docroot \
-		..
+		.
 	rm -rf docroot/main
 	mkdir -p docroot/main
 	docker rm -f docroot-main
