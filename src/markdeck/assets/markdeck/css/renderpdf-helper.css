@@ -1,0 +1,44 @@
+@keyframes slide-commands{
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+.commands {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 15%;
+    bottom: 0;
+    font-size: 14pt;
+    padding: 2% 2% 4%;
+    text-align: right;
+}
+.commands * {
+    color: rgba(120, 120, 120, 0);
+}
+body.main-menu .commands {
+    background: rgba(240, 240, 240, .5);
+    border-left: 2px solid rgba(120, 120, 120, .5);
+    animation: slide-commands .5s;
+}
+body.main-menu .commands * {
+    color: rgba(120, 120, 120, 1);
+}
+
+body.main-menu div:not(.commands) {
+    filter: blur(4px);
+}
+
+body.main-menu div.commands {
+    display: block;
+}
+
+body.rendering .commands:hover {
+    opacity: 0;
+    animation: none;
+}
+.render-error-message {
+    display: none;
+}
+body.render-error .render-error-message {
+    display: block;
+}
