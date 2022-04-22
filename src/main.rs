@@ -14,11 +14,13 @@ use std::sync::mpsc::channel;
 use std::sync::mpsc::Sender;
 use std::sync::Arc;
 use std::time::{Duration, Instant};
+use std::os::unix::fs::PermissionsExt;  // TODO what about windows?
+
 
 use clap::crate_version;
 use clap::{clap_app, ArgMatches};
 use color_eyre::{
-    eyre::{ensure, eyre, Result},
+    eyre::{eyre, Result},
     Report,
 };
 // use log::{debug, info, warn, error};
@@ -33,6 +35,10 @@ use live_server::Trigger;
 use tracing::{debug, error, info, warn};
 use tracing_subscriber::EnvFilter;
 
+// TODO brew install java graphviz qrencode svgbob
+
+
+// old stuff below this line, try to ignore for now
 // TODO sanity check
 // TODO check for following tools:
 // TODO brew install pandoc # mandatory
@@ -131,6 +137,7 @@ fn default_log_settings() {
 }
 
 #[derive(Debug, Clone)]
+#[allow(dead_code)]
 struct Context {
     source_path: PathBuf,
     target_path: PathBuf,
@@ -139,7 +146,7 @@ struct Context {
     watcher_type: WatcherType,
     watch_delay: u64,
     pandoc_cmd: String,
-    pandoc_available: bool,
+    // pandoc_available: bool,
     decktape_cmd: String,
     decktape_available: bool,
     gs_cmd: String,
@@ -213,7 +220,7 @@ impl From<ArgMatches<'_>> for Context {
             watcher_type: value_t!(matches.value_of("watcher"), WatcherType)
                 .unwrap_or(WatcherType::CompareReference),
             watch_delay: value_t_or_exit!(matches.value_of("watch_delay"), u64),
-            pandoc_available: check(&pandoc_cmd, "--version"),
+            // pandoc_available: check(&pandoc_cmd, "--version"),
             pandoc_cmd,
             decktape_available: check(&decktape_cmd, "version"),
             decktape_cmd,
@@ -253,7 +260,7 @@ fn main() -> Result<(), Report> {
         (@arg target: --target +takes_value default_value("deck") "path of target folder")
         (@arg watcher: --watcher +takes_value +case_insensitive possible_values(&WatcherType::variants()) "watcher, detects source file changes")
         (@arg watch_delay: --watch_delay +takes_value default_value("500") "delay between watch calls, in millis")
-        (@arg pandoc_cmd: --pandoc_cmd +takes_value default_value("pandoc") "pandoc command")
+        (@arg pandoc_cmd: --pandoc_cmd +takes_value default_value(".tools/pandoc") "pandoc command")
         (@arg decktape_cmd: --decktape_cmd +takes_value default_value("") "decktape command")
         (@arg gs_cmd: --gs_cmd +takes_value default_value("gs") "ghostscript command")
         /*
@@ -268,8 +275,31 @@ fn main() -> Result<(), Report> {
             (about: "initializes current folder with minimal markdeck sources")
             (@arg folder: +required +takes_value "name of new markdeck folder")
         )
+        (@subcommand dev =>
+            (about: "dev stuff")
+        )
     )
     .get_matches();
+
+    if let Some(_) = matches.subcommand_matches("dev") {
+        info!("dev");
+        let path =
+            "../example/deck/rendered/render_svgbob-1a89ca30702be95a205cda7d628bb3e5699bdee9.svg";
+
+        use minidom::quick_xml::Reader;
+        use minidom::Element;
+        use std::fs::File;
+
+        let mut reader = Reader::from_file(path)?;
+        let mut svg = Element::from_reader(&mut reader)?;
+        let id = "4711-0815";
+        svg.set_attr("id", id);
+
+        let mut file = File::create("foo.txt")?;
+        svg.write_to(&mut file)?;
+        // info!("{:#?}", svg);
+        return Ok(());
+    }
 
     if let Some(init_matches) = matches.subcommand_matches("init") {
         let folder = init_matches.value_of("folder").unwrap();
@@ -296,11 +326,13 @@ fn main() -> Result<(), Report> {
     let context = Context::from(matches);
     debug!("{:#?}", context);
 
+    /*
     ensure!(
         context.pandoc_available,
         "'{}' command not found, bailing out now...",
         context.pandoc_cmd
     );
+    */
     if !context.decktape_available {
         info!(
             "'{}' command not found, pdf rendering not available.",
@@ -357,6 +389,9 @@ impl Context {
 
         let mut reference = PathBuf::from(&self.target_path);
         reference.push(&self.target_file);
+
+        sync_executables(".tools", &self.target_path, ".tools")?;
+        // TODO fix exec permission
 
         let mut files_count;
         let mut last_files_count = 0;
@@ -484,7 +519,7 @@ impl Context {
                                 info!("pdf shrinking took {} msecs", duration.as_millis());
                             }
                         } else {
-                            warn!(
+                            warn!(  // TODO
                                 "pdf rendering not possible: '{}' command does not work!",
                                 &self.decktape_cmd
                             );
@@ -729,6 +764,24 @@ impl Context {
         }
         Ok(metadata)
     }
+}
+
+fn sync_executables(source_path: &str, target_root: &Path, target_path: &str) -> Result<(), Report> {
+    sync_static(&source_path, &target_root, &target_path)?;
+    let mut target = target_root.to_path_buf();
+    if !target_path.is_empty() {
+        target.push(target_path);
+    }
+    let entries = fs::read_dir(&target).unwrap();
+    for entry in entries {
+        let path = entry?.path();
+        info!("ensure executable bit set for {}", &path.display());
+        // TODO support windows, too!
+        let mut perms = fs::metadata(&path)?.permissions();
+        perms.set_mode(0o755);
+        fs::set_permissions(&path, perms)?;
+    }
+    Ok(())
 }
 
 fn sync_static(source_path: &str, target_root: &Path, target_path: &str) -> Result<(), Report> {

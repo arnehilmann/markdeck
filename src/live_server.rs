@@ -60,13 +60,13 @@ pub async fn start_live_server(
 
     HttpServer::new(move || {
         App::new()
-            .data(concierge.clone())
-            .data(docroot.clone())
+            .app_data(Data::new(concierge.clone()))
+            .app_data(Data::new(docroot.clone()))
             .wrap(middleware::Logger::default())
             .service(web::resource("/ws").route(web::get().to(ws_index)))
-            .service(web::resource("/").route(web::get().to(|| {
+            .service(web::resource("/").route(web::get().to(|| async {
                 HttpResponse::Found()
-                    .header("LOCATION", "index.html")
+                    .append_header((actix_web::http::header::LOCATION, "index.html"))
                     .finish()
             })))
             .service(web::resource("/index.html").route(web::get().to(patch_response)))
@@ -94,8 +94,11 @@ async fn ws_index(r: HttpRequest, stream: web::Payload) -> Result<HttpResponse, 
     let concierge = r
         .app_data::<Data<Arc<RwLock<Concierge>>>>()
         .expect("no concierge found!");
-    let mws = MyWebSocket::new(concierge.get_ref().clone());
+    /*
     let (_addr, res) = ws::start_with_addr(mws, &r, stream)?;
+    */
+    let mws = MyWebSocket::new(concierge.get_ref().clone());
+    let res = ws::WsResponseBuilder::new(mws, &r, stream).start()?;
 
     Ok(res)
 }

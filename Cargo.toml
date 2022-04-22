@@ -6,39 +6,45 @@ edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[profile.release]
+strip = true
+lto = true
+
 [build-dependencies]
-grass = "0.10.6"
-anyhow = "1.0.42"
+grass = "0"
+anyhow = "1"
 
 [dependencies]
-rust-embed = { version = "6.0.0", features = ["compression"] }
-grass = "0.10.6"
-rusync = "0.7.0"
-serde = { version = "1.0.127", features = ["derive"] }
-serde_json = "1.0.66"
-glob = "0.3.0"
+rust-embed = { version = "6", features = ["compression"] }
+grass = "0"
+rusync = "0"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+glob = "0"
 
-actix = "0.10.0"
-actix-codec = "0.4.0"
-actix-web = "3.3.2"
-actix-web-actors = "3.0.0"
-actix-files = "0.5.0"
-awc = "2.0.3"
-env_logger = "0.9.0"
-futures = "0.3.16"
-bytes = "1.0.1"
-actix-service = "2.0.0"
+actix = "0"
+actix-codec = "0"
+actix-web = "4"
+actix-web-actors = "4"
+actix-files = "0"
+awc = "3"
+env_logger = "0"
+futures = "0"
+bytes = "1"
+actix-service = "2"
 
-notify = "4.0.17"
-anyhow = "1.0.42"
-ctrlc = { version = "3.1.9", features = ["termination"] }
-uuid = { version = "0.8.2", features = ["serde", "v4"] }
-log = "0.4.14"
-walkdir = "2.3.2"
-regex = "1.5.4"
+notify = "4"
+anyhow = "1"
+ctrlc = { version = "3", features = ["termination"] }
+uuid = { version = "1", features = ["serde", "v4"] }
+log = "0"
+walkdir = "2"
+regex = "1"
 
-clap = "2.33.3"
-color-eyre = "0.5.11"
-tracing = "0.1.26"
-tracing-subscriber = "0.2.19"
-eyre = "0.6.5"
+clap = "2"
+color-eyre = "0"
+tracing = "0"
+tracing-subscriber = { version = "0", features = ["env-filter"] }
+eyre = "0"
+
+minidom = "0"
