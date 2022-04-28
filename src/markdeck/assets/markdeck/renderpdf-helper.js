@@ -32,6 +32,7 @@ const renderPdf = async (filename, cbs, width=960, height=740,
     try {
         console.log("preparing slides for pdf rendering")
         document.body.classList.add("rendering")
+        document.body.classList.remove("main-menu")
         window.resizeTo(width, height)
         cbs.init()
 
