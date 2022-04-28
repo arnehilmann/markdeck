@@ -52,6 +52,7 @@ $endfor$
     <div class="connection-lost-message"><h1>R E C O N N E C T I N G</h1></div>
     <div class="render-error-message"><h1>R E N D E R   E R R O R</h1>Retry, please... 😬</div>
 
+
     $if(markdeckFooter)$
     <div class="markdeck-logo"><a href="https://github.com/arnehilmann/markdeck">powered by markdeck</a></div>
     $endif$
@@ -196,20 +197,6 @@ $body$
 
         jQuery(".flush-right").children(".flush-right").removeClass("flush-right");
         flushright(".slides section.flush-right");
-
-        function show_main_menu() {
-            console.log("main menu");
-            var body = document.getElementsByTagName("body")[0];
-            body.classList.add("main-menu");
-        }
-        window.show_main_menu = show_main_menu;
-
-        function hide_main_menu() {
-            console.log("/main menu");
-            var body = document.getElementsByTagName("body")[0];
-            body.classList.remove("main-menu");
-        }
-        window.hide_main_menu = hide_main_menu;
     </script>
 
     <script>
@@ -257,10 +244,6 @@ $body$
 
         document.body.className += " $themes$";
     </script>
-
-<div class="commands" onmouseover="javascript:show_main_menu();" onmouseout="javascript:hide_main_menu();">
-    <a href="javascript:null" onclick="javascript:launchPdfRendering();">render pdf</a>
-</div>
 
 <script src="assets/3rdparty/jspdf/jspdf.umd.min.js"></script>
 <script src="assets/markdeck/renderpdf-helper.js"></script>
