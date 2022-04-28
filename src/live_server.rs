@@ -70,7 +70,7 @@ pub async fn start_live_server(
                     .finish()
             })))
             .service(web::resource("/index.html").route(web::get().to(patch_response)))
-            .service(web::resource("/helper/*").route(web::get().to(helper)))
+            .service(web::resource("/helper/{path:.*}").route(web::get().to(helper)))
             .service(fs::Files::new("/", docroot.clone()))
     })
     // .bind(format!("127.0.0.1:{}", port))?
