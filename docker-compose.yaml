@@ -1,0 +1,25 @@
+version: "3.4"
+services:
+  markdeck:
+    image: arne/markdeck:0.60.0
+    ports:
+      - 8080:8080
+    environment:
+      - ASCIIART_A2S_HOST=http://a2sketch:22753
+    volumes:
+      - type: bind
+        source: ./
+        target: /source
+        read_only: true
+      - type: bind
+        source: ./deck
+        target: /target
+  a2sketch:
+    image: arne/a2sketch:0.15
+    ports:
+      - 22753:22753
+    volumes:
+      - type: bind
+        source: ./
+        target: /custom-types
+        read_only: true
