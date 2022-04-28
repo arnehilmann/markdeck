@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="232" height="176">
+    <style>
+        line, path, circle, rect, polygon{stroke:black;stroke-width:2;stroke-opacity:1;fill-opacity:1;stroke-linecap:round;stroke-linejoin:miter;}text{font-family:Raleway;font-size:16px;}rect.backdrop{stroke:none;fill:white;}.broken{stroke-dasharray:8;}.filled{fill:black;}.bg_filled{fill:white;}.nofill{fill:white;}.end_marked_arrow{marker-end:url(#arrow);}.start_marked_arrow{marker-start:url(#arrow);}.end_marked_diamond{marker-end:url(#diamond);}.start_marked_diamond{marker-start:url(#diamond);}.end_marked_circle{marker-end:url(#circle);}.start_marked_circle{marker-start:url(#circle);}.end_marked_open_circle{marker-end:url(#open_circle);}.start_marked_open_circle{marker-start:url(#open_circle);}.end_marked_big_open_circle{marker-end:url(#big_open_circle);}.start_marked_big_open_circle{marker-start:url(#big_open_circle);}
+        <!--separator-->
+        
+    </style>
+    <defs>
+        <marker id="arrow" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <polygon points="0,0 0,4 4,2 0,0"></polygon>
+        </marker>
+        <marker id="diamond" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <polygon points="0,2 2,0 4,2 2,4 0,2"></polygon>
+        </marker>
+        <marker id="circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <circle cx="4" cy="4" r="2" class="filled"></circle>
+        </marker>
+        <marker id="open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <circle cx="4" cy="4" r="2" class="bg_filled"></circle>
+        </marker>
+        <marker id="big_open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <circle cx="4" cy="4" r="3" class="bg_filled"></circle>
+        </marker>
+    </defs>
+    <rect class="backdrop" x="0" y="0" width="232" height="176"></rect>
+    <text x="66" y="28" >P</text>
+    <circle cx="84" cy="24" r="3" class="filled"></circle>
+    <text x="58" y="76" >v0</text>
+    <text x="170" y="76" >v3</text>
+    <circle cx="76" cy="88" r="3" class="filled"></circle>
+    <line x1="74" y1="92" x2="46" y2="148" class="solid"></line>
+    <line x1="80" y1="88" x2="160" y2="88" class="solid"></line>
+    <circle cx="164" cy="88" r="3" class="filled"></circle>
+    <line x1="166" y1="92" x2="194" y2="148" class="solid"></line>
+    <text x="138" y="108" >X</text>
+    <line x1="136" y1="112" x2="134" y2="116" class="solid"></line>
+    <circle cx="132" cy="120" r="3" class="nofill"></circle>
+    <circle cx="44" cy="152" r="3" class="filled"></circle>
+    <line x1="48" y1="152" x2="192" y2="152" class="solid"></line>
+    <circle cx="196" cy="152" r="3" class="filled"></circle>
+    <text x="18" y="156" >v1</text>
+    <text x="210" y="156" >v2</text>
+    <g>
+        <line x1="86" y1="28" x2="122" y2="100" class="solid"></line>
+        <polygon points="119,100 126,108 126,97" class="filled"></polygon>
+    </g>
+</svg>

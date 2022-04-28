@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="240px" preserveAspectRatio="none" style="width:290px;height:240px;background:#00000000;" version="1.1" viewBox="0 0 290 240" width="290px" zoomAndPan="magnify"><defs/><g><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="35" x2="35" y1="47.9375" y2="193.75"/><line style="stroke:#181818;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="248" x2="248" y1="47.9375" y2="193.75"/><rect fill="#E2E2F0" height="41.9375" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="60" x="5" y="5"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacing" textLength="46" x="12" y="34.2773">Bob</text><rect fill="#E2E2F0" height="41.9375" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="60" x="5" y="192.75"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacing" textLength="46" x="12" y="222.0273">Bob</text><rect fill="#E2E2F0" height="41.9375" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="72" x="212" y="5"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacing" textLength="58" x="219" y="34.2773">Alice</text><rect fill="#E2E2F0" height="41.9375" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="72" x="212" y="192.75"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacing" textLength="58" x="219" y="222.0273">Alice</text><polygon fill="#181818" points="236,87.875,246,91.875,236,95.875,240,91.875" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="35" x2="242" y1="91.875" y2="91.875"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacing" textLength="59" x="42" y="84.2148">hello</text><polygon fill="#181818" points="46,129.8125,36,133.8125,46,137.8125,42,133.8125" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="40" x2="247" y1="133.8125" y2="133.8125"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacing" textLength="189" x="52" y="126.1523">oh, you again...</text><polygon fill="#181818" points="236,171.75,246,175.75,236,179.75,240,175.75" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="35" x2="242" y1="175.75" y2="175.75"/><text fill="#000000" font-family="Raleway" font-size="24" lengthAdjust="spacing" textLength="26" x="42" y="168.0898">??</text><!--MD5=[53f33b229b0e35572e6b31cd02e18b70]
+@startuml
+skinparamlocked backgroundcolor transparent
+skinparamlocked backgroundcolor transparent
+skinparamlocked defaultFontSize 24
+skinparamlocked defaultFontName Raleway
+Bob->Alice : hello
+Alice->Bob : oh, you again...
+Bob->Alice : ??
+@enduml
+
+PlantUML version 1.2022.4(Sat Apr 09 13:29:17 GMT 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
