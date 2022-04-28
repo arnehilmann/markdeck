@@ -3,7 +3,6 @@ extern crate clap;
 extern crate color_eyre;
 extern crate eyre;
 
-use std::convert::TryFrom;
 use std::env;
 use std::fs::{self, OpenOptions};
 use std::io::Write;
@@ -14,6 +13,7 @@ use std::sync::mpsc::channel;
 use std::sync::mpsc::Sender;
 use std::sync::Arc;
 use std::time::{Duration, Instant};
+#[cfg(target_family = "unix")]
 use std::os::unix::fs::PermissionsExt;  // TODO what about windows?
 
 
@@ -32,7 +32,7 @@ use serde_json::{from_str, Map, Value};
 
 use live_server::Trigger;
 
-use tracing::{debug, error, info, warn};
+use tracing::{debug, info, warn};
 use tracing_subscriber::EnvFilter;
 
 // TODO brew install java graphviz qrencode svgbob
@@ -81,45 +81,6 @@ arg_enum! {
     }
 }
 
-#[derive(Debug)]
-struct PdfParams {
-    filename: String,
-    size: String,
-    pause: String,
-    load_pause: String,
-    variant: String,
-}
-
-impl TryFrom<Map<String, Value>> for PdfParams {
-    type Error = ();
-    fn try_from(metadata: Map<String, Value>) -> Result<Self, Self::Error> {
-        let pdf = metadata["pdf"].as_str().unwrap_or("");
-        if !pdf.is_empty() {
-            return Ok(PdfParams {
-                filename: pdf.to_string(),
-                size: metadata["pdf_size"]
-                    .as_str()
-                    .unwrap_or("1024x768")
-                    .to_string(),
-                pause: metadata
-                    .get("pdf_pause")
-                    .map_or("100", |v| v.as_str().unwrap_or("100"))
-                    .to_string(),
-                load_pause: metadata
-                    .get("pdf_load_pause")
-                    .map_or("100", |v| v.as_str().unwrap_or("100"))
-                    .to_string(),
-                variant: metadata["variant"]
-                    .as_str()
-                    .unwrap_or("automatic")
-                    .to_string(),
-            });
-        } else {
-            Err(())
-        }
-    }
-}
-
 #[cfg(debug_assertions)]
 fn default_log_settings() {
     env::set_var(
@@ -147,71 +108,11 @@ struct Context {
     watch_delay: u64,
     pandoc_cmd: String,
     // pandoc_available: bool,
-    decktape_cmd: String,
-    decktape_available: bool,
-    gs_cmd: String,
-    gs_available: bool,
 }
 
 impl From<ArgMatches<'_>> for Context {
     fn from(matches: ArgMatches) -> Self {
-        fn check(cmd: &str, arg: &str) -> bool {
-            if cmd.is_empty() {
-                return false;
-            }
-            let mut call = Command::new(cmd);
-            call.arg(arg);
-            let output = call.output();
-            if output.is_err() {
-                return false;
-            }
-            let output = output.expect("");
-            /*
-            for line in String::from_utf8(output.stdout)
-                .unwrap_or("__string conversion failed__".to_string())
-                .lines()
-            {
-                // TODO
-                // debug!("{}", line);
-            }
-            */
-            for line in String::from_utf8(output.stderr)
-                .unwrap_or_else(|_| "__string conversion failed__".to_string())
-                .lines()
-            {
-                // TODO
-                warn!("{}", line);
-            }
-            output.status.success()
-        }
-        fn find_decktape_cmd(matches: &ArgMatches) -> String {
-            let cmd = matches.value_of("decktape_cmd").unwrap_or("").to_string();
-            if !cmd.is_empty() {
-                return cmd;
-            }
-            let mut call = Command::new("npm");
-            call.arg("bin");
-            let output = call.output();
-            if output.is_ok() {
-                let output = output.expect("");
-                let npm_bin = String::from_utf8(output.stdout)
-                    .unwrap_or_else(|_| "__string conversion failed__".to_string())
-                    .lines()
-                    .next()
-                    .expect("")
-                    .to_owned();
-                let decktape_bin = Path::new(&npm_bin);
-                let decktape_bin = decktape_bin.join("decktape");
-                let decktape_bin = decktape_bin.to_str().expect("");
-                if check(decktape_bin, "version") {
-                    return String::from(decktape_bin);
-                }
-            }
-            String::from("decktape")
-        }
         let pandoc_cmd = matches.value_of("pandoc_cmd").unwrap_or("").to_string();
-        let decktape_cmd = find_decktape_cmd(&matches);
-        let gs_cmd = matches.value_of("gs_cmd").unwrap_or("").to_string();
         Context {
             source_path: PathBuf::from(matches.value_of("source").unwrap()),
             target_path: PathBuf::from(matches.value_of("target").unwrap()),
@@ -220,12 +121,7 @@ impl From<ArgMatches<'_>> for Context {
             watcher_type: value_t!(matches.value_of("watcher"), WatcherType)
                 .unwrap_or(WatcherType::CompareReference),
             watch_delay: value_t_or_exit!(matches.value_of("watch_delay"), u64),
-            // pandoc_available: check(&pandoc_cmd, "--version"),
             pandoc_cmd,
-            decktape_available: check(&decktape_cmd, "version"),
-            decktape_cmd,
-            gs_available: check(&gs_cmd, "--version"),
-            gs_cmd,
         }
     }
 }
@@ -261,16 +157,6 @@ fn main() -> Result<(), Report> {
         (@arg watcher: --watcher +takes_value +case_insensitive possible_values(&WatcherType::variants()) "watcher, detects source file changes")
         (@arg watch_delay: --watch_delay +takes_value default_value("500") "delay between watch calls, in millis")
         (@arg pandoc_cmd: --pandoc_cmd +takes_value default_value(".tools/pandoc") "pandoc command")
-        (@arg decktape_cmd: --decktape_cmd +takes_value default_value("") "decktape command")
-        (@arg gs_cmd: --gs_cmd +takes_value default_value("gs") "ghostscript command")
-        /*
-        (@subcommand check_update =>
-            (about: "WIP: checks for newer version of markdeck")
-        )
-        (@subcommand update =>
-            (about: "WIP: updates markdeck (maintains backup of current version)")
-        )
-        */
         (@subcommand init =>
             (about: "initializes current folder with minimal markdeck sources")
             (@arg folder: +required +takes_value "name of new markdeck folder")
@@ -325,26 +211,6 @@ fn main() -> Result<(), Report> {
 
     let context = Context::from(matches);
     debug!("{:#?}", context);
-
-    /*
-    ensure!(
-        context.pandoc_available,
-        "'{}' command not found, bailing out now...",
-        context.pandoc_cmd
-    );
-    */
-    if !context.decktape_available {
-        info!(
-            "'{}' command not found, pdf rendering not available.",
-            context.decktape_cmd
-        );
-    }
-    if !context.gs_available {
-        info!(
-            "'{}' command not found, pdf optimization not available",
-            context.gs_cmd
-        );
-    }
 
     let running = Arc::new(AtomicBool::new(true));
     let running_watcher = running.clone();
@@ -424,108 +290,7 @@ impl Context {
             if rerender {
                 sender.send(Trigger::StartRerendering)?;
                 match self.render_html(&sources) {
-                    Ok(Some(pdf_options)) => {
-                        sender.send(Trigger::Reload)?;
-                        if self.decktape_available {
-                            let start = Instant::now();
-                            let mut target_pdf = PathBuf::from(&self.target_path);
-                            target_pdf.push(pdf_options.filename);
-                            info!("rendering pdf now: {}!", target_pdf.display());
-                            let mut render_cmd = Command::new(&self.decktape_cmd);
-                            render_cmd
-                                .arg("-s")
-                                .arg(pdf_options.size)
-                                .arg("-p")
-                                .arg(pdf_options.pause)
-                                .arg("--load-pause")
-                                .arg(pdf_options.load_pause)
-                                .arg(pdf_options.variant)
-                                .arg(format!(
-                                    "http://localhost:{}/index.html?render=pdf",
-                                    self.port
-                                ))
-                                .arg(&target_pdf);
-                            let mut child = render_cmd.spawn().unwrap();
-                            match child.wait() {
-                                Ok(status) => {
-                                    if status.success() {
-                                        info!("pdf rendered succesfully");
-                                    } else {
-                                        warn!("an error occured during pdf rendering!");
-                                    }
-                                }
-                                Err(e) => warn!("an error occured during pdf rendering: {}", e),
-                            }
-                            let duration = start.elapsed();
-                            info!("pdf rendering took {} msecs", duration.as_millis());
-
-                            if self.gs_available {
-                                let start = Instant::now();
-                                info!("shrinking pdf");
-                                let mut tmp_file = PathBuf::from(&target_pdf);
-                                tmp_file.set_extension("pdf.tmp");
-                                let mut gs_cmd = Command::new(&self.gs_cmd);
-                                gs_cmd
-                                    .arg("-q")
-                                    .arg("-dNOPAUSE")
-                                    .arg("-dBATCH")
-                                    .arg("-dSAFER")
-                                    .arg("-sDEVICE=pdfwrite")
-                                    // .arg("-dCompatibilityLevel=1.4")
-                                    .arg("-dCompatibilityLevel=1.7")
-                                    .arg("-dPDFSETTINGS=/screen")
-                                    .arg("-dEmbedAllFonts=true")
-                                    .arg("-dSubsetFonts=true")
-                                    .arg("-dColorImageDownsampleType=/Bicubic")
-                                    // .arg("-dColorImageResolution=300")
-                                    .arg("-dColorImageResolution=72")
-                                    .arg("-dGrayImageDownsampleType=/Bicubic")
-                                    // .arg("-dGrayImageResolution=300")
-                                    .arg("-dGrayImageResolution=72")
-                                    .arg("-dMonoImageDownsampleType=/Bicubic")
-                                    // .arg("-dMonoImageResolution=300")
-                                    .arg("-dMonoImageResolution=72")
-                                    .arg(format!("-sOutputFile={}", tmp_file.display()))
-                                    .arg(&target_pdf);
-                                let mut child = gs_cmd.spawn().unwrap();
-                                match child.wait() {
-                                    Ok(status) => {
-                                        if status.success() {
-                                            info!("pdf shrinking succesfully");
-                                            let orig_meta = target_pdf.metadata().unwrap(); // TODO
-                                            let shrinked_meta = tmp_file.metadata().unwrap(); // TODO
-                                            let orig_len = orig_meta.len();
-                                            let shrinked_len = shrinked_meta.len();
-                                            let percent = 100 * shrinked_len / orig_len;
-                                            debug!(
-                                                "orig: {}, shrinked: {}, percent: {}",
-                                                orig_len, shrinked_len, percent
-                                            );
-                                            if percent > 100 {
-                                                info!("shrinking didn't reduce the filesize, using original pdf");
-                                            } else {
-                                                info!("filesize shrinked to {}%", percent);
-                                                fs::rename(&tmp_file, &target_pdf)?;
-                                            }
-                                        } else {
-                                            warn!("an error occured during pdf shrinking!");
-                                        }
-                                    }
-                                    Err(e) => {
-                                        error!("an error occured during pdf shrinking: {}", e)
-                                    }
-                                }
-                                let duration = start.elapsed();
-                                info!("pdf shrinking took {} msecs", duration.as_millis());
-                            }
-                        } else {
-                            warn!(  // TODO
-                                "pdf rendering not possible: '{}' command does not work!",
-                                &self.decktape_cmd
-                            );
-                        }
-                    }
-                    Ok(None) => sender.send(Trigger::Reload)?,
+                    Ok(_) => sender.send(Trigger::Reload)?,
                     Err(e) => {
                         warn!("an error occured during html rendering: {:?}", e);
                         std::fs::OpenOptions::new()
@@ -544,7 +309,7 @@ impl Context {
         Ok(())
     }
 
-    fn render_html(&self, sources: &[PathBuf]) -> Result<Option<PdfParams>, Report> {
+    fn render_html(&self, sources: &[PathBuf]) -> Result<(), Report> {
         let start = Instant::now();
         for source in sources.iter() {
             info!("sources: {}", source.display());
@@ -557,12 +322,12 @@ impl Context {
         sync_static(".markdeck", &self.target_path, ".markdeck")?;
         sync_static("toplevel", &self.target_path, "")?;
 
-        let pdf_params = self.render_deck(sources)?;
+        self.render_deck(sources)?;
 
         let duration = start.elapsed();
         info!("rendering took {} msecs", duration.as_millis());
 
-        Ok(pdf_params)
+        Ok(())
     }
 }
 
@@ -608,7 +373,7 @@ if pandoc \
     */
 
 impl Context {
-    fn render_deck(&self, source_files: &[PathBuf]) -> Result<Option<PdfParams>, Report> {
+    fn render_deck(&self, source_files: &[PathBuf]) -> Result<(), Report> {
         info!("render_deck");
         let mut slides_combined = PathBuf::from(&self.target_path);
         slides_combined.push("slides.combined.md.txt");
@@ -727,10 +492,6 @@ impl Context {
                 debug!("{}", line);
             }
             info!("slides rendered successfully");
-
-            if let Ok(params) = PdfParams::try_from(metadata) {
-                return Ok(Some(params));
-            }
         } else {
             for line in String::from_utf8(output.stdout)?.lines() {
                 info!("{}", line);
@@ -740,7 +501,7 @@ impl Context {
             }
             warn!("an error occured! {:?}", output.status.code());
         }
-        Ok(None)
+        Ok(())
     }
 
     fn fetch_metadata(&self) -> Result<Map<String, Value>, Report> {
@@ -768,18 +529,20 @@ impl Context {
 
 fn sync_executables(source_path: &str, target_root: &Path, target_path: &str) -> Result<(), Report> {
     sync_static(&source_path, &target_root, &target_path)?;
-    let mut target = target_root.to_path_buf();
-    if !target_path.is_empty() {
-        target.push(target_path);
-    }
-    let entries = fs::read_dir(&target).unwrap();
-    for entry in entries {
-        let path = entry?.path();
-        info!("ensure executable bit set for {}", &path.display());
-        // TODO support windows, too!
-        let mut perms = fs::metadata(&path)?.permissions();
-        perms.set_mode(0o755);
-        fs::set_permissions(&path, perms)?;
+    #[cfg(target_family = "unix")]  // TODO support windows, too!
+    {
+        let mut target = target_root.to_path_buf();
+        if !target_path.is_empty() {
+            target.push(target_path);
+        }
+        let entries = fs::read_dir(&target).unwrap();
+        for entry in entries {
+            let path = entry?.path();
+            info!("ensure executable bit set for {}", &path.display());
+            let mut perms = fs::metadata(&path)?.permissions();
+            perms.set_mode(0o755);
+            fs::set_permissions(&path, perms)?;
+        }
     }
     Ok(())
 }
