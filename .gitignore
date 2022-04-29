@@ -26,3 +26,4 @@ src/docroot/live_server
 src/docroot/pandoc-x86_64-apple-darwin
 src/docroot/pandoc-x86_64-unknown-linux-musl
 images.built
+tmp
