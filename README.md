@@ -30,43 +30,50 @@ You can also visit the shiny [landing page](https://arnehilmann.github.io/markde
 [revealjs showcase](https://arnehilmann.github.io/markdeck/showcase/), or the
 [impressjs showcase](https://arnehilmann.github.io/markdeck/showcase.impress/).
 
+## tl;dr
 
-## install markdeck, tl;dr
-
-You need `bash`, `curl`, and `docker-compose`, then run the following commands:
 ```
-curl -LO https://raw.githubusercontent.com/arnehilmann/markdeck/master/markdeck
-chmod a+x markdeck
-./markdeck pull
+mkdir my-slides && cd my-slides
+# choose the right binary to download:
+# curl -Lo markdeck https://github.com/arnehilmann/markdeck/releases/download/v0.60.0/markdeck.x86_64-apple-darwin
+# curl -Lo markdeck https://github.com/arnehilmann/markdeck/releases/download/v0.60.0/markdeck.x86_64-unknown-linux-musl
+chmod a+rx ./markdeck
+./markdeck init
+./markdeck
+open http://localhost:8080/
+open http://localhost:8080/admin.html
+
+# edit slides.md, assets/*, ...
 ```
 
-The `markdeck` script can be stored in a folder in `$PATH` so that it
-can be executed from everywhere in the file system.
+## tl;dr, the old way
+
+```
+mkdir my-slides && cd my-slides
+curl -LO https://raw.githubusercontent.com/arnehilmann/markdeck/main/docker-compose.yaml
+docker-compose up
+
+open http://localhost:8080/
+open http://localhost:8080/admin.html
+
+# edit slides.md, assets/*, ...
+```
+
+## optional components
+
+| Renderer | Needed Component | Installation on MacOS
+| --- | --- | ---
+| render_ditaa, render_plantuml   | java runtime    | TODO
+| render_dot                      | graphviz        | brew install graphviz
+| render_vegalite                 | TODO            | TODO
+| render_qr                       | qrencode        | brew install qrencode
+| render_svgbob                   | svgbob          | brew install svgbob
+| render_a2s, render_a2sketch     | TODO            | TODO
 
 
 ## documentation
 
 ... can be found in [DOCUMENTATION.md](DOCUMENTATION.md)
-
-
-## how to start from scratch
-
-Run the following command to create an empty presentation (if markdeck
-is not stored in `$PATH` prefix the command with `./`):
-
-```
-markdeck scaffold
-```
-
-Run the following command to start markdeck:
-
-```
-markdeck
-```
-
-Open the browser at `http://localhost:8080`.
-
-# edit slides.md, add assets/, consult documentation, ...
 
 
 ## how does this work
