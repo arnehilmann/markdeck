@@ -251,6 +251,22 @@ markdeck/versions:	Makefile
 	echo "MERMAID_VERSION=$(MERMAID_VERSION)" >> $@
 	echo "SVGBOB_VERSION=$(SVGBOB_VERSION)" >> $@
 
+update-rust:
+	rustup self update
+	rustup update
+	cargo clean
+	cargo update
+
+	# brew tap SergioBenitez/osxct	# no update since 4 years?!
+	# from https://github.com/messense/homebrew-macos-cross-toolchains
+	brew tap messense/macos-cross-toolchains
+	brew upgrade x86_64-unknown-linux-gnu || brew install x86_64-unknown-linux-gnu
+	rustup target add x86_64-unknown-linux-gnu
+	brew upgrade x86_64-unknown-linux-musl || brew install x86_64-unknown-linux-musl
+	rustup target add x86_64-unknown-linux-musl
+
+	brew upgrade mingw-w64 || brew install mingw-w64
+	rustup target add x86_64-pc-windows-gnu
 
 clean:
 	rm -f downloaded/bin/*
