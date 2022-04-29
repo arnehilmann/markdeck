@@ -4,3 +4,7 @@
 body.render-error .render-error-message {
     display: block;
 }
+
+.impress-enabled .step, body.rendering section.step {
+    opacity: 1;
+}
