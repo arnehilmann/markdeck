@@ -66,13 +66,18 @@ target/binaries/markdeck.x86_64-unknown-linux-musl:
 
 
 docker-image:
-	docker build -f docker/Dockerfile.markdeck target/binaries -t arne/markdeck:0.60.0
+	docker build -f docker/Dockerfile.markdeck target/binaries -t arne/markdeck:$(VERSION)
+
+push-image:
+	docker push arne/markdeck:$(VERSION)
+	docker tag arne/markdeck:$(VERSION) quay.io/arne/markdeck:$(VERSION)
+	docker push quay.io/arne/markdeck:$(VERSION)
 
 run-as-container:
 	mkdir -p example/test
-	# docker run -it -v $(PWD)/example/:/source:ro -v $(PWD)/example/test/:/target -p 8080:8080 markdeck:0.60.0
+	# docker run -it -v $(PWD)/example/:/source:ro -v $(PWD)/example/test/:/target -p 8080:8080 markdeck:$(VERSION)
 	docker rm -f markdeck
-	docker run -it -v $(PWD)/example/:/source:ro -p 8080:8080 -e RUST_LOG=debug --name markdeck markdeck:0.60.0
+	docker run -it -v $(PWD)/example/:/source:ro -p 8080:8080 -e RUST_LOG=debug --name markdeck markdeck:$(VERSION)
 
 debug-container:
 	docker exec -it markdeck ash
