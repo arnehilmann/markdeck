@@ -32,23 +32,22 @@ You can also visit the shiny [landing page](https://arnehilmann.github.io/markde
 
 ## tldr
 
+Choose the right binary to download:
 ```
-mkdir my-slides && cd my-slides
-```
-
-Now choose the right binary to download:
-```
+# MacOS (Intel)
 curl -Lo markdeck https://github.com/arnehilmann/markdeck/releases/download/v0.60.0/markdeck.x86_64-apple-darwin
 ```
 
 ```
+# Linux
 curl -Lo markdeck https://github.com/arnehilmann/markdeck/releases/download/v0.60.0/markdeck.x86_64-unknown-linux-musl
 ```
 
 ```
 chmod a+rx ./markdeck
-./markdeck init
-./markdeck
+./markdeck init my-slides
+cd my-slides
+../markdeck
 ```
 
 ```
@@ -58,7 +57,21 @@ open http://localhost:8080/admin.html
 # edit slides.md, add assets/*, examine example deck, read documentation, create ascii-art, ...
 ```
 
+## optional components
+
+| Renderer | Needed Component | Installation on MacOS
+| --- | --- | ---
+| render_ditaa, render_plantuml   | java runtime    | `brew install java`
+| render_dot                      | graphviz        | `brew install graphviz`
+| render_vegalite                 | vega-lite       | `brew install npm; npm install vega vega-cli vega-lite`
+| render_qr                       | qrencode        | `brew install qrencode`
+| render_svgbob                   | svgbob          | `brew install svgbob`
+| render_a2s, render_a2sketch     | docker          | `docker run -d -p 22753:22753 arne/a2sketch:0.15`
+
+
 ## tldr, the old way
+
+also see the old [README.md for v0.54](README-v0.54.md).
 
 ```
 mkdir -p my-slides/deck && cd my-slides
@@ -74,21 +87,13 @@ open http://localhost:8080/admin.html
 # edit slides.md, add assets/*, examine example deck, read documentation, create ascii-art, ...
 ```
 
-## optional components
+## links
 
-| Renderer | Needed Component | Installation on MacOS
-| --- | --- | ---
-| render_ditaa, render_plantuml   | java runtime    | TODO
-| render_dot                      | graphviz        | brew install graphviz
-| render_vegalite                 | TODO            | TODO
-| render_qr                       | qrencode        | brew install qrencode
-| render_svgbob                   | svgbob          | brew install svgbob
-| render_a2s, render_a2sketch     | TODO            | TODO
+* [slide markup documentation](DOCUMENTATION.md)
 
+* [todos](TODOS.md)
 
-## documentation
-
-... can be found in [DOCUMENTATION.md](DOCUMENTATION.md)
+* [rewrite in rust](REWRITE_IN_RUST.md)
 
 
 ## how does this work
