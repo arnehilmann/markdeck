@@ -3,23 +3,11 @@ title: markdeck example
 variant: reveal
 # variant: impress
 pdf: markdeck-example.pdf
-# standalone: markdeck-example.html
-# highlight_style: grayscale
 highlight_style: github-gist
 asciinema: true
-# themes: example
 themes: mono
 # slideNumber: true
-# autoSlide: 5000
 # controls: true
-# controlsTutorial: true
-# controlsLayout: edges
-# pdf_size: 1189x841
-# pdf_size: 1024x768
-pdf_size: 1400x875
-# pdf_pause: 1000
-
-
 ---
 
 # markdeck {bgcss=sea-gradient x=0 y=0 rz=-.1 .light-on-dark}
@@ -27,15 +15,13 @@ pdf_size: 1400x875
 collaborative slide editing made easy
 
 ![](fab fa-markdown)
-![](fab fa-docker)
 ![](fab fa-html5)
 ![](fab fa-css3)
 ![](fab fa-js-square)
 
-<small> arne@hilmann.de • 2021</small>
+<small> arne@hilmann.de • 2022</small>
 
 [![](fab fa-github)](https://github.com/arnehilmann/markdeck)
-[![](fab fa-docker)](https://hub.docker.com/r/arne/markdeck-pandoc/)
 [![](fas fa-envelope)](email:arne@hilmann.de)
 
 # features {rx=1 bgcss=sea-gradient .light-on-dark}
@@ -277,7 +263,7 @@ public class Example {
 
 ►
 
-```{.render_svgbob args="--scale 10 --font-family Raleway --font-size 24"}
+```{.render_svgbob args="--scale 1 --font-family Raleway --font-size 16"}
 
         P *
            \
@@ -289,7 +275,6 @@ public class Example {
       /                \
   v1 *------------------* v2
 ```
-
 
 # asciiart (plantuml) {.ltr}
 
@@ -461,17 +446,8 @@ font-size="medium"
 
 [`https://github.com/arnehilmann/markdeck`{.render_qr}](https://github.com/arnehilmann/markdeck)
 
-# {rx=1 ry=0}
 
-!INCLUDECODE "assets/test.json" ({.bash .fragment .hl-code ln-start-from=15}), 1:5
-
-!INCLUDECODE "assets/test.json" ({.bash .fragment .hl-code ln-start-from=25}), 1
-
-!INCLUDECODE "assets/test.json" ({.bash .fragment .hl-code ln-start-from=35}), 1:
-
-!INCLUDECODE "assets/test.json" ({.bash .fragment .hl-code ln-start-from=35}), :4
-
-# markdeck {.skip skipon="reveal" scale=5 x=1.8}
+# markdeck {.skip skipon="reveal" scale=5 x=1.5}
 
 # {.skip skipon="reveal" scale=1 .flush-right rx=0 ry=.25}
 
@@ -482,7 +458,6 @@ impress.js-variant
 collaborative slide editing made easy
 
 ![](fab fa-markdown)
-![](fab fa-docker)
 ![](fab fa-html5)
 ![](fab fa-css3)
 ![](fab fa-js-square)
@@ -496,11 +471,7 @@ collaborative slide editing made easy
 collaborative slide editing made easy
 
 ![](fab fa-markdown)
-![](fab fa-docker)
 ![](fab fa-html5)
 ![](fab fa-css3)
 ![](fab fa-js-square)
 <img src="assets/img/buddy-egyptian.svg" style="height:120px; vertical-align:middle; box-shadow:none;"/>
-
-
-
