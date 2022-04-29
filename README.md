@@ -34,23 +34,35 @@ You can also visit the shiny [landing page](https://arnehilmann.github.io/markde
 
 ```
 mkdir my-slides && cd my-slides
-# choose the right binary to download:
-# curl -Lo markdeck https://github.com/arnehilmann/markdeck/releases/download/v0.60.0/markdeck.x86_64-apple-darwin
-# curl -Lo markdeck https://github.com/arnehilmann/markdeck/releases/download/v0.60.0/markdeck.x86_64-unknown-linux-musl
+```
+
+Now choose the right binary to download:
+```
+curl -Lo markdeck https://github.com/arnehilmann/markdeck/releases/download/v0.60.0/markdeck.x86_64-apple-darwin
+```
+
+```
+curl -Lo markdeck https://github.com/arnehilmann/markdeck/releases/download/v0.60.0/markdeck.x86_64-unknown-linux-musl
+```
+
+```
 chmod a+rx ./markdeck
 ./markdeck init
 ./markdeck
+```
+
+```
 open http://localhost:8080/
 open http://localhost:8080/admin.html
 
-# edit slides.md, assets/*, ...
+# edit slides.md, add assets/*, examine example deck, read documentation, create ascii-art, ...
 ```
 
 ## tldr, the old way
 
 ```
 mkdir -p my-slides/deck && cd my-slides
-echo '# Hello World!' > slides.md
+echo -e '# Hello World!\n\n# Second Slide...' > slides.md
 curl -LO https://raw.githubusercontent.com/arnehilmann/markdeck/main/docker-compose.yaml
 docker-compose up
 ```
