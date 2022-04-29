@@ -30,7 +30,7 @@ You can also visit the shiny [landing page](https://arnehilmann.github.io/markde
 [revealjs showcase](https://arnehilmann.github.io/markdeck/showcase/), or the
 [impressjs showcase](https://arnehilmann.github.io/markdeck/showcase.impress/).
 
-## tl;dr
+## tldr
 
 ```
 mkdir my-slides && cd my-slides
@@ -46,14 +46,16 @@ open http://localhost:8080/admin.html
 # edit slides.md, assets/*, ...
 ```
 
-## tl;dr, the old way
+## tldr, the old way
 
 ```
 mkdir -p my-slides/deck && cd my-slides
-echo "# Hello World!" > slides.md
+echo '# Hello World!' > slides.md
 curl -LO https://raw.githubusercontent.com/arnehilmann/markdeck/main/docker-compose.yaml
 docker-compose up
+```
 
+```
 open http://localhost:8080/
 open http://localhost:8080/admin.html
 
