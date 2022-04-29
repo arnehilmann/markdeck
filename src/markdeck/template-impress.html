@@ -26,15 +26,13 @@
 
     <link href="assets/framework/impress.js/css/impress-demo.css" rel="stylesheet" />
     <link href="assets/markdeck/css/markdeck.impress.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/markdeck/css/renderpdf-helper.css" />
     $for(themes)$
         <link href="themes/$themes$/css/slides.impress.css" rel="stylesheet" />
     $endfor$
     <link href="assets/css/slides.impress.css" rel="stylesheet" />
     <script>
-        window.pdf_render = window.location.search.match(/render=pdf/gi) != null;
-        if (window.pdf_render) {
-            document.write('<link rel="stylesheet" href="assets/css/render-pdf.css" type="text/css">');
-        }
+        const render_pdf = window.render_pdf = window.location.search.match(/render-pdf/gi) != null
     </script>
 
 $for(header-includes)$
@@ -52,6 +50,8 @@ $include-before$
 $endfor$
 
     <div class="rerendering-message"><h1>R E R E N D E R I N G</h1></div>
+    <div class="connection-lost-message"><h1>R E C O N N E C T I N G</h1></div>
+    <div class="render-error-message"><h1>R E N D E R   E R R O R</h1>Retry, please... 😬</div>
 
     <div class="fallback-message">
         <p>Your browser <b>doesn't support the features required</b> by impress.js, so you are presented with a simplified version of this presentation.</p>
@@ -63,7 +63,7 @@ $endfor$
     <div
         id="impress"
         class="markdeck"
-        data-transition-duration="750">
+        data-transition-duration="0">
 
 $body$
 
@@ -133,6 +133,51 @@ $body$
     $endif$
 
     <script src="assets/3rdparty/jquery.js"></script>
+
+<script src="assets/3rdparty/jspdf/jspdf.umd.min.js"></script>
+<script src="assets/markdeck/renderpdf-helper.js"></script>
+
+<script>
+    console.log("script!");
+    if (window.render_pdf) {
+        console.log("aha");
+        const filename = "$pdf$" || "slides.pdf"
+        docReady(() => {
+            console.log("doc ready")
+            const deck = window.impress()
+            console.log(deck)
+            classListOfLastSlide = undefined
+            let nr = 0;
+            renderPdf(
+                filename,
+                {
+                    init: async () => {
+                        deck.init()
+                        deck.prev()
+                        classListOfLastSlide = document.body.classList[3]
+                        console.log(classListOfLastSlide)
+                        deck.init()
+                        var size = [window.width,window.height];
+                        window.resize = function(){
+                            window.resizeTo(size[0], size[1]);
+                        };
+                        deck.goto(0, 0)
+                    },
+                    isLastSlide: () => {
+                        return document.body.classList[3] == classListOfLastSlide
+                        // return nr > 10;
+                    },
+                    nextSlide: async () => {
+                        // nr += 1;
+                        // await deck.goto(nr, 0);
+                        await delay(100)
+                        await deck.next()
+                    },
+                }
+            )
+        })
+    }
+</script>
 
 $for(include-after)$
 $include-after$
