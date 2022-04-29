@@ -49,14 +49,15 @@ open http://localhost:8080/admin.html
 ## tl;dr, the old way
 
 ```
-mkdir my-slides && cd my-slides
+mkdir -p my-slides/deck && cd my-slides
+echo "# Hello World!" > slides.md
 curl -LO https://raw.githubusercontent.com/arnehilmann/markdeck/main/docker-compose.yaml
 docker-compose up
 
 open http://localhost:8080/
 open http://localhost:8080/admin.html
 
-# edit slides.md, assets/*, ...
+# edit slides.md, add assets/*, examine example deck, read documentation, create ascii-art, ...
 ```
 
 ## optional components
