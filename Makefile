@@ -26,7 +26,7 @@ JUPYTER_VERSION=0.4
 
 # all:	docroot pandocs
 .PHONY: all target/binaries/markdeck.x86_64-apple-darwin target/binaries/markdeck.x86_64-unknown-linux-musl
-all:	docroot pandocs binaries
+all:	docroot pandocs binaries docker-image
 
 debug:
 	time cargo build
