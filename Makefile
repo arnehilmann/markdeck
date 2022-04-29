@@ -96,12 +96,16 @@ images.built: Makefile docker/Dockerfile.*
 	touch images.built
 
 
+src/docroot/main/assets/3rdparty/jspdf/jspdf.umd.min.js:
+	mkdir -p $(shell dirname $@)
+	curl -Lo $@ https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js
+
 src/docroot/main/toplevel/admin.html:	src/docroot/main/admin.template target/versions
 	export $(shell cat target/versions | xargs)
 	envsubst < $< > $@
 
 
-docroot:	src/docroot/main/toplevel/admin.html
+docroot:	src/docroot/main/toplevel/admin.html src/docroot/main/assets/3rdparty/jspdf/jspdf.umd.min.js
 	docker build -t arne/markdeck-docroot:latest -f docker/Dockerfile.docroot \
 		--build-arg MERMAID_VERSION=$(MERMAID_VERSION) \
 		--build-arg PANDOC_VERSION=$(PANDOC_VERSION) \
