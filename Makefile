@@ -15,7 +15,7 @@ IMPRESSJS_VERSION=1.1.0
 MERMAID_VERSION=9.0.0
 SVGBOB_VERSION=0.5.0-alpha.6
 
-VERSION=0.60.0
+VERSION=0.60.1
 MOTTO=rusty version
 
 
@@ -43,8 +43,11 @@ src/docroot/pandoc-x86_64-unknown-linux-musl:
 	chmod a+rx $@
 	rm -f pandoc-$(PANDOC_VERSION)-linux-amd64.tar.gz
 
+src/docroot/pandoc-aarch64-apple-darwin:	src/docroot/pandoc-x86_64-apple-darwin
+	cp $< $@
 
-binaries: target/binaries/markdeck.x86_64-apple-darwin target/binaries/markdeck.x86_64-unknown-linux-musl
+binaries: target/binaries/markdeck.x86_64-apple-darwin target/binaries/markdeck.x86_64-unknown-linux-musl target/binaries/markdeck.aarch64-apple-darwin 
+	time upx --best --lzma target/binaries/*-apple-*
 
 
 target/binaries/markdeck.x86_64-apple-darwin:
@@ -60,6 +63,13 @@ target/binaries/markdeck.x86_64-unknown-linux-musl:
 	export AR_x86_64_unknown_linux_musl=x86_64-unknown-linux-musl-ar
 	export CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER=x86_64-unknown-linux-musl-gcc
 	export TARGET=x86_64-unknown-linux-musl
+	time cargo build --release --target $${TARGET}
+	mkdir -p target/binaries
+	cp target/$${TARGET}/release/markdeck $@
+
+
+target/binaries/markdeck.aarch64-apple-darwin:
+	export TARGET=aarch64-apple-darwin
 	time cargo build --release --target $${TARGET}
 	mkdir -p target/binaries
 	cp target/$${TARGET}/release/markdeck $@
