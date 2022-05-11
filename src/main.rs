@@ -4,10 +4,11 @@ extern crate color_eyre;
 extern crate eyre;
 
 use std::env;
-use std::fs::{self, OpenOptions};
+use std::fs::{self, OpenOptions, File};
 use std::io::Write;
 use std::path::{Path, PathBuf};
 use std::process::Command;
+use std::io::LineWriter;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::mpsc::channel;
 use std::sync::mpsc::Sender;
@@ -174,7 +175,6 @@ fn main() -> Result<(), Report> {
 
         use minidom::quick_xml::Reader;
         use minidom::Element;
-        use std::fs::File;
 
         let mut reader = Reader::from_file(path)?;
         let mut svg = Element::from_reader(&mut reader)?;
@@ -192,12 +192,14 @@ fn main() -> Result<(), Report> {
         info!("folder: {}", folder);
         let mut path = env::current_dir()?;
         path.push(folder);
+        /*  allow "init" in existing folder, just dont overwrite anything
         if fs::metadata(&path).is_ok() {
             return Err(eyre!(
                 "folder '{}' already exists, bailing out now...",
                 path.display()
             ));
         }
+        */
         fs::create_dir_all(&path)?;
         sync_static("scaffold/", &path, "")?;
         info!(
@@ -322,6 +324,7 @@ impl Context {
         sync_static(".markdeck", &self.target_path, ".markdeck")?;
         sync_static("toplevel", &self.target_path, "")?;
 
+        // TODO dont bubble-up error, but display it here and in index.html
         self.render_deck(sources)?;
 
         let duration = start.elapsed();
@@ -493,12 +496,19 @@ impl Context {
             }
             info!("slides rendered successfully");
         } else {
+            // TODO write output to index.html
+            let file = File::create("index.html")?;
+            let mut file = LineWriter::new(file);
+            file.write_all(b"<html><body>\n")?;
+            file.write_all(&output.stdout)?;
+            file.write_all(&output.stderr)?;
             for line in String::from_utf8(output.stdout)?.lines() {
                 info!("{}", line);
             }
             for line in String::from_utf8(output.stderr)?.lines() {
                 warn!("{}", line);
             }
+            file.flush()?;
             warn!("an error occured! {:?}", output.status.code());
         }
         Ok(())
