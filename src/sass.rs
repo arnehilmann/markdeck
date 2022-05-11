@@ -1,5 +1,5 @@
 use eyre::Result;
-use log::{info, warn};
+use log::{debug, info, warn};
 use std::fs::{self};
 use std::path::Path;
 
