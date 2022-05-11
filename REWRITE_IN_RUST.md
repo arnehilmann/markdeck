@@ -34,3 +34,12 @@ Yes.
 So I decided to rewrite the "main event loop" of the pandoc service in a new language, rust.
 In this process, I learned a lot about rust (the hard way, sometimes... I still dont like life cycle anotations).
 ...
+
+
+_to be continued_
+
+no shell-out: rsync, sassc, markdown_pp
+
+pandoc bundled inside markdeck: 98MB pandoc, together with live webserver, 
+event loop, frameworks (revealjs, impressjs), css styles, fonts, pdfs, ...
+in 80MB markdeck binary
