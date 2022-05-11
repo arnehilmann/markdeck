@@ -8,7 +8,7 @@ pub fn sassc(source_folder: &Path, scss_file: &str, target_folder: &Path) -> Res
     source_path.push(scss_file);
 
     if !source_path.exists() {
-        info!("scss not found at {}", source_path.display());
+        debug!("scss not found at {}", source_path.display());
         return Ok(());
     }
 
