@@ -1,6 +1,6 @@
 [package]
 name = "markdeck"
-version = "0.60.0"
+version = "0.60.1"
 authors = ["Arne Hilmann <arne@hilmann.de>"]
 edition = "2018"
 

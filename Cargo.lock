@@ -1259,7 +1259,7 @@ dependencies = [
 
 [[package]]
 name = "markdeck"
-version = "0.60.0"
+version = "0.60.1"
 dependencies = [
  "actix",
  "actix-codec",
