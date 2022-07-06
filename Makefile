@@ -189,6 +189,7 @@ check-versions:
 
 target/versions:	Makefile
 	rm -f $@
+	mkdir -p $(shell dirname $@)
 	echo "MARKDECK_VERSION=$(VERSION)" >> $@
 	echo "PANDOC_VERSION=$(PANDOC_VERSION)" >> $@
 	echo "REVEALJS_VERSION=$(REVEALJS_VERSION)" >> $@
