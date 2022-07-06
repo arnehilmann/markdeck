@@ -21,7 +21,6 @@ src/docroot/main/assets/3rdparty/
 example/node_modules/
 src/docroot/main/
 node_modules/
-src/docroot/live_server
 .vscode
 src/docroot/pandoc-x86_64-apple-darwin
 src/docroot/pandoc-x86_64-unknown-linux-musl

@@ -1,0 +1,88 @@
+<!doctype html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Trianglify Background Generator</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link rel="stylesheet" href="css/jquery-ui-style.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <link href='http://fonts.googleapis.com/css?family=Muli' rel='stylesheet' type='text/css'>
+  </head>
+  <body>
+    <header>
+      <h1>
+        trianglify background generator
+      </h1>
+    </header>
+    <div class="main clearfix">
+      <div id="loading">
+      <p>
+        LOADING....
+      </p>
+        <img src="loading.gif" alt="">
+    </div>
+    <div id="controls">
+      <div class="panel">
+        <h2>Render Options</h2>
+        <label class="screen-size-input" for="bg-width">Width</label>
+        <input class="screen-size-input" id="bg-width" type="text" value="1400"/>
+        <label class="screen-size-input" for="bg-height">Height</label>
+        <input class="screen-size-input" id="bg-height" type="text" value="1000"/>
+        
+        <label for="cell-slider">Cell Size</label>
+        <div id="cell-slider" class="slider"></div>
+        <p class="slider-value" id="cell-value">150</p>
+
+        <label for="cellpadding-slider">Cell Padding</label>
+        <div id="cellpadding-slider" class="slider"></div>
+        <p class="slider-value" id="cellpadding-value">15</p>
+
+        <label class="bleed-label" for="bleed-slider">Bleed</label>
+        <div id="bleed-slider" class="slider"></div>
+        <p class="slider-value" id="bleed-value">150</p>
+      </div>
+      <div class="panel">
+        <h2>Colour Scheme</h2>
+        <p class="input-info">
+          Select from the top 100 palettes from <a target="_blank" href="http://colourlovers.com">colourlovers</a>, and also the <a href="http://bl.ocks.org/mbostock/5577023" target="_blank">ColorBrewer</a> palettes.
+        </p>
+        <label class="colour-input-label" for="x-gradient">X Gradient</label>
+        <input class="colour-input" id="x-gradient" type="radio" name="gradient-direction" value="x" checked="checked">
+        <label class="colour-input-label" for="y-gradient">Y Gradient</label>
+        <input class="colour-input" id="y-gradient" type="radio" name="gradient-direction" value="y">
+        <label class="colour-input-label" for="both-gradient">Both</label>
+        <input class="colour-input" id="both-gradient" type="radio" name="gradient-direction" value="z">
+
+        <label>Palette List</label>
+        <div id="colour-list"></div>
+        <button id="randomise-colours" class="colour-buttons" href="#">Randomise Colours</button>
+        <button id="generate">Regenerate</button>
+        <a id="download-btn" href="#" target="_blank">Download</a>
+        <a href="help.html">Help</a>
+      </div>
+
+      </div>
+      <div id="backgrounds">
+      </div>
+      <footer>
+        <div class="info">
+          <p>Powered by <a href="https://github.com/qrohlf/trianglify" target="_blank">trianglify</a></p>
+          <p><a href="https://github.com/alssndro/trianglify-background-generator/" target="_blank">View on Github</a></p>
+        </div>
+      </footer>
+      <canvas id="the-canvas"></canvas>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="js/trianglify-min.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>

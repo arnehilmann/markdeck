@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Unique gradient generator</title>
+	<link rel="stylesheet" href="dist/main.css">
+	<link href='https://fonts.googleapis.com/css?family=Playfair+Display:400,900' rel='stylesheet' type='text/css'>
+	<link rel="icon" type="image/png" href="img/favicon.ico">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="This tool helps you to generate beautiful blurry background images. It uses extremely light images instead off CSS3 gradients.">
+	<meta http-equiv="Content-Language" content="en">
+
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Unique gradient generator">
+	<meta property="og:description" content="This tool helps you to generate beautiful blurry background images. It uses extremely light images instead off CSS3 gradients.">
+	<meta property="og:image" content="http://gradient.quasi.ink/img/billboard.png"/>
+
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:site" content="@tiborsaas">
+	<meta name="twitter:creator" content="@tiborsaas">
+	<meta name="twitter:title" content="Unique gradient generator">
+	<meta name="twitter:description" content="This tool helps you to generate beautiful blurry background images. It uses extremely light images instead off CSS3 gradients">
+	<meta name="twitter:image" content="http://gradient.quasi.ink/img/billboard.png"></head>
+<body>
+
+	<!-- Image bottom seletor -->
+
+	<div class="ui bottom sidebar images">
+		<img class="ui small rounded image" src="img/party_thumb.png" title="https://picjumbo.com/festival-hands-up-people-partying/">
+		<img class="ui small rounded image" src="img/lightning_thumb.png" title="https://pixabay.com/en/weather-thunderstorm-flash-light-768460/">
+		<img class="ui small rounded image" src="img/buildings_thumb.png" title="https://pixabay.com/en/buildings-skyscrapers-perspective-768773/">
+		<img class="ui small rounded image" src="img/party-people_thumb.png" title="https://stocksnap.io/photo/1C4BWK6SE4">
+		<img class="ui small rounded image" src="img/light-circles_thumb.png" title="https://www.pexels.com/photo/light-colorful-colourful-blur-20721/">
+		<img class="ui small rounded image" src="img/nature_thumb.png" title="https://pixabay.com/en/nature-geology-formation-sandstone-768788/">
+		<img class="ui small rounded image" src="img/lights_thumb.png" title="https://pixabay.com/en/lights-blurred-color-lanterns-801894/">
+		<img class="ui small rounded image" src="img/2girls_thumb.png" title="http://finda.photo/image/9736">
+		<img class="ui small rounded image" src="img/autumn_thumb.png" title="https://pixabay.com/en/autumn-fall-leaves-colors-water-691263/">
+		<img class="ui small rounded image" src="img/ferrari_thumb.png" title="http://www.splitshire.com/ferrari-458/">
+		<img class="ui small rounded image" src="img/davideragusa_thumb.png" title="http://barnimages.com/elbphilharmonie-in-hamburg/">
+		<img class="ui small rounded image" src="img/volcanoes_thumb.png" title="https://pixabay.com/en/volcanoes-magma-lava-mountains-691939/">
+		<img class="ui small rounded image" src="img/blurred-light_thumb.png" title="http://www.splitshire.com/blurred-light/">
+		<img class="ui small rounded image" src="img/artificial-trees_thumb.png" title="https://pixabay.com/en/artificial-trees-illumination-945387/">
+		<img class="ui small rounded image" src="img/fun_thumb.png" title="http://finda.photo/image/10088">
+		<img class="ui small rounded image" src="img/flowers_thumb.png" title="c">
+		<img class="ui small rounded image" src="img/chaos_thumb.png" title="https://stocksnap.io/photo/15284550C1">
+		<img class="ui small rounded image" src="img/water_thumb.png" title="https://pixabay.com/en/water-wave-inside-tube-foam-731251/">
+		<img class="ui small rounded image" src="img/more-clouds_thumb.png" title="http://barnimages.com/clouds-in-the-sky/">
+		<img class="ui small rounded image" src="img/pier-sunset_thumb.png" title="http://skitterphoto.com/?portfolio=pier-at-sunset">
+		<img class="ui small rounded image" src="img/woman-glasses_thumb.png" title="http://bossfight.co/woman-glasses-3/">
+		<img class="ui small rounded image" src="img/water-texture_thumb.png" title="https://pixabay.com/en/water-surface-pattern-ripple-blue-829003/">
+		<img class="ui small rounded image" src="img/blur-fireworks_thumb.png" title="http://barnimages.com/child-watching-the-fireworks/">
+		<img class="ui small rounded image" src="img/code_thumb.png" title="Inception :)">
+		<img class="ui small rounded image" src="img/tree-and-sky_thumb.png" title="http://skitterphoto.com/?portfolio=lonely-tree-and-colorful-sky">
+		<img class="ui small rounded image" src="img/projectspace_thumb.png" title="http://jaymantri.com/post/112158023323/download">
+		<img class="ui small rounded image" src="img/plant_thumb.png" title="https://pixabay.com/en/plant-potted-decorative-green-vase-828714/">
+		<img class="ui small rounded image" src="img/above-the-clouds_thumb.png" title="https://pixabay.com/en/above-the-clouds-blue-sky-sunny-691592/">
+		<img class="ui small rounded image" src="img/roses_thumb.png" title="https://pixabay.com/en/roses-colored-tinted-colorful-828945/">
+		<img class="ui small rounded image" src="img/art-sky_thumb.png" title="http://fancycrave.com/post/130396846488/download-by-michal-kulesza">
+		<img class="ui small rounded image" src="img/fireworks_thumb.png" title="https://pixabay.com/en/fireworks-holiday-celebration-846063/">
+		<img class="ui small rounded image" src="img/audience_thumb.png" title="https://pixabay.com/en/audience-crowd-people-persons-828584/">
+	</div>
+
+	<!-- Main editor area -->
+
+	<div class="pusher">
+		<div class="page-content hideable">
+			<h1>Unique gradient generator</h1>
+			<p>This tool helps you to generate beautiful blurry background images that you can use in any project. It doesn't use CSS3 gradients, but a rather unique approach. It takes a stock image, extracts a very small area (<em>sample area</em>) and scales it up to 100%. The browser's image smoothing algorithm takes care of the rest.</p>
+			<p>You can then use the image as an inline, base64 encoded image in any HTML element's background, just click <em>Generate CSS</em> button at the bottom of the app. Select source images from the gallery or use yours, the possibilities are endless.</p>
+			<h2>Goodies</h2>
+			<ul>
+				<li>Use your keyboard: <u>arrow keys</u> help to navigate precisely while the <u>esc</u> key hides the whole UI, and <u>R</u> randomizes the settings.</li>
+				<li>Save HTTP requests, serve the background instantly, provide unique designs.</li>
+				<li>Use your own images</li>
+				<li>Share your design via URLs</li>
+			</ul>
+			<h2>Credits</h2>
+			<p>This tool was dreamed, developed, directed, executive produced by <a href="http://tibor.szasz.hu">Tibor Szász</a>. The images used in the project are all public domain stock images. Sources can be found in the image titles. Technologies used: Semantic UI, Dat.GUI, SASS, ES6, Pen and paper.</p>
+		</div>
+		<canvas id="slicer" width="0" height="0"></canvas>
+		<div class="action-buttons hideable">
+			<a class="ui circular icon button" target="_blank" href="https://github.com/tiborsaas/unique-gradient-generator"><i class="github alternate icon"></i></a>
+			<a class="ui circular facebook icon button" target="_blank"><i class="facebook icon"></i></a>
+			<a class="ui circular twitter icon button" target="_blank"><i class="twitter icon"></i></a>
+			<button class="ui black icon button" id="get-url"><i class="linkify icon"></i></button>
+			<button class="ui black button" id="generate">Generate CSS</button>
+			<button class="ui black button" id="browse-image" target="file">Browse image</button>
+			<button class="ui black button" id="image-selector">Select source image</button>
+			<input type="file" id="file" accept=".png,.jpg,.jpeg,.tiff,.bmp">
+		</div>
+	</div>
+
+	<!-- Export CSS code dialog -->
+
+	<div class="ui modal" id="generate-css">
+		<i class="close icon"></i>
+		<div class="header">
+			CSS Code
+		</div>
+		<div class="image content">
+			<div class="description">
+				<p>Copy and paste the code below to any CSS rule you would like to have this as a background.</p>
+				<div class="ui form">
+					<div class="field">
+						<textarea></textarea>
+					</div>
+				</div>
+				<p class="size">Image size: <strong><span class="bytes">-</span> bytes</strong></p>
+			</div>
+		</div>
+		<div class="actions">
+			<div class="ui positive right button">
+				Close dialog
+			</div>
+		</div>
+	</div>
+
+	<!-- Get share URL dialog -->
+
+	<div class="ui modal" id="get-url-dialog">
+		<i class="close icon"></i>
+		<div class="header">
+			Get the URL to your design
+		</div>
+		<div class="image content">
+			<div class="description">
+				<div class="ui form">
+					<div class="field">
+						<input type="text" class="" onClick="this.select()">
+						<div class="ui negative message sorry">
+							<div class="header">Terribly sorry</div>
+						  	<p>Only designs created from the stock library can be shared this way :/</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="actions">
+			<div class="ui positive right button">
+				Close
+			</div>
+		</div>
+	</div>
+
+	<!-- da script -->
+
+	<script src="dist/index.js"></script>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	  ga('create', 'UA-65340105-3', 'auto');
+	  ga('send', 'pageview');
+	</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+
+/**
+ * Main entry point
+ */
+
+@import 'variables';
+@import 'responsive';
+@import './vendor/semantic.min';
+@import 'defaults';
+
+.pusher {
+	min-height: 100%;
+	background-color: #121212;
+	background-size: cover !important;
+	padding-top: 2em;
+	padding-bottom: 2em;
+}
+
+.action-buttons {
+	position: fixed;
+	right: 10px;
+	bottom: 15px;
+	z-index: 2;
+
+	input {
+		display: none;
+	}
+
+	@include mobile {
+		width: 180px;
+		text-align: right;
+
+		.button {
+			margin-bottom: 0.5em;
+		}
+	}
+}
+
+.page-content {
+	/*position: absolute;*/
+	min-height: 100%;
+	margin-left: 3em;
+	margin-right: 3em;
+	max-width: 654px;
+	color: #fff;
+
+	@include mobile {
+		margin-left: 1em;
+		margin-right: 1em;
+		padding-bottom: 13em;
+	}
+
+	&.invert {
+		color: #121212;
+		opacity: 0.9999; /* ugly chrome hack */
+
+		a {
+			color: #121212;
+			border-bottom-color: #121212;
+		}
+
+		li {
+			color: #121212;
+		}
+	}
+
+	h1 {
+		font-family: 'Playfair Display', serif;
+		font-weight: 800;
+		font-size: 3em;
+	}
+
+	h2 {
+		font-family: 'Playfair Display', serif;
+		font-weight: 400;
+		font-size: 2em;
+	}
+
+	p {
+		font-family: arial;
+		font-size: 1em;
+		line-height: 1.62em;
+	}
+}
+
+.sidebar.images {
+	padding-top: 5px;
+	background: #000;
+	text-align: center;
+}
+
+
+/**
+ * Dat GUI
+ */
+.dg .c select {
+	margin-top: 0 !important;
+	position: relative;
+	left: -5px;
+}
+
+.dg.ac {
+	z-index: 2 !important;
+}

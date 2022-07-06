@@ -138,16 +138,16 @@ docroot:	src/docroot/main/toplevel/admin.html src/docroot/main/assets/3rdparty/j
 	docker export docroot-main | tar -C src/docroot/main --strip-components 1 -x markdeck/
 	docker rm docroot-main
 
-	docker build -t arne/markdown-friends-docroot:latest \
-		-f ../markdown-friends/Dockerfile \
-		--target build-docroot \
-		../markdown-friends
-	# docker scan arne/markdown-friends-docroot:latest
-	rm -rf docroot/live_server/helper
-	mkdir -p src/docroot/live_server/helper
-	docker rm -f docroot-helper
-	docker create --name=docroot-helper arne/markdown-friends-docroot:latest foo
-	docker export docroot-helper | tar -C src/docroot/live_server/helper --strip-components 1 -x docroot/
+	# docker build -t arne/markdown-friends-docroot:latest \
+		# -f ../markdown-friends/Dockerfile \
+		# --target build-docroot \
+		# ../markdown-friends
+	# # docker scan arne/markdown-friends-docroot:latest
+	# rm -rf docroot/live_server/helper
+	# mkdir -p src/docroot/live_server/helper
+	# docker rm -f docroot-helper
+	# docker create --name=docroot-helper arne/markdown-friends-docroot:latest foo
+	# docker export docroot-helper | tar -C src/docroot/live_server/helper --strip-components 1 -x docroot/
 
 
 tag:

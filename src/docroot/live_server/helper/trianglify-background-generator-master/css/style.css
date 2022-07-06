@@ -1,0 +1,422 @@
+/*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
+
+/* ==========================================================================
+ Base styles: opinionated defaults
+ ========================================================================== */
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box;
+ }
+
+html {
+  color: #444444;
+  font-size: 1em;
+  line-height: 1.5;
+  font-family: "Muli", sans-serif;
+}
+
+/*
+* Remove text-shadow in selection highlight: h5bp.com/i
+* These selection rule sets have to be separate.
+* Customize the background color to match your design.
+*/
+
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+::selection {
+  background: #b3d4fc;
+  text-shadow: none;
+}
+
+/*
+* A better looking default horizontal rule
+*/
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0;
+}
+
+/*
+* Remove the gap between images, videos, audio and canvas and the bottom of
+* their containers: h5bp.com/i/440
+*/
+
+audio,
+canvas,
+img,
+svg,
+video {
+  vertical-align: middle;
+}
+
+/*
+* Remove default fieldset styles.
+*/
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+* Allow only vertical resizing of textareas.
+*/
+
+textarea {
+  resize: vertical;
+}
+
+/* ==========================================================================
+ Browse Happy prompt
+ ========================================================================== */
+
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+/* ==========================================================================
+ Author's custom styles
+ ========================================================================== */
+
+a {
+  color: #444444;
+}
+
+h1, h2, h3, h4, h5 {
+  margin: 0;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: 1.4em;
+  text-align: center;
+  padding: 0.75em 0;
+  line-height: 1.25;
+  background-color: #262626;
+  color: white;
+}
+
+h2 {
+  font-size: 1.25em;
+  line-height: 1.2;
+  margin: 0.75em 0;
+}
+
+p {
+  margin: 1.5em 0;
+}
+
+header {
+  background-color: #262626;
+}
+
+#loading {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 9999999;
+  background-color: white;
+  text-align: center;
+}
+
+.slider {
+  width: 100%;
+}
+
+#the-image {
+  margin: 0 auto;
+}
+
+html, body, .main {
+  width: 100%;
+  height: 100%;
+}
+
+#the-canvas {
+  display: none;
+}
+
+#controls {
+  float: left;
+  width: 30%;
+  height: 100%;
+  padding: 0.75em 0;
+}
+
+.panel {
+  padding: 0 4%;
+}
+
+#backgrounds {
+  float: left;
+  width: 70%;
+  height: 100%;
+  background-repeat: no-repeat;
+}
+
+label {
+  display: block;
+  width: 100%;
+  margin: 0 0 0.75em 0;
+  text-transform: uppercase;
+}
+
+input, select {
+  display: block;
+  margin: 0 0 3em 0;
+  outline: none;
+  width: 100%;
+  border: none;
+  background-color: #EDEDED;
+  line-height: 1.5;
+  text-align: center;
+}
+
+input:focus {
+  background-color: #444444;
+  color: #EEEEEE;
+}
+
+.noise-label {
+  margin: 0;
+}
+
+.input-info {
+  margin: 0 0 0.75em 0;
+  font-size: 0.875em;
+}
+
+button, #download-btn {
+  border: 1px solid #BBBBBB;
+  border-radius: 0px;
+  width: 100%;
+  display: block;
+  margin: 0 0 1.5em 0;
+  line-height: 1.5;
+  text-transform: uppercase;
+  background-color: white;
+  outline: none;
+  padding: 0.125em 0;
+}
+
+button:hover, #download-btn:hover {
+  background-color: #262626;
+  border-color: #262626;
+  color: white;
+}
+
+#download-btn {
+  text-align: center;
+  text-decoration: none;
+  line-height: 1.5;
+}
+
+.slider-value {
+  text-align: center;
+  margin-top: 0.75em;
+}
+
+footer {
+  float: left;
+  width: 100%;
+}
+
+.info {
+  float: left;
+  width: 100%;
+  text-align: center;
+}
+
+.colour-scheme-selectors {
+  margin: 0.75em 0;
+}
+
+.colour-input {
+  float: left;
+  width: 20%;
+  margin: 0 0 0.75em 0;
+}
+
+.colour-input-label {
+  float: left;
+  width: 80%;
+  margin: 0 0 0.75em 0;
+}
+
+#colour-list {
+  height: 20em;
+  overflow-y: scroll;
+  margin: 0 0 1.5em 0;
+}
+
+.palette-cont {
+  margin: 0.2em 0;
+}
+
+.palette-colour {
+  float: left;
+  height: 4em;
+}
+
+.help-body {
+  width: auto;
+  height: auto;
+  padding: 0 25%;
+}
+
+.help-list {
+  padding: 1.5em 0;
+}
+
+@media(min-width: 1200px) {
+  .panel {
+    float: left;
+    width: 50%;
+  }
+}
+/* ==========================================================================
+ jQuery UI Slider overrides
+ ========================================================================== */
+.ui-corner-all {
+  border-radius: 0;
+}
+
+.ui-slider-horizontal {
+  height: 1em;
+  border: none;
+  background: #EFEFEF;
+}
+
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default {
+  border: none;
+  background: #BBBBBB;
+  color: #555555;
+}
+
+.ui-state-default a,
+.ui-state-default a:link,
+.ui-state-default a:visited {
+  color: #555555;
+  text-decoration: none;
+}
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
+  border: none;
+  background: #444444;
+  font-weight: normal;
+  color: #212121;
+}
+.ui-state-hover a,
+.ui-state-hover a:hover,
+.ui-state-hover a:link,
+.ui-state-hover a:visited,
+.ui-state-focus a,
+.ui-state-focus a:hover,
+.ui-state-focus a:link,
+.ui-state-focus a:visited {
+  color: #212121;
+  text-decoration: none;
+}
+
+.ui-slider .ui-slider-handle {
+  /*width: 0.75em;*/
+  height: 1em;
+}
+
+.ui-slider-horizontal .ui-slider-handle {
+  top: 0;
+  /*margin-left: -.6em;*/
+}
+
+/* ==========================================================================
+ Helper classes
+ ========================================================================== */
+
+/*
+* Hide from both screenreaders and browsers: h5bp.com/u
+*/
+
+.hidden {
+  display: none !important;
+  visibility: hidden;
+}
+
+/*
+* Hide only visually, but have it available for screenreaders: h5bp.com/v
+*/
+
+.visuallyhidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/*
+* Extends the .visuallyhidden class to allow the element to be focusable
+* when navigated to via the keyboard: h5bp.com/p
+*/
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+  clip: auto;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+}
+
+/*
+* Hide visually and from screenreaders, but maintain layout
+*/
+
+.invisible {
+  visibility: hidden;
+}
+
+/*
+* Clearfix: contain floats
+*
+* For modern browsers
+* 1. The space content is one way to avoid an Opera bug when the
+*    `contenteditable` attribute is included anywhere else in the document.
+*    Otherwise it causes space to appear at the top and bottom of elements
+*    that receive the `clearfix` class.
+* 2. The use of `table` rather than `block` is only necessary if using
+*    `:before` to contain the top-margins of child elements.
+*/
+
+.clearfix:before,
+.clearfix:after {
+  content: " "; /* 1 */
+  display: table; /* 2 */
+}
+
+.clearfix:after {
+  clear: both;
+}
