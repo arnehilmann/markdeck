@@ -47,7 +47,7 @@ src/docroot/pandoc-aarch64-apple-darwin:	src/docroot/pandoc-x86_64-apple-darwin
 	cp $< $@
 
 binaries: target/binaries/markdeck.x86_64-apple-darwin target/binaries/markdeck.x86_64-unknown-linux-musl target/binaries/markdeck.aarch64-apple-darwin 
-	time upx --best --lzma target/binaries/*-apple-*
+	time upx --best --lzma target/binaries/*x86_64-apple-*
 
 
 target/binaries/markdeck.x86_64-apple-darwin:
