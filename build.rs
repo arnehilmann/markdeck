@@ -8,8 +8,10 @@ fn main() -> std::io::Result<()> {
     let source = format!("src/docroot/pandoc-{target}");
     let target = "src/docroot/main/.tools/pandoc";
 
-    print!("copying pandoc {source} to {target}\n");
+    print!("creating target folder\n");
+    fs::create_dir_all("src/docroot/main/.tools/")?;
 
+    print!("copying pandoc {source} to {target}\n");
     fs::copy(source, target)?;
     Ok(())
 }
