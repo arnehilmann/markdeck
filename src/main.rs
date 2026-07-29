@@ -294,7 +294,7 @@ impl Context {
                 match self.render_html(&sources) {
                     Ok(_) => sender.send(Trigger::Reload)?,
                     Err(e) => {
-                        warn!("an error occured during html rendering: {:?}", e);
+                        warn!("an error occurred during html rendering: {:?}", e);
                         std::fs::OpenOptions::new()
                             .create(true)
                             .append(true)
@@ -509,7 +509,7 @@ impl Context {
                 warn!("{}", line);
             }
             file.flush()?;
-            warn!("an error occured! {:?}", output.status.code());
+            warn!("an error occurred! {:?}", output.status.code());
         }
         Ok(())
     }

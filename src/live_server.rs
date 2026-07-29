@@ -85,7 +85,7 @@ async fn helper(r: HttpRequest, _stream: web::Payload) -> Result<HttpResponse, E
     if path.ends_with('/') {
         path.push_str("index.html");
     }
-    let body = Assets::get(&path).expect("an error occured!");
+    let body = Assets::get(&path).expect("an error occurred!");
     let res = actix_web::HttpResponse::Ok().body(body.data.into_owned());
     Ok(res)
 }
